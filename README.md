@@ -1,4 +1,4 @@
-# software-engineering
+# ソフトウェア工学
 
 このリポジトリは、Git/GitHubを使用してソフトウェア工学の開発を行うためのものである。  
 
