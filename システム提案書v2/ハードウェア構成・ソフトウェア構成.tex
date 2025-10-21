@@ -1,0 +1,46 @@
+\subsection{ハードウェア構成}
+%表を用いて書きたい
+本システムのハードウェア構成を表\ref{tab:hardware_configuration}に示す。
+\begin{table}[H]
+ \centering
+ \begin{tabular}{|c|c|c|c|}
+ \hline
+ 項目 & 種類 & 数量 & 備考\\
+ \hline
+ メインサーバー & レンタルサーバー & 1 & \\
+ \hline
+ データベースサーバー & レンタルサーバー & 1 & \\
+ \hline
+ 管理者端末 & デスクトップPC & 1 & \\
+ \hline
+ ユーザー端末 & スマートフォン & 利用者数 & \\
+    \hline
+ \end{tabular}
+ \caption{ハードウェア構成}
+ \label{tab:hardware_configuration}
+\end{table}
+
+\subsection{ソフトウェア構成}
+本システムのソフトウェア構成を表\ref{tab:software_configuration}に示す。
+\begin{table}[H]
+ \centering
+ \begin{tabular}{|c|c|}
+ \hline
+ ソフトウェア & 備考\\
+ \hline
+ バックエンド & FastAPI\\
+ \hline
+ フロントエンド & Flutter\\
+ \hline
+ Webサーバ & Nginx\\
+ \hline
+ データベース管理システム & MySQL\\
+ \hline
+ 管理者端末 & Ubuntu 22.04\\
+ \hline
+ 利用者端末 & Android, iOS\\
+ \hline
+ \end{tabular}
+ \caption{ソフトウェア構成}
+ \label{tab:software_configuration}
+\end{table}

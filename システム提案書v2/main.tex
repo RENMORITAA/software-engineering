@@ -1,0 +1,96 @@
+\documentclass{jlreq} 
+%\usepackage{url} 
+\usepackage{float}
+\usepackage{graphicx} 
+\usepackage{multicol}
+\usepackage{ascmac}
+\usepackage{siunitx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+%赤い枠が出ないようにhyperrefを読み込む 
+
+\usepackage{fancyvrb}
+\usepackage{hyperref}%pdfに赤い枠を出さない
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  filecolor=magenta,
+  urlcolor=blue,
+  citecolor=black,
+}
+
+\lstnewenvironment{mylisting}[1][]%
+  {\lstset{
+    frame=single,
+    basicstyle=\ttfamily\small,
+    numbersep=6pt,
+    tabsize=3,
+    extendedchars=true,
+    xleftmargin=17pt,
+    framexleftmargin=17pt,
+    breaklines=true,
+    numbers=left,
+    language=Matlab,  % ← ここで言語指定
+    #1
+  }}{}
+
+
+\begin{document}
+
+% --- 表紙 ---
+\begin{titlepage}
+  \centering
+  \vspace*{2cm}
+  {\LARGE \bfseries システム提案書 \par}
+  \vspace{1.5cm}
+  {\Huge \bfseries 香美市特化型配達サービス \par}
+  \vspace{3cm}
+  %第1版
+  {\Large 第1版 \par}
+  %少し開けて作成日を入れる
+  \vspace{2cm}
+  {\Large \today \par}
+  \vspace{0.5cm}
+  \vfill
+\end{titlepage}
+
+\newpage
+
+\tableofcontents
+\newpage
+
+
+\section{現状の課題}
+\input{現状の課題.tex}
+
+\section{課題解決のための課題}
+\input{課題解決のための課題.tex}
+
+\section{機能概要・前提条件・制約事項}
+\input{機能概要・前提条件・制約事項.tex}
+
+\section{情報・金銭の流れ}
+\input{情報・金銭の流れ.tex}
+
+\section{想定する利用者}
+\input{想定する利用者.tex}
+
+\section{ハードウェア構成・ソフトウェア構成}
+\input{ハードウェア構成・ソフトウェア構成.tex}
+
+\section{運用・保守}
+\input{運用・保守.tex}
+
+\section{費用対効果}
+\input{費用対効果.tex}
+
+\section{開発体制と工程計画}
+\input{開発体制と工程計画.tex}
+
+\section{システムアピールポイント}
+\input{システムアピールポイント.tex}
+
+
+\end{document}
+
