@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.22.0 (TeX Live 2025)  (format=lualatex 2025.7.12)  18 OCT 2025 22:48
+This is LuaHBTeX, Version 1.22.0 (TeX Live 2025)  (format=lualatex 2025.7.12)  22 OCT 2025 23:32
  restricted system commands enabled.
 **main.tex
 (./main.tex
@@ -1493,7 +1493,7 @@ Package luatex.def Info: 流れ.drawio.pdf  used on input line 14.
 <お金の流れ1.pdf, id=264, 290.0436pt x 317.26529pt>
 File: お金の流れ1.pdf Graphic file (type pdf)
 <use お金の流れ1.pdf>
-Package luatex.def Info: お金の流れ1.pdf  used on input line 27.
+Package luatex.def Info: お金の流れ1.pdf  used on input line 31.
 (luatex.def)             Requested size: 220.00005pt x 240.65454pt.
 
 
@@ -1501,9 +1501,9 @@ Package luatex.def Info: お金の流れ1.pdf  used on input line 27.
 (./想定する利用者.tex)
 (./ハードウェア構成・ソフトウェア構成.tex
 
-[12<./お金の流れ1.pdf>]) (./運用・保守.tex)
+[12<./お金の流れ1.pdf>]) (./運用・保守.tex
 
-[13] (./費用対効果.tex(load cache: extra_lmroman7-regular.luc)
+[13]) (./費用対効果.tex(load cache: extra_lmroman7-regular.luc)
 LaTeX Font Info:    Font shape `JT3/mc/m/n' will be
 (Font)              scaled to size 7.0pt on input line 27.
 (load cache: extra_lmroman5-regular.luc)
@@ -1512,25 +1512,21 @@ LaTeX Font Info:    Font shape `JT3/mc/m/n' will be
 
 
 [14]) (./開発体制と工程計画.tex
-<開発計画.pdf, id=377, 469.755pt x 158.51219pt>
+<開発計画.pdf, id=375, 469.755pt x 158.51219pt>
 File: 開発計画.pdf Graphic file (type pdf)
 <use 開発計画.pdf>
 Package luatex.def Info: 開発計画.pdf  used on input line 5.
 (luatex.def)             Requested size: 395.9974pt x 133.62338pt.
 )
-(./システムアピールポイント.tex)
+(./システムアピールポイント.tex
 
-[15<./開発計画.pdf>]
+[15<./開発計画.pdf>])
 
 [16] (./main.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-06-30>
  ***********
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 6483C5012E35A5D974FEBF5771BBD317;3713.
 )
@@ -1538,10 +1534,10 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 Here is how much of LuaTeX's memory you used:
  19385 strings out of 470139
  195698,953878 words of node,token memory allocated
- 1277 words of node memory still in use:
-   11 hlist, 2 vlist, 6 rule, 2 glue, 4 kern, 2 glyph, 291 attribute, 55 glue_sp
-ec, 38 attribute_list, 1 write, 14 user_defined nodes
-   avail lists: 1:35,2:48993,3:760,4:781,5:336,6:106,7:4390,8:49,9:2075,10:46,11
+ 1253 words of node memory still in use:
+   11 hlist, 2 vlist, 6 rule, 2 glue, 4 kern, 2 glyph, 280 attribute, 55 glue_sp
+ec, 37 attribute_list, 1 write, 14 user_defined nodes
+   avail lists: 1:35,2:49005,3:760,4:781,5:336,6:106,7:4390,8:49,9:2075,10:46,11
 :6
  47227 multiletter control sequences out of 65536+600000
  61 fonts using 64484671 bytes
@@ -1557,10 +1553,10 @@ f><c:/texlive/2025/texmf-dist/fonts/opentype/public/haranoaji/HaranoAjiGothic-Me
 dium.otf><c:/texlive/2025/texmf-dist/fonts/type1/public/lm/lmmi10.pfb><c:/texliv
 e/2025/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/texlive/2025/texmf-dist/fo
 nts/type1/public/lm/lmsy10.pfb>
-Output written on main.pdf (17 pages, 3410253 bytes).
+Output written on main.pdf (17 pages, 3410310 bytes).
 
-PDF statistics: 484 PDF objects out of 1000 (max. 8388607)
- 375 compressed objects within 4 object streams
+PDF statistics: 483 PDF objects out of 1000 (max. 8388607)
+ 374 compressed objects within 4 object streams
  96 named destinations out of 1000 (max. 131072)
  265 words of extra memory for PDF output out of 10000 (max. 100000000)
 
