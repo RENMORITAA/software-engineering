@@ -37,7 +37,7 @@ git config --global pull.rebase true
 
 ---
 
-## � 2. リポジトリのクローン作成
+##  2. リポジトリのクローン作成
 
 初回作業時のみ実行すること：
 ```bash
@@ -77,7 +77,7 @@ cd software-engineering
 
 ---
 
-## � 5. トラブルシューティング
+##  5. トラブルシューティング
 
 ###  「Permission denied (publickey)」エラーの場合
 このエラーは、SSH鍵がGitHubに登録されていないことが原因である。  
