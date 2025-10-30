@@ -6,8 +6,6 @@ on:
       - developer
     paths:
       - '**/main.tex'
-    paths-ignore:
-      - '**/*.pdf'
   workflow_dispatch:
 
 jobs:
@@ -37,10 +35,23 @@ jobs:
       - name: Compile LaTeX in changed directories
         if: ${{ steps.changed.outputs.dirs != '' }}
         run: |
+          set -euo pipefail
+          failed=0
           for dir in ${{ steps.changed.outputs.dirs }}; do
-            echo "Compiling $dir/main.tex ..."
-            latexmk -pdf -cd "$dir/main.tex"
+            if [ -d "$dir" ]; then
+              echo "Compiling $dir/main.tex ..."
+              (cd "$dir" && latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex) || {
+                echo "Compilation failed in $dir" >&2
+                failed=1
+              }
+            else
+              echo "Directory $dir not found, skipping"
+            fi
           done
+          if [ "$failed" -ne 0 ]; then
+            echo "One or more compilations failed" >&2
+            exit 1
+          fi
 
       # 生成されたPDFを同じ場所にコミット
       - name: Commit and push PDFs
