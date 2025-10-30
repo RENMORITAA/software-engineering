@@ -1,4 +1,4 @@
-name: Auto Build Changed LaTeX File
+name: LaTeX compilation
 
 on:
   push:
@@ -6,24 +6,25 @@ on:
       - developer
     paths:
       - '**/main.tex'
-  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
+      # リポジトリをチェックアウト
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # git diff で差分を取得するため
+          fetch-depth: 0
 
-      - name: Install TeX Live and latexmk
+      # TeX Live 環境を準備
+      - name: Install TeX Live
         run: |
           sudo apt-get update
           sudo apt-get install -y texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-pictures latexmk
 
-      # どのディレクトリで main.tex が変更されたかを特定
+      # 変更のあったディレクトリを検出
       - name: Detect changed directories
         id: changed
         run: |
@@ -31,34 +32,21 @@ jobs:
           echo "dirs=$dirs"
           echo "dirs=$dirs" >> $GITHUB_OUTPUT
 
-      # 各ディレクトリでLaTeXコンパイル
+      # 各ディレクトリで main.tex をコンパイル
       - name: Compile LaTeX in changed directories
         if: ${{ steps.changed.outputs.dirs != '' }}
         run: |
-          set -euo pipefail
-          failed=0
           for dir in ${{ steps.changed.outputs.dirs }}; do
-            if [ -d "$dir" ]; then
-              echo "Compiling $dir/main.tex ..."
-              (cd "$dir" && latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex) || {
-                echo "Compilation failed in $dir" >&2
-                failed=1
-              }
-            else
-              echo "Directory $dir not found, skipping"
-            fi
+            echo "Compiling $dir/main.tex ..."
+            latexmk -pdf -cd "$dir/main.tex"
           done
-          if [ "$failed" -ne 0 ]; then
-            echo "One or more compilations failed" >&2
-            exit 1
-          fi
 
-      # 生成されたPDFを同じ場所にコミット
+      # 生成された PDF をコミットして同じブランチに push
       - name: Commit and push PDFs
         if: ${{ steps.changed.outputs.dirs != '' }}
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add **/main.pdf
-          git commit -m "Auto-compile main.pdf for changed directories [skip ci]" || echo "No changes to commit"
+          git commit -m "Auto-compile main.pdf [skip ci]" || echo "No changes to commit"
           git push origin developer
