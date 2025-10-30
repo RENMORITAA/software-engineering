@@ -16,8 +16,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          # fetch previous commits so `git diff` works
-          fetch-depth: 0
+          fetch-depth: 0  # git diff で差分を取得するため
 
       - name: Install TeX Live and latexmk
         run: |
@@ -28,7 +27,6 @@ jobs:
       - name: Detect changed directories
         id: changed
         run: |
-          # push の差分から main.tex があるディレクトリを取得
           dirs=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep 'main\.tex' | xargs -r -n1 dirname | sort -u)
           echo "dirs=$dirs"
           echo "dirs=$dirs" >> $GITHUB_OUTPUT
@@ -37,57 +35,23 @@ jobs:
       - name: Compile LaTeX in changed directories
         if: ${{ steps.changed.outputs.dirs != '' }}
         run: |
+          set -euo pipefail
+          failed=0
           for dir in ${{ steps.changed.outputs.dirs }}; do
-            echo "Compiling $dir/main.tex ..."
-            latexmk -pdf -cd "$dir/main.tex"
+            if [ -d "$dir" ]; then
+              echo "Compiling $dir/main.tex ..."
+              (cd "$dir" && latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex) || {
+                echo "Compilation failed in $dir" >&2
+                failed=1
+              }
+            else
+              echo "Directory $dir not found, skipping"
+            fi
           done
-
-      # 生成されたPDFを同じ場所にコミット
-      - name: Commit and push PDFs
-        if: ${{ steps.changed.outputs.dirs != '' }}
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add **/main.pdf
-          git commit -m "Auto-compile main.pdf for changed directories [skip ci]" || echo "No changes to commit"
-          git push origin developer
-name: Auto Build Changed LaTeX File
-
-on:
-  push:
-    branches:
-      - developer
-    paths:
-      - '**/main.tex'
-    paths-ignore:
-      - '**.pdf'
-  workflow_dispatch:
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      # どのディレクトリで main.tex が変更されたかを特定
-      - name: Detect changed directories
-        id: changed
-        run: |
-          # pushの差分から main.tex があるディレクトリを取得
-          dirs=$(git diff --name-only HEAD^ HEAD | grep 'main\.tex' | xargs -r -n1 dirname | sort -u)
-          echo "dirs=$dirs"
-          echo "dirs=$dirs" >> $GITHUB_OUTPUT
-
-      # 各ディレクトリでLaTeXコンパイル
-      - name: Compile LaTeX in changed directories
-        if: ${{ steps.changed.outputs.dirs != '' }}
-        run: |
-          for dir in ${{ steps.changed.outputs.dirs }}; do
-            echo "Compiling $dir/main.tex ..."
-            latexmk -pdf -cd "$dir/main.tex"
-          done
+          if [ "$failed" -ne 0 ]; then
+            echo "One or more compilations failed" >&2
+            exit 1
+          fi
 
       # 生成されたPDFを同じ場所にコミット
       - name: Commit and push PDFs
