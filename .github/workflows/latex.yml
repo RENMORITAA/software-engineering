@@ -2,6 +2,7 @@ name: LaTeX compilation
 
 on:
   push:
+
     branches:
       - developer
     paths:
@@ -14,9 +15,10 @@ jobs:
     steps:
       # リポジトリをチェックアウト
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: true
 
       # TeX Live 環境を準備
       - name: Install TeX Live
@@ -36,10 +38,23 @@ jobs:
       - name: Compile LaTeX in changed directories
         if: ${{ steps.changed.outputs.dirs != '' }}
         run: |
+          set -euo pipefail
+          failed=0
           for dir in ${{ steps.changed.outputs.dirs }}; do
-            echo "Compiling $dir/main.tex ..."
-            latexmk -pdf -cd "$dir/main.tex"
+            if [ -d "$dir" ]; then
+              echo "Compiling $dir/main.tex ..."
+              (cd "$dir" && latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex) || {
+                echo "Compilation failed in $dir" >&2
+                failed=1
+              }
+            else
+              echo "Directory $dir not found, skipping"
+            fi
           done
+          if [ "$failed" -ne 0 ]; then
+            echo "One or more compilations failed" >&2
+            exit 1
+          fi
 
       # 生成された PDF をコミットして同じブランチに push
       - name: Commit and push PDFs
