@@ -2,6 +2,12 @@
 
 このリポジトリは、Git/GitHubを使用してソフトウェア工学の開発を行うためのものである。  
 
+## Notionを使ってタスク管理する
+
+https://www.notion.so/29c81dd0df498022837de242a2e0386d?source=copy_link
+
+これにタスクを行った人と作業中・完了を明確にします
+期限も設定することが可能です
 ## 緊急
 `git switch developer`
 に変更してください
