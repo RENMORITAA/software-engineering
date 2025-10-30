@@ -1,0 +1,86 @@
+\documentclass{jlreq} 
+%\usepackage{url} 
+\usepackage{float}
+\usepackage{graphicx} 
+\usepackage{multicol}
+\usepackage{ascmac}
+\usepackage{siunitx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+%赤い枠が出ないようにhyperrefを読み込む 
+
+\usepackage{fancyvrb}
+\usepackage{hyperref}%pdfに赤い枠を出さない
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  filecolor=magenta,
+  urlcolor=blue,
+  citecolor=black,
+}
+
+\lstnewenvironment{mylisting}[1][]%
+  {\lstset{
+    frame=single,
+    basicstyle=\ttfamily\small,
+    numbersep=6pt,
+    tabsize=3,
+    extendedchars=true,
+    xleftmargin=17pt,
+    framexleftmargin=17pt,
+    breaklines=true,
+    numbers=left,
+    language=Matlab,  % ← ここで言語指定
+    #1
+  }}{}
+
+
+\begin{document}
+
+% --- 表紙 ---
+\begin{titlepage}
+  \centering
+  \vspace{2cm}
+  {\LARGE \bfseries 外部設計書 \par}
+  \vspace{1cm}
+  {\LARGE \bfseries 香美市特化型配達サービス \par}
+  \vspace{1cm}
+   {\LARGE \bfseries Stellar Delivery \par}
+  \vspace{3cm}
+  %第2版
+  {\Large 第1版 \par}
+  %少し開けて作成日を入れる
+  \vspace{4cm}
+  {\Large \today \par}
+  \vspace{0.5cm}
+  {\LARGE \bfseries StellarWorks \par}
+  \vfill
+\end{titlepage}
+
+\newpage
+
+\tableofcontents
+\newpage
+
+
+\section{はじめに}
+\input{はじめに.tex}
+
+\section{システム概要}
+\input{システム概要.tex}
+
+\section{機能設計}
+\input{機能設計.tex}
+
+\section{UI設計}
+\input{UI設計.tex}
+
+\section{運用保守設計}
+\input{運用保守設計.tex}
+
+\section{データベース設計}
+\input{データベース設計.tex}
+
+\section{ネットワーク設計}
+\input{ネットワーク設計.tex}
