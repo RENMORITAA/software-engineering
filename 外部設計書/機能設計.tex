@@ -53,13 +53,25 @@
 \subsubsection{退会}
 会員が任意のタイミングでアプリ会員から退会する機能。会員情報をデータベースから完全に削除する。
 
-
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.75\textwidth]{./退会.pdf}
   \caption{退会機能}
   \label{fig:退会}
 \end{figure}
+
+\subsubsection{パスワード再発行}
+ユーザーはパスワードを忘れた場合、メールアドレスをフォームに入力することで再発行を行う。間違っている場
+合はエラーメッセージを出力し、合っている場合はパスワードを生成してデータベースを更新し、メールアドレス宛にそのパス
+ワードを送信し、通知画面を表示する。
+
+begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./パスワード再発行.pdf}
+  \caption{パスワード再発行機能}
+  \label{fig:スワード再発行}
+\end{figure}
+
 
 
 \subsection{依頼側}
