@@ -1,0 +1,1 @@
+ build/web/index.html:  /app/web/index.html
