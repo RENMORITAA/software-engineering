@@ -1,6 +1,7 @@
 //THIS FILE DEFINES TS-TEX's API AND SHOULD NOT BE EDITED. IF EDITED YOU CAN REWRITE THIS FILE USING TsApiFile.rewrite().
 //CHANGING ANY OF THIS CONTENT WILL NOT AFFECT THE ACTUAL API THAT IS EXPOSED BY THE RUNTIME AND THEREFORE WILL HAVE NO EFFECT!
 
+
 export interface IRange 
 {
   start: ILocation;
@@ -166,4 +167,3 @@ export interface ICompletionItemProvider extends ILifecycleHookComponent
 export const l = String.raw;
 export const SCOPE: ScopeAbstract = null;
 export const RESOLVER: IResolver = null;
-

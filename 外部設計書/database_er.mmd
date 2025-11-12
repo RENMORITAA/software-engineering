@@ -1,0 +1,150 @@
+%% Mermaid ER diagram for Stellar Delivery
+%% CLIでPDF生成可能な形式
+
+erDiagram
+    USERS {
+        user_id INT PK "ユーザーID"
+        name VARCHAR "氏名"
+        email VARCHAR "メールアドレス (unique)"
+        password_hash VARCHAR "パスワードハッシュ"
+        phone VARCHAR "電話番号"
+        birthday DATE "生年月日"
+        role ENUM "customer/delivery/store/admin"
+        created_at DATETIME "登録日時"
+        updated_at DATETIME "更新日時"
+    }
+
+    CUSTOMERS {
+        customer_id INT PK
+        address VARCHAR "配送先住所"
+        payment_method ENUM "credit/bank/kamica/cash"
+        balance DECIMAL "残高"
+    }
+
+    STORES {
+        store_id INT PK
+        store_name VARCHAR "店舗名"
+        address VARCHAR "店舗住所"
+        bank_account VARCHAR "振込口座"
+        fee_rate DECIMAL "手数料率(%)"
+    }
+
+    DELIVERY_WORKERS {
+        delivery_id INT PK
+        vehicle_type ENUM "bicycle/motorbike/car"
+        employment_status ENUM "part-time/freelance"
+        total_deliveries INT "累計配達回数"
+        rating FLOAT "平均評価"
+    }
+
+    ADMINS {
+        admin_id INT PK
+        permissions TEXT "権限(JSON等)"
+    }
+
+    PRODUCTS {
+        product_id INT PK
+        store_id INT
+        name VARCHAR "商品名"
+        description TEXT "商品説明"
+        price DECIMAL "価格"
+        image_url VARCHAR "画像URL"
+        stock INT "在庫数"
+    }
+
+    ORDERS {
+        order_id INT PK
+        customer_id INT
+        store_id INT
+        delivery_id INT "NULL可"
+        total_amount DECIMAL "合計金額"
+        status ENUM "ordered/preparing/delivering/completed/canceled"
+        order_time DATETIME "注文日時"
+        delivery_time DATETIME "配達完了日時"
+    }
+
+    ORDER_ITEMS {
+        order_id INT
+        product_id INT
+        quantity INT "数量"
+        subtotal DECIMAL "小計"
+        %% composite PK: (order_id, product_id)
+    }
+
+    PAYMENTS {
+        payment_id INT PK
+        order_id INT
+        payment_method ENUM "credit/bank/kamica"
+        amount DECIMAL "支払金額"
+        status ENUM "pending/completed/failed"
+        transaction_id VARCHAR "外部決済ID"
+        created_at DATETIME "実行日時"
+    }
+
+    DELIVERY_HISTORY {
+        history_id INT PK
+        delivery_id INT
+        order_id INT
+        status ENUM "accepted/picked_up/delivered/canceled"
+        timestamp DATETIME "状態変更時刻"
+    }
+
+    JOBS {
+        job_id INT PK
+        store_id INT
+        title VARCHAR "タイトル"
+        description TEXT "募集内容"
+        wage DECIMAL "報酬額"
+        created_at DATETIME "登録日時"
+        closed_at DATETIME "募集締切日時"
+    }
+
+    JOB_APPLICATIONS {
+        job_id INT
+        delivery_id INT
+        applied_at DATETIME "応募日時"
+        status ENUM "applied/accepted/rejected"
+        %% composite PK: (job_id, delivery_id)
+    }
+
+    %% Relationships (cardinality)
+    USERS ||--|| CUSTOMERS : "is a"
+    USERS ||--|| STORES : "is a"
+    USERS ||--|| DELIVERY_WORKERS : "is a"
+    USERS ||--|| ADMINS : "is a"
+
+    STORES ||--o{ PRODUCTS : "sells"
+    CUSTOMERS ||--o{ ORDERS : "places"
+    STORES ||--o{ ORDERS : "receives"
+    DELIVERY_WORKERS ||--o{ ORDERS : "delivers"
+
+    ORDERS ||--o{ ORDER_ITEMS : "contains"
+    PRODUCTS ||--o{ ORDER_ITEMS : "included in"
+
+    ORDERS ||--o{ PAYMENTS : "has"
+
+    DELIVERY_WORKERS ||--o{ DELIVERY_HISTORY : "has history"
+    ORDERS ||--o{ DELIVERY_HISTORY : "has history"
+
+    STORES ||--o{ JOBS : "posts"
+    JOBS ||--o{ JOB_APPLICATIONS : "receives"
+    DELIVERY_WORKERS ||--o{ JOB_APPLICATIONS : "applies"
+
+    %% Foreign Key relationships
+    CUSTOMERS }|--|| USERS : "FK customer_id -> user_id"
+    STORES }|--|| USERS : "FK store_id -> user_id"
+    DELIVERY_WORKERS }|--|| USERS : "FK delivery_id -> user_id"
+    ADMINS }|--|| USERS : "FK admin_id -> user_id"
+
+    PRODUCTS }|--|| STORES : "FK store_id -> store_id"
+    ORDERS }|--|| CUSTOMERS : "FK customer_id -> customer_id"
+    ORDERS }|--|| STORES : "FK store_id -> store_id"
+    ORDERS }|--|| DELIVERY_WORKERS : "FK delivery_id -> delivery_id"
+    ORDER_ITEMS }|--|| ORDERS : "FK order_id -> order_id"
+    ORDER_ITEMS }|--|| PRODUCTS : "FK product_id -> product_id"
+    PAYMENTS }|--|| ORDERS : "FK order_id -> order_id"
+    DELIVERY_HISTORY }|--|| DELIVERY_WORKERS : "FK delivery_id -> delivery_id"
+    DELIVERY_HISTORY }|--|| ORDERS : "FK order_id -> order_id"
+    JOBS }|--|| STORES : "FK store_id -> store_id"
+    JOB_APPLICATIONS }|--|| JOBS : "FK job_id -> job_id"
+    JOB_APPLICATIONS }|--|| DELIVERY_WORKERS : "FK delivery_id -> delivery_id"
