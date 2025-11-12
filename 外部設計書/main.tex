@@ -80,7 +80,10 @@
 \input{運用保守設計.tex}
 
 \section{データベース設計}
-\input{データベース設計.tex}
+% Mermaid ソースをそのまま表示します（LaTeX による解釈を避けるため verbatim として挿入）。
+% 表示のみ必要であれば以下のままで問題ありません。図として埋め込みたい場合は
+% infra/er_diagram.mmd を SVG に変換して \includegraphics する運用を推奨します。
+\VerbatimInput{データベース設計.tex}
 
 \section{ネットワーク設計}
 \input{ネットワーク設計.tex}
