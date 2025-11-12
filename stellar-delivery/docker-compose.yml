@@ -1,0 +1,57 @@
+version: '3.9'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: stellar_db
+    restart: always
+    env_file: .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  backend:
+    build:
+      context: ./backend
+    container_name: stellar_backend
+    restart: always
+    depends_on:
+      - db
+    env_file: .env
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    ports:
+      - "8000:8000"
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: stellar_frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"
+
+  nginx:
+    build:
+      context: ./nginx
+      args:
+        MODE: dev
+    container_name: stellar_nginx
+    restart: always
+    depends_on:
+      - frontend
+      - backend
+    ports:
+      - "80:80"
+
+volumes:
+  db_data:
