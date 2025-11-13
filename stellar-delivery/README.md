@@ -1,239 +1,160 @@
-Stellar Delivery
+STELLAR-DELIVERY
 =================
 
-このリポジトリは、簡易的なバックエンド（FastAPI/Python）とフロントエンド（Flutter Web）を Docker Compose で起動できるサンプルプロジェクトです。
-
-この README には、セットアップ手順、開発フロー、Docker を使った起動方法、よくあるトラブルシュートを日本語でまとめています。
-
 目次
---
 
-- 前提
-- リポジトリ構成
-- ローカル開発（推奨）
-  - バックエンドをローカルで動かす
-  - フロントエンド（Flutter）をローカルで動かす
-- Docker / Docker Compose を使った実行
-  - 初回ビルド & 起動
-  - 再ビルド（キャッシュ無視）
-  - 停止・ログ確認
-- 開発時のヒント（Windows / PowerShell）
-- よくある問題と対処
-- 変更履歴・次の作業
+1. プロジェクト構成（簡潔版）
+2. 各ディレクトリ / ファイルの役割（詳細）
+3. Docker — よく使うコマンド
+4. フロントエンド開発（どのファイルを変えると何が起きるか）
+5. 開発時の便利なコマンド / ログの見方 / トラブル対処
 
-前提
---
-
-- Docker Desktop（Windows なら WSL2 経由の設定を推奨）
-- docker compose（Docker Desktop に同梱）
-- （ローカルで Flutter を使う場合）Flutter SDK（`flutter` コマンドが使えること）
-- Git
-
-リポジトリ構成（重要ファイル）
---
-
-- `docker-compose.yml` - サービス定義（db, backend, frontend, nginx）
-- `backend/` - Python バックエンドと Dockerfile
-  - `backend/app/main.py` など（FastAPI アプリケーション）
-  - `backend/requirements.txt`
-- `frontend/` - Flutter プロジェクトと Dockerfile
-  - `frontend/pubspec.yaml`
-  - `frontend/lib/` - Flutter のソース (`main.dart`)
-  - `frontend/web/` - Flutter Web のソース/テンプレート
-- `nginx/` - リバースプロキシ設定（`default.conf`）
-- `db/init.sql` - DB 初期化 SQL
-
-推奨プロジェクト構成（例）
+1. プロジェクト構成（簡潔版）
 ```
-project-root/
-├─ docker-compose.yml        # 開発用
-├─ .env                      # 開発用環境変数
+STELLAR-DELIVERY/
 ├─ backend/
-│   ├─ Dockerfile
-│   ├─ app/
-│   │   └─ main.py
-│   └─ requirements.txt
-├─ frontend/
-│   ├─ Dockerfile
-│   ├─ lib/
-│   ├─ web/
-│   └─ pubspec.yaml
-├─ nginx/
-│   ├─ dev.conf
-│   ├─ prod.conf
-│   └─ Dockerfile
+│  ├─ app/
+│  │  └─ main.py
+│  ├─ Dockerfile
+│  └─ requirements.txt
 ├─ db/
-│   └─ init.sql
-└─ infra/
-  ├─ terraform/            # (AWSデプロイ用)
-  ├─ ecs-task-def.json
-  └─ ecr-push.sh
+│  └─ init.sql
+├─ frontend/
+│  ├─ lib/            # Flutter/Dart アプリ本体（ロジック・ウィジェット）
+│  ├─ web/            # web 用のエントリ / index.html 等
+│  ├─ build/web/      # ビルド出力（生成される）
+│  ├─ pubspec.yaml
+│  └─ Dockerfile
+├─ infra/
+│  └─ er_diagram.mmd
+├─ nginx/
+│  ├─ default.conf
+│  ├─ dev.conf
+│  ├─ prod.conf
+│  └─ Dockerfile
+├─ .env
+└─ docker-compose.yml
 ```
 
-ローカル開発（推奨）
---
+2. 各ディレクトリ / ファイルの役割（詳細）
 
-目的に応じてバックエンド／フロントエンドをローカルで直接実行できます。開発ループが速くなります。
+backend/
 
-バックエンドをローカルで動かす（Python / FastAPI）
+app/main.py
 
-PowerShell 例:
+FastAPI（例）等のサーバアプリ本体。API エンドポイント、起動設定などが書かれる場所。
 
+Dockerfile
+
+バックエンド用のイメージを作る定義。Python 環境や依存のインストール、uvicorn 実行コマンドなどが書かれる。
+
+requirements.txt
+
+Python パッケージ一覧（pip install -r requirements.txt）。
+
+→ 編集の影響：main.py を編集したら（ソース修正）コンテナを再ビルド／再起動する必要があります（後述）。
+
+db/
+
+init.sql
+
+初期テーブル作成や初期データ挿入など。MySQL コンテナ起動時に適用される（docker compose のボリューム / 初期化で使う想定）。
+
+frontend/
+
+lib/
+
+Flutter/Dart のメインコード（ウィジェット、画面、ビジネスロジック）。
+
+ここを編集するとアプリの見た目・挙動が変わります。
+
+web/
+
+Web ビルド用のエントリ（index.html など）。Web 固有の meta や JS ラッパーなど。
+
+build/web/
+
+flutter build web で生成される静的ファイル群（この出力を nginx や静的サーバで配る）。
+
+pubspec.yaml / pubspec.lock
+
+依存パッケージ、アセット指定など。
+
+Dockerfile
+
+フロントをビルドして静的ファイルを出力し（またはサーバを立て）コンテナに組み込むための定義。
+
+→ 編集の影響：
+
+lib/ を編集 → UI/ロジックが変わる → ローカル開発サーバで hot-reload または flutter build web → コンテナに反映するには再ビルド/再デプロイが必要。
+
+web/index.html を編集 → HTML の <head> や meta を変えられる（タイトルやタグ、外部スクリプトの挿入等）。
+
+pubspec.yaml を更新 → 依存を追加したら flutter pub get 実行後、再ビルドが必要。
+
+nginx/
+
+default.conf, dev.conf, prod.conf
+
+nginx の設定ファイル。リバースプロキシ設定（どのパスを backend に飛ばすか）、静的ファイルのルート、キャッシュ設定など。
+
+dev.conf はローカル開発向け、prod.conf は本番向けの想定。
+
+Dockerfile
+
+nginx イメージのカスタム化（設定ファイルをコピーしたり、証明書を入れたり）。
+
+→ 編集の影響：nginx 設定を変えたら nginx コンテナを再起動（または再ビルド）して設定を反映する必要があります。
+
+ルートの docker-compose.yml
+
+サービス群（frontend, backend, nginx, db）を定義。ポートや環境変数、ボリューム、依存関係を書いているファイル。
+
+注意：スクショで出ていたけど version: 行は最新の docker compose では不要という警告が出ます。削除しても動作します。
+
+3. Docker — よく使うコマンド
+
+前提：プロジェクトルート（docker-compose.yml がある場所）で実行してください。Windows PowerShell の例を示します。
+
+全部起動（ビルドも含む）
 ```powershell
-cd C:\Users\mrenk\software-engineering\stellar-delivery\backend
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-# uvicorn で起動（デバッグ用）
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-```
-
-API が起動したら http://localhost:8000/docs で OpenAPI ドキュメントが見えるはずです。
-
-フロントエンド（Flutter）をローカルで動かす
-
-ローカルで Flutter を使って編集 → ホットリロードする流れ:
-
-```powershell
-cd C:\Users\mrenk\software-engineering\stellar-delivery\frontend
-# もしプロジェクトが未作成なら: flutter create . --platforms=web
-flutter pub get
-# Chrome で実行 (ホットリロード可能)
-flutter run -d chrome
-```
-
-ビルドして静的ファイルを生成する（配布/コンテナ用）:
-
-```powershell
-cd frontend
-flutter build web --release
-# 成果物は frontend/build/web に生成されます
-```
-
-Docker / Docker Compose を使った実行
---
-
-Docker を使うと、環境を揃えて一発で起動できます。以下は PowerShell 用のコマンド例です。
-
-初回ビルド & 起動
-
-```powershell
-cd C:\Users\mrenk\software-engineering\stellar-delivery
-# フロントやバックエンドの Docker イメージをビルドして起動（バックグラウンド）
 docker compose up -d --build
-# 起動中のサービス一覧を確認
-docker compose ps
 ```
 
-個別にフロントのみビルドしたい場合:
+一つだけ再起動（コードを直したとき等）
 
+変更しただけでイメージを再ビルドしたい場合（ソースを Docker イメージに取り込む構成のとき）：
 ```powershell
-docker compose build frontend
-docker compose up -d frontend
+docker compose up -d --build backend
 ```
 
-再ビルド（キャッシュ無視）
-
-変更がイメージに反映されない場合、キャッシュを無視して再ビルドします:
-
+ただ単にサービスを再起動（イメージ再ビルドは不要）したいとき：
 ```powershell
-docker compose build --no-cache frontend
-docker compose up -d frontend
+docker compose restart backend
 ```
 
-停止 & クリーン
+（backend の代わりに frontend / nginx / db を指定してください）
 
+停止（コンテナを停止する）
 ```powershell
-# 全サービス停止・削除（コンテナ・ネットワーク）
+# 停止する（コンテナは残る）
+docker compose stop
+
+# 停止してコンテナ／ネットワークを削除する（クリーン）
 docker compose down
-# イメージやボリュームも完全に消す場合（注意: データ消える）
-docker compose down --rmi all --volumes --remove-orphans
 ```
 
-ログ確認
+補助コマンド
 
 ```powershell
-# 全サービスのログを追う
-docker compose logs -f
-# 特定サービスのログ（フロント）
-docker compose logs -f frontend
+# コンテナ一覧（起動中）
+docker ps
+
+# 任意サービスのログを追う
+docker logs -f <コンテナ名またはID>
+# 例
+docker logs -f stellar_backend
+
+# コンテナの再ビルド（個別）
+docker compose build <service>
 ```
-
-コンテナ内コマンド実行
-
-```powershell
-# フロントコンテナに入ってファイルを確認する例
-docker compose exec frontend sh
-# 例: nginx が配信しているファイルをみる
-docker compose exec frontend cat /usr/share/nginx/html/index.html
-```
-
-ポート割り当て
-
-- フロント: ホスト 5173 -> コンテナ 80
-- バックエンド: ホスト 8000 -> コンテナ 8000
-- DB (MySQL): ホスト 3306 -> コンテナ 3306
-- nginx (リバースプロキシ): ホスト 80 -> コンテナ 80
-
-注意: どのサービスにアクセスするかによりポートを指定してください。フロントは http://localhost:5173 を開くのが直接的です。
-
-開発時のヒント（Windows / PowerShell）
---
-
-- PowerShell では `||` などのシェル演算子は使えません。複数コマンドを繋ぐ場合は `;` や `Start-Process` 等を使ってください。
-- Docker のボリュームマウントで Windows のパスがうまく動かないことがあります（特に WSL2 と組み合わせたとき）。その場合は次のいずれかを試してください:
-  - WSL2 の中で操作する（`wsl` を使ってリポジトリに移動して実行）。
-  - ホストのビルド成果物を使う代わりに Dockerfile のマルチステージビルドでイメージに成果物を内包する。
-
-よくある問題と対処
---
-
-1) docker compose 実行時に出る警告: `the attribute 'version' is obsolete` 
-   - 対処: `docker-compose.yml` の先頭にある `version: "3.9"` 行は無害ですが、警告を消したければ削除しても構いません。Compose v2/v3 の互換性に問題はありません。
-
-2) Dockerfile の `COPY` で `"/frontend": not found` と言われる
-   - 原因: Dockerfile の `COPY ./frontend /app` のように、ビルドコンテキストの外をコピーしようとした場合に発生します。
-   - 対処: Dockerfile 側で `COPY . /app` のように書くか、`docker-compose.yml` の `build.context` を修正してビルドコンテキストを正しく設定します。
-
-3) Flutter 実行時に `You appear to be trying to run flutter as root` の警告
-   - 警告はビルドが止まる原因ではありません。気になる場合は Dockerfile 内で非 root ユーザーに切り替えることも可能です。
-
-4) フロントがプレースホルダ（"Building Flutter web... (placeholder)"）を返す
-   - 原因: `frontend/web/index.html` がプレースホルダのまま、あるいは nginx が古いファイルを配信している。
-   - 対処: `flutter build web` を実行して `frontend/build/web` を作成し、Docker イメージを再ビルドする、またはホストの `build/web` をコンテナにマウントして nginx が正しいファイルを配信するようにします（開発用）。
-
-5) マウントしたボリュームがコンテナ内で見えない・ファイルがない
-   - Windows のファイル共有やパスの問題が多いです。WSL2 を利用している場合は WSL の中でコマンドを実行するほうが確実です。代替はイメージ内にビルド成果物を含める方法です。
-
-その他のコマンド（便利）
---
-
-```powershell
-# 画像やアセットを再生成したいとき
-cd frontend
-flutter clean
-flutter pub get
-flutter build web --release
-
-# Docker イメージをまとめて消す（注意）
-docker system prune --all --volumes
-```
-
-将来の改善案 / 次の作業
---
-
-- CI を導入して、`flutter build web` と `docker build` を自動化（GitHub Actions 等）。
-- フロントとバックエンド間の API 契約を作成し、E2E テストを追加。 
-- 開発向けに `docker-compose.override.yml` を用意し、ボリュームマウントとホットリロードをサポートする。 
-
-サポート
---
-
-問題が起きたら、以下情報を共有してください:
-- 実行したコマンドとその出力（エラーメッセージ）
-- `docker compose ps` と `docker compose logs <service>` の出力（該当サービス）
-- 使用している OS（Windows の場合は PowerShell/WSL2 の有無）
-
----
-
-README を作成しました。必要ならこの README にプロジェクト固有の追加情報（API エンドポイント一覧や DB スキーマの詳細など）を追記します。
