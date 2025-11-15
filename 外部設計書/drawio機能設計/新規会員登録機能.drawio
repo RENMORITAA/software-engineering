@@ -1,0 +1,266 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0" version="28.2.9">
+  <diagram name="ページ1" id="q0JIHNB8AOH4h2SrHdY5">
+    <mxGraphModel dx="915" dy="595" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-2" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="50" y="80" width="350" height="1240" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-3" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="440" y="80" width="360" height="1240" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-4" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;ユーザー&lt;/font&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="172.5" y="35" width="85" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-5" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;システム&lt;/font&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="575" y="30" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-6" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="192.5" y="120" width="45" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-14" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="520.88" y="510" width="187.5" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-16" value="新規会員登録画面生成" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="544.63" y="517.5" width="140" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-17" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="119" y="600" width="187.5" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-18" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" target="ujOmbrsP-d7Tk_zyG0Zu-17" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="617.75" y="550" as="sourcePoint" />
+            <mxPoint x="667.75" y="500" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="617.75" y="570" />
+              <mxPoint x="212.75" y="570" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-19" value="新規会員登録画面表示" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="142.75" y="600" width="140" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-25" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" target="ujOmbrsP-d7Tk_zyG0Zu-26" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="214.41" y="165" as="sourcePoint" />
+            <mxPoint x="214.41" y="195" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-26" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="121.25" y="200" width="187.5" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-27" value="新規会員登録選択" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="162.5" y="205" width="105" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-28" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="ujOmbrsP-d7Tk_zyG0Zu-29" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="308.75" y="220" as="sourcePoint" />
+            <mxPoint x="358.75" y="170" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-29" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="526.25" y="200" width="187.5" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-30" value="利用規約画面生成" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="535" y="207.5" width="170" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-31" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="616" y="240" as="sourcePoint" />
+            <mxPoint x="211" y="290" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="616" y="260" />
+              <mxPoint x="211" y="260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-32" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="121.25" y="290" width="187.5" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-33" value="利用規約画面表示" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="158.25" y="302.5" width="105" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-35" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="117" y="360" width="187.5" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-36" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" target="ujOmbrsP-d7Tk_zyG0Zu-35" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="211" y="330" as="sourcePoint" />
+            <mxPoint x="257.5" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-37" value="同意可否選択" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="156.13" y="372.5" width="109.25" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-38" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="ujOmbrsP-d7Tk_zyG0Zu-35" target="ujOmbrsP-d7Tk_zyG0Zu-40" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="480" y="387.5" as="sourcePoint" />
+            <mxPoint x="615.5" y="405.21592709984145" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="616" y="380" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-40" value="" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="518.88" y="410" width="193.75" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-41" value="利用規約に同意したか" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="547.87" y="422.5" width="144.25" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-42" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" target="ujOmbrsP-d7Tk_zyG0Zu-14" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="615" y="470" as="sourcePoint" />
+            <mxPoint x="665" y="420" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-43" value="YES" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="570" y="460" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-44" value="" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.955;exitY=0.492;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" target="ujOmbrsP-d7Tk_zyG0Zu-29" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="712.6312499999999" y="439.52" as="sourcePoint" />
+            <mxPoint x="722.47" y="220" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="749" y="440" />
+              <mxPoint x="748.72" y="220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-45" value="NO" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="684.63" y="410" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-47" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="121.25" y="680" width="187.5" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-49" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="214.41" y="640" as="sourcePoint" />
+            <mxPoint x="214.41" y="685" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-50" value="会員情報入力" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="152.5" y="687.5" width="125" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-51" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="308.75" y="700" as="sourcePoint" />
+            <mxPoint x="620.75" y="730" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="620.75" y="700" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-52" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="528.25" y="830" width="187.5" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-53" value="登録されたメールアドレスに確認URLを送信" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="553.13" y="837.5" width="140" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-54" value="" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="526.25" y="730" width="193.75" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-55" value="入力情報に不備がないか" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="551" y="742.5" width="144.25" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-56" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" target="ujOmbrsP-d7Tk_zyG0Zu-52" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="622.37" y="790" as="sourcePoint" />
+            <mxPoint x="672.37" y="740" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-57" value="YES" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="577.37" y="780" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-58" value="NO" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="692" y="730" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-59" value="" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.955;exitY=0.492;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" target="ujOmbrsP-d7Tk_zyG0Zu-14" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="720" y="759.52" as="sourcePoint" />
+            <mxPoint x="721.3687500000001" y="540" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="756.3687500000001" y="760" />
+              <mxPoint x="756" y="530" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-60" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="625" y="870" as="sourcePoint" />
+            <mxPoint x="220.25" y="920" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="625" y="890" />
+              <mxPoint x="220" y="890" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-61" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="121.25" y="920" width="187.5" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-62" value="登録したメールアドレスに届いた確認URLを開く" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="131.25" y="927.5" width="167.5" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-63" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="ujOmbrsP-d7Tk_zyG0Zu-61" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="995" y="1010" as="sourcePoint" />
+            <mxPoint x="620" y="1020" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="215" y="990" />
+              <mxPoint x="620" y="990" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-64" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="532.5" y="1020" width="187.5" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-65" value="登録されたメールアドレスが正しいことを認識" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="541.25" y="1035" width="170" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-66" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="630" y="1140" as="sourcePoint" />
+            <mxPoint x="225.25" y="1190" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="630" y="1160" />
+              <mxPoint x="225" y="1160" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-67" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="126.25" y="1190" width="187.5" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-68" value="登録確認画面表示" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="160.75" y="1197.5" width="107.5" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-69" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="532.5" y="1100" width="187.5" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-70" value="登録確認画面生成" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="572.5" y="1107.5" width="101.25" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-71" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="ujOmbrsP-d7Tk_zyG0Zu-64" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="623.75" y="1060" as="sourcePoint" />
+            <mxPoint x="626" y="1100" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-72" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.507;entryY=0.944;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" target="ujOmbrsP-d7Tk_zyG0Zu-2" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="227.5" y="1230" as="sourcePoint" />
+            <mxPoint x="277.5" y="1180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-74" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="202.5" y="1250" width="45" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-75" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#FFFFFF;" parent="1" vertex="1">
+          <mxGeometry x="205" y="1252.5" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ujOmbrsP-d7Tk_zyG0Zu-76" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="207.5" y="1255" width="35" height="35" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

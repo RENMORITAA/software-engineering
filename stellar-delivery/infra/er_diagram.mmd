@@ -1,0 +1,131 @@
+%% Mermaid ER diagram for Stellar Delivery
+%% Save as .mmd and open with Mermaid live editor or VSCode Mermaid Preview
+
+erDiagram
+    USERS {
+        INT user_id PK "ユーザーID"
+        VARCHAR name "氏名"
+        VARCHAR email "メールアドレス (unique)"
+        VARCHAR password_hash "パスワードハッシュ"
+        VARCHAR phone "電話番号"
+        DATE birthday "生年月日"
+        ENUM role "customer/delivery/store/admin"
+        DATETIME created_at "登録日時"
+        DATETIME updated_at "更新日時"
+    }
+
+    CUSTOMERS {
+        INT customer_id PK FK "FK -> users.user_id"
+        VARCHAR address "配送先住所"
+        ENUM payment_method "credit/bank/kamica/cash"
+        DECIMAL balance "残高"
+    }
+
+    STORES {
+        INT store_id PK FK "FK -> users.user_id"
+        VARCHAR store_name "店舗名"
+        VARCHAR address "店舗住所"
+        VARCHAR bank_account "振込口座"
+        DECIMAL fee_rate "手数料率(%)"
+    }
+
+    DELIVERY_WORKERS {
+        INT delivery_id PK FK "FK -> users.user_id"
+        ENUM vehicle_type "bicycle/motorbike/car"
+        ENUM employment_status "part-time/freelance"
+        INT total_deliveries "累計配達回数"
+        FLOAT rating "平均評価"
+    }
+
+    ADMINS {
+        INT admin_id PK FK "FK -> users.user_id"
+        TEXT permissions "権限(JSON等)"
+    }
+
+    PRODUCTS {
+        INT product_id PK "商品ID"
+        INT store_id FK "FK -> stores.store_id"
+        VARCHAR name "商品名"
+        TEXT description "商品説明"
+        DECIMAL price "価格"
+        VARCHAR image_url "画像URL"
+        INT stock "在庫数"
+    }
+
+    ORDERS {
+        INT order_id PK "注文ID"
+        INT customer_id FK "FK -> customers.customer_id"
+        INT store_id FK "FK -> stores.store_id"
+        INT delivery_id FK "FK -> delivery_workers.delivery_id (NULL可)"
+        DECIMAL total_amount "合計金額"
+        ENUM status "ordered/preparing/delivering/completed/canceled"
+        DATETIME order_time "注文日時"
+        DATETIME delivery_time "配達完了日時"
+    }
+
+    ORDER_ITEMS {
+        INT order_id FK "FK -> orders.order_id"
+        INT product_id FK "FK -> products.product_id"
+        INT quantity "数量"
+        DECIMAL subtotal "小計"
+        PK order_product_pk "(order_id, product_id)"
+    }
+
+    PAYMENTS {
+        INT payment_id PK "決済ID"
+        INT order_id FK "FK -> orders.order_id"
+        ENUM payment_method "credit/bank/kamica"
+        DECIMAL amount "支払金額"
+        ENUM status "pending/completed/failed"
+        VARCHAR transaction_id "外部決済ID"
+        DATETIME created_at "実行日時"
+    }
+
+    DELIVERY_HISTORY {
+        INT history_id PK "履歴ID"
+        INT delivery_id FK "FK -> delivery_workers.delivery_id"
+        INT order_id FK "FK -> orders.order_id"
+        ENUM status "accepted/picked_up/delivered/canceled"
+        DATETIME timestamp "状態変更時刻"
+    }
+
+    JOBS {
+        INT job_id PK "求人ID"
+        INT store_id FK "FK -> stores.store_id"
+        VARCHAR title "タイトル"
+        TEXT description "募集内容"
+        DECIMAL wage "報酬額"
+        DATETIME created_at "登録日時"
+        DATETIME closed_at "募集締切日時"
+    }
+
+    JOB_APPLICATIONS {
+        INT job_id FK "FK -> jobs.job_id"
+        INT delivery_id FK "FK -> delivery_workers.delivery_id"
+        DATETIME applied_at "応募日時"
+        ENUM status "applied/accepted/rejected"
+        PK job_app_pk "(job_id, delivery_id)"
+    }
+
+    %% Relationships (cardinality expressive)
+    USERS ||--|| CUSTOMERS : "is a"
+    USERS ||--|| STORES : "is a"
+    USERS ||--|| DELIVERY_WORKERS : "is a"
+    USERS ||--|| ADMINS : "is a"
+
+    STORES ||--o{ PRODUCTS : "sells"
+    CUSTOMERS ||--o{ ORDERS : "places"
+    STORES ||--o{ ORDERS : "receives"
+    DELIVERY_WORKERS ||--o{ ORDERS : "delivers"
+
+    ORDERS ||--o{ ORDER_ITEMS : "contains"
+    PRODUCTS ||--o{ ORDER_ITEMS : "included in"
+
+    ORDERS ||--o{ PAYMENTS : "has"
+
+    DELIVERY_WORKERS ||--o{ DELIVERY_HISTORY : "has history"
+    ORDERS ||--o{ DELIVERY_HISTORY : "has history"
+
+    STORES ||--o{ JOBS : "posts"
+    JOBS ||--o{ JOB_APPLICATIONS : "receives"
+    DELIVERY_WORKERS ||--o{ JOB_APPLICATIONS : "applies"
