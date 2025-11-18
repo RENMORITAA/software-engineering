@@ -1,215 +1,225 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
-void main() => runApp(const MyApp());
+void main() {
+  runApp(const StellarDeliveryApp());
+}
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class StellarDeliveryApp extends StatelessWidget {
+  const StellarDeliveryApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Stellar Delivery',
-      theme: ThemeData(primarySwatch: Colors.indigo),
-      home: const DeliveryHome(),
+      debugShowCheckedModeBanner: false,
+      home: const StellarHomePage(),
     );
   }
 }
 
-class Delivery {
-  Delivery({required this.id, required this.address, this.delivered = false});
-  final String id;
-  final String address;
-  bool delivered;
-}
-
-class DeliveryHome extends StatefulWidget {
-  const DeliveryHome({super.key});
-
-  @override
-  State<DeliveryHome> createState() => _DeliveryHomeState();
-}
-
-class _DeliveryHomeState extends State<DeliveryHome> {
-  final List<Delivery> _items = List.generate(
-    5,
-    (i) => Delivery(id: 'DLV-${1000 + i}', address: 'Tokyo - Chiyoda ${i + 1}'),
-  );
-
-  final Random _rnd = Random();
-  int _currentIndex = 0;
-
-  void _addRandom() {
-    final id = 'DLV-${1000 + _rnd.nextInt(9000)}';
-    final addr = 'Tokyo - Shibuya ${1 + _rnd.nextInt(100)}';
-    setState(() {
-      _items.insert(0, Delivery(id: id, address: addr));
-    });
-  }
-
-  void _showAddSheet() {
-    final _addrCtl = TextEditingController();
-    showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      builder: (ctx) => Padding(
-        padding: EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Text('Add Delivery', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
-              const SizedBox(height: 8),
-              TextField(controller: _addrCtl, decoration: const InputDecoration(labelText: 'Address')),
-              const SizedBox(height: 12),
-              ElevatedButton(
-                onPressed: () {
-                  final addr = _addrCtl.text.trim();
-                  if (addr.isEmpty) return;
-                  final id = 'DLV-${1000 + _rnd.nextInt(9000)}';
-                  setState(() => _items.insert(0, Delivery(id: id, address: addr)));
-                  Navigator.of(ctx).pop();
-                },
-                child: const Text('Add'),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _toggleDeliveredById(String id) {
-    final idx = _items.indexWhere((e) => e.id == id);
-    if (idx == -1) return;
-    setState(() => _items[idx].delivered = !_items[idx].delivered);
-  }
-
-  void _showDetailsSheet(Delivery d) {
-    showModalBottomSheet<void>(
-      context: context,
-      builder: (ctx) => Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Delivery ${d.id}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
-            const SizedBox(height: 8),
-            Text('Address: ${d.address}'),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                const Text('Status: '),
-                Chip(label: Text(d.delivered ? 'Delivered' : 'Pending')),
-                const Spacer(),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(ctx).pop();
-                    _toggleDeliveredById(d.id);
-                  },
-                  child: Text(d.delivered ? 'Mark Pending' : 'Mark Delivered'),
-                )
-              ],
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDeliveries() {
-    if (_items.isEmpty) {
-      return const Center(child: Text('No deliveries'));
-    }
-    return ListView.separated(
-      itemCount: _items.length,
-      separatorBuilder: (_, __) => const Divider(height: 1),
-      itemBuilder: (context, idx) {
-        final d = _items[idx];
-        return Dismissible(
-          key: ValueKey(d.id),
-          direction: DismissDirection.endToStart,
-          background: Container(
-            color: Colors.red,
-            alignment: Alignment.centerRight,
-            padding: const EdgeInsets.only(right: 20),
-            child: const Icon(Icons.delete, color: Colors.white),
-          ),
-          onDismissed: (direction) {
-            final removed = d;
-            setState(() => _items.removeAt(idx));
-            ScaffoldMessenger.of(context).clearSnackBars();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Deleted ${removed.id}'),
-                action: SnackBarAction(
-                  label: 'Undo',
-                  onPressed: () => setState(() => _items.insert(idx, removed)),
-                ),
-              ),
-            );
-          },
-          child: ListTile(
-            leading: CircleAvatar(child: Text(d.id.split('-').last)),
-            title: Text(d.address),
-            subtitle: Text(d.delivered ? 'Delivered' : 'Pending'),
-            trailing: Checkbox(
-              value: d.delivered,
-              onChanged: (_) => _toggleDeliveredById(d.id),
-            ),
-            onTap: () => _showDetailsSheet(d),
-            onLongPress: () => _showDetailsSheet(d),
-          ),
-        );
-      },
-    );
-  }
+class StellarHomePage extends StatelessWidget {
+  const StellarHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Stellar Delivery'),
-        centerTitle: true,
-        elevation: 2,
-        actions: [
-          IconButton(onPressed: _showAddSheet, icon: const Icon(Icons.add)),
+      bottomNavigationBar: _bottomNav(),
+      body: Column(
+        children: [
+          _headerImage(context),
+          _storeInfo(),
+          const SizedBox(height: 12),
+          _bottomInfoButtons(),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('Today\'s deliveries', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
-            const SizedBox(height: 8),
-            Expanded(
-              child: Card(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(4),
-                  child: _buildDeliveries(),
-                ),
+    );
+  }
+
+  // -------------------------------
+  // 上部の背景 + 店舗画像
+  // -------------------------------
+  Widget _headerImage(BuildContext context) {
+    return Stack(
+      children: [
+        // 背景宇宙柄
+        Container(
+          height: 250,
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/space_bg.jpg"),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        // 店舗写真
+        Container(
+          margin: const EdgeInsets.only(top: 60),
+          height: 180,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            image: const DecorationImage(
+              image: AssetImage("assets/food_sample.jpg"),
+              fit: BoxFit.cover,
+              colorFilter: ColorFilter.mode(
+                Colors.black38,
+                BlendMode.darken,
               ),
             ),
-          ],
+          ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (i) => setState(() => _currentIndex = i),
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Deliveries'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+        // 閉じるボタン
+        Positioned(
+          top: 20,
+          left: 20,
+          child: CircleAvatar(
+            radius: 22,
+            backgroundColor: Colors.black54,
+            child: Icon(Icons.close, color: Colors.white, size: 28),
+          ),
+        ),
+        // テキスト「ようこそステラ食堂へ」
+        const Positioned(
+          bottom: 20,
+          left: 20,
+          right: 20,
+          child: Center(
+            child: Text(
+              "ようこそ\nステラ食堂へ",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                shadows: [
+                  Shadow(
+                      offset: Offset(1, 1),
+                      blurRadius: 6,
+                      color: Colors.black87)
+                ],
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  // -------------------------------
+  // 店舗情報欄
+  // -------------------------------
+  Widget _storeInfo() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      child: Column(
+        children: const [
+          Text(
+            "ステラ食堂 STELLAR\nDINING ROOM",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 6),
+          Text(
+            "5.0★",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 4),
+          Text(
+            "基本料金 ¥150\nユーザーサービス料金 ¥70",
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 6),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.location_on, size: 20),
+              SizedBox(width: 4),
+              Text("店舗からの距離 2.0 km\n高知県香美市土佐山田町〇〇〇"),
+            ],
+          ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _showAddSheet,
-        child: const Icon(Icons.add),
+    );
+  }
+
+  // -------------------------------
+  // 2つの四角ボタン「手数料」「到着時間」
+  // -------------------------------
+  Widget _bottomInfoButtons() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Colors.grey.shade300),
+              ),
+              child: const Column(
+                children: [
+                  Text("合計手数料", style: TextStyle(fontSize: 16)),
+                  SizedBox(height: 6),
+                  Text("¥320",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Colors.grey.shade300),
+              ),
+              child: const Column(
+                children: [
+                  Text("到着予定時間", style: TextStyle(fontSize: 16)),
+                  SizedBox(height: 6),
+                  Text("20分",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
+    );
+  }
+
+  // -------------------------------
+  // 下部のナビバー
+  // -------------------------------
+  Widget _bottomNav() {
+    return BottomNavigationBar(
+      selectedItemColor: Colors.black,
+      unselectedItemColor: Colors.grey,
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: "",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.shopping_cart),
+          label: "",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.favorite),
+          label: "",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.notifications),
+          label: "",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: "",
+        ),
+      ],
     );
   }
 }
