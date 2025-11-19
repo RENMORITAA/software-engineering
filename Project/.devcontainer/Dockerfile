@@ -60,12 +60,12 @@ USER developer
 # 作業ディレクトリを設定
 WORKDIR $HOME
 
-# Android SDK の各コンポーネントを sdkmanager でインストール（yesで自動応答）
+# Android SDK の各コンポーネントを sdkmanager でインストール(yesで自動応答)
 RUN yes | sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platform-tools" "platforms;android-34" "build-tools;33.0.1"
 
 # Android ライセンスに同意
 RUN yes | flutter doctor --android-licenses
-# Flutter の初回設定（analytics無効化）
+# Flutter の初回設定(analytics無効化)
 RUN flutter --disable-analytics
 
 # コンテナ起動時にbashを実行

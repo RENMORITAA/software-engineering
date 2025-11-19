@@ -1,0 +1,15 @@
+services:
+  flutter:
+    build:
+      context: ./
+    tty: true
+    volumes:
+      - workspace-data:/home/developer/workspace
+    # LinuxのFlutterがx64アーキテクチャにしか対応していないため設定
+    platform: linux/x86_64
+    ports:
+      - "8080:8080"  # Flutter Web Server
+      - "5555:5555"  # Android ADB
+
+volumes:
+  workspace-data:
