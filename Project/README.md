@@ -19,8 +19,10 @@
 プロジェクトルートで以下のコマンドを実行するだけで、すべて自動でセットアップされます:
 
 ```powershell
-# 1. Dev Containers拡張機能をインストール済みであることを確認
-# 2. コンテナをビルド・起動
+# 1. バックエンドAPI + MySQLデータベースを起動
+docker-compose up -d --build
+
+# 2. Flutterコンテナをビルド・起動
 cd .devcontainer
 docker-compose up -d --build
 cd ..
@@ -28,11 +30,45 @@ cd ..
 # 3. ワークスペース権限を修正してFlutterプロジェクトを作成
 docker exec -it devcontainer-flutter-1 bash -c "sudo chown -R developer:developer /home/developer/workspace && cd /home/developer/workspace && flutter create sample_app"
 
-# 4. Gradle設定を追加してWebアプリを起動
+# 4. httpパッケージを追加
+docker exec -it devcontainer-flutter-1 bash -c "cd /home/developer/workspace/sample_app && flutter pub add http"
+
+# 5. Gradle設定を追加してWebアプリを起動
 docker exec -it devcontainer-flutter-1 bash -c "cd /home/developer/workspace/sample_app && echo 'org.gradle.unsafe.watch-fs=false' >> android/gradle.properties && flutter run -d web-server --web-hostname=0.0.0.0 --web-port=8080"
 ```
 
 これでブラウザから `http://localhost:8080` にアクセスすると、Flutterアプリが表示されます!
+
+### よく使うコマンド
+
+```powershell
+# すべてのコンテナの状態を確認
+docker ps
+
+# バックエンドAPIのログを確認
+docker logs api_server
+
+# Flutterアプリを再起動
+docker exec -it devcontainer-flutter-1 bash -c "cd /home/developer/workspace/sample_app && flutter run -d web-server --web-hostname=0.0.0.0 --web-port=8080"
+
+# MySQLに接続
+docker exec -it mysql_db mysql -u app -papppass appdb
+
+# APIの動作確認
+Invoke-WebRequest -Uri http://localhost:8001/users -UseBasicParsing | Select-Object -ExpandProperty Content
+
+# すべてのコンテナを停止
+docker-compose down
+cd .devcontainer
+docker-compose down
+cd ..
+
+# すべてのコンテナを再起動
+docker-compose restart
+cd .devcontainer
+docker-compose restart
+cd ..
+```
 
 ## 詳細なセットアップ手順
 
@@ -100,11 +136,202 @@ docker exec -it devcontainer-flutter-1 bash -c "cd /home/developer/workspace/sam
 - ターミナルで `r` キーを押下するとリアルタイムで変更が反映されます
 - ブラウザをリロードすると最新の状態が表示されます
 
+## データベース連携
+
+このプロジェクトには既にバックエンドAPI(Node.js + Express)とMySQL DBが設定されています。
+
+### 1. バックエンドとDBを起動
+
+```powershell
+# プロジェクトルートで実行
+docker-compose up -d
+```
+
+これで以下が起動します:
+- **バックエンドAPI**: `http://localhost:8001`
+- **MySQL DB**: `localhost:3307` (内部では3306)
+
+### 2. APIの動作確認
+
+ブラウザまたはコマンドで確認:
+```powershell
+# APIのヘルスチェック
+curl http://localhost:8001
+
+# ユーザー一覧を取得(DBから)
+curl http://localhost:8001/users
+```
+
+### 3. FlutterアプリからAPIを呼び出す
+
+#### pubspec.yamlにhttpパッケージを追加
+
+コンテナ内で実行:
+```powershell
+docker exec -it devcontainer-flutter-1 bash -c "cd /home/developer/workspace/sample_app && flutter pub add http"
+```
+
+#### lib/main.dartを編集してAPI呼び出し
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: const MyHomePage(title: 'Flutter DB Demo'),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  List<dynamic> users = [];
+  bool isLoading = false;
+
+  Future<void> fetchUsers() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      // ホストマシンのAPIにアクセス
+      final response = await http.get(
+        Uri.parse('http://host.docker.internal:8001/users'),
+      );
+
+      if (response.statusCode == 200) {
+        setState(() {
+          users = json.decode(response.body);
+          isLoading = false;
+        });
+      }
+    } catch (e) {
+      print('Error: $e');
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'データベースのユーザー一覧:',
+              style: TextStyle(fontSize: 20),
+            ),
+            const SizedBox(height: 20),
+            if (isLoading)
+              const CircularProgressIndicator()
+            else if (users.isEmpty)
+              const Text('ボタンを押してデータを取得')
+            else
+              Expanded(
+                child: ListView.builder(
+                  itemCount: users.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      leading: CircleAvatar(
+                        child: Text('${users[index]['id']}'),
+                      ),
+                      title: Text(users[index]['name']),
+                    );
+                  },
+                ),
+              ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: fetchUsers,
+        tooltip: 'Fetch Users',
+        child: const Icon(Icons.refresh),
+      ),
+    );
+  }
+}
+```
+
+### 4. アプリを再起動
+
+```powershell
+# Flutterアプリを再起動(既存のプロセスを停止してから)
+docker exec -it devcontainer-flutter-1 bash -c "cd /home/developer/workspace/sample_app && flutter run -d web-server --web-hostname=0.0.0.0 --web-port=8080"
+```
+
+### 5. 動作確認
+
+1. ブラウザで `http://localhost:8080` にアクセス
+2. 右下の更新ボタン(🔄)をタップ
+3. データベースから取得したユーザー一覧(Taro, Hanako)が表示されます!
+
+### データベースの操作
+
+#### MySQLに直接接続
+
+```powershell
+# MySQLコンテナに接続
+docker exec -it mysql_db mysql -u app -papppass appdb
+
+# SQL実行例
+SELECT * FROM users;
+INSERT INTO users (name) VALUES ('Jiro');
+EXIT;
+```
+
+#### 新しいAPIエンドポイントを追加
+
+`backend/src/index.js`を編集:
+```javascript
+// ユーザーを追加
+app.post("/users", async (req, res) => {
+  const { name } = req.body;
+  const [result] = await pool.query("INSERT INTO users (name) VALUES (?)", [name]);
+  res.json({ id: result.insertId, name });
+});
+```
+
+バックエンドを再起動:
+```powershell
+docker-compose restart backend
+```
+
 ## 開発の進め方
 
 - Flutterの開発は`lib`ディレクトリ以下の`.dart`ファイルを編集
 - Hot Reloadを活用して変更を素早く確認
 - コンテナ内の`/home/developer/workspace/sample_app`がプロジェクトディレクトリです
+- バックエンドAPIを通じてデータベースと連携できます
 
 ## トラブルシューティング
 

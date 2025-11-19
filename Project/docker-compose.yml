@@ -12,6 +12,7 @@ services:
       - "8001:8000"
     volumes:
       - ./backend:/app
+      - /app/node_modules  # node_modulesをボリュームで保護
     depends_on:
       - db
 
