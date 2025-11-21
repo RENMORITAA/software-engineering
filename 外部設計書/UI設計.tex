@@ -842,3 +842,103 @@
   \caption{依頼者注文履歴}
   \label{fig:a依頼者注文履歴}
 \end{figure}
+
+
+\subsubsection{問い合わせ対応画面}
+
+図\ref{fig:a問い合わせ対応画面}では、問い合わせに関連した機能をまとめた画面である。まず、ホームにて問い合わせフォームの一覧が表示されている。ここでは簡潔に内容が伝わり、かつ問い合わせ対応の画面を開いた際にどの画面にも遷移することなく、素早い対応が見込めるためこの配置にしている。また、未対応を視認しやすいように未対応ボタンにて詳細が推移するようになったり、赤文字で書かれていたりする。
+
+次に、図\ref{fig:a問い合わせ対応画面には、}誤配達対応や通報管理画面、問い合わせ例編集ボタンがある。誤配達対応や通報管理画面には現在何件の対応要請が来ているのかが分かるよう件数が明示されている。そして、それぞれのボタンを押下することでそれぞれの画面に遷移するようになっている。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/13_問い合わせ対応画面.pdf}
+  \caption{問い合わせ対応画面}
+  \label{fig:a問い合わせ対応画面}
+\end{figure}
+
+\subsubsection{誤配達対応画面}
+
+図\ref{fig:a誤配達対応画面}では、誤配達対応の内容が一覧で表示されている。ここでは、未着か誤配達かの状態が表示されており、配達員やどこからどこに対して配達があるのか、要請が届いた時間が表示されている。そして、詳細ボタンを押下することで、図\ref{fig:a誤配達詳細}のような詳細画面が表示される。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/132_誤配達対応/132_誤配達対応画面.pdf}
+  \caption{誤配達対応画面}
+  \label{fig:a誤配達対応画面}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/132_誤配達対応/132_配達詳細.pdf}
+  \caption{誤配達対応詳細}
+  \label{fig:a誤配達対応詳細}
+\end{figure}
+
+\subsubsection{通報管理画面}
+
+図\ref{fig:a通報管理画面}では、図\ref{fig:a問い合わせ対応画面}にて通報管理ボタンを押下した際に遷移する画面である。この画面では通報の一覧が確認でき、前小小々節と同様にステータスや配達員、詳細、要請時間が表示されている。詳細ボタンを押下することで図\ref{fig:a通報内容詳細画面}に遷移する。
+
+図\ref{fig:a通報内容詳細画面}では、通報内容の詳細が明記されている。配達ステータスやどの店舗からどの場所への配達なのか、発生した場所を示す地図、報告内容が通報詳細に表示させる。そして、通報元であるアカウント名と番号が右上に表示され、アカウント情報のタブを選択することでアカウント情報の一覧が確認される。対応ボタンでは、対応は管理側がそれぞれの対応を行う。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/133_通報管理/133_通報管理画面.pdf}
+  \caption{誤配達対応画面}
+  \label{fig:a誤配達対応画面}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/133_通報管理/1331_通報内容詳細画面.pdf}
+  \caption{誤配達対応詳細}
+  \label{fig:a誤配達対応詳細}
+\end{figure}
+
+\subsubsection{問い合わせ詳細画面}
+図\ref{fig:a問い合わせ詳細画面}では、問い合わせ詳細が表示される。問い合わせタイトルや内容、基本情報としてどこからどこに対する配達なのかが明記されている。また、報告元のアカウント情報が右上に名前と番号が表示されている。タブを切り替えることでアカウント情報の一覧が確認できる。そして、画面スクロールすることで対応メールを送信する図\ref{fig:a問い合わせ対応メール送信・編集}に移行する。
+
+図\ref{fgi:a問い合わせ対応メール送信・編集}では、問い合わせタイトルと内容を書くことができるテキストボックスがある。そして、やり直しボタンを押下することでリセットがされ、送信ボタンを押すことでメールの送信が問い合わせたアカウント向けに送信される。
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/131_問い合わせ詳細/131_問い合わせ詳細.pdf}
+  \caption{問い合わせ詳細画面}
+  \label{fig:a問い合わせ詳細画面}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/133_通報管理/1331_通報内容詳細画面.pdf}
+  \caption{誤配達対応詳細}
+  \label{fig:a誤配達対応詳細}
+\end{figure}
+
+\subsubsection{問い合わせ例編集}
+図\ref{fig:a問い合わせ例編集}は、図\ref{fig:a問い合わせ対応画面}での問い合わせ例編集ボタンより遷移される画面である。この画面では、よくある問い合わせ例を編集する画面である。右上のステータスよりプレビュなのか、書き換え中なのかが表示される。図\ref{fig:a問い合わせ例編集2}は、プレビュ画面である。右上の編集ボタンより編集モードに切り替え、図\ref{fig:a問い合わせ例編集}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/134_問い合わせ例編集/1341_問い合わせ例確認.pdf}
+  \caption{問い合わせ例確認画面}
+  \label{fig:a問い合わせ例編集}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/134_問い合わせ例編集/13411_問い合わせ例編集.pdf}
+  \caption{問い合わせ例編集画面}
+  \label{fig:a問い合わせ例編集2}
+\end{figure}
+
+図\ref{fig:a問い合わせ例編集}にて、プルダウンを示す逆三角形を押下する。問い合わせ例編集画面も同様に図\ref{fig:a問い合わせ例詳細編集2}も同じ動作となる。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/134_問い合わせ例編集/13411_問い合わせ例確認.pdf}
+  \caption{a問い合わせ例編集}
+  \label{fig:a問い合わせ例編集}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/134_問い合わせ例編集/13421_問い合わせ例詳細編集.pdf}
+  \caption{a問い合わせ例編集2}
+  \label{fig:a問い合わせ例編集2}
+\end{figure}
