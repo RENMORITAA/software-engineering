@@ -1041,7 +1041,7 @@
 
 \subsubsection{注文詳細画面}
 図\ref{fig:a注文詳細画面}は注文詳細画面である。
-依頼者詳細画面の注文履歴から「詳細」ボタンを押すことでこの画面に遷移し、配達先・配達者・目安距離・購入した商品・店舗および配達員の評価といった詳細な情報を確認することができる。
+依頼者詳細画面の注文履歴から「詳細」ボタンを押すことでこの画面に遷移し、配達先住所・配達者・目安距離・購入した商品・店舗および配達員への評価といった詳細な情報を確認することができる。
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.5\textwidth]{./pic/administrator画面デザイン/121_依頼者アカウント管理/121221_依頼者詳細画面_注文履歴_注文詳細.pdf}
@@ -1049,6 +1049,124 @@
   \label{fig:a注文詳細画面}
 \end{figure}
 
+
+\subsubsection{配達員アカウント管理画面}
+図\ref{fig:a配達員アカウント管理画面}は配達員アカウント管理画面である。
+アプリを利用している配達員のアカウントの一覧を確認することができる。
+画面右上にある検索窓にて依頼者ID検索または氏名検索ができ、該当するアカウントのみが表示されるようになる。
+また、「登録」「削除」「申請確認」「詳細」ボタンを押すと各画面に遷移する。
+なお、削除を行う際は配達員ID欄の左側にあるチェック欄を選択する必要がある。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{./pic/administrator画面デザイン/122_配達員アカウント管理/122_配達員アカウント画面.pdf}
+  \caption{配達員アカウント管理画面}
+  \label{fig:a配達員アカウント管理画面}
+\end{figure}
+
+\subsubsection{配達員登録画面}
+図\ref{fig:a配達員登録画面}は配達員アカウント管理画面である。
+ここでは、配達員の新規登録を行うことができる。
+基本情報としてかな、氏名、生年月日、年齢、性別、郵便番号、住所、電話番号、メールアドレスの9項目、
+口座情報として銀行名、支店名、預金の種類、口座番号、口座名義（カナ）の5項目を入力するようになっている。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{./pic/administrator画面デザイン/122_配達員アカウント管理/1221_配達員登録画面.pdf}
+  \caption{配達員登録画面}
+  \label{fig:a配達員登録画面}
+\end{figure}
+
+\subsubsection{配達員削除確認画面}
+図\ref{fig:a配達員削除確認画面}は配達員削除確認画面である。
+ここでは、配達員アカウント管理画面で選択した任意の配達員アカウントの削除を行うことができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{./pic/administrator画面デザイン/122_配達員アカウント管理/12241_配達員削除確認画面.pdf}
+  \caption{配達員削除確認画面}
+  \label{fig:a配達員削除確認画面}
+\end{figure}
+
+\subsubsection{配達員申請確認画面}
+図\ref{fig:a配達員申請確認画面}は配達員申請確認画面である。
+ここでは、配達員アカウントの新規申請を確認することができる。
+「詳細」ボタンを押すと配達員申請詳細画面（図\ref{fig:a配達員申請詳細画面}）に遷移し、配達員が登録した基本情報、口座情報、履歴書を見ることができる。
+内容を確認して特に問題がなかった場合は、「承認する」ボタンを押すと配達員としてアカウントが正式に登録される。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{./pic/administrator画面デザイン/122_配達員アカウント管理/1222_配達員申請確認.pdf}
+  \caption{配達員申請確認画面}
+  \label{fig:a配達員申請確認画面}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{./pic/administrator画面デザイン/122_配達員アカウント管理/12221_配達員申請詳細画面.pdf}
+  \caption{配達員申請詳細画面}
+  \label{fig:a配達員申請詳細画面}
+\end{figure}
+
+\subsubsection{配達員詳細画面}
+図\ref{fig:a配達員アカウント情報}、図\ref{fig:a配達員配達履歴}は配達員詳細画面である。
+アカウント情報では基本情報、口座情報、問い合わせ履歴、振込履歴を確認することができ、
+配達履歴では依頼受注日時、配達完了日時、取引完了日時、依頼者、注文点数、報酬金額、ステータスを確認することができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{./pic/administrator画面デザイン/122_配達員アカウント管理/12231_配達員詳細画面_アカウント情報.pdf}
+  \caption{配達員アカウント情報}
+  \label{fig:a配達員アカウント情報}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{./pic/administrator画面デザイン/122_配達員アカウント管理/12232_配達員詳細画面_配達履歴.pdf}
+  \caption{配達員配達履歴}
+  \label{fig:a配達員配達履歴}
+\end{figure}
+
+\subsubsection{配達員情報編集画面}
+図\ref{fig:a配達員情報編集画面}は配達員情報編集画面である。
+配達員詳細画面のアカウント情報から「編集」ボタンを押すことでこの画面に遷移し、各項目の内容の編集を行うことができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{./pic/administrator画面デザイン/122_配達員アカウント管理/122311_配達員情報編集画面.pdf}
+  \caption{配達員情報編集画面}
+  \label{fig:a配達員情報編集画面}
+\end{figure}
+
+\subsubsection{配達詳細画面}
+図\ref{fig:a配達詳細画面}は配達詳細画面である。
+配達員詳細画面の配達履歴から「詳細」ボタンを押すことでこの画面に遷移し、配達先住所・店舗・店舗住所・目安距離・配達した商品・依頼者からの評価といった詳細な情報を確認することができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{./pic/administrator画面デザイン/122_配達員アカウント管理/122321_配達員詳細画面_配達履歴_配達詳細.pdf}
+  \caption{配達詳細画面}
+  \label{fig:a配達詳細画面}
+\end{figure}
+
+\subsubsection{履歴書確認画面}
+図\ref{fig:a履歴書確認画面}は履歴書確認画面である。
+配達員詳細画面から「履歴書」ボタンを押すことでこの画面に遷移し、配達員が登録した履歴書情報を確認することができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{./pic/administrator画面デザイン/122_配達員アカウント管理/12233_配達員詳細画面_履歴書確認.pdf}
+  \caption{履歴書確認画面}
+  \label{fig:a履歴書確認画面}
+\end{figure}
+
+\subsubsection{警告通知送信画面}
+図\ref{fig:a警告通知送信画面}は警告通知送信画面である。
+配達員詳細画面から「警告通知」ボタンを押すことでこの画面に遷移し、配達員に対して警告通知の送信を行うことができる。
+重要度はプルダウン選択で注意・重要・警告の3段階から選ぶことができる。
+また、「送信履歴」ボタンを押すことで警告通知送信履歴画面（図\ref{fig:a警告通知送信履歴画面}）に遷移し、過去に送信した通知の内容を確認することができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{./pic/administrator画面デザイン/122_配達員アカウント管理/12234_警告通知送信画面.pdf}
+  \caption{警告通知送信画面}
+  \label{fig:a警告通知送信画面}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{./pic/administrator画面デザイン/122_配達員アカウント管理/122341_警告通知送信履歴画面.pdf}
+  \caption{警告通知送信履歴画面}
+  \label{fig:a警告通知送信履歴画面}
+\end{figure}
 
 
 \subsubsection{問い合わせ対応画面}
