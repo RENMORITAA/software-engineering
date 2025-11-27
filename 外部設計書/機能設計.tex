@@ -2,6 +2,42 @@
 \subsection{機能概要図}
 以下に示す図は本アプリの機能概要である。
 
+\subsubsection{依頼側}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/画面遷移図/依頼側遷移図.pdf}
+  \caption{依頼側機能概要図}
+  \label{fig:依頼側機能概要図}
+\end{figure}
+
+
+\subsubsection{配達側}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/画面遷移図/配達側遷移図.pdf}
+  \caption{配達側機能概要図}
+  \label{fig:配達側機能概要図}
+\end{figure}
+
+
+\subsubsection{店舗側}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./drawio遷移図/店舗画面遷移図改.drawio.pdf}
+  \caption{店舗側機能概要図}
+  \label{fig:店舗側機能概要図}
+\end{figure}
+
+\subsubsection{管理者側}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/画面遷移図/管理者側遷移図_修正版.pdf}
+  \caption{管理者側機能概要図}
+  \label{fig:管理者側機能概要図}
+\end{figure}
+
+
+
 \subsubsection{ログイン関連機能}
 図\ref{fig:ログイン関連機能}は、ログイン関連機能の概要図である。
 \begin{figure}[H]
@@ -179,16 +215,18 @@
 商品の在庫の状況を変更する機能である。
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/アカウント情報登録機能.pdf}
+  \includegraphics[width=0.75\textwidth]{./Image/店舗在庫ステータス変更機能.drawio.pdf}
   \caption{在庫ステータス変更機能}
   \label{fig:在庫ステータス変更機能}
 \end{figure}
+
+
 
 \subsubsection{メニュー登録機能}
 店舗のメニューを登録する機能である。
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/アカウント情報登録機能.pdf}
+  \includegraphics[width=0.75\textwidth]{./Image/店舗側メニュー登録機能改.drawio.pdf}
   \caption{メニュー登録機能}
   \label{fig:メニュー登録機能}
 \end{figure}
@@ -197,7 +235,7 @@
 メニューを削除する機能である。
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/アカウント情報登録機能.pdf}
+  \includegraphics[width=0.75\textwidth]{./Image/店舗側メニュー削除機能改.drawio.pdf}
   \caption{メニュー削除機能}
   \label{fig:メニュー削除機能}
 \end{figure}
@@ -206,7 +244,7 @@
 メニュー情報を変更する機能である。
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/アカウント情報登録機能.pdf}
+  \includegraphics[width=0.75\textwidth]{./Image/店舗側メニュー編集機能改.drawio.pdf}
   \caption{メニュー情報変更機能}
   \label{fig:メニュー情報変更機能}
 \end{figure}
@@ -215,7 +253,7 @@
 受注一覧を表示する機能である。
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/アカウント情報登録機能.pdf}
+  \includegraphics[width=0.75\textwidth]{./Image/店舗受注一覧機能.drawio.pdf}
   \caption{受注一覧機能}
   \label{fig:受注一覧機能}
 \end{figure}
@@ -224,7 +262,7 @@
 配達員の情報を確認する機能である。
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/アカウント情報登録機能.pdf}
+  \includegraphics[width=0.75\textwidth]{./Image/店舗配達員情報確認.drawio.pdf}
   \caption{配達員情報確認機能}
   \label{fig:配達員情報確認機能}
 \end{figure}
@@ -233,7 +271,7 @@
 商品の受け渡し完了を確認する機能である。
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/アカウント情報登録機能.pdf}
+  \includegraphics[width=0.75\textwidth]{./Image/店舗側受け渡し確認機能改.drawio.pdf}
   \caption{受け渡し完了確認機能}
   \label{fig:受け渡し完了確認機能}
 \end{figure}
@@ -242,7 +280,7 @@
 配達に関するトラブルを報告する機能である。
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/アカウント情報登録機能.pdf}
+  \includegraphics[width=0.75\textwidth]{./Image/店舗側配達トラブル報告機能改.drawio.pdf}
   \caption{配達トラブル報告機能}
   \label{fig:配達トラブル報告機能}
 \end{figure}
@@ -252,7 +290,7 @@
 売上に関する情報を確認する機能である。
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/アカウント情報登録機能.pdf}
+  \includegraphics[width=0.75\textwidth]{./Image/店舗売上画面.drawio.pdf}
   \caption{売上確認機能}
   \label{fig:売上確認機能}
 \end{figure}
@@ -262,7 +300,7 @@
 売り上げ数に関する情報を確認する機能である。
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/アカウント情報登録機能.pdf}
+  \includegraphics[width=0.75\textwidth]{./Image/店舗売り上げ数管理機能.drawio.pdf}
   \caption{売り上げ数確認機能}
   \label{fig:売り上げ数確認機能}
 \end{figure}
@@ -272,19 +310,12 @@
 売り上げや管理者への手数料を表示する機能である。
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/アカウント情報登録機能.pdf}
+  \includegraphics[width=0.75\textwidth]{./Image/店舗明細表示機能.drawio.pdf}
   \caption{明細表示機能}
   \label{fig:明細表示機能}
 \end{figure}
 
-\subsubsection{店舗用通知機能}
-店舗用の通知を表示する機能である。
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/アカウント情報登録機能.pdf}
-  \caption{店舗用通知機能}
-  \label{fig:店舗用通知機能}
-\end{figure}
+
 
 \subsection{管理側}
 \subsubsection{アカウント情報登録}
@@ -375,7 +406,7 @@
 配達員詳細画面から履歴書の表示を行う機能である。
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/履歴書表示.pdf}
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/履歴書表示機能.pdf}
   \caption{履歴書表示機能}
   \label{fig:履歴書表示}
 \end{figure}
@@ -403,4 +434,144 @@
   \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/店舗詳細表示機能.pdf}
   \caption{店舗詳細表示機能}
   \label{fig:店舗詳細表示機能}
+\end{figure}
+\subsubsection{営業許可証表示機能}
+店舗アカウントの詳細から営業許可証表示を行う機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/営業許可証表示機能.pdf}
+  \caption{営業許可証表示機能}
+  \label{fig:営業許可証表示機能}
+\end{figure}
+
+\subsubsection{管理者アカウント管理画面表示}
+管理者アカウント管理画面の表示を行う機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/管理者アカウント管理画面.pdf}
+  \caption{管理者アカウント管理画面表示機能}
+  \label{fig:管理者アカウント管理画面表示機能}
+\end{figure}
+\subsubsection{管理者詳細表示}
+管理者アカウントの詳細の表示を行う機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/管理者詳細表示機能.pdf}
+  \caption{管理者詳細表示機能}
+  \label{fig:管理者詳細表示機能}
+\end{figure}
+
+\subsubsection{精算管理}
+管理者アカウントから精算管理を行う機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/精算管理機能.pdf}
+  \caption{精算管理機能}
+  \label{fig:精算管理機能}
+\end{figure}
+\subsubsection{収益管理}
+収益の管理を行う機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/収益管理.pdf}
+  \caption{収益管理機能}
+  \label{fig:収益管理}
+\end{figure}
+
+\subsubsection{総利用者数管理}
+総利用者数の管理を行う機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/総利用者数管理.pdf}
+  \caption{総利用者数管理機能}
+  \label{fig:総利用者数管理}
+\end{figure}
+
+\subsubsection{注文数管理}
+注文数の管理を行う機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/注文数管理.pdf}
+  \caption{注文数管理機能}
+  \label{fig:注文数管理}
+\end{figure}
+
+\subsubsection{売り上げ管理}
+売り上げの管理を行う機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/売り上げ管理.pdf}
+  \caption{売り上げ管理機能}
+  \label{fig:売り上げ管理管理}
+\end{figure}
+\subsubsection{全体通知送信・管理}
+全体通知送信・管理を行う機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/全体通知送信管理.pdf}
+  \caption{全体通知送信・管理機能}
+  \label{fig:全体通知送信管理}
+\end{figure}
+
+\subsubsection{配達員通知送信・管理}
+配達員通知送信・管理を行う機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/配達員通知送信管理.pdf}
+  \caption{配達員通知送信・管理機能}
+  \label{fig:配達員通知送信管理}
+\end{figure}
+
+\subsubsection{依頼者通知送信・管理}
+依頼者通知送信・管理を行う機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/依頼者通知送信管理.pdf}
+  \caption{依頼者通知送信・管理機能}
+  \label{fig:依頼者通知送信管理}
+\end{figure}
+
+\subsubsection{店舗通知送信・管理}
+店舗通知送信・管理を行う機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/店舗通知送信管理.pdf}
+  \caption{店舗通知送信・管理機能}
+  \label{fig:店舗通知送信管理}
+\end{figure}
+
+\subsubsection{通知送信}
+通知送信を行う機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/全体通知送信機能.pdf}
+  \caption{通知送信機能}
+  \label{fig:全体通知送信機能}
+\end{figure}
+
+\subsubsection{問い合わせ対応}
+問い合わせ対応を行うための機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/問い合わせ対応機能.pdf}
+  \caption{問い合わせ対応機能}
+  \label{fig:問い合わせ対応機能}
+\end{figure}
+
+\subsubsection{問い合わせ例編集}
+問い合わせ例の編集を行うための機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/問い合わせ例編集機能.pdf}
+  \caption{問い合わせ例編集機能}
+  \label{fig:問い合わせ例編集機能}
+\end{figure}
+
+\subsubsection{システム設定}
+本システムの設定を行うための機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/システム設定.pdf}
+  \caption{システム設定機能}
+  \label{fig:システム設定機能}
 \end{figure}

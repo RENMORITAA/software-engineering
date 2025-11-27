@@ -1,46 +1,49 @@
-version: "3.9"
+version: "3.8"
 
 services:
   flutter:
     build:
-      context: ./frontend
-      dockerfile: docker/Dockerfile
-    container_name: flutter_app
-    working_dir: /app
+      context: .
+      dockerfile: docker/flutter/Dockerfile
+    container_name: flutter_dev
     volumes:
-      - ./frontend:/app
+      - ./src:/app
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=university_app
+      - DB_USER=student
+      - DB_PASSWORD=password123
+    depends_on:
+      - db
+    working_dir: /app
+    tty: true
+
+  db:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: university_app
+      POSTGRES_USER: student
+      POSTGRES_PASSWORD: password123
+    volumes:
+      - ./docker/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  api:
+    image: postgrest/postgrest
+    container_name: postgrest_api
     ports:
       - "3000:3000"
-      - "8081:8081"
-    entrypoint: ["./docker/entrypoint.sh"]
-    command: ["flutter", "run", "-d", "web-server", "--web-port=3000"]
-    depends_on:
-      - backend
-
-  backend:
-    build:
-      context: ./backend
-    container_name: api_server
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./backend:/app
+    environment:
+      PGRST_DB_URI: postgres://student:password123@db:5432/university_app
+      PGRST_DB_SCHEMA: public
+      PGRST_DB_ANON_ROLE: student
     depends_on:
       - db
 
-  db:
-    image: mysql:8.0
-    container_name: mysql_db
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: appdb
-      MYSQL_USER: app
-      MYSQL_PASSWORD: apppass
-    volumes:
-      - db-data:/var/lib/mysql
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
-    ports:
-      - "3306:3306"
-
 volumes:
-  db-data:
+  db_data:

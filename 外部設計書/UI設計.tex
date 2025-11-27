@@ -1,8 +1,1476 @@
-本アプリのUI設計を以下に示す．
+本アプリのUI設計を以下に示す。
 \subsection{依頼側}
+\subsubsection{お問い合わせ送信}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/お問い合わせ送信.pdf}
+  \caption{お問い合わせ送信}
+  \label{fig:お問い合わせ送信}
+\end{figure}
+
+
+\subsubsection{マイページ}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/マイページ.pdf}
+  \caption{マイページ}
+  \label{fig:マイページ}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/会員情報確認・編集画面.pdf}
+  \caption{会員情報確認・編集画面}
+  \label{fig:c会員情報確認・編集画面}
+\end{figure}
+
+\begin{figure}[tbp]
+  \centering
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/パスワード変更画面.pdf}
+    \caption{パスワード変更画面}
+    \label{fig:cパスワード変更画面}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/配達先住所確認・編集画面.pdf}
+    \caption{配達先住所確認・編集画面}
+    \label{fig:c配達先住所確認・編集画面}
+  \end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/口座情報登録・確認画面.pdf}
+  \caption{口座情報登録・確認画面}
+  \label{fig:c口座情報登録・確認画面}
+\end{figure}
+
+
+\begin{figure}[tbp]
+  \centering
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/注文履歴一覧画面.pdf}
+    \caption{注文履歴一覧画面}
+    \label{fig:c注文履歴一覧画面}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/注文履歴詳細画面.pdf}
+    \caption{注文履歴詳細画面}
+    \label{fig:c注文履歴詳細画面}
+  \end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/商品到着報告画面.pdf}
+  \caption{商品到着報告画面}
+  \label{fig:c商品到着報告画面}
+\end{figure}
+
+\begin{figure}[tbp]
+  \centering
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/配達員評価画面.pdf}
+    \caption{配達員評価画面}
+    \label{fig:c配達員評価画面}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/店舗評価画面.pdf}
+    \caption{店舗評価画面}
+    \label{fig:c店舗評価画面}
+  \end{minipage}
+\end{figure}
+
+\begin{figure}[tbp]
+  \centering
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/支払い明細表示画面.pdf}
+    \caption{支払い明細表示画面}
+    \label{fig:c支払い明細表示画面}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/問い合わせ画面.pdf}
+    \caption{問い合わせ画面}
+    \label{fig:c問い合わせ画面}
+  \end{minipage}
+\end{figure}
+
+\begin{figure}[tbp]
+  \centering
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/ログアウト画面.pdf}
+    \caption{ログアウト画面}
+    \label{fig:cログアウト画面}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/退会画面.pdf}
+    \caption{退会画面}
+    \label{fig:c退会画面}
+  \end{minipage}
+\end{figure}
+
+
+\subsubsection{依頼者側ホーム画面}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/依頼者側ホーム画面.pdf}
+  \caption{依頼者側ホーム画面}
+  \label{fig:c依頼者側ホーム画面}
+\end{figure}
+
+\subsubsection{店舗商品検索画面}
+\begin{figure}[tbp]
+  \centering
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/店舗・商品検索画面.pdf}
+    \caption{店舗・商品検索画面}
+    \label{fig:c店舗・商品検索画面}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/店舗情報確認画面.pdf}
+    \caption{店舗情報確認画面}
+    \label{fig:c店舗情報確認画面}
+  \end{minipage}
+\end{figure}
+
+\subsubsection{カート画面}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/カート画面.pdf}
+  \caption{カート画面}
+  \label{fig:cカート画面}
+\end{figure}
+
+\begin{figure}[tbp]
+  \centering
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/注文確認画面.pdf}
+    \caption{注文確認画面}
+    \label{fig:c注文確認画面}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/注文確定画面.pdf}
+    \caption{注文確定画面}
+    \label{fig:c注文確定画面}
+  \end{minipage}
+\end{figure}
+
+
+
+
+
+\subsubsection{マップ画面}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/マップ画面.pdf}
+  \caption{マップ画面}
+  \label{fig:cマップ画面}
+\end{figure}
+
+\subsubsection{通知画面}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/通知画面.pdf}
+  \caption{通知画面}
+  \label{fig:c通知画面}
+\end{figure}
+
+
+
+
+
+
 
 \subsection{配達側}
+\subsubsection{ログイン画面}
+利用者がStellardeliveryのサイトにアクセスするために、ログイン画面および図\ref{fig:dログイン画面}にてIDとパスワードの入力を行う。この際に、アカウントがない場合は、ログインボタンの上記にある新規会員登録画面へ遷移するリンクを選択することで新規会員登録画面に移行する。また、IDおよびパスワードを入力するテキストボックスの下記にあるリンクを選択することでIDおよびパスワードを忘れた場合の処置が可能となっている。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/Deliveryer画面デザイン/ログイン画面/ログイン画面.pdf}
+  \caption{ログイン画面}
+  \label{fig:dログイン画面}
+\end{figure}
+
+\subsubsection{パスワード確認・再設定画面}
+図\ref{fig:dパスワード確認・再設定画面}は、パスワード確認・再設定用URLをメールにて送信するための画面である。上記のログイン画面にてパスワードを忘れた際のリンクをクリックされた際に表示される画面である。ここでは利用者のアカウントのパスワード確認および再設定を行うためのメールを送ることで本アプリにログインできることを促す画面である。メールアドレスおよびIDを入力し、
+
+図\ref{fig:dパスワード確認メール送信画面}では、図\ref{fig:dパスワード確認・再設定画面}にて送信ボタンを押すことで遷移される画面である。この画面では、メールアドレス宛にメールが送信されたことを利用者に伝える画面となってる。
+
+\begin{figure}[tbp]
+  \centering
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/Deliveryer画面デザイン/ログイン画面/パスワード確認画面.pdf}
+    \caption{パスワード確認・再設定画面}
+    \label{fig:dパスワード確認・再設定画面}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/Deliveryer画面デザイン/ログイン画面/パスワード確認送信画面.pdf}
+    \caption{パスワード確認メール送信画面}
+    \label{fig:dパスワード確認メール送信画面}
+  \end{minipage}
+\end{figure}
+
+\subsubsection{ID確認画面}
+図\ref{fig:dID確認画面}は、ID確認を行うためのURLをメールに送信する画面である。ここでは、利用者のメールアドレスおよびパスワードを入力し、ID確認用のメールを送ることで利用者がIDを確認しログイン処理が可能となる処置となっている。
+
+図\ref{fig:dID確認送信画面}は、ID確認を行うためのURLをメールにて送信したことを知らせる画面である。
+
+\begin{figure}[tbp]
+  \centering
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/Deliveryer画面デザイン/ログイン画面/ID確認画面.pdf}
+    \caption{ID確認画面}
+    \label{fig:dID確認画面}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/Deliveryer画面デザイン/ログイン画面/ID確認送信画面.pdf}
+    \caption{ID確認送信画面}
+    \label{fig:dID確認送信画面}
+  \end{minipage}
+\end{figure}
+
+\subsubsection{配達員側新規会員登録画面}
+図\ref{fig:d配達員側新規会員登録}では、図\ref{fig:dログイン画面}にて新規会員登録のリンクを選択することで表示される画面である。ここでは、まず利用手段について選択してもらう。利用手段に応じて登録する内容が変化する。図\ref{fig:d配達員側新規会員登録画面2}では、入力内容の確認を行う画面である。
+
+\begin{figure}[tbp]
+  \centering
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/deliveryer画面デザイン/配達員側新規会員登録画面/新規会員登録画面.pdf}
+    \caption{配達員側新規会員登録}
+    \label{fig:d配達員側新規会員登録}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/deliveryer画面デザイン/配達員側新規会員登録画面/新規会員登録画面-1.pdf}
+    \caption{配達員側新規会員確認画面}
+    \label{fig:d配達員側新規会員登録画面2}
+  \end{minipage}
+\end{figure}
+
+そして、図\ref{fig:d配達員側新規会員登録画面2}にて登録ボタンを押下することで図\ref{fig:d配達員側新規会員登録画面3}に遷移する。図\ref{fig:d配達員側新規会員登録画面3}では、新規会員登録完了を表示し、かつ配達員としてすぐに始めることができるよう履歴書入力を促すボタンが配置されている。ホームへというボタンを押下することで本アプリのホームに遷移される。
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/deliveryer画面デザイン/配達員側新規会員登録画面/新規会員登録画面-2.pdf}
+  \caption{配達員側新規会員登録完了画面}
+  \label{fig:d配達員側新規会員登録画面3}
+\end{figure}
+
+\subsubsection{ホーム画面}
+図\ref{fig:dホーム画面}では、本アプリをログインした際にホーム画面として表示される画面である。本アプリでは、フッターにて求人検索、マップ、受注、マイページ、ホームのボタンがあり、常にそれぞれの画面に遷移することが可能である。
+
+図\ref{fig:dホーム画面}には、キーワードにて求人検索ができる検索バーと求人情報おすすめを表示する機能がある。また、配達中であれば受注した依頼の中で直近の配達内容を表示する機能がある。ここでは、ルート確認や配達完了、配達状況を確認することができ、アプリを開いた際にすぐに情報が確認できるものとなっている。
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/Deliveryer画面デザイン/ホーム画面.pdf}
+  \caption{ホーム画面}
+  \label{fig:dホーム画面}
+\end{figure}
+
+\subsubsection{求人検索画面}
+図\ref{fig:d求人検索画面}では、求人検索を行うための画面である。ここで求人の一覧を確認することができ、地域や商品数、そして届ける手段としておすすめだと考えられる求人を表示する機能がある。
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/Deliveryer画面デザイン/求人検索画面/求人検索画面.pdf}
+  \caption{求人検索画面}
+  \label{fig:d求人検索画面}
+\end{figure}
+
+図\ref{fig:d求人検索詳細画面}では、図\ref{fig:d求人検索画面}にてピックアップされた内容をタップすることで表示される画面である。この画面では、求人詳細を示しており、注文内容や目安の距離、報酬金額が一覧にて確認することができる。また、下記にあるルート表示ボタンを押下することで図\ref{fig:d求人ルート表示画面}のような求人ルートがマップの形で確認できる画面に遷移することが可能である。
+
+\begin{figure}[tbp]
+  \centering
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/Deliveryer画面デザイン/求人検索画面/求人検索内容確認.pdf}
+    \caption{求人検索詳細画面}
+    \label{fig:d求人検索詳細画面}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/Deliveryer画面デザイン/求人検索画面/求人ルート表示画面.pdf}
+    \caption{求人ルート表示画面}
+    \label{fig:d求人ルート表示画面}
+  \end{minipage}
+\end{figure}
+
+%求人確定画面をかく
+
+\subsubsection{マップ機能}
+図\ref{fig:d配達先住所検索画面}では、マップにて求人情報および配達先が確認できる画面である。ここにおいて、店舗はジャンルによってアイコンが異なり、配達先を赤い旗マークとしている。また、求人一覧を下部にて確認することができ、求人内容の検索を利用することも可能な画面である。
+
+図\ref{fig:d求人ルート表示画面}では、図\ref{fig:d配達先住所検索画面}にて押下された求人内容の距離をマップにて視覚的に目的地を表示する画面である。
+
+\begin{figure}[tbp]
+  \centering
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/Deliveryer画面デザイン/マップ画面/配達先住所検索画面.pdf}
+    \caption{配達先住所検索画面}
+    \label{fig:d配達先住所検索画面}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/Deliveryer画面デザイン/マップ画面/求人ルート表示画面.pdf}
+    \caption{求人ルート表示画面(マップ)}
+    \label{fig:dマップ求人ルート表示画面}
+  \end{minipage}
+\end{figure}
+
+図\ref{fig:dマップ求人受注画面}では、前述の図\ref{fig:d求人検索詳細画面}と同様の機能を有している画面である。
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/Deliveryer画面デザイン/マップ画面/求人受注画面.pdf}
+  \caption{求人受注画面(マップ)}
+  \label{fig:dマップ求人受注画面}
+\end{figure}
+
+\subsubsection{受注一覧画面}
+図\ref{fig:d受注依頼一覧画面}では、受注した依頼の一覧を表示する画面である。受注依頼は最大3つまでであり、それぞれの受注依頼に対して配達希望時間や現在時刻から何分後なのかが表示される。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/deliveryer画面デザイン/受注依頼一覧画面/受注依頼一覧.pdf}
+  \caption{受注依頼一覧画面}
+  \label{fig:d受注依頼一覧画面}
+\end{figure}
+
+図\ref{fig:d依頼詳細画面}では、受注内容を各因子、配達完了やルート確認を行う画面である。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/Deliveryer画面デザイン/受注依頼一覧画面/依頼詳細画面.pdf}
+  \caption{依頼詳細画面}
+  \label{fig:d依頼詳細画面}
+\end{figure}
+
+\subsubsection{通知画面}
+図\ref{fig:d配達業務通知画面}では、通知を行う画面である。ここでは配達業務および運営メールの切り替えを行うことができ、配達業務では配達完了メールなどが届けられる。
+
+図\ref{fig:dメール詳細画面}では、図\ref{fig:d配達業務通知画面}にて選択したメールの詳細を見ることができる画面である。
+
+\begin{figure}[tbp]
+  \centering
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/Deliveryer画面デザイン/通知画面/通知画面.pdf}
+    \caption{配達業務通知画面}
+    \label{fig:d配達業務通知画面}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/Deliveryer画面デザイン/通知画面/メール詳細画面.pdf}
+    \caption{配達業務通知詳細画面}
+    \label{fig:dメール詳細画面}
+  \end{minipage}
+\end{figure}
+
+図\ref{fig:d運営通知画面}では、図\ref{fig:d配達業務通知画面}にて切り替えた運営メールを一覧を表示する画面である。そして、図\ref{fig:dメール詳細2}では前述と同様にメールの詳細が確認できる画面である。
+
+%運営通知画面のファイル名を変更する。
+
+\begin{figure}[tbp]
+  \centering
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/deliveryer画面デザイン/通知画面/通知画面.pdf}
+    \caption{運営通知画面}
+    \label{fig:d運営通知画面}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/Deliveryer画面デザイン/通知画面/メール詳細画面-1.pdf}
+    \caption{運営メール詳細画面}
+    \label{fig:dメール詳細2}
+  \end{minipage}
+\end{figure}
+
+\subsubsection{マイページ}
+図\ref{fig:dマイページ}では、会員登録、履歴書、配達履歴、パスワード確認、口座情報管理、給与明細、運営問い合わせ、設定、ログアウト・退会を行う画面である。主に自身のアカウントに関する設定の変更などを行うことができる。
+
+%%%%%
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/Deliveryer画面デザイン/マイページ.pdf}
+  \caption{マイページ}
+  \label{fig:dマイページ}
+\end{figure}
+
+\subsubsection{会員情報管理画面}
+図\ref{fig:d会員情報管理}では、会員情報の管理や確認が可能である。右上にあるボタンより図\ref{fig:d会員情報変更画面}に画面が切り替わり会員情報の変更が可能となる。
+
+\begin{figure}[tbp]
+  \centering
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/Deliveryer画面デザイン/会員情報管理画面/会員情報管理.pdf}
+    \caption{会員情報管理画面}
+    \label{fig:d会員情報管理}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/Deliveryer画面デザイン/会員情報管理画面/会員情報変更.pdf}
+    \caption{会員情報変更画面}
+    \label{fig:d会員情報変更画面}
+  \end{minipage}
+\end{figure}
+
+\subsubsection{履歴書}
+図\ref{fig:d履修変更画面}では、履歴書の内容を確認することが可能である。そして、右上の変更ボタンより図\ref{fig:d履歴書画面-1}のように画面が切り替わり、履歴書の内容を変更することが可能となる。
+
+\begin{figure}[tbp]
+  \centering
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/Deliveryer画面デザイン/履修変更画面/履歴書画面.pdf}
+    \caption{履歴書管理画面}
+    \label{fig:d履修変更画面}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/Deliveryer画面デザイン/履修変更画面/履歴書画面-1.pdf}
+    \caption{履歴書変更画面}
+    \label{fig:d履歴書画面-1}
+  \end{minipage}
+\end{figure}
+
+図\ref{fig:d履歴書変更確認画面}では、履歴書の変更内容を確認する画面である。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/deliveryer画面デザイン/履修変更画面/履歴書変更確認画面.pdf}
+  \caption{履歴書変更確認画面}
+  \label{fig:d履歴書変更確認画面}
+\end{figure}
+
+\subsubsection{配達履歴}
+図\ref{fig:d配達履歴画面}では、配達履歴の一覧を表示する画面である。そして、それぞれの内容を押下することで図\ref{fig:d配達履歴詳細画面}に遷移し、配達履歴の詳細を確認することができる。この画面で注文内容や単価、配達完了日などを確認することができる。
+
+\begin{figure}[tbp]
+  \centering
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/Deliveryer画面デザイン/配達履歴画面/配達履歴画面.pdf}
+    \caption{配達履歴画面}
+    \label{fig:d配達履歴画面}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/Deliveryer画面デザイン/配達履歴画面/配達履歴詳細画面.pdf}
+    \caption{配達履歴詳細画面}
+    \label{fig:d配達履歴詳細画面}
+  \end{minipage}
+\end{figure}
+
+\subsubsection{パスワード変更}
+図\ref{fig:dパスワード変更画面}では、パスワード変更を行う画面である。
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/Deliveryer画面デザイン/パスワード変更画面.pdf}
+  \caption{パスワード変更画面}
+  \label{fig:dパスワード変更画面}
+\end{figure}
+
+\subsubsection{口座情報管理}
+図\ref{fig:d口座情報管理画面}では、アカウントの口座情報を確認することが可能である。この画面では、変更ボタンを押下することで図\ref{fig:d口座情報変更画面}に遷移される。この画面では、口座情報を入力し口座情報を変更する画面である。
+
+\begin{figure}[tbp]
+  \centering
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/deliveryer画面デザイン/口座情報変更画面/口座情報管理画面.pdf}
+    \caption{口座情報管理画面}
+    \label{fig:d口座情報管理画面}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/deliveryer画面デザイン/口座情報変更画面/口座情報変更画面.pdf}
+    \caption{口座情報変更画面}
+    \label{fig:d口座情報変更画面}
+  \end{minipage}
+\end{figure}
+
+図\ref{fig:d口座情報変更確認画面}では、図\ref{fig:d口座情報変更画面}にて変更した内容を確認する画面である。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/Deliveryer画面デザイン/口座情報変更画面/口座情報変更画面-1.pdf}
+  \caption{口座情報変更確認画面}
+  \label{fig:d口座情報変更確認画面}
+\end{figure}
+
+\subsubsection{給与明細}
+図\ref{fig:d給与明細}では、給与明細が確認できる画面である。ここでは図\ref{fig:d給与明細_表示期間の変更}のように表示期間の変更が可能である。
+
+\begin{figure}[tbp]
+  \centering
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/Deliveryer画面デザイン/給与明細画面/給与明細画面.pdf}
+    \caption{給与明細画面}
+    \label{fig:d給与明細}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/Deliveryer画面デザイン/給与明細画面/給与明細_表示期間の変更.pdf}
+    \caption{給与明細画面での表示期間の変更画面}
+    \label{fig:d給与明細_表示期間の変更}
+  \end{minipage}
+\end{figure}
+
+\subsubsection{運営問い合わせ}
+図\ref{fig:d運営問い合わせ画面}では、運営問い合わせフォームやよくある問い合わせの閲覧が可能である。そして、問い合わせフォームを押下することで図\ref{fig:d問い合わせフォーム}のように運営にメールにて問い合わせることが可能である。
+
+\begin{figure}[tbp]
+  \centering
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/Deliveryer画面デザイン/運営問い合わせ画面/運営問い合わせホーム.pdf}
+    \caption{運営問い合わせホーム画面}
+    \label{fig:d運営問い合わせ画面}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/Deliveryer画面デザイン/運営問い合わせ画面/運営問い合わせフォーム.pdf}
+    \caption{問い合わせフォーム画面}
+    \label{fig:d問い合わせフォーム}
+  \end{minipage}
+\end{figure}
+
+\subsubsection{設定}
+図\ref{fig:d設定}では、言語設定や文字の大きさ、プッシュ通知のON、OFFが可能である。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/Deliveryer画面デザイン/設定.pdf}
+  \caption{設定画面}
+  \label{fig:d設定}
+\end{figure}
+
+\subsubsection{ログアウト・退会}
+図\ref{fig:dログアウト・退会}ではログアウト・退会の手続きを行う。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/Deliveryer画面デザイン/ログアウト・退会画面/ログアウト・退会.pdf}
+  \caption{ログアウト・退会画面}
+  \label{fig:dログアウト・退会}
+\end{figure}
 
 \subsection{店舗側}
 
+\subsubsection{業務画面}
+図\ref{fig:d業務画面}では、店舗側の業務の選択画面である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/store画面デザイン/業務画面.pdf}
+  \caption{業務画面}
+  \label{fig:業務画面}
+\end{figure}
+
+\subsubsection{メニュー情報変更選択画面}
+図\ref{fig:dメニュー情報変更選択画面}では、メニュー情報の登録、削除、変更を行うための選択画面である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/store画面デザイン/メニュー情報変更画面.pdf}
+  \caption{メニュー情報変更選択画面}
+  \label{fig:メニュー情報変更選択画面}
+\end{figure}
+
+\subsubsection{メニュー情報登録画面}
+図\ref{fig:dメニュー情報登録画面}では、メニュー情報の新規登録を行う画面である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/store画面デザイン/メニュー登録画面.pdf}
+  \caption{メニュー情報登録画面}
+  \label{fig:メニュー情報登録画面}
+\end{figure}
+
+\subsubsection{メニュー情報削除画面}
+図\ref{fig:dメニュー情報削除画面}では、メニュー情報の削除を行う画面である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/store画面デザイン/メニュー情報削除画面.pdf}
+  \caption{メニュー情報削除画面}
+  \label{fig:メニュー情報削除画面}
+\end{figure}
+
+\subsubsection{メニュー情報変更画面}
+図\ref{fig:dメニュー情報変更画面}では、すでにあるメニュー情報の変更を行う画面である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/store画面デザイン/メニュー情報変更画面-1.pdf}
+  \caption{メニュー情報変更画面}
+  \label{fig:メニュー情報変更画面}
+\end{figure}
+
+\subsubsection{在庫ステータス変更画面}
+図\ref{fig:d在庫ステータス変更画面}では、メニュー情報の在庫ステータスの変更を行う画面である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/store画面デザイン/在庫ステータス変更画面.pdf}
+  \caption{在庫ステータス変更画面}
+  \label{fig:在庫ステータス変更画面}
+\end{figure}
+
+\subsubsection{注文管理画面}
+図\ref{fig:d注文管理画面}では、今来ている注文を確認することができる画面である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/store画面デザイン/注文管理画面.pdf}
+  \caption{注文管理画面}
+  \label{fig:注文管理画面}
+\end{figure}
+
+\subsubsection{受注一覧画面}
+図\ref{fig:d受注一覧画面}では、受注した注文の一覧を確認することができる画面である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/store画面デザイン/受注一覧画面.pdf}
+  \caption{受注一覧画面}
+  \label{fig:受注一覧画面}
+\end{figure}
+
+\subsubsection{配達員情報確認画面}
+図\ref{fig:d配達員情報確認画面}では、商品を配達している配達員の情報を確認することができる画面である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/store画面デザイン/配達員情報確認.pdf}
+  \caption{配達員情報確認画面}
+  \label{fig:配達員情報確認画面}
+\end{figure}
+
+\subsubsection{受け渡し完了確認画面}
+図\ref{fig:d受け渡し完了確認画面}では、配達員に商品を受け渡し完了したことを確認する画面である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/store画面デザイン/受け渡し完了確認画面.pdf}
+  \caption{受け渡し完了確認画面}
+  \label{fig:受け渡し完了確認画面}
+\end{figure}
+
+\subsubsection{配達トラブル報告画面}
+図\ref{fig:d配達トラブル報告画面}では、配達に関するトラブルを報告する画面である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/store画面デザイン/配達トラブル報告画面.pdf}
+  \caption{配達トラブル報告画面}
+  \label{fig:配達トラブル報告画面}
+\end{figure}
+
+\subsubsection{売上画面}
+図\ref{fig:d売上画面}では、売上情報を確認する画面である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/store画面デザイン/売上画面.pdf}
+  \caption{売上画面}
+  \label{fig:売上画面}
+\end{figure}
+
+\subsubsection{明細表示画面}
+図\ref{fig:d設定}では、売上画面から選択した明細の詳細を確認する画面である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/store画面デザイン/明細表示画面.pdf}
+  \caption{明細表示画面}
+  \label{fig:明細表示画面}
+\end{figure}
+
+\subsubsection{マイページ}
+図\ref{fig:d店舗マイページ}では、店舗側のマイページ画面である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/store画面デザイン/マイページ.pdf}
+  \caption{マイページ(店舗)}
+  \label{fig:店舗マイページ}
+\end{figure}
+
+\subsubsection{店舗情報確認・編集画面}
+図\ref{fig:d店舗情報確認・編集画面}では、店舗情報の確認および編集を行う画面である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/store画面デザイン/店舗情報確認・編集画面.pdf}
+  \caption{店舗情報確認・編集画面}
+  \label{fig:店舗情報確認・編集画面}
+\end{figure}
+
+\subsubsection{許可書ファイルアップロード画面}
+図\ref{fig:d許可書ファイルアップロード画面}では、許可書ファイルのアップロードを行う画面である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/store画面デザイン/許可書ファイルアップロード.pdf}
+  \caption{許可書ファイルアップロード画面}
+  \label{fig:許可書ファイルアップロード画面}
+\end{figure}
+
+\subsubsection{パスワード変更画面}
+図\ref{fig:dパスワード変更画面}では、パスワードの変更を行う画面である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/store画面デザイン/パスワード変更画面.pdf}
+  \caption{パスワード変更画面}
+  \label{fig:パスワード変更画面}
+\end{figure}
+
+\subsubsection{口座情報登録・確認画面}
+図\ref{fig:d口座情報登録・確認画面}では、口座情報の登録および確認を行う画面である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/store画面デザイン/口座情報登録・確認画面.pdf}
+  \caption{口座情報登録・確認画面}
+  \label{fig:口座情報登録・確認画面}
+\end{figure}
+
+\subsubsection{問い合わせ画面}
+図\ref{fig:d問い合わせ画面}では、運営への問い合わせを行う画面である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/store画面デザイン/問い合わせ画面.pdf}
+  \caption{問い合わせ画面}
+  \label{fig:問い合わせ画面}
+\end{figure}
+
+\subsubsection{ログアウト・退会画面}
+図\ref{fig:dログアウト・退会画面}では、ログアウトおよび退会を行う画面である。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/store画面デザイン/ログアウト・退会画面.pdf}
+  \caption{ログアウト・退会画面}
+  \label{fig:ログアウト・退会画面}
+\end{figure}
+
+\subsubsection{通知画面}
+図\ref{fig:d通知画面}では、店舗側の通知画面である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/store画面デザイン/通知画面.pdf}
+  \caption{通知画面}
+  \label{fig:通知画面}
+\end{figure}
+
+
+
 \subsection{管理者側}
+ここでは管理者側の画面について説明する。
+
+\subsubsection{管理者用端末アプリ起動画面/ログイン画面}
+図\ref{fig:a管理者用端末アプリ起動画面}、図\ref{fig:a管理者ログイン画面}は管理者用端末のアプリ起動画面およびログイン画面である。
+管理者は管理者IDとパスワードでログインする。
+管理者IDを忘れた場合は、図\ref{fig:a管理者IDを忘れた場合}でメールアドレスとパスワードを入力し、メールにて送付されたURLを開くことで、
+図\ref{fig:a管理者ID確認画面}から管理者IDを確認することができる。
+パスワードを忘れた場合は、図\ref{fig:aパスワードを忘れた場合}で管理者IDとメールアドレスを入力し、メールにて送付されたURLを開くことで、
+図\ref{fig:aパスワード再設定画面}からパスワードの再設定を行うことができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/0_ログイン/0_管理者用端末_アプリ起動画面.pdf}
+  \caption{管理者用端末アプリ起動画面}
+  \label{fig:a管理者用端末アプリ起動画面}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/0_ログイン/01_ログイン画面.pdf}
+  \caption{ログイン画面}
+  \label{fig:a管理者ログイン画面}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/0_ログイン/011_管理者ID場合のメールアドレス送信画面.pdf}
+  \caption{管理者IDを忘れた場合}
+  \label{fig:a管理者IDを忘れた場合}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/0_ログイン/0111_管理者ID確認画面.pdf}
+  \caption{管理者ID確認画面}
+  \label{fig:a管理者ID確認画面}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/0_ログイン/0120_パスワードを忘れた場合のメールアドレス送信画面.pdf}
+  \caption{パスワードを忘れた場合}
+  \label{fig:aパスワードを忘れた場合}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/0_ログイン/0121_パスワード再設定画面.pdf}
+  \caption{パスワード再設定画面}
+  \label{fig:aパスワード再設定画面}
+\end{figure}
+
+\subsubsection{管理者ホーム画面}
+図\ref{fig:aホーム画面}は管理者ホーム画面である。
+ここから運営管理、アカウント管理、問い合わせ対応の各画面に遷移することができる。
+なお、以降で示す画面にはホーム画面ボタンが常にフッターで表示されており、いつでもこの画面に遷移することが可能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/1_ホーム画面.pdf}
+  \caption{管理者ホーム画面}
+  \label{fig:aホーム画面}
+\end{figure}
+
+\subsubsection{運営管理画面}
+図\ref{fig:a運営管理画面}は運営管理画面である。
+ここから売り上げ管理、清算管理、全体通知送信・管理、システム設定の各画面に遷移し、操作を行うことができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/11_運営管理画面.pdf}
+  \caption{運営管理画面}
+  \label{fig:a運営管理画面}
+\end{figure}
+
+\subsubsection{売り上げ管理画面}
+図\ref{fig:a売り上げ管理画面}は売り上げ管理画面である。
+ここでは、月間の売り上げをグラフで確認することができる。
+なお、ここでの売り上げとは依頼者に請求した商品の代金と報酬・手数料の合計金額のこととする。
+また、ここから総利用者数管理、注文数管理、収益管理の各画面に遷移し、操作を行うことができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/111_売り上げ管理/111_売り上げ管理画面.pdf}
+  \caption{売り上げ管理画面}
+  \label{fig:a売り上げ管理画面}
+\end{figure}
+
+
+\subsubsection{総利用者数管理画面}
+図\ref{fig:a総利用者数管理画面}は総利用者数管理画面である。
+ここでは、グラフの左上にあるボタンを押して切り替えることで、依頼者・配達員・新規登録のそれぞれにおける年齢別の利用者人数・割合・問い合わせ数を確認することができる。
+また、ここから注文数管理、収益管理の各画面に遷移することができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/111_売り上げ管理/1111_総利用者数管理画面(1).pdf}
+  \caption{総利用者数管理画面}
+  \label{fig:a総利用者数管理画面}
+\end{figure}
+
+\subsubsection{注文数管理画面}
+図\ref{fig:a注文数管理画面}は注文数管理画面である。
+ここでは、依頼者からの注文件数およびご配達件数を年齢別で確認することができる。
+また、ここから総利用者数、収益管理の各画面に遷移することができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/111_売り上げ管理/1114_注文数管理画面.pdf}
+  \caption{注文数管理画面}
+  \label{fig:a注文数管理画面}
+\end{figure}
+
+\subsubsection{収益管理画面}
+図\ref{fig:a収益管理画面}は収益管理画面である。
+ここでは、年間費用および年間収益とその内訳、年間利益を確認することができる。
+また、ここから清算管理、総利用者数、注文数管理の各画面に遷移することができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/111_売り上げ管理/1113_収益管理画面(修正版).pdf}
+  \caption{収益管理画面}
+  \label{fig:a収益管理画面}
+\end{figure}
+
+
+\subsubsection{精算管理画面}
+図\ref{fig:a精算管理画面(依頼者)}は依頼者を対象とした精算管理画面である。
+ここでは、依頼者が各月に注文した商品の代金、報酬・手数料、請求金額、そして「未入金」「入金確認済み」といった支払いステータスを一覧で確認できる。
+各行にある「詳細」ボタンを押すと、精算管理詳細画面（図\ref{fig:a精算管理詳細画面(依頼者)}）へ遷移し、依頼者ごとのより具体的な支払い状況を確認することが可能である。
+また、画面上部に配置された切替ボタンを利用することで、配達員や店舗に関する精算情報も同様の形式で確認できる。
+ただし、項目としては配達員の場合は商品の代金、距離の追加料金、支払い金額、支払いステータスとなっており、
+店舗の場合は商品の代金、手数料、支払い金額、支払いステータスとなっている。
+
+加えて、この画面から前述した収益管理画面へと遷移することも可能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/112_清算管理/1121_精算管理画面(依頼者).pdf}
+  \caption{精算管理画面(依頼者)}
+  \label{fig:a精算管理画面(依頼者)}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/112_清算管理/11211_精算管理詳細画面(依頼者).pdf}
+  \caption{精算管理詳細画面(依頼者)}
+  \label{fig:a精算管理詳細画面(依頼者)}
+\end{figure}
+
+
+\subsubsection{全体通知送信・管理画面}
+図\ref{fig:a全体通知送信・管理画面}は全体通知送信・管理画面である。
+画面右上にあるチェック欄を用いて通知対象の絞り込みができ、アプリユーザーに対して送信した通知の管理を行うことができる。
+「もっと見る」ボタンを押すと通知一覧画面（図\ref{fig:通知一覧画面}）が表示され、
+さらに「詳細」ボタンを押すことで各通知の詳細な内容を確認することができる（図\ref{fig:通知詳細画面}）。
+
+また、全体通知送信画面（図\ref{fig:a全体通知送信画面}）に遷移することができる。
+通知先として全体、依頼者、配達員、店舗のいずれか1つを選択し、タイトルと内容を記述して通知を送信する。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/113_全体通知送信管理/113_全体通知送信・管理.pdf}
+  \caption{全体通知送信・管理画面}
+  \label{fig:a全体通知送信・管理画面}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/113_全体通知送信管理/1131_通知一覧.pdf}
+  \caption{通知一覧画面}
+  \label{fig:a通知一覧画面}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/113_全体通知送信管理/11311_通知詳細.pdf}
+  \caption{通知詳細画面}
+  \label{fig:a通知詳細画面}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/113_全体通知送信管理/1132_全体通知送信.pdf}
+  \caption{全体通知送信画面}
+  \label{fig:a全体通知送信画面}
+\end{figure}
+
+
+\subsubsection{システム設定画面}
+図\ref{fig:aシステム設定画面}はシステム設定画面である。
+この画面では、現在の店舗手数料率と配達料金（1㎞あたりの金額）を確認することができる。
+「変更」ボタンを押すと手数料変更画面（図\ref{fig:a手数料変更画面}）に遷移し、店舗手数料率と配達料金の変更を行うことができる。
+
+また、利用規約更新画面（図\ref{fig:a利用規約更新画面}）に遷移し、現在の利用規約の内容確認および編集を行うことができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/114_システム設定/114_システム設定画面.pdf}
+  \caption{システム設定画面}
+  \label{fig:aシステム設定画面}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/114_システム設定/1141_手数料変更画面.pdf}
+  \caption{手数料変更画面}
+  \label{fig:a手数料変更画面}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/114_システム設定/1143_利用規約更新.pdf}
+  \caption{利用規約更新画面}
+  \label{fig:a利用規約更新画面}
+\end{figure}
+
+
+\subsubsection{アカウント管理画面}
+図\ref{fig:aアカウント管理画面}はアカウント管理画面である。
+ここから依頼者、配達員、店舗、管理者の各アカウント管理画面に遷移し、操作を行うことができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/12_アカウント管理画面.pdf}
+  \caption{アカウント管理画面}
+  \label{fig:aアカウント管理画面}
+\end{figure}
+
+\subsubsection{依頼者アカウント管理画面}
+図\ref{fig:a依頼者アカウント管理画面}は依頼者アカウント管理画面である。
+アプリを利用している依頼者のアカウントの一覧を確認することができる。
+画面右上にある検索窓にて依頼者ID検索または氏名検索ができ、該当するアカウントのみが表示されるようになる。
+また、「登録」「削除」「詳細」ボタンを押すと各画面に遷移する。
+なお、削除を行う際は依頼者ID欄の左側にあるチェック欄を選択する必要がある。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/121_依頼者アカウント管理/121_依頼者アカウント画面.pdf}
+  \caption{依頼者アカウント管理画面}
+  \label{fig:a依頼者アカウント管理画面}
+\end{figure}
+
+\subsubsection{依頼者登録画面}
+図\ref{fig:a依頼者登録画面}は依頼者アカウント管理画面である。
+ここでは、依頼者の新規登録を行うことができる。
+基本情報としてかな、氏名、生年月日、年齢、性別、郵便番号、住所、電話番号、メールアドレスの9項目、
+口座情報として銀行名、支店名、預金の種類、口座番号、口座名義（カナ）の5項目を入力するようになっている。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/121_依頼者アカウント管理/1211_依頼者登録画面.pdf}
+  \caption{依頼者登録画面}
+  \label{fig:a依頼者登録画面}
+\end{figure}
+
+\subsubsection{依頼者削除確認画面}
+図\ref{fig:a依頼者削除確認画面}は依頼者削除確認画面である。
+ここでは、依頼者アカウント管理画面で選択した任意の依頼者アカウントの削除を行うことができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/121_依頼者アカウント管理/12131_依頼者削除確認画面.pdf}
+  \caption{依頼者削除確認画面}
+  \label{fig:a依頼者削除確認画面}
+\end{figure}
+
+\subsubsection{依頼者詳細画面}
+図\ref{fig:a依頼者アカウント情報}、図\ref{fig:a依頼者注文履歴}は依頼者詳細画面である。
+アカウント情報では基本情報、口座情報、問い合わせ履歴、請求履歴を確認することができ、
+注文履歴では注文日時、配達完了日時、取引完了日時、注文店舗、注文点数、合計金額、ステータスを確認することができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/121_依頼者アカウント管理/12121_依頼者詳細画面_アカウント情報.pdf}
+  \caption{依頼者アカウント情報}
+  \label{fig:a依頼者アカウント情報}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/121_依頼者アカウント管理/12122_依頼者詳細画面_注文履歴.pdf}
+  \caption{依頼者注文履歴}
+  \label{fig:a依頼者注文履歴}
+\end{figure}
+
+\subsubsection{依頼者情報編集画面}
+図\ref{fig:a依頼者情報編集画面}は依頼者情報編集画面である。
+依頼者詳細画面のアカウント情報から「編集」ボタンを押すことでこの画面に遷移し、各項目の内容の編集を行うことができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/121_依頼者アカウント管理/121211_依頼者情報編集画面.pdf}
+  \caption{依頼者情報編集画面}
+  \label{fig:a依頼者情報編集画面}
+\end{figure}
+
+\subsubsection{注文詳細画面}
+図\ref{fig:a注文詳細画面}は注文詳細画面である。
+依頼者詳細画面の注文履歴から「詳細」ボタンを押すことでこの画面に遷移し、配達先住所・配達者・目安距離・購入した商品・店舗および配達員への評価といった詳細な情報を確認することができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/121_依頼者アカウント管理/121221_依頼者詳細画面_注文履歴_注文詳細.pdf}
+  \caption{注文詳細画面}
+  \label{fig:a注文詳細画面}
+\end{figure}
+
+
+\subsubsection{配達員アカウント管理画面}
+図\ref{fig:a配達員アカウント管理画面}は配達員アカウント管理画面である。
+アプリを利用している配達員のアカウントの一覧を確認することができる。
+画面右上にある検索窓にて依頼者ID検索または氏名検索ができ、該当するアカウントのみが表示されるようになる。
+また、「登録」「削除」「申請確認」「詳細」ボタンを押すと各画面に遷移する。
+なお、削除を行う際は配達員ID欄の左側にあるチェック欄を選択する必要がある。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/122_配達員アカウント管理/122_配達員アカウント画面.pdf}
+  \caption{配達員アカウント管理画面}
+  \label{fig:a配達員アカウント管理画面}
+\end{figure}
+
+\subsubsection{配達員登録画面}
+図\ref{fig:a配達員登録画面}は配達員アカウント管理画面である。
+ここでは、配達員の新規登録を行うことができる。
+基本情報としてかな、氏名、生年月日、年齢、性別、郵便番号、住所、電話番号、メールアドレスの9項目、
+口座情報として銀行名、支店名、預金の種類、口座番号、口座名義（カナ）の5項目を入力するようになっている。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/122_配達員アカウント管理/1221_配達員登録画面.pdf}
+  \caption{配達員登録画面}
+  \label{fig:a配達員登録画面}
+\end{figure}
+
+\subsubsection{配達員削除確認画面}
+図\ref{fig:a配達員削除確認画面}は配達員削除確認画面である。
+ここでは、配達員アカウント管理画面で選択した任意の配達員アカウントの削除を行うことができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/122_配達員アカウント管理/12241配達員削除確認画面.pdf}
+  \caption{配達員削除確認画面}
+  \label{fig:a配達員削除確認画面}
+\end{figure}
+
+\subsubsection{配達員申請確認画面}
+図\ref{fig:a配達員申請確認画面}は配達員申請確認画面である。
+ここでは、配達員アカウントの新規申請を確認することができる。
+「詳細」ボタンを押すと配達員申請詳細画面（図\ref{fig:a配達員申請詳細画面}）に遷移し、配達員が登録した基本情報、口座情報、履歴書を見ることができる。
+内容を確認して特に問題がなかった場合は、「承認する」ボタンを押すと配達員としてアカウントが正式に登録される。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/122_配達員アカウント管理/1222_配達員申請確認.pdf}
+  \caption{配達員申請確認画面}
+  \label{fig:a配達員申請確認画面}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/122_配達員アカウント管理/12221_配達員申請詳細画面.pdf}
+  \caption{配達員申請詳細画面}
+  \label{fig:a配達員申請詳細画面}
+\end{figure}
+
+\subsubsection{配達員詳細画面}
+図\ref{fig:a配達員アカウント情報}、図\ref{fig:a配達員配達履歴}は配達員詳細画面である。
+アカウント情報では基本情報、口座情報、問い合わせ履歴、振込履歴を確認することができ、
+配達履歴では依頼受注日時、配達完了日時、取引完了日時、依頼者、注文点数、報酬金額、ステータスを確認することができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/122_配達員アカウント管理/12231_配達員詳細画面_アカウント情報.pdf}
+  \caption{配達員アカウント情報}
+  \label{fig:a配達員アカウント情報}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/122_配達員アカウント管理/12232_配達員詳細画面_配達履歴.pdf}
+  \caption{配達員配達履歴}
+  \label{fig:a配達員配達履歴}
+\end{figure}
+
+\subsubsection{配達員情報編集画面}
+図\ref{fig:a配達員情報編集画面}は配達員情報編集画面である。
+配達員詳細画面のアカウント情報から「編集」ボタンを押すことでこの画面に遷移し、各項目の内容の編集を行うことができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/122_配達員アカウント管理/122311_配達員情報編集画面.pdf}
+  \caption{配達員情報編集画面}
+  \label{fig:a配達員情報編集画面}
+\end{figure}
+
+\subsubsection{配達詳細画面}
+図\ref{fig:a配達詳細画面}は配達詳細画面である。
+配達員詳細画面の配達履歴から「詳細」ボタンを押すことでこの画面に遷移し、配達先住所・店舗・店舗住所・目安距離・配達した商品・依頼者からの評価といった詳細な情報を確認することができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/122_配達員アカウント管理/122321_配達者詳細画面_配達履歴_配達詳細.pdf}
+  \caption{配達詳細画面}
+  \label{fig:a配達詳細画面}
+\end{figure}
+
+\subsubsection{履歴書確認画面}
+図\ref{fig:a履歴書確認画面}は履歴書確認画面である。
+配達員詳細画面から「履歴書」ボタンを押すことでこの画面に遷移し、配達員が登録した履歴書情報を確認することができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/122_配達員アカウント管理/12233_配達員詳細画面_履歴書確認.pdf}
+  \caption{履歴書確認画面}
+  \label{fig:a履歴書確認画面}
+\end{figure}
+
+\subsubsection{警告通知送信画面}
+図\ref{fig:a警告通知送信画面}は警告通知送信画面である。
+配達員詳細画面から「警告通知」ボタンを押すことでこの画面に遷移し、配達員に対して警告通知の送信を行うことができる。
+重要度はプルダウン選択で注意・重要・警告の3段階から選ぶことができる。
+また、「送信履歴」ボタンを押すことで警告通知送信履歴画面（図\ref{fig:a警告通知送信履歴画面}）に遷移し、過去に送信した通知の内容を確認することができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/122_配達員アカウント管理/12234_警告通知送信画面.pdf}
+  \caption{警告通知送信画面}
+  \label{fig:a警告通知送信画面}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/122_配達員アカウント管理/122341_警告通知送信履歴画面.pdf}
+  \caption{警告通知送信履歴画面}
+  \label{fig:a警告通知送信履歴画面}
+\end{figure}
+
+
+\subsubsection{店舗アカウント管理画面}
+図\ref{fig:a店舗アカウント管理画面}は店舗アカウント管理画面である。
+アプリを利用している店舗のアカウントの一覧を確認することができる。
+画面右上にある検索窓にて店舗ID検索または店舗名検索ができ、該当するアカウントのみが表示されるようになる。
+また、「登録」「削除」「申請確認」「詳細」ボタンを押すと各画面に遷移する。
+なお、削除を行う際は店舗ID欄の左側にあるチェック欄を選択する必要がある。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/123_店舗アカウント管理/123_店舗アカウント画面.pdf}
+  \caption{店舗アカウント管理画面}
+  \label{fig:a店舗アカウント管理画面}
+\end{figure}
+
+\subsubsection{店舗登録画面}
+図\ref{fig:a店舗登録画面}は店舗アカウント管理画面である。
+ここでは、店舗の新規登録を行うことができる。
+基本情報として店舗名、営業時間、休業日、郵便番号、住所、電話番号、メールアドレスの7項目、
+口座情報として銀行名、支店名、預金の種類、口座番号、口座名義（カナ）の5項目を入力するようになっている。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/123_店舗アカウント管理/1231_店舗登録画面.pdf}
+  \caption{店舗登録画面}
+  \label{fig:a店舗登録画面}
+\end{figure}
+
+\subsubsection{店舗削除確認画面}
+図\ref{fig:a店舗削除確認画面}は店舗削除確認画面である。
+ここでは、店舗アカウント管理画面で選択した任意の店舗アカウントの削除を行うことができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/123_店舗アカウント管理/12341_店舗アカウント画面.pdf}
+  \caption{店舗削除確認画面}
+  \label{fig:a店舗削除確認画面}
+\end{figure}
+
+\subsubsection{店舗申請確認画面}
+図\ref{fig:a店舗申請確認画面}は店舗申請確認画面である。
+ここでは、店舗アカウントの新規申請を確認することができる。
+「詳細」ボタンを押すと店舗申請詳細画面（図\ref{fig:a店舗申請詳細画面}）に遷移し、店舗が登録した基本情報、口座情報、営業許可証を見ることができる。
+内容を確認して特に問題がなかった場合は、「承認する」ボタンを押すと店舗としてアカウントが正式に登録される。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/123_店舗アカウント管理/1232_店舗申請確認.pdf}
+  \caption{店舗申請確認画面}
+  \label{fig:a店舗申請確認画面}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/123_店舗アカウント管理/12321_店舗申請詳細画面.pdf}
+  \caption{店舗申請詳細画面}
+  \label{fig:a店舗申請詳細画面}
+\end{figure}
+
+\subsubsection{店舗詳細画面}
+図\ref{fig:a店舗アカウント情報}、図\ref{fig:a店舗販売履歴}は店舗詳細画面である。
+アカウント情報では基本情報、口座情報、問い合わせ履歴、振込履歴を確認することができ、
+販売履歴では商品受け渡し日時、配達完了日時、取引完了日時、依頼者、注文点数、売上金額、ステータスを確認することができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/123_店舗アカウント管理/12331_店舗詳細画面_アカウント情報.pdf}
+  \caption{店舗アカウント情報}
+  \label{fig:a店舗アカウント情報}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/123_店舗アカウント管理/12332_店舗詳細画面_配達履歴.pdf}
+  \caption{店舗販売履歴}
+  \label{fig:a店舗販売履歴}
+\end{figure}
+
+\subsubsection{店舗情報編集画面}
+図\ref{fig:a店舗情報編集画面}は店舗情報編集画面である。
+店舗詳細画面のアカウント情報から「編集」ボタンを押すことでこの画面に遷移し、各項目の内容の編集を行うことができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/123_店舗アカウント管理/123311_店舗情報編集画面.pdf}
+  \caption{店舗情報編集画面}
+  \label{fig:a店舗情報編集画面}
+\end{figure}
+
+\subsubsection{販売詳細画面}
+図\ref{fig:a販売詳細画面}は販売詳細画面である。
+店舗詳細画面の販売履歴から「詳細」ボタンを押すことでこの画面に遷移し、配達先住所・配達者・目安距離・販売した商品・依頼者からの評価といった詳細な情報を確認することができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/123_店舗アカウント管理/123321_店舗詳細画面_販売履歴_販売詳細.pdf}
+  \caption{販売詳細画面}
+  \label{fig:a販売詳細画面}
+\end{figure}
+
+\subsubsection{営業許可証確認画面}
+図\ref{fig:a営業許可証確認画面}は営業許可証確認画面である。
+店舗詳細画面から「営業許可証」ボタンを押すことでこの画面に遷移し、店舗がアップデートした営業許可証を確認することができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/123_店舗アカウント管理/12333_店舗詳細画面_営業許可証.pdf}
+  \caption{営業許可証確認画面}
+  \label{fig:a営業許可証確認画面}
+\end{figure}
+
+
+\subsubsection{管理者アカウント管理画面}
+図\ref{fig:a管理者アカウント管理画面}は管理者アカウント管理画面である。
+アプリを利用している管理者のアカウントの一覧を確認することができる。
+画面右上にある検索窓にて管理者ID検索または氏名検索ができ、該当するアカウントのみが表示されるようになる。
+また、「登録」「削除」「詳細」ボタンを押すと各画面に遷移する。
+なお、削除を行う際は依頼者ID欄の左側にあるチェック欄を選択する必要がある。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/124_管理者アカウント管理/124_管理者アカウント画面.pdf}
+  \caption{管理者アカウント管理画面}
+  \label{fig:a管理者アカウント管理画面}
+\end{figure}
+
+\subsubsection{管理者登録画面}
+図\ref{fig:a管理者登録画面}は管理者アカウント管理画面である。
+ここでは、権限を持つ人のみ管理者の新規登録を行うことができる。
+基本情報としてかな、氏名、生年月日、年齢、性別、郵便番号、住所、電話番号、メールアドレスの9項目を入力するようになっている。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/124_管理者アカウント管理/1241_管理者登録画面.pdf}
+  \caption{管理者登録画面}
+  \label{fig:a管理者登録画面}
+\end{figure}
+
+\subsubsection{管理者削除確認画面}
+図\ref{fig:a管理者削除確認画面}は管理者削除確認画面である。
+ここでは、管理者アカウント管理画面で選択した任意の管理者アカウントの削除を行うことができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/124_管理者アカウント管理/12431_管理者削除確認画面.pdf}
+  \caption{管理者削除確認画面}
+  \label{fig:a管理者削除確認画面}
+\end{figure}
+
+\subsubsection{管理者詳細画面}
+図\ref{fig:a管理者アカウント情報}、図\ref{fig:a管理者注文履歴}は管理者詳細画面である。
+アカウント情報では基本情報を確認することができ、
+管理者権限では項目ごとに権限の有無を確認することができる。
+権限を有する場合は「〇」、有していない場合は「‐」が表示される。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/124_管理者アカウント管理/12421_管理者詳細画面_アカウント情報.pdf}
+  \caption{管理者アカウント情報}
+  \label{fig:a管理者アカウント情報}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/124_管理者アカウント管理/12422_管理者詳細画面_注文履歴.pdf}
+  \caption{管理者注文履歴}
+  \label{fig:a管理者注文履歴}
+\end{figure}
+
+\subsubsection{管理者情報編集画面}
+図\ref{fig:a管理者情報編集画面}は管理者情報編集画面である。
+管理者詳細画面のアカウント情報から「編集」ボタンを押すことでこの画面に遷移し、各項目の内容の編集を行うことができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/124_管理者アカウント管理/124211_管理者情報編集画面.pdf}
+  \caption{管理者情報編集画面}
+  \label{fig:a管理者情報編集画面}
+\end{figure}
+
+\subsubsection{管理者権限編集画面}
+図\ref{fig:a管理者権限編集画面}は管理者権限編集画面である。
+管理者詳細画面の管理者権限から「編集」ボタンを押すことでこの画面に遷移し、プルダウン選択で「〇」または「‐」を選んで項目ごとに権限の有無を設定することができる。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/124_管理者アカウント管理/124221_管理者権限編集画面.pdf}
+  \caption{管理者権限編集画面}
+  \label{fig:a管理者権限編集画面}
+\end{figure}
+
+
+
+
+\subsubsection{問い合わせ対応画面}
+
+図\ref{fig:a問い合わせ対応画面}では、問い合わせに関連した機能をまとめた画面である。まず、ホームにて問い合わせフォームの一覧が表示されている。ここでは簡潔に内容が伝わり、かつ問い合わせ対応の画面を開いた際にどの画面にも遷移することなく、素早い対応が見込めるためこの配置にしている。また、未対応を視認しやすいように未対応ボタンにて詳細が推移するようになったり、赤文字で書かれていたりする。
+
+次に、図\ref{fig:a問い合わせ対応画面には、}誤配達対応や通報管理画面、問い合わせ例編集ボタンがある。誤配達対応や通報管理画面には現在何件の対応要請が来ているのかが分かるよう件数が明示されている。そして、それぞれのボタンを押下することでそれぞれの画面に遷移するようになっている。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/13_問い合わせ対応画面.pdf}
+  \caption{問い合わせ対応画面}
+  \label{fig:a問い合わせ対応画面}
+\end{figure}
+
+\subsubsection{誤配達対応画面}
+
+図\ref{fig:a誤配達対応画面}では、誤配達対応の内容が一覧で表示されている。ここでは、未着か誤配達かの状態が表示されており、配達員やどこからどこに対して配達があるのか、要請が届いた時間が表示されている。そして、詳細ボタンを押下することで、図\ref{fig:a誤配達詳細}のような詳細画面が表示される。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/132_誤配達対応/132_誤配達対応画面.pdf}
+  \caption{誤配達対応画面}
+  \label{fig:a誤配達対応画面}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/132_誤配達対応/1321_配達詳細.pdf}
+  \caption{誤配達対応詳細}
+  \label{fig:a誤配達対応詳細}
+\end{figure}
+
+\subsubsection{通報管理画面}
+
+図\ref{fig:a通報管理画面_2}では、図\ref{fig:a問い合わせ対応画面}にて通報管理ボタンを押下した際に遷移する画面である。この画面では通報の一覧が確認でき、前小小々節と同様にステータスや配達員、詳細、要請時間が表示されている。詳細ボタンを押下することで図\ref{fig:a通報内容詳細画面}に遷移する。
+
+図\ref{fig:a通報内容詳細画面}では、通報内容の詳細が明記されている。配達ステータスやどの店舗からどの場所への配達なのか、発生した場所を示す地図、報告内容が通報詳細に表示させる。そして、通報元であるアカウント名と番号が右上に表示され、アカウント情報のタブを選択することでアカウント情報の一覧が確認される。対応ボタンでは、対応は管理側がそれぞれの対応を行う。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/133_通報管理/133_通報管理画面.pdf}
+  \caption{誤配達対応画面}
+  \label{fig:a誤配達対応画面_2}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/133_通報管理/1331_通報内容詳細画面.pdf}
+  \caption{誤配達対応詳細}
+  \label{fig:a誤配達対応詳細_2}
+\end{figure}
+
+\subsubsection{問い合わせ詳細画面}
+図\ref{fig:a問い合わせ詳細画面}では、問い合わせ詳細が表示される。問い合わせタイトルや内容、基本情報としてどこからどこに対する配達なのかが明記されている。また、報告元のアカウント情報が右上に名前と番号が表示されている。タブを切り替えることでアカウント情報の一覧が確認できる。そして、画面スクロールすることで対応メールを送信する図\ref{fig:a問い合わせ対応メール送信・編集}に移行する。
+
+図\ref{fgi:a問い合わせ対応メール送信・編集}では、問い合わせタイトルと内容を書くことができるテキストボックスがある。そして、やり直しボタンを押下することでリセットがされ、送信ボタンを押すことでメールの送信が問い合わせたアカウント向けに送信される。
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/131_問い合わせ詳細/131_問い合わせ詳細.pdf}
+  \caption{問い合わせ詳細画面}
+  \label{fig:a問い合わせ詳細画面}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/133_通報管理/1331_通報内容詳細画面.pdf}
+  \caption{誤配達対応詳細}
+  \label{fig:a誤配達対応詳細_3}
+\end{figure}
+
+\subsubsection{問い合わせ例編集}
+図\ref{fig:a問い合わせ例編集}は、図\ref{fig:a問い合わせ対応画面}での問い合わせ例編集ボタンより遷移される画面である。この画面では、よくある問い合わせ例を編集する画面である。右上のステータスよりプレビュなのか、書き換え中なのかが表示される。図\ref{fig:a問い合わせ例編集2}は、プレビュ画面である。右上の編集ボタンより編集モードに切り替え、図\ref{fig:a問い合わせ例編集}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/134_問い合わせ例編集/1341_問い合わせ例確認.pdf}
+  \caption{問い合わせ例確認画面}
+  \label{fig:a問い合わせ例編集}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/134_問い合わせ例編集/13411_問い合わせ例編集.pdf}
+  \caption{問い合わせ例編集画面}
+  \label{fig:a問い合わせ例編集2}
+\end{figure}
+
+図\ref{fig:a問い合わせ例編集_2}にて、プルダウンを示す逆三角形を押下する。問い合わせ例編集画面も同様に図\ref{fig:a問い合わせ例詳細編集2_2}も同じ動作となる。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/134_問い合わせ例編集/1341_問い合わせ例確認.pdf}
+  \caption{a問い合わせ例編集}
+  \label{fig:a問い合わせ例編集_2}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./pic/administrator画面デザイン/134_問い合わせ例編集/13421_問い合わせ例詳細編集.pdf}
+  \caption{a問い合わせ例編集2}
+  \label{fig:a問い合わせ例編集2_2}
+\end{figure}
