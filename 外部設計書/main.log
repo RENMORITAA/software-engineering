@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 This is LuaHBTeX, Version 1.22.0 (TeX Live 2025)  (format=lualatex 2025.10.9)  27 NOV 2025 14:24
  restricted system commands enabled.
 **main.tex
@@ -41,9 +42,86 @@ Inserting `luaotfload.aux.set_xheight' in `luaotfload.patch_font'.
 Inserting `luaotfload.rewrite_fontname' in `luaotfload.patch_font'.
 Inserting `tracingstacklevels' in `input_level_string'. (c:/texlive/2025/texmf-
 dist/tex/latex/jlreq/jlreq.cls
+=======
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=latex 2025.7.12)  20 NOV 2025 02:30
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**c:/Users/mrenk/software-engineering/外部設計書/main.tex
+(c:/Users/mrenk/software-engineering/外部設計書/main.tex
+LaTeX2e <2025-06-01> patch level 1
+L3 programming layer <2025-06-30>
+(c:/texlive/2025/texmf-dist/tex/latex/jlreq/jlreq.cls
+>>>>>>> Stashed changes
 Document Class: jlreq 2025/3/16 jlreq
 (c:/texlive/2025/texmf-dist/tex/latex/jlreq/jlreq-helpers.sty
 Package: jlreq-helpers 2024/02/13 jlreq-helpers
+\jlreq@tempcnta=\count275
+\jlreq@tempcntb=\count276
+\jlreq@tempcntc=\count277
+\jlreq@tempdima=\dimen148
+\jlreq@tempdimb=\dimen149
+\jlreq@tempdimc=\dimen150
+\jlreq@tempskipa=\skip49
+\jlreq@tempskipb=\skip50
+\jlreq@tempskipc=\skip51
+\jlreq@tempboxa=\box53
+\jlreq@tempboxb=\box54
+\jlreq@tempboxc=\box55
+\jlreq@resultdimen=\dimen151
+\jlreq@resultskip=\skip52
+\jlreq@resultbox=\box56
+\jlreq@resultcnt=\count278
+\jlreq@reference@count=\count279
+\jlreq@currentpage=\count280
+)
+\l__jlreq_tmpa_int=\count281
+\l__jlreq_tmpb_int=\count282
+\l__jlreq_tmpc_int=\count283
+\l__jlreq_tmpa_dim=\dimen152
+\l__jlreq_tmpb_dim=\dimen153
+\l__jlreq_tmpc_dim=\dimen154
+\l__jlreq_tmpa_skip=\skip53
+\l__jlreq_tmpb_skip=\skip54
+\l__jlreq_tmpc_skip=\skip55
+\l__jlreq_tmpa_box=\box57
+\l__jlreq_tmpb_box=\box58
+\l__jlreq_tmpc_box=\box59
+ jlreq guessed engine: platex (c:/texlive/2025/texmf-dist/tex/latex/everyhook/everyhook.sty (c:/texlive/2025/texmf-dist/tex/latex/svn-prov/svn-prov.sty
+Package: svn-prov 2010/04/24 v3.1862 Package Date/Version from SVN Keywords
+)
+Package: everyhook 2014/11/26 v1.2 (SVN Rev: 12)\ Hooks for low level TeX everyX primitives.
+ (c:/texlive/2025/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2025/02/11 v2.5l e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count284
+)
+\everypar=\toks17
+\frozen@everymath=\toks18
+\frozen@everydisplay=\toks19
+\everyhbox=\toks20
+\everyvbox=\toks21
+\everycr=\toks22
+)
+! Undefined control sequence.
+l.493   \epTeXinputencoding
+                            utf8
+? 
+! Emergency stop.
+l.493 
+      
+End of file on the terminal!
+
+ 
+Here is how much of TeX's memory you used:
+ 922 strings out of 469761
+ 17541 string characters out of 5482144
+ 427005 words of memory out of 5000000
+ 29371 multiletter control sequences out of 15000+600000
+ 626825 words of font info for 40 fonts, out of 8000000 for 9000
+ 36 hyphenation exceptions out of 8191
+ 57i,0n,65p,384b,26s stack positions out of 10000i,1000n,20000p,200000b,200000s
+No pages of output.
+elpers 2024/02/13 jlreq-helpers
 \jlreq@tempcnta=\count273
 \jlreq@tempcntb=\count274
 \jlreq@tempcntc=\count275
