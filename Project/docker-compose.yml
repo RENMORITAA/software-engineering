@@ -1,0 +1,49 @@
+version: "3.8"
+
+services:
+  flutter:
+    build:
+      context: .
+      dockerfile: docker/flutter/Dockerfile
+    container_name: flutter_dev
+    volumes:
+      - ./src:/app
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=university_app
+      - DB_USER=student
+      - DB_PASSWORD=password123
+    depends_on:
+      - db
+    working_dir: /app
+    tty: true
+
+  db:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: university_app
+      POSTGRES_USER: student
+      POSTGRES_PASSWORD: password123
+    volumes:
+      - ./docker/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  api:
+    image: postgrest/postgrest
+    container_name: postgrest_api
+    ports:
+      - "3000:3000"
+    environment:
+      PGRST_DB_URI: postgres://student:password123@db:5432/university_app
+      PGRST_DB_SCHEMA: public
+      PGRST_DB_ANON_ROLE: student
+    depends_on:
+      - db
+
+volumes:
+  db_data:
