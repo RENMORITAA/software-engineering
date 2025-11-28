@@ -1,22 +1,19 @@
 本アプリのUI設計を以下に示す。
 \subsection{依頼側}
-\subsubsection{お問い合わせ送信}
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/お問い合わせ送信.pdf}
-  \caption{お問い合わせ送信}
-  \label{fig:お問い合わせ送信}
-\end{figure}
-
 
 \subsubsection{マイページ}
+図\ref{fig:cマイページ}では、会員情報確認・編集、パスワード変更、配達先住所確認・編集、口座情報登録・確認、
+注文履歴一覧表示、支払い明細表示、問い合わせ、ログアウト、退会を行う画面である。
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/マイページ.pdf}
   \caption{マイページ}
-  \label{fig:マイページ}
+  \label{fig:cマイページ}
 \end{figure}
 
+\subsubsection{会員情報確認・編集}
+図\ref{fig:c会員情報確認・編集画面}では、自身の情報の管理や確認が可能である。
+右上にあるボタンにより編集画面に切り替わり、会員情報の変更が可能となる。
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/会員情報確認・編集画面.pdf}
@@ -24,23 +21,26 @@
   \label{fig:c会員情報確認・編集画面}
 \end{figure}
 
-\begin{figure}[tbp]
+\subsubsection{パスワード変更}
+図\ref{fig:cパスワード変更画面}では、パスワードの変更を行う画面である。
+\begin{figure}[H]
   \centering
-  \begin{minipage}{.43\linewidth}
-    \centering
     \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/パスワード変更画面.pdf}
     \caption{パスワード変更画面}
     \label{fig:cパスワード変更画面}
-  \end{minipage}
-  \hspace{5mm}
-  \begin{minipage}{.43\linewidth}
+\end{figure}
+
+\subsubsection{配達先住所確認・編集}
+図\ref{fig:c配達先住所確認・編集画面}では、商品の配達先住所確認・編集が可能である。
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/配達先住所確認・編集画面.pdf}
     \caption{配達先住所確認・編集画面}
     \label{fig:c配達先住所確認・編集画面}
-  \end{minipage}
 \end{figure}
 
+\subsubsection{口座情報登録・確認}
+図\ref{fig:c口座情報登録・確認画面}では、支払先の口座情報登録・確認を行う画面である。
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/口座情報登録・確認画面.pdf}
@@ -48,24 +48,26 @@
   \label{fig:c口座情報登録・確認画面}
 \end{figure}
 
-
-\begin{figure}[tbp]
+\subsubsection{注文履歴一覧}
+図\ref{fig:c注文履歴一覧画面}では、過去の注文履歴を確認することが可能である。
+\begin{figure}[H]
   \centering
-  \begin{minipage}{.43\linewidth}
-    \centering
     \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/注文履歴一覧画面.pdf}
     \caption{注文履歴一覧画面}
     \label{fig:c注文履歴一覧画面}
-  \end{minipage}
-  \hspace{5mm}
-  \begin{minipage}{.43\linewidth}
+\end{figure}
+
+\subsubsection{注文履歴詳細}
+図\ref{fig:c注文履歴詳細画面}では、図\ref{fig:c注文履歴一覧画面}の詳細を確認することが可能である。
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/注文履歴詳細画面.pdf}
     \caption{注文履歴詳細画面}
     \label{fig:c注文履歴詳細画面}
-  \end{minipage}
 \end{figure}
 
+\subsubsection{商品到着報告}
+図\ref{fig:c商品到着報告画面}では、商品の配達完了を確認することが可能である。
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/商品到着報告画面.pdf}
@@ -73,59 +75,64 @@
   \label{fig:c商品到着報告画面}
 \end{figure}
 
-\begin{figure}[tbp]
+\subsubsection{配達員評価}
+図\ref{fig:c配達員評価画面}では、配達員の評価が可能である。満足・普通・不満の三段階評価が行える。
+\begin{figure}[H]
   \centering
-  \begin{minipage}{.43\linewidth}
-    \centering
     \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/配達員評価画面.pdf}
     \caption{配達員評価画面}
     \label{fig:c配達員評価画面}
-  \end{minipage}
-  \hspace{5mm}
-  \begin{minipage}{.43\linewidth}
+\end{figure}
+
+\subsubsection{店舗評価}
+図\ref{fig:c店舗評価画面}では、店舗の評価が可能である。星1から星5の5段階評価が行える。
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/店舗評価画面.pdf}
     \caption{店舗評価画面}
     \label{fig:c店舗評価画面}
-  \end{minipage}
 \end{figure}
 
-\begin{figure}[tbp]
+\subsubsection{支払い明細表示}
+図\ref{fig:c支払い明細表示画面}では、過去の支払い明細を確認することが可能である。
+\begin{figure}[H]
   \centering
-  \begin{minipage}{.43\linewidth}
-    \centering
     \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/支払い明細表示画面.pdf}
     \caption{支払い明細表示画面}
     \label{fig:c支払い明細表示画面}
-  \end{minipage}
-  \hspace{5mm}
-  \begin{minipage}{.43\linewidth}
+\end{figure}
+
+\subsubsection{問い合わせ}
+図\ref{fig:c問い合わせ画面}では、運営問い合わせが可能である。
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/問い合わせ画面.pdf}
     \caption{問い合わせ画面}
     \label{fig:c問い合わせ画面}
-  \end{minipage}
 \end{figure}
 
-\begin{figure}[tbp]
+\subsubsection{ログアウト}
+図\ref{fig:cログアウト画面}では、ログアウトの手続きを行う。
+\begin{figure}[H]
   \centering
-  \begin{minipage}{.43\linewidth}
-    \centering
     \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/ログアウト画面.pdf}
     \caption{ログアウト画面}
     \label{fig:cログアウト画面}
-  \end{minipage}
-  \hspace{5mm}
-  \begin{minipage}{.43\linewidth}
+\end{figure}
+
+\subsubsection{退会}
+図\ref{fig:c退会画面}では、退会の手続きを行う。
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/退会画面.pdf}
     \caption{退会画面}
     \label{fig:c退会画面}
-  \end{minipage}
 \end{figure}
 
 
 \subsubsection{依頼者側ホーム画面}
+図\ref{fig:c依頼者側ホーム画面}では、本アプリをログインした際にホーム画面として表示される画面である。
+本アプリでは、カート画面、マップ画面、マイページ、通知画面に常に遷移することが可能である。
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/依頼者側ホーム画面.pdf}
@@ -134,24 +141,27 @@
 \end{figure}
 
 \subsubsection{店舗商品検索画面}
-\begin{figure}[tbp]
+図\ref{fig:c店舗・商品検索画面}では、店舗・商品を検索することが可能である。キーワードから店舗・商品を
+検索できる。
+
+\begin{figure}[H]
   \centering
-  \begin{minipage}{.43\linewidth}
-    \centering
     \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/店舗・商品検索画面.pdf}
     \caption{店舗・商品検索画面}
     \label{fig:c店舗・商品検索画面}
-  \end{minipage}
-  \hspace{5mm}
-  \begin{minipage}{.43\linewidth}
+\end{figure}
+
+\subsubsection{店舗情報確認画面}
+図\ref{fig:c店舗情報確認画面}では、店舗の詳細情報について確認が可能である。
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/店舗情報確認画面.pdf}
     \caption{店舗情報確認画面}
     \label{fig:c店舗情報確認画面}
-  \end{minipage}
 \end{figure}
 
 \subsubsection{カート画面}
+図\ref{fig:cカート画面}では、カート内に入っている商品の確認・変更ができる。
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/カート画面.pdf}
@@ -159,28 +169,28 @@
   \label{fig:cカート画面}
 \end{figure}
 
-\begin{figure}[tbp]
+\subsubsection{注文確認画面}
+図\ref{fig:c注文確認画面}では、注文内容の確認・確定が可能である。
+\begin{figure}[H]
   \centering
-  \begin{minipage}{.43\linewidth}
-    \centering
     \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/注文確認画面.pdf}
     \caption{注文確認画面}
     \label{fig:c注文確認画面}
-  \end{minipage}
-  \hspace{5mm}
-  \begin{minipage}{.43\linewidth}
+\end{figure}
+
+\subsubsection{注文確定画面}
+図\ref{fig:c注文確定画面}では、注文内容を確定したことを確認できる。また、
+配達先に変更がある場合は、変更が可能となっている。
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/注文確定画面.pdf}
     \caption{注文確定画面}
     \label{fig:c注文確定画面}
-  \end{minipage}
 \end{figure}
 
 
-
-
-
 \subsubsection{マップ画面}
+図\ref{fig:cマップ画面}では、マップにて配達先及び店舗の位置情報を確認することが可能である。
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/マップ画面.pdf}
@@ -189,17 +199,14 @@
 \end{figure}
 
 \subsubsection{通知画面}
+図\ref{fig:c通知画面}では、配達完了の通知や運営からのメールを受信でき、確認することが可能である。
+
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.75\textwidth]{./pic/customer画面デザイン/通知画面.pdf}
   \caption{通知画面}
   \label{fig:c通知画面}
 \end{figure}
-
-
-
-
-
 
 
 \subsection{配達側}
@@ -506,14 +513,24 @@
 \end{figure}
 
 \subsubsection{パスワード変更}
-図\ref{fig:dパスワード変更画面}では、パスワード変更を行う画面である。
+パスワード変更を行う前に図\ref{fig:dパスワード認証画面}にて現在のパスワードの認証を行う。この画面では、現在のパスワードをテキストボックスに入力してもらい、横にある目のマークにて表示、非表示の切り替えが可能である。そして、パスワードを忘れた場合はこちら、よりパスワードを忘れた場合の対処を行う。パスワードが違う場合は、認証ボタンの上に赤文字にて表示されるものとなっている。
 
-
-\begin{figure}[H]
+現在のパスワード認証後、図\ref{fig:dパスワード変更画面}にてパスワード変更を行う。ここでは、現在のパスワードがすでに打ち込まれおり、新たなパスワードを再設定する。変更ボタンよりパスワード変更の確定を行う。
+\begin{figure}[tbp]
   \centering
-  \includegraphics[width=0.75\textwidth]{./pic/Deliveryer画面デザイン/パスワード変更画面.pdf}
-  \caption{パスワード変更画面}
-  \label{fig:dパスワード変更画面}
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/Deliveryer画面デザイン/パスワード変更前_パスワード認証画面.pdf}
+    \caption{パスワード認証画面}
+    \label{fig:dパスワード認証画面}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{.43\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{./pic/Deliveryer画面デザイン/パスワード変更画面.pdf}
+    \caption{パスワード変更画面}
+    \label{fig:dパスワード変更画面}
+  \end{minipage}
 \end{figure}
 
 \subsubsection{口座情報管理}
