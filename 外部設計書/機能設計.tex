@@ -417,6 +417,7 @@
   \caption{配達員用通知機能}
   \label{fig:deliverer通知機能}
 \end{figure}
+\clearpage
 
 \subsubsection{パスワード変更前のパスワード認証}
 パスワード変更を行うにあたり、現在のパスワード認証を行う機能である。
@@ -426,6 +427,7 @@
   \caption{パスワード変更における現在のパスワード認証機能}
   \label{fig:パスワード認証}
 \end{figure}
+\clearpage
 
 \subsubsection{パスワード変更}
 パスワード変更および更新を行う機能である。
@@ -685,13 +687,23 @@
 \end{figure}
 \clearpage
 
-\subsubsection{警告通知}
-配達員アカウントの詳細画面から警告通知を行う機能である。
+\subsubsection{警告通知送信}
+配達員アカウントの詳細画面から警告通知の送信を行う機能である。
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/警告通知機能.pdf}
-  \caption{警告通知機能}
-  \label{fig:警告通知機能}
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/警告通知送信機能.pdf}
+  \caption{警告通知送信機能}
+  \label{fig:警告通知送信機能}
+\end{figure}
+\clearpage
+
+\subsubsection{警告通知履歴}
+配達員アカウントの詳細画面から警告通知の履歴表示を行う機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/警告通知履歴機能.pdf}
+  \caption{警告通知履歴機能}
+  \label{fig:警告通知履歴機能}
 \end{figure}
 \clearpage
 
@@ -705,13 +717,33 @@
 \end{figure}
 \clearpage
 
-\subsubsection{店舗詳細表示}
+\subsubsection{店舗アカウント詳細表示}
 店舗アカウントの詳細の表示を行う機能である。
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/店舗詳細表示機能.pdf}
-  \caption{店舗詳細表示機能}
-  \label{fig:店舗詳細表示機能}
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/店舗アカウント詳細表示機能.pdf}
+  \caption{店舗アカウント詳細表示機能}
+  \label{fig:店舗アカウント詳細表示機能}
+\end{figure}
+\clearpage
+
+\subsubsection{店舗アカウント編集}
+店舗アカウントの編集を行う機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/店舗アカウント編集機能.pdf}
+  \caption{店舗アカウント編集機能}
+  \label{fig:店舗アカウント編集機能}
+\end{figure}
+\clearpage
+
+\subsubsection{店舗アカウント販売履歴}
+店舗アカウントの販売履歴を表示する機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/店舗アカウント販売履歴機能.pdf}
+  \caption{店舗アカウント販売履歴表示機能}
+  \label{fig:店舗アカウント販売履歴表示機能}
 \end{figure}
 \clearpage
 
@@ -735,23 +767,63 @@
 \end{figure}
 \clearpage
 
-\subsubsection{管理者詳細表示}
-管理者アカウントの詳細の表示を行う機能である。
+\subsubsection{管理者アカウント編集}
+管理者アカウントの編集を行う機能である。
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/管理者詳細表示機能.pdf}
-  \caption{管理者詳細表示機能}
-  \label{fig:管理者詳細表示機能}
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/管理者アカウント編集機能.pdf}
+  \caption{管理者アカウント編集機能}
+  \label{fig:管理者アカウント編集機能}
 \end{figure}
 \clearpage
 
-\subsubsection{精算管理}
-管理者アカウントから精算管理を行う機能である。
+\subsubsection{管理者アカウント管理者権限の編集}
+管理者アカウントの管理者権限の編集を行う機能である。
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/精算管理機能.pdf}
-  \caption{精算管理機能}
-  \label{fig:精算管理機能}
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/管理者アカウント管理者権限機能.pdf}
+  \caption{管理者アカウント管理者権限の編集}
+  \label{fig:管理者アカウント管理者権限の編集}
+\end{figure}
+\clearpage
+
+\subsubsection{精算管理詳細表示}
+管理者アカウントから精算管理の詳細を表示する機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/精算管理詳細機能.pdf}
+  \caption{精算管理詳細表示機能}
+  \label{fig:精算管理詳細表示機能}
+\end{figure}
+\clearpage
+
+\subsubsection{精算管理からの店舗画面選択}
+管理者アカウントから精算管理から店舗画面に選択する際の機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/精算管理店舗機能.pdf}
+  \caption{精算管理からの店舗画面選択機能}
+  \label{fig:精算管理からの店舗画面選択機能}
+\end{figure}
+\clearpage
+
+\subsubsection{精算管理からの配達員画面選択機能}
+管理者アカウントから精算管理から配達員画面に選択する際の機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/精算管理配達員機能.pdf}
+  \caption{精算管理からの配達員画面選択機能}
+  \label{fig:精算管理からの配達員画面選択機能}
+\end{figure}
+\clearpage
+
+\subsubsection{精算管理からの収益管理選択}
+管理者アカウントから精算管理から収益管理画面に選択する際の機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/精算管理収益管理機能.pdf}
+  \caption{精算管理からの収益管理画面選択機能}
+  \label{fig:精算管理からの収益管理画面選択機能}
 \end{figure}
 \clearpage
 
@@ -759,9 +831,29 @@
 収益の管理を行う機能である。
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/収益管理.pdf}
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/収益管理詳細機能.pdf}
   \caption{収益管理機能}
   \label{fig:収益管理}
+\end{figure}
+\clearpage
+
+\subsubsection{収益管理から総利用者数画面選択}
+収益の管理を総利用者数画面選択を行う機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/収益管理総利用者数機能.pdf}
+  \caption{収益管理総利用者数機能}
+  \label{fig:収益管理総利用者数機能}
+\end{figure}
+\clearpage
+
+\subsubsection{収益管理から注文数管理画面選択}
+収益の管理を注文数管理画面選択を行う機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/収益管理注文数管理機能.pdf}
+  \caption{収益管理注文管理数機能}
+  \label{fig:収益管理注文管理数機能}
 \end{figure}
 \clearpage
 
@@ -819,9 +911,29 @@
 注文数の管理を行う機能である。
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/注文数管理.pdf}
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/注文数管理詳細機能.pdf}
   \caption{注文数管理機能}
   \label{fig:注文数管理}
+\end{figure}
+\clearpage
+
+\subsubsection{注文数管理から総利用数画面選択}
+注文数の管理から総利用者数画面選択を行う機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/注文数管理総利用者数機能.pdf}
+  \caption{注文数管理から総利用数画面選択機能}
+  \label{fig:注文数管理から総利用者数画面選択}
+\end{figure}
+\clearpage
+
+\subsubsection{注文数管理から収益管理画面選択}
+注文数の管理から収益管理画面選択を行う機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/注文数管理収益管理機能.pdf}
+  \caption{注文数管理から収益管理画面選択機能}
+  \label{fig:注文数管理から総利用者数画面選択}
 \end{figure}
 \clearpage
 
@@ -829,11 +941,43 @@
 売り上げの管理を行う機能である。
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/売り上げ管理.pdf}
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/売り上げ管理詳細機能.pdf}
   \caption{売り上げ管理機能}
   \label{fig:売り上げ管理管理}
 \end{figure}
 \clearpage
+
+\subsubsection{売り上げ管理から総利用者数画面選択}
+売り上げの管理から総利用者数画面の選択を行う機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/売り上げ管理総利用者数機能.pdf}
+  \caption{売り上げ管理から総利用者数画面選択機能}
+  \label{fig:売り上げ管理管理から総利用者数画面選択}
+\end{figure}
+\clearpage
+
+\subsubsection{売り上げ管理から注文数画面選択}
+売り上げの管理から注文数数画面の選択を行う機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/売り上げ管理注文数機能.pdf}
+  \caption{売り上げ管理から注文数画面選択機能}
+  \label{fig:売り上げ管理管理から注文数画面選択}
+\end{figure}
+\clearpage
+
+\subsubsection{売り上げ管理から収益管理画面選択}
+売り上げの管理から収益管理画面の選択を行う機能である。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./Image/administrator機能設計/売り上げ管理収益管理機能.pdf}
+  \caption{売り上げ管理から収益管理画面選択機能}
+  \label{fig:売り上げ管理管理から収益管理画面選択}
+\end{figure}
+\clearpage
+
+
 
 \subsubsection{全体通知送信・管理}
 全体通知送信・管理を行う機能である。
