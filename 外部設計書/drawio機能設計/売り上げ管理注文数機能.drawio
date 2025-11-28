@@ -1,0 +1,121 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0" version="29.2.1">
+  <diagram name="ページ1" id="3-JBI89Y98U_Fp8nw2qg">
+    <mxGraphModel dx="1737" dy="957" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="400" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="farfk762uZ6YHoDy1e0X-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;container=0;" value="" vertex="1">
+          <mxGeometry height="714.99" width="508.67" x="55" y="115.01" as="geometry" />
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;container=0;" value="" vertex="1">
+          <mxGeometry height="714.99" width="523.2" x="621.8" y="115.01" as="geometry" />
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-3" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=0;" value="&lt;font style=&quot;font-size: 26px;&quot;&gt;ユーザー&lt;/font&gt;" vertex="1">
+          <mxGeometry height="32.50684931506849" width="123.53333333333336" x="247.57333333333327" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-4" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=0;" value="&lt;font style=&quot;font-size: 26px;&quot;&gt;システム&lt;/font&gt;" vertex="1">
+          <mxGeometry height="48.76027397260275" width="130.79999999999998" x="818" y="50.0032876712329" as="geometry" />
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-5" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;container=0;" value="" vertex="1">
+          <mxGeometry height="65.032125" width="65.032125" x="291.53" y="128.13410958904115" as="geometry" />
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;container=0;" value="" vertex="1">
+          <mxGeometry height="65.01369863013699" width="272.5" x="182.3699999999999" y="248.73328767123292" as="geometry" />
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-7" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;「売り上げ管理」を選択&lt;/span&gt;" vertex="1">
+          <mxGeometry height="18.74" width="249.47" x="195.6199999999999" y="271.87328767123296" as="geometry" />
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;container=0;" value="" vertex="1">
+          <mxGeometry height="65.01369863013699" width="272.5" x="182.3699999999999" y="341.7132876712328" as="geometry" />
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-9" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;売り上げ&lt;/span&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;管理画面表示&lt;/span&gt;" vertex="1">
+          <mxGeometry height="13.88" width="262.38" x="187.42999999999984" y="367.283287671233" as="geometry" />
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;container=0;" value="" vertex="1">
+          <mxGeometry height="65.01369863013699" width="272.5" x="758.31" y="248.73328767123292" as="geometry" />
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-11" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;売り上げ管理画面生成&lt;/span&gt;" vertex="1">
+          <mxGeometry height="18.74" width="263.44" x="759.72" y="271.87328767123284" as="geometry" />
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-12" edge="1" parent="1" source="farfk762uZ6YHoDy1e0X-6" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="farfk762uZ6YHoDy1e0X-10" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="567.0999999999999" y="608.7332876712329" as="sourcePoint" />
+            <mxPoint x="617.0999999999999" y="558.7332876712329" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-13" edge="1" parent="1" source="farfk762uZ6YHoDy1e0X-10" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.536;exitY=0.994;exitDx=0;exitDy=0;exitPerimeter=0;" target="farfk762uZ6YHoDy1e0X-8" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="904.9200000000001" y="373.7332876712328" />
+            </Array>
+            <mxPoint x="905" y="318.7332876712328" as="sourcePoint" />
+            <mxPoint x="744.9199999999998" y="461.7132876712328" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-14" edge="1" parent="1" source="farfk762uZ6YHoDy1e0X-5" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.518;entryY=0.003;entryDx=0;entryDy=0;entryPerimeter=0;" target="farfk762uZ6YHoDy1e0X-6" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="319.54999999999995" y="173.74698630136993" as="sourcePoint" />
+            <mxPoint x="795" y="248.73328767123292" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-15" edge="1" parent="1" source="farfk762uZ6YHoDy1e0X-8" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="farfk762uZ6YHoDy1e0X-73" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="309.74000000000024" y="433.7432876712328" as="sourcePoint" />
+            <mxPoint x="311.72499999999945" y="443.743287671233" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-37" edge="1" parent="1" source="farfk762uZ6YHoDy1e0X-73" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="farfk762uZ6YHoDy1e0X-38" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="455.1299999999992" y="485.003287671233" as="sourcePoint" />
+            <mxPoint x="765.9399999999995" y="230.0032876712329" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-38" parent="1" style="rounded=1;whiteSpace=wrap;html=1;container=0;" value="" vertex="1">
+          <mxGeometry height="65.01369863013699" width="272.5" x="750.6599999999995" y="452.4932876712328" as="geometry" />
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-39" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;注文数管理画面生成&lt;/span&gt;" vertex="1">
+          <mxGeometry height="18.74" width="263.44" x="752.0699999999996" y="475.6332876712331" as="geometry" />
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-40" edge="1" parent="1" source="farfk762uZ6YHoDy1e0X-38" style="endArrow=classic;html=1;rounded=0;exitX=0.519;exitY=1.012;exitDx=0;exitDy=0;entryX=0.994;entryY=0.545;entryDx=0;entryDy=0;entryPerimeter=0;exitPerimeter=0;" target="farfk762uZ6YHoDy1e0X-41" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="891.9300000000002" y="628.503287671233" />
+            </Array>
+            <mxPoint x="891.9300000000002" y="517.503287671233" as="sourcePoint" />
+            <mxPoint x="451.9299999999995" y="625.503287671233" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-41" parent="1" style="rounded=1;whiteSpace=wrap;html=1;container=0;" value="" vertex="1">
+          <mxGeometry height="65.01369863013699" width="272.5" x="179.29999999999936" y="592.503287671233" as="geometry" />
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-42" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;注文数管理&lt;/span&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;画面表示&lt;/span&gt;" vertex="1">
+          <mxGeometry height="13.88" width="262.38" x="184.3599999999993" y="618.0732876712327" as="geometry" />
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-43" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="65.03212499999995" width="65.03212499999995" x="275.9399999999995" y="696.6432876712329" as="geometry" />
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-44" parent="farfk762uZ6YHoDy1e0X-43" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;container=0;" value="" vertex="1">
+          <mxGeometry height="65.032125" width="65.032125" as="geometry" />
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-45" parent="farfk762uZ6YHoDy1e0X-43" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#FFFFFF;container=0;" value="" vertex="1">
+          <mxGeometry height="57.806333333333335" width="57.806333333333335" x="3.6333333333334394" y="4.063356164384004" as="geometry" />
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-46" parent="farfk762uZ6YHoDy1e0X-43" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;container=0;" value="" vertex="1">
+          <mxGeometry height="50.580541666666676" width="50.580541666666676" x="7.252133333333404" y="8.110458904109692" as="geometry" />
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-47" edge="1" parent="1" source="farfk762uZ6YHoDy1e0X-41" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.474;exitY=1.023;exitDx=0;exitDy=0;exitPerimeter=0;" target="farfk762uZ6YHoDy1e0X-44" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="305.9399999999997" y="659.003287671233" as="sourcePoint" />
+            <mxPoint x="315.0499999999994" y="722.3632876712327" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-73" parent="1" style="rounded=1;whiteSpace=wrap;html=1;container=0;" value="" vertex="1">
+          <mxGeometry height="65.01369863013699" width="272.5" x="182.36" y="452.49" as="geometry" />
+        </mxCell>
+        <mxCell id="farfk762uZ6YHoDy1e0X-74" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;「注文数管理」を選択&lt;/span&gt;" vertex="1">
+          <mxGeometry height="13.88" width="262.38" x="187.41999999999996" y="478.0600000000002" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

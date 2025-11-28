@@ -1,0 +1,122 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0" version="29.2.1">
+  <diagram name="ページ1" id="xXrXdQ0btZUf-DMTt84T">
+    <mxGraphModel dx="2316" dy="1276" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="400" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;container=0;" value="" vertex="1">
+          <mxGeometry height="674.99" width="508.67" x="55" y="105.01" as="geometry" />
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;container=0;" value="" vertex="1">
+          <mxGeometry height="674.99" width="523.2" x="621.8" y="105.01" as="geometry" />
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-6" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=0;" value="&lt;font style=&quot;font-size: 26px;&quot;&gt;ユーザー&lt;/font&gt;" vertex="1">
+          <mxGeometry height="32.50684931506849" width="123.53333333333336" x="247.57333333333327" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-7" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=0;" value="&lt;font style=&quot;font-size: 26px;&quot;&gt;システム&lt;/font&gt;" vertex="1">
+          <mxGeometry height="48.76027397260275" width="130.79999999999998" x="818" y="40.0032876712329" as="geometry" />
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-8" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;container=0;" value="" vertex="1">
+          <mxGeometry height="65.032125" width="65.032125" x="291.53" y="118.13410958904115" as="geometry" />
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;container=0;" value="" vertex="1">
+          <mxGeometry height="65.01369863013699" width="272.5" x="182.3699999999999" y="238.73328767123292" as="geometry" />
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-10" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;「売り上げ管理」を選択&lt;/span&gt;" vertex="1">
+          <mxGeometry height="18.74" width="249.47" x="195.6199999999999" y="261.87328767123296" as="geometry" />
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;container=0;" value="" vertex="1">
+          <mxGeometry height="65.01369863013699" width="272.5" x="182.3699999999999" y="331.7132876712329" as="geometry" />
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-12" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;売り上げ&lt;/span&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;管理画面表示&lt;/span&gt;" vertex="1">
+          <mxGeometry height="13.88" width="262.38" x="187.42999999999984" y="357.2832876712329" as="geometry" />
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-13" parent="1" style="rounded=1;whiteSpace=wrap;html=1;container=0;" value="" vertex="1">
+          <mxGeometry height="65.01369863013699" width="272.5" x="758.31" y="238.73328767123292" as="geometry" />
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-14" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;売り上げ管理画面生成&lt;/span&gt;" vertex="1">
+          <mxGeometry height="18.74" width="263.44" x="759.72" y="261.87328767123284" as="geometry" />
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-15" edge="1" parent="1" source="gpC6FQuJgrF9_duiwRXz-9" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="gpC6FQuJgrF9_duiwRXz-13" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="567.0999999999999" y="598.7332876712329" as="sourcePoint" />
+            <mxPoint x="617.0999999999999" y="548.7332876712329" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-16" edge="1" parent="1" source="gpC6FQuJgrF9_duiwRXz-13" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.536;exitY=0.994;exitDx=0;exitDy=0;exitPerimeter=0;" target="gpC6FQuJgrF9_duiwRXz-11" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="904.9200000000001" y="363.73328767123286" />
+            </Array>
+            <mxPoint x="905" y="308.73328767123286" as="sourcePoint" />
+            <mxPoint x="744.9199999999998" y="451.7132876712328" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-17" edge="1" parent="1" source="gpC6FQuJgrF9_duiwRXz-8" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.518;entryY=0.003;entryDx=0;entryDy=0;entryPerimeter=0;" target="gpC6FQuJgrF9_duiwRXz-9" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="319.54999999999995" y="163.74698630136993" as="sourcePoint" />
+            <mxPoint x="795" y="238.73328767123292" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-18" edge="1" parent="1" source="gpC6FQuJgrF9_duiwRXz-11" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="gpC6FQuJgrF9_duiwRXz-76" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="309.74000000000024" y="423.7432876712328" as="sourcePoint" />
+            <mxPoint x="311.7249999999999" y="433.743287671233" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-60" edge="1" parent="1" source="gpC6FQuJgrF9_duiwRXz-76" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="gpC6FQuJgrF9_duiwRXz-61" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="452.4599999999996" y="485.003287671233" as="sourcePoint" />
+            <mxPoint x="308.75999999999976" y="220.0032876712329" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-61" parent="1" style="rounded=1;whiteSpace=wrap;html=1;container=0;" value="" vertex="1">
+          <mxGeometry height="65.01369863013699" width="272.5" x="750.6599999999996" y="452.5032876712331" as="geometry" />
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-62" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;収益管理画面生成&lt;/span&gt;" vertex="1">
+          <mxGeometry height="18.74" width="263.44" x="752.0699999999995" y="475.643287671233" as="geometry" />
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-63" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;exitX=0.519;exitY=1.012;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitPerimeter=0;" target="gpC6FQuJgrF9_duiwRXz-64" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="902" y="600" />
+            </Array>
+            <mxPoint x="902.4300000000005" y="517.5132876712329" as="sourcePoint" />
+            <mxPoint x="462.00999999999954" y="624.373287671233" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-64" parent="1" style="rounded=1;whiteSpace=wrap;html=1;container=0;" value="" vertex="1">
+          <mxGeometry height="65.01369863013699" width="272.5" x="189.37999999999943" y="567.0032876712331" as="geometry" />
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-65" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;収益管理画面表示&lt;/span&gt;" vertex="1">
+          <mxGeometry height="13.88" width="262.38" x="194.43999999999937" y="592.5732876712328" as="geometry" />
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-66" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="65.03212499999995" width="65.03212499999995" x="286.0199999999995" y="673.7032876712329" as="geometry" />
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-67" parent="gpC6FQuJgrF9_duiwRXz-66" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;container=0;" value="" vertex="1">
+          <mxGeometry height="65.032125" width="65.032125" as="geometry" />
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-68" parent="gpC6FQuJgrF9_duiwRXz-66" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#FFFFFF;container=0;" value="" vertex="1">
+          <mxGeometry height="57.806333333333335" width="57.806333333333335" x="3.6333333333334394" y="4.063356164384004" as="geometry" />
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-69" parent="gpC6FQuJgrF9_duiwRXz-66" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;container=0;" value="" vertex="1">
+          <mxGeometry height="50.580541666666676" width="50.580541666666676" x="7.252133333333404" y="8.110458904109692" as="geometry" />
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-70" edge="1" parent="1" source="gpC6FQuJgrF9_duiwRXz-64" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.474;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" target="gpC6FQuJgrF9_duiwRXz-67" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points" />
+            <mxPoint x="316.01999999999975" y="633.5032876712331" as="sourcePoint" />
+            <mxPoint x="325.1299999999994" y="696.8632876712328" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-76" parent="1" style="rounded=1;whiteSpace=wrap;html=1;container=0;" value="" vertex="1">
+          <mxGeometry height="65.01369863013699" width="272.5" x="182.29000000000002" y="451.97" as="geometry" />
+        </mxCell>
+        <mxCell id="gpC6FQuJgrF9_duiwRXz-77" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;「収益管理」を選択&lt;/span&gt;" vertex="1">
+          <mxGeometry height="13.88" width="262.38" x="187.34999999999997" y="477.5400000000001" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
