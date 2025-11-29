@@ -1,0 +1,133 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0" version="29.2.1">
+  <diagram name="ページ1" id="MIbkc648vbrmUkJaDtjY">
+    <mxGraphModel dx="3660" dy="1640" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="400" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;container=0;" value="" vertex="1">
+          <mxGeometry height="868.73" width="508.67" x="40" y="111.27" as="geometry" />
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;container=0;" value="" vertex="1">
+          <mxGeometry height="868.73" width="523.2" x="606.8" y="111.27" as="geometry" />
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-3" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=0;" value="&lt;font style=&quot;font-size: 26px;&quot;&gt;ユーザー&lt;/font&gt;" vertex="1">
+          <mxGeometry height="32.50684931506849" width="123.53333333333336" x="231.50333333333333" y="38.1267123287671" as="geometry" />
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-4" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;container=0;" value="&lt;font style=&quot;font-size: 26px;&quot;&gt;システム&lt;/font&gt;" vertex="1">
+          <mxGeometry height="48.76027397260275" width="130.79999999999998" x="803" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-5" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;container=0;" value="" vertex="1">
+          <mxGeometry height="65.032125" width="65.032125" x="276.53" y="124.39082191780824" as="geometry" />
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-6" edge="1" parent="1" source="4d-LeKMkxngg-h0TYFIo-5" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.519;entryY=0.048;entryDx=0;entryDy=0;entryPerimeter=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="310.3900000000001" y="244.39" as="sourcePoint" />
+            <mxPoint x="309.0874999999994" y="220.00065753424644" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;container=0;" value="" vertex="1">
+          <mxGeometry height="65.01369863013699" width="272.5" x="177.3699999999999" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-8" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;「詳細」を選択&lt;/span&gt;" vertex="1">
+          <mxGeometry height="18.74" width="249.47" x="190.6199999999999" y="383.1400000000001" as="geometry" />
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;container=0;" value="" vertex="1">
+          <mxGeometry height="65.01369863013699" width="272.5" x="177.3699999999999" y="452.98" as="geometry" />
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-10" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;アカウント情報詳細画面表示&lt;/span&gt;" vertex="1">
+          <mxGeometry height="13.88" width="262.38" x="182.42999999999984" y="478.54999999999995" as="geometry" />
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;container=0;" value="" vertex="1">
+          <mxGeometry height="65.01369863013699" width="272.5" x="753.31" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-12" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;アカウント情報詳細画面生成&lt;/span&gt;" vertex="1">
+          <mxGeometry height="18.74" width="263.44" x="754.72" y="383.14" as="geometry" />
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-13" edge="1" parent="1" source="4d-LeKMkxngg-h0TYFIo-7" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="4d-LeKMkxngg-h0TYFIo-11" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="562.0999999999999" y="720" as="sourcePoint" />
+            <mxPoint x="612.0999999999999" y="670" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-14" edge="1" parent="1" source="4d-LeKMkxngg-h0TYFIo-11" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.536;exitY=0.994;exitDx=0;exitDy=0;exitPerimeter=0;" target="4d-LeKMkxngg-h0TYFIo-9" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="899.9200000000001" y="485" />
+            </Array>
+            <mxPoint x="900" y="430" as="sourcePoint" />
+            <mxPoint x="739.9199999999998" y="572.98" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-15" parent="1" style="rounded=1;whiteSpace=wrap;html=1;container=0;" value="" vertex="1">
+          <mxGeometry height="65.01369863013699" width="272.5" x="178.29999999999995" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-16" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 20px; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;配達員アカウント一覧画面表示&lt;/span&gt;" vertex="1">
+          <mxGeometry height="18.74" width="167.57" x="229.83000000000015" y="243.14" as="geometry" />
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-17" edge="1" parent="1" source="4d-LeKMkxngg-h0TYFIo-15" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="4d-LeKMkxngg-h0TYFIo-7" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="740" y="410" as="sourcePoint" />
+            <mxPoint x="790" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-18" edge="1" parent="1" source="4d-LeKMkxngg-h0TYFIo-9" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="4d-LeKMkxngg-h0TYFIo-127" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="304.74000000000024" y="520" as="sourcePoint" />
+            <mxPoint x="306.74499999999944" y="602.6500000000001" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-99" parent="1" style="rounded=1;whiteSpace=wrap;html=1;container=0;" value="" vertex="1">
+          <mxGeometry height="65.01369863013699" width="272.5" x="775.0699999999997" y="569.9999999999999" as="geometry" />
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-100" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;履歴書画面生成&lt;/span&gt;" vertex="1">
+          <mxGeometry height="18.74" width="263.44" x="776.4799999999996" y="593.14" as="geometry" />
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-101" edge="1" parent="1" source="4d-LeKMkxngg-h0TYFIo-127" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="4d-LeKMkxngg-h0TYFIo-99" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="466.43999999999966" y="608.6499999999995" as="sourcePoint" />
+            <mxPoint x="451.7599999999998" y="430.4799999999999" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-103" edge="1" parent="1" source="4d-LeKMkxngg-h0TYFIo-99" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.994;entryY=0.545;entryDx=0;entryDy=0;entryPerimeter=0;" target="4d-LeKMkxngg-h0TYFIo-104" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="911.7599999999998" y="746.4799999999999" />
+            </Array>
+            <mxPoint x="611.7599999999998" y="630.4799999999999" as="sourcePoint" />
+            <mxPoint x="471.7599999999998" y="743.4799999999999" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-104" parent="1" style="rounded=1;whiteSpace=wrap;html=1;container=0;" value="" vertex="1">
+          <mxGeometry height="65.01369863013699" width="272.5" x="179.1299999999997" y="710.4799999999999" as="geometry" />
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-105" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;履歴書画面表示&lt;/span&gt;" vertex="1">
+          <mxGeometry height="13.88" width="262.38" x="184.18999999999966" y="736.0500000000001" as="geometry" />
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-106" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="65.03212499999995" width="65.03212499999995" x="281.7599999999998" y="840.4799999999999" as="geometry" />
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-107" parent="4d-LeKMkxngg-h0TYFIo-106" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;container=0;" value="" vertex="1">
+          <mxGeometry height="65.032125" width="65.032125" as="geometry" />
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-108" parent="4d-LeKMkxngg-h0TYFIo-106" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#FFFFFF;container=0;" value="" vertex="1">
+          <mxGeometry height="57.806333333333335" width="57.806333333333335" x="3.6333333333334394" y="4.063356164384004" as="geometry" />
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-109" parent="4d-LeKMkxngg-h0TYFIo-106" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;container=0;" value="" vertex="1">
+          <mxGeometry height="50.580541666666676" width="50.580541666666676" x="7.252133333333404" y="8.110458904109692" as="geometry" />
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-110" edge="1" parent="1" source="4d-LeKMkxngg-h0TYFIo-104" style="endArrow=classic;html=1;rounded=0;exitX=0.491;exitY=1.011;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="4d-LeKMkxngg-h0TYFIo-107" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="351.7599999999998" y="830.4799999999999" as="sourcePoint" />
+            <mxPoint x="401.7599999999998" y="780.4799999999999" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-127" parent="1" style="rounded=1;whiteSpace=wrap;html=1;container=0;" value="" vertex="1">
+          <mxGeometry height="65.01369863013699" width="272.5" x="177.36999999999995" y="568.13" as="geometry" />
+        </mxCell>
+        <mxCell id="4d-LeKMkxngg-h0TYFIo-128" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;「履歴書」を選択&lt;/span&gt;" vertex="1">
+          <mxGeometry height="18.74" width="263.44" x="178.7799999999998" y="591.2700000000001" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y \
     libglu1-mesa \
     openjdk-11-jdk \
     wget \
+    dos2unix \
     && rm -rf /var/lib/apt/lists/*
 
 # Flutter SDKのインストール
@@ -31,6 +32,7 @@ WORKDIR /app
 
 # エントリーポイントスクリプトをコピー
 COPY docker/flutter/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN dos2unix /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
