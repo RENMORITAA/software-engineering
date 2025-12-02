@@ -1,0 +1,68 @@
+\section{API設計}
+バックエンド（FastAPI）で実装する主なAPIエンドポイントを記述する。
+
+\subsection{認証 (Auth)}
+
+\textbf{ログイン} \\
+POST /auth/login
+\begin{itemize}
+    \item \textbf{Request}: email, password
+    \item \textbf{Response}: access\_token, token\_type, user\_role
+\end{itemize}
+
+\textbf{新規登録} \\
+POST /auth/register
+\begin{itemize}
+    \item \textbf{Request}: email, password, user\_type, profile\_data(name, address, etc.)
+    \item \textbf{Response}: user\_id, message
+\end{itemize}
+
+\subsection{商品 (Products)}
+
+\textbf{店舗別商品一覧取得} \\
+GET /stores/\{store\_id\}/products
+\begin{itemize}
+    \item \textbf{Request}: store\_id (path)
+    \item \textbf{Response}: list[product\_object]
+\end{itemize}
+
+\textbf{商品登録（店舗のみ）} \\
+POST /products
+\begin{itemize}
+    \item \textbf{Request}: token, name, price, description, image, stock\_status
+    \item \textbf{Response}: product\_id, message
+\end{itemize}
+
+\subsection{注文 (Orders)}
+
+\textbf{注文作成} \\
+POST /orders
+\begin{itemize}
+    \item \textbf{Request}: token, store\_id, items[{product\_id, quantity}], total\_price
+    \item \textbf{Response}: order\_id, message
+\end{itemize}
+
+\textbf{注文ステータス更新} \\
+PUT /orders/\{order\_id\}/status
+\begin{itemize}
+    \item \textbf{Request}: token, status (prepared, delivering, delivered)
+    \item \textbf{Response}: message
+\end{itemize}
+
+\subsection{配達 (Delivery)}
+
+\textbf{配達可能案件一覧取得} \\
+GET /delivery/jobs
+\begin{itemize}
+    \item \textbf{Request}: token, current\_location
+    \item \textbf{Response}: list[order\_object]
+\end{itemize}
+
+\textbf{案件受注} \\
+POST /delivery/jobs/\{order\_id\}/accept
+\begin{itemize}
+    \item \textbf{Request}: token, order\_id
+    \item \textbf{Response}: message
+\end{itemize}
+
+\newpage
