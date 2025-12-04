@@ -8,6 +8,9 @@ on:
     paths:
       - '**/main.tex'
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
