@@ -1,0 +1,45 @@
+本章では、Flutter の開発における Dart の命名規約およびコーディングスタイルを示す。
+
+\subsection{命名規約}
+
+\subsubsection{ケース（表記形式）}
+
+表\ref{table:case} に命令時に用いるケースの定義を示す。
+
+\begin{table}[h]
+\centering
+\caption{命名時に用いるケースの定義}
+\label{table:case}
+\begin{tabular}{|c|c|c|}
+\hline
+ケース & 説明 & 例 \\
+\hline
+lowerCamelCase & 先頭小文字,単語区切り大文字 & userName \\
+UpperCamelCase & 先頭大文字,単語区切り大文字 & UserProfile \\
+snake\_case & 小文字,アンダースコアつなぎ & user\_profile \\
+UPPER\_SNAKE\_CASE & 大文字,アンダースコアつなぎ & MAX\_COUNT \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Dart の命名規約}
+
+表\ref{table:naming} に Dart における対象ごとの命名規約を示す。
+
+\begin{table}[h]
+\centering
+\caption{Dart の命名規約}
+\label{table:naming}
+\begin{tabular}{|c|c|c|}
+\hline
+対象 & ケース & 例 \\
+\hline
+モジュール名/パッケージ名 & snake\_case & user\_profile, my\_package \\
+ファイル名/ディレクトリ名 & snake\_case & user\_detail\_page.dart \\
+クラス名 & UpperCamelCase & UserModel \\
+メソッド/関数名 & lowerCamelCase & getUserData() \\
+変数名 & lowerCamelCase & userCount \\
+定数名 & lowerCamelCase & maxRetryCount \\
+\hline
+\end{tabular}
+\end{table}
