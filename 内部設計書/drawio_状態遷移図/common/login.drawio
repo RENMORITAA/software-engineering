@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0" version="29.2.6">
   <diagram name="ページ1" id="h7WYVvq2mX1OggGuKnpI">
-    <mxGraphModel dx="1815" dy="909" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="400" pageHeight="570" background="none" math="0" shadow="0">
+    <mxGraphModel dx="1077" dy="435" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="400" pageHeight="570" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -119,8 +119,8 @@
         <mxCell id="aDGe4TjBTntoOj6C8t2w-26" parent="1" style="rounded=1;whiteSpace=wrap;html=1;container=0;dashed=1;" value="" vertex="1">
           <mxGeometry height="110" width="210" x="-92.3" y="870" as="geometry" />
         </mxCell>
-        <mxCell id="aDGe4TjBTntoOj6C8t2w-27" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;div style=&quot;text-align: start;&quot;&gt;&lt;span style=&quot;font-family: 游ゴシック; white-space-collapse: preserve; background-color: rgb(255, 255, 255);&quot;&gt;&lt;font style=&quot;font-size: 20px;&quot;&gt;　LoginPage&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: start;&quot;&gt;&lt;span style=&quot;font-size: 20px; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;クラス呼び出し&lt;/span&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="18.74" width="179.74" x="-77.17" y="915.6300000000001" as="geometry" />
+        <mxCell id="aDGe4TjBTntoOj6C8t2w-27" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;div style=&quot;text-align: start;&quot;&gt;&lt;span style=&quot;font-family: 游ゴシック; white-space-collapse: preserve; background-color: rgb(255, 255, 255);&quot;&gt;&lt;font style=&quot;font-size: 20px;&quot;&gt;ChangeRootPage&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: start;&quot;&gt;&lt;span style=&quot;font-size: 20px; background-color: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); font-family: 游ゴシック; white-space-collapse: preserve; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;で呼び出すRouter&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: start;&quot;&gt;&lt;span style=&quot;font-size: 20px; background-color: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); font-family: 游ゴシック; white-space-collapse: preserve; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;を&lt;/span&gt;&lt;span style=&quot;font-size: 20px; background-color: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); font-family: 游ゴシック; white-space-collapse: preserve; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;RootRouteとす&lt;/span&gt;&lt;span style=&quot;background-color: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-family: 游ゴシック; font-size: 20px; white-space-collapse: preserve;&quot;&gt;る&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="18.74" width="187.17" x="-77.17" y="915.63" as="geometry" />
         </mxCell>
         <mxCell id="aDGe4TjBTntoOj6C8t2w-30" edge="1" parent="1" source="aDGe4TjBTntoOj6C8t2w-20" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.519;exitY=-0.003;exitDx=0;exitDy=0;exitPerimeter=0;strokeWidth=2;" target="coWmceu6TPjgOaM4Jl1u-1" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
