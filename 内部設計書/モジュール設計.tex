@@ -26,7 +26,6 @@
 \end{tabular}
 \end{table}
 
-%画像の追加
 
 %画像の追加
 
@@ -184,6 +183,65 @@
 &\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
 
 &\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\subsubsection{共通}
+
+
+\begin{table}[h]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{change\_root\_page.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{アプリ全体を包括するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{岡林磨目} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & ChangeRootPage\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & アプリの大まかな区別である LoginRoute と RootRoute を包括しているクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+
+&\multicolumn{2}{p{0.9\linewidth}|}{app\_router.gr.dart の LoginRoute クラスを組み込む} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+
+\begin{table}[h]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{new\_member.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{新規会員登録画面を生成するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{梶本和希} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & NewMember\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 新規会員登録画面のWidgetを動的に変更するクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{new\_member.dart の NewMenberState クラスを組み込む} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & NewMemberState\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 新規会員登録画面を表示するクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{rule\_screen.dart の RuleScreen クラスを呼び出すことで利用規約を表示
+
+login\_page.dart のLoginPageクラスを呼び出しログイン画面を表示
+
+戻るボタンの選択で前のモジュールに戻る} \\ \hline
+
+
 \end{tabular}
 \end{table}
 
