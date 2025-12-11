@@ -304,3 +304,43 @@ mypage.dart の ScrollMyPageDetail クラスを組み込む} \\ \hline
 \end{table}
 
 %画像の追加
+\begin{table}[h]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{login\_page.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{ログイン画面を生成するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{梶本和希} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & LoginPage\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & ログイン画面のWidgetを動的に変更するクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{login\_page.dartのLoginPageStateクラスを組み込む} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & LoginPageState \\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & ログイン画面の状態を返すクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & State \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{new\_member.dartのNewMemberクラスを呼び出すことで、新規会員登録画面を表示
+
+login\_page.dartのLoginAppBarクラスを組み込む} \\ \hline
+
+
+\multirow{9}{*}{構成要素} & クラス名 & LoginAppBar\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget,imprementsPrefferdSizeWidget \\ \cline{2-3}
+& 処理概要 & ログイン画面用に作成を行ったAppBarを生成するコンポーネント \\ \cline{2-3}
+& 入力 & ChangeGeneralCorporationstore \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\end{tabular}
+\end{table}
+
+%画像の追加
