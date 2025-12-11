@@ -1,5 +1,7 @@
 \subsection{overlay}
 
+\subsubsection{共通機能}
+
 \begin{table}[h]
 \centering
 %\caption{}
@@ -128,3 +130,34 @@
 はいを押すと変更確定処理後、ConfirmInfChange().hide() により controlle.close が呼び出されオーバレイを閉じる} \\ \hline
 \end{tabular}
 \end{table}
+
+\subsubsection{配達員}
+
+\begin{table}[h]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{rule\_screen.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{利用規約を表示するオーバーレイ}  \\ \hline
+責任者 &\multicolumn{2}{l|}{岡林磨目} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & RuleScreen\\ \cline{2-3}
+& クラス種類 & OverEntry \\ \cline{2-3}
+& 処理概要 & Overlayの内容を返す \\ \cline{2-3}
+& 入力 & Buildcontext context \\ \cline{2-3}
+& 出力 & Maaterial \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+
+&\multicolumn{2}{p{0.9\linewidth}|}{rule\_screen.dart の RuleScreen().show(context)を呼び出すとオーバーレイ表示
+
+閉じるを押すとRuleScreen().hide()により controlle.closeが呼び出されオーバレイを閉じる} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{./状態遷移図/delivery_状態遷移図/Notice_detail.pdf}
+  \caption{配達員アカウント管理画面}
+  \label{fig:a配達員アカウント管理画面}
+\end{figure}
