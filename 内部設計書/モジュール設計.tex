@@ -1,3 +1,176 @@
+以下に本アプリケーションのモジュール設計を示す。
+
+\begin{itemize}
+  \item overlay は、アプリケーション上で一番上のレイヤーに表示されるウィジェットをまとめたモジュー
+ルについて記述している。
+  \item provider は、アプリケーション全体で使用する共通の変数をまとめたモジュールについて記述して
+いる。
+  \item page は、アプリケーションの画面をまとめたモジュールについて記述している。
+  \item component は、page で用いられるパーツをまとめたモジュールについて記述している。
+\end{itemize}
+
+
+\begin{table}[htbp]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor[RGB]{200,200,200}
+\multicolumn{2}{|c|}{\textbf{overlay モジュール}} \\
+\hline
+\textbf{モジュール名} & \textbf{概要} \\
+\hline
+\multicolumn{2}{|l|}{\textbf{＜共通機能＞}} \\
+\hline
+logout.dart & ログアウトを確定するかどうかを確認するオーバーレイ \\
+withdraw.dart & 退会を確定するかどうかを確認するオーバーレイ \\
+cancel\_inf\_change.dart & 情報の変更をキャンセルするかを確認するオーバーレイ \\
+confirm\_inf\_change.dart & 情報の変更を確定するかを確認するオーバーレイ \\
+rule\_screen.dart & 利用規約を表示するオーバーレイ \\
+\hline
+\multicolumn{2}{|l|}{\textbf{＜依頼側＞}} \\
+\hline
+\multicolumn{2}{|l|}{\textbf{＜配達側＞}} \\
+\hline
+d\_payslip\_change\_date.dart & 配達員の給与明細の表示される期間を変更するモジュール \\
+\hline
+\multicolumn{2}{|l|}{\textbf{＜店舗側＞}} \\
+\hline
+\end{tabularx}
+\caption{overlay モジュールの構成}
+\end{table}
+
+
+\begin{table}[htbp]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor[RGB]{200,200,200}
+\multicolumn{2}{|c|}{\textbf{provider モジュール}} \\
+\hline
+\textbf{モジュール名} & \textbf{概要} \\
+\hline
+change\_user\_role.dart & アプリ全体で使用するプロバイダモジュール \\
+app\_router.gr.dart & RouterをRouterに変換するモジュール \\
+\hline
+\end{tabularx}
+\caption{provider モジュールの構成}
+\end{table}
+
+
+\begin{table}[htbp]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor[RGB]{200,200,200}
+\multicolumn{2}{|c|}{\textbf{page モジュール}} \\
+\hline
+\textbf{モジュール名} & \textbf{概要} \\
+\hline
+\multicolumn{2}{|l|}{\textbf{＜共通機能＞}} \\
+\hline
+change\_root\_page.dart & アプリ全体を包括するモジュール \\
+new\_member.dart & 新規会員登録画面を生成するモジュール \\
+mypage.dart & マイページ画面を表示するモジュール \\
+login\_page.dart & ログイン画面を生成するモジュール \\
+logout\_withdraw\_page.dart & ログアウト・退会画面を生成するモジュール \\
+\hline
+\multicolumn{2}{|l|}{\textbf{＜依頼側＞}} \\
+\hline
+c\_root\_page.dart & 「ホーム」、「カート」、「マップ」、「マイページ」、「通知」を包括するモジュール \\
+c\_info.dart & 依頼者の会員情報画面を表示するモジュール \\
+c\_info\_change.dart & 依頼者の会員情報変更画面を表示するモジュール \\
+c\_address.dart & 配達先住所確認画面を表示するモジュール \\
+c\_address\_change.dart & 配達先住所編集画面を表示するモジュール \\
+c\_address\_add.dart & 配達先住所追加画面を表示するモジュール \\
+c\_banking\_info.dart & 口座情報管理画面を表示するモジュール \\
+c\_banking\_info\_change.dart & 口座情報変更画面を表示するモジュール \\
+c\_banking\_info\_check.dart & 口座情報変更を確認する画面を表示するモジュール \\
+c\_order\_history.dart & 注文履歴一覧画面を表示するモジュール \\
+c\_order\_history\_detail.dart & 注文履歴詳細画面を表示するモジュール \\
+c\_order\_arrival\_report.dart & 商品到着報告画面を表示するモジュール \\
+c\_home.dart & 依頼者のホーム画面を表示するモジュール \\
+c\_payment.dart & 支払い明細画面を表示するモジュール \\
+c\_product\_list.dart & 商品一覧画面を表示するモジュール \\
+c\_order\_check.dart & 注文確認画面を表示するモジュール \\
+c\_order\_confirm.dart & 注文確定画面を表示するモジュール \\
+c\_cart.dart & カート情報を表示するモジュール \\
+c\_map\_search.dart & マップでの店舗検索を行う画面を表示するモジュール \\
+\hline
+\multicolumn{2}{|l|}{\textbf{＜配達側＞}} \\
+\hline
+d\_home.dart & ホーム画面を表示するモジュール \\
+d\_notice.dart & 通知一覧画面を表示するモジュール \\
+d\_notice\_detail.dart & 通知詳細画面を表示するモジュール \\
+d\_job\_select.dart & 求人検索一覧画面を表示するモジュール \\
+d\_job\_detail.dart & 求人情報の詳細画面を表示するモジュール \\
+d\_map.dart & 求人情報より配達先ルートを示したマップを表示するモジュール \\
+d\_banking\_information.dart & 口座情報を示した画面を表示するモジュール \\
+d\_resume\_detail.dart & 履歴書情報を示した画面を表示するモジュール \\
+d\_resume\_change.dart & 履歴書情報を変更する画面を表示するモジュール \\
+d\_payslip.dart & 給与明細を示した画面を表示するモジュール \\
+d\_delivery\_history.dart & 配達履歴の一覧を示した画面を表示するモジュール \\
+d\_delivery\_history\_detail.dart & 配達履歴詳細を示した画面を表示するモジュール \\
+d\_banking\_information\_change.dart & 口座情報変更を行う画面を表示するモジュール \\
+d\_banking\_information\_check.dart & 口座情報の変更を確認する画面を表示するモジュール \\
+d\_job\_map\_select.dart & マップにて配達員先住所(求人情報)を検索する画面を表示するモジュール \\
+d\_root\_page.dart & 「ホーム」、「求人検索」、「マップ」、「受注」、「マイページ」を包括するモジュール \\
+\hline
+\multicolumn{2}{|l|}{\textbf{＜店舗側＞}} \\
+\hline
+s\_root\_page.dart & 「ホーム」、「業務」、「注文管理」、「売上」、「マイページ」を包括するモジュール \\
+s\_info.dart & 店舗の会員情報画面を表示するモジュール \\
+s\_info\_change.dart & 店舗の会員情報変更画面を表示するモジュール \\
+s\_inventory\_status.dart & 店舗の在庫ステータス画面を表示するモジュール \\
+s\_menu\_regist.dart & メニュー情報の新規登録画面を表示するモジュール \\
+s\_menu\_change.dart & メニュー情報の変更画面を表示するモジュール \\
+s\_menu\_delete.dart & メニュー情報の削除画面を表示するモジュール \\
+s\_menu\_edit.dart & メニュー情報設定画面を表示するモジュール \\
+s\_order\_list.dart & 受注一覧画面を表示するモジュール \\
+s\_work.dart & 業務画面を表示するモジュール \\
+s\_home.dart & 店舗ホーム画面を表示するモジュール \\
+s\_delivery\_complete.dart & 受け渡し完了確認画面を表示するモジュール \\
+s\_banking\_info.dart & 口座情報管理画面を表示するモジュール \\
+\hline
+\end{tabularx}
+\caption{page モジュールの構成}
+\end{table}
+
+
+\begin{table}[htbp]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor[RGB]{200,200,200}
+\multicolumn{2}{|c|}{\textbf{component モジュール}} \\
+\hline
+\textbf{モジュール名} & \textbf{概要} \\
+\hline
+\multicolumn{2}{|l|}{\textbf{＜共通機能＞}} \\
+\hline
+finish\_screen.dart & 完了画面を生成するコンポーネント \\
+over\_screen\_controller.dart & オーバーレイの表示、非表示の操作を行うコンポーネント \\
+\hline
+\multicolumn{2}{|l|}{\textbf{＜依頼側＞}} \\
+\hline
+c\_number\_count.dart & 注文数のカウントを増加(減少)するボタンを生成するレイヤー \\
+general\_form.dart & 一般ユーザが入力するフォームを出力するコンポーネント \\
+password\_input.dart & パスワードを入力するフォームを作成するコンポーネント \\
+\hline
+\multicolumn{2}{|l|}{\textbf{＜配達側＞}} \\
+\hline
+d\_notice\_change.dart & 通知画面にて配達業務と運営メールの切り替えにて使用するモジュール \\
+d\_job.dart & 求人情報を表示するモジュール(求人検索での求人を選択する際に使用) \\
+button\_set.dart & 任意のテキストを記載したボタンを生成するレイヤー \\
+\hline
+\multicolumn{2}{|l|}{\textbf{＜店舗側＞}} \\
+\hline
+
+\hline
+\end{tabularx}
+\caption{component モジュールの構成}
+\end{table}
+
+
 \subsection{overlay}
 
 \subsubsection{共通機能}
