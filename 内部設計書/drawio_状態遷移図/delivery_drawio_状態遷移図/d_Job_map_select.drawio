@@ -1,0 +1,112 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0" version="29.2.4">
+  <diagram name="ページ1" id="h7WYVvq2mX1OggGuKnpI">
+    <mxGraphModel dx="1105" dy="1548" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="400" pageHeight="570" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="w2uVqQ3-Yz1XoFL-ZSt8-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;container=0;dashed=1;" value="" vertex="1">
+          <mxGeometry height="110" width="210" x="-27.69999999999999" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="w2uVqQ3-Yz1XoFL-ZSt8-7" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-size: 20px;&quot;&gt;DJobMapSelect&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-size: 20px;&quot;&gt;クラス&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-size: 20px;&quot;&gt;呼び出し&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="18.74" width="249.47" x="-49.000000000000114" y="76.5032876712329" as="geometry" />
+        </mxCell>
+        <mxCell id="6Eu5DlcZq5zBKxaDudT4-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="107" width="207" x="-25.69999999999999" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="6Eu5DlcZq5zBKxaDudT4-4" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;APIと通信&lt;/span&gt;&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="18.74" width="249.47" x="-49" y="270.13" as="geometry" />
+        </mxCell>
+        <mxCell id="yrsNFQZONvkt2iydv9tW-84" edge="1" parent="1" source="w2uVqQ3-Yz1XoFL-ZSt8-6" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;strokeWidth=2;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="6Eu5DlcZq5zBKxaDudT4-2" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="35" y="440" as="sourcePoint" />
+            <mxPoint x="35" y="510" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yrsNFQZONvkt2iydv9tW-113" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" value="" vertex="1">
+          <mxGeometry height="107" width="207" x="-24.629999999999995" y="407" as="geometry" />
+        </mxCell>
+        <mxCell id="yrsNFQZONvkt2iydv9tW-114" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;求人情報住所、&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;周辺マップ、求人情報&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 20px; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;を取得&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="18.74" width="249.47" x="-43.93000000000001" y="450.13" as="geometry" />
+        </mxCell>
+        <mxCell id="yrsNFQZONvkt2iydv9tW-115" edge="1" parent="1" source="6Eu5DlcZq5zBKxaDudT4-2" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;strokeWidth=2;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="yrsNFQZONvkt2iydv9tW-113" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="79.07" y="327" as="sourcePoint" />
+            <mxPoint x="37.06999999999999" y="697" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yrsNFQZONvkt2iydv9tW-116" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="107" width="207" x="-23.629999999999995" y="594" as="geometry" />
+        </mxCell>
+        <mxCell id="yrsNFQZONvkt2iydv9tW-117" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;マップ画面を&lt;/span&gt;&lt;span style=&quot;font-size: 20px; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;表示&lt;/span&gt;" vertex="1">
+          <mxGeometry height="18.74" width="249.47" x="-46.93000000000001" y="639.13" as="geometry" />
+        </mxCell>
+        <mxCell id="yrsNFQZONvkt2iydv9tW-118" edge="1" parent="1" source="yrsNFQZONvkt2iydv9tW-113" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;strokeWidth=2;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="yrsNFQZONvkt2iydv9tW-116" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="79.07" y="514" as="sourcePoint" />
+            <mxPoint x="37.06999999999999" y="884" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yrsNFQZONvkt2iydv9tW-152" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="107" width="207" x="-154.7" y="817" as="geometry" />
+        </mxCell>
+        <mxCell id="yrsNFQZONvkt2iydv9tW-153" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;求人情報を選択&lt;/span&gt;" vertex="1">
+          <mxGeometry height="18.74" width="249.47" x="-178" y="863.1300000000001" as="geometry" />
+        </mxCell>
+        <mxCell id="yrsNFQZONvkt2iydv9tW-164" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;strokeWidth=2;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="-53.09" y="777" as="sourcePoint" />
+            <mxPoint x="221.91" y="777" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yrsNFQZONvkt2iydv9tW-165" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;strokeWidth=2;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="81.16" y="776" as="sourcePoint" />
+            <mxPoint x="80.48999999999992" y="699.9999999999995" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="yrsNFQZONvkt2iydv9tW-166" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;strokeWidth=2;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="yrsNFQZONvkt2iydv9tW-152" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="-51.94" y="777" as="sourcePoint" />
+            <mxPoint x="-210.94" y="657" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LUG-Z4M1Aj0yrEuK-uNR-16" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="107" width="207" x="118.19999999999996" y="818" as="geometry" />
+        </mxCell>
+        <mxCell id="LUG-Z4M1Aj0yrEuK-uNR-17" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;「戻る」を選択&lt;/span&gt;" vertex="1">
+          <mxGeometry height="18.74" width="249.47" x="95.9" y="865.1300000000001" as="geometry" />
+        </mxCell>
+        <mxCell id="LUG-Z4M1Aj0yrEuK-uNR-21" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;strokeWidth=2;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="LUG-Z4M1Aj0yrEuK-uNR-16" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="220.95999999999995" y="778" as="sourcePoint" />
+            <mxPoint x="61.95999999999995" y="658" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LUG-Z4M1Aj0yrEuK-uNR-33" parent="1" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;" value="" vertex="1">
+          <mxGeometry height="107" width="207" x="-152.99999999999997" y="982" as="geometry" />
+        </mxCell>
+        <mxCell id="LUG-Z4M1Aj0yrEuK-uNR-38" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;strokeWidth=2;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="LUG-Z4M1Aj0yrEuK-uNR-33" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="-50" y="925" as="sourcePoint" />
+            <mxPoint x="-50" y="983" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LUG-Z4M1Aj0yrEuK-uNR-39" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;DJobDetailクラス&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;を呼び出す&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="18.74" width="249.47" x="-178" y="1029" as="geometry" />
+        </mxCell>
+        <mxCell id="LUG-Z4M1Aj0yrEuK-uNR-41" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="107" width="207" x="120.90000000000003" y="982" as="geometry" />
+        </mxCell>
+        <mxCell id="LUG-Z4M1Aj0yrEuK-uNR-42" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;strokeWidth=2;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="LUG-Z4M1Aj0yrEuK-uNR-41" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="223.9" y="925" as="sourcePoint" />
+            <mxPoint x="223.9" y="983" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LUG-Z4M1Aj0yrEuK-uNR-43" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;1つ前のパスに&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;戻る&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="18.74" width="249.47" x="95.9" y="1029" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
