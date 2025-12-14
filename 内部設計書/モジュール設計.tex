@@ -203,7 +203,7 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 %画像の追加
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/withdraw.pdf}
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/withdraw.pdf}
   \caption{withdraw.dart の状態遷移図}
   \label{fig:withdraw.dart}
 \end{figure}
@@ -262,7 +262,7 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 %画像の追加
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/RuleScreen.pdf}
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/RuleScreen.pdf}
   \caption{rule\_screen.dart の状態遷移図}
   \label{fig:rule_screen.dart}
 \end{figure}
@@ -295,7 +295,7 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 %画像の追加
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/CancelInfChange.pdf}
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/CancelInfChange.pdf}
   \caption{cancel\_inf\_change.dart の状態遷移図}
   \label{fig:cancel_inf_change.dart}
 \end{figure}
@@ -329,7 +329,7 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 %画像の追加
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/ConfirmInfChange.pdf}
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/ConfirmInfChange.pdf}
   \caption{confirm\_inf\_change.dart の状態遷移図}
   \label{fig:confirm_inf_change.dart}
 \end{figure}
@@ -363,15 +363,15 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 %画像の追加
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/RuleScreen.pdf}
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/RuleScreen.pdf}
   \caption{rule\_screen.dart の状態遷移図}
-  \label{fig:rule_screen.dart}
+  \label{fig:rule_screen_signedin.dart}
 \end{figure}
 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.5\textwidth]{./状態遷移図/delivery_状態遷移図/Notice_detail.pdf}
+  \safeincludegraphics[width=0.5\textwidth]{./状態遷移図/delivery_状態遷移図/Notice_detail.pdf}
   \caption{配達員アカウント管理画面}
   \label{fig:a配達員アカウント管理画面}
 \end{figure}
@@ -432,7 +432,7 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 %画像の追加
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/ChangeRootPage.pdf}
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/ChangeRootPage.pdf}
   \caption{change\_root\_page.dart の状態遷移図}
   \label{fig:change_root_page.dart}
 \end{figure}
@@ -475,7 +475,7 @@ login\_page.dart のLoginPageクラスを呼び出しログイン画面を表示
 %画像の追加
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/NewMember.pdf}
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/NewMember.pdf}
   \caption{new\_member.dart の状態遷移図}
   \label{fig:new_member.dart}
 \end{figure}
@@ -541,7 +541,7 @@ mypage.dart の ScrollMyPageDetail クラスを組み込む} \\ \hline
 %画像の追加
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/MyPage.pdf}
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/MyPage.pdf}
   \caption{mypage.dart の状態遷移図}
   \label{fig:mypage.dart}
 \end{figure}
@@ -587,13 +587,25 @@ login\_page.dartのLoginAppBarクラスを組み込む} \\ \hline
 \end{tabular}
 \end{table}
 
-%画像の追加
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/LoginPage.pdf}
-  \caption{login\_page.dart の状態遷移図}
-  \label{fig:login_page.dart}
-\end{figure}
+%画像の追加（ファイルが存在する場合のみ表示）
+\IfFileExists{状態遷移図/common_状態遷移図/LoginPage.pdf}{%
+  \begin{figure}[H]
+    \centering
+    \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/LoginPage.pdf}
+    \caption{login\_page.dart の状態遷移図}
+    \label{fig:login_page.dart}
+  \end{figure}
+}{%
+  % 図ファイル未配置時はプレースホルダのみ表示
+  \begin{figure}[H]
+    \centering
+    \fbox{\begin{minipage}{0.7\textwidth}\centering
+      状態遷移図/common\_状態遷移図/LoginPage.pdf が存在しません。
+    \end{minipage}}
+    \caption{login\_page.dart の状態遷移図（ファイル未配置）}
+    \label{fig:login_page.dart}
+  \end{figure}
+}
 
 
 
@@ -622,7 +634,7 @@ logout.dartのLogoutクラスの呼び出すことでログアウトオーバー
 %画像の追加
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/LogoutWithdraw.pdf}
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/LogoutWithdraw.pdf}
   \caption{logout\_withdraw\_page.dart の状態遷移図}
   \label{fig:logout_withdraw_page.dart}
 \end{figure}

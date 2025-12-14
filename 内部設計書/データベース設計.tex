@@ -1,11 +1,14 @@
 以下に、本アプリケーションにおける主要なデータベース設計を示す。
 
+\subsection{テーブル一覧}
+
 \begin{table}[h]
 \centering
 \caption{テーブル一覧}
-\begin{tabular}{|l|l|}
+\label{tab:db_list}
+\begin{tabularx}{\textwidth}{|l|X|}
 \hline
-テーブル名 & 説明 \\ \hline
+\rowcolor[RGB]{230,230,230} \textbf{テーブル名} & \textbf{説明} \\ \hline
 users & 全ユーザ（依頼者・配達員・店舗・管理者）の基底情報 \\ \hline
 requester\_profiles & 依頼者の詳細情報（住所、クレジットカード情報等） \\ \hline
 deliverer\_profiles & 配達員の詳細情報（履歴書、稼働状況、口座情報） \\ \hline
@@ -15,17 +18,17 @@ orders & 注文情報のヘッダー（合計金額、ステータス、依頼�
 order\_details & 注文明細（商品ID、数量） \\ \hline
 deliveries & 配達情報（担当配達員ID、位置情報ログ） \\ \hline
 notifications & 通知情報 \\ \hline
-\end{tabular}
+\end{tabularx}
 \end{table}
 
 \subsection{主要テーブル詳細}
 
-\textbf{users テーブル}
-\begin{table}[h]
+\subsubsection*{users テーブル}
+\begin{table}[H]
 \centering
 \begin{tabular}{|l|l|l|l|}
 \hline
-カラム名 & 制約 & 型 & 説明 \\ \hline
+\rowcolor[RGB]{240,240,240} \textbf{カラム名} & \textbf{制約} & \textbf{型} & \textbf{説明} \\ \hline
 id & PK & int & ユーザーID \\ \hline
 email & NN, UQ & varchar & メールアドレス \\ \hline
 password & NN & varchar & ハッシュ化されたパスワード \\ \hline
@@ -34,12 +37,12 @@ created\_at & & datetime & 作成日時 \\ \hline
 \end{tabular}
 \end{table}
 
-\textbf{orders テーブル}
-\begin{table}[h]
+\subsubsection*{orders テーブル}
+\begin{table}[H]
 \centering
 \begin{tabular}{|l|l|l|l|}
 \hline
-カラム名 & 制約 & 型 & 説明 \\ \hline
+\rowcolor[RGB]{240,240,240} \textbf{カラム名} & \textbf{制約} & \textbf{型} & \textbf{説明} \\ \hline
 id & PK & int & 注文ID \\ \hline
 requester\_id & FK & int & 依頼者ID \\ \hline
 store\_id & FK & int & 店舗ID \\ \hline
@@ -50,12 +53,12 @@ ordered\_at & & datetime & 注文日時 \\ \hline
 \end{tabular}
 \end{table}
 
-\textbf{deliveries テーブル}
-\begin{table}[h]
+\subsubsection*{deliveries テーブル}
+\begin{table}[H]
 \centering
 \begin{tabular}{|l|l|l|l|}
 \hline
-カラム名 & 制約 & 型 & 説明 \\ \hline
+\rowcolor[RGB]{240,240,240} \textbf{カラム名} & \textbf{制約} & \textbf{型} & \textbf{説明} \\ \hline
 id & PK & int & 配達ID \\ \hline
 order\_id & FK & int & 注文ID \\ \hline
 pickup\_time & & datetime & 商品受け取り時間 \\ \hline
