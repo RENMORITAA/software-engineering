@@ -1,0 +1,68 @@
+以下に、本アプリケーションにおける主要なデータベース設計を示す。
+
+\subsection{テーブル一覧}
+
+\begin{table}[h]
+\centering
+\caption{テーブル一覧}
+\label{tab:db_list}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor[RGB]{230,230,230} \textbf{テーブル名} & \textbf{説明} \\ \hline
+users & 全ユーザ（依頼者・配達員・店舗・管理者）の基底情報 \\ \hline
+requester\_profiles & 依頼者の詳細情報（住所、クレジットカード情報等） \\ \hline
+deliverer\_profiles & 配達員の詳細情報（履歴書、稼働状況、口座情報） \\ \hline
+store\_profiles & 店舗の詳細情報（営業許可証、営業時間、口座情報） \\ \hline
+products & 商品情報 \\ \hline
+orders & 注文情報のヘッダー（合計金額、ステータス、依頼者ID） \\ \hline
+order\_details & 注文明細（商品ID、数量） \\ \hline
+deliveries & 配達情報（担当配達員ID、位置情報ログ） \\ \hline
+notifications & 通知情報 \\ \hline
+\end{tabularx}
+\end{table}
+
+\subsection{主要テーブル詳細}
+
+\subsubsection*{users テーブル}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+\rowcolor[RGB]{240,240,240} \textbf{カラム名} & \textbf{制約} & \textbf{型} & \textbf{説明} \\ \hline
+id & PK & int & ユーザーID \\ \hline
+email & NN, UQ & varchar & メールアドレス \\ \hline
+password & NN & varchar & ハッシュ化されたパスワード \\ \hline
+role & NN & char & 役割（requester/deliverer/store/admin） \\ \hline
+created\_at & & datetime & 作成日時 \\ \hline
+\end{tabular}
+\end{table}
+
+\subsubsection*{orders テーブル}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+\rowcolor[RGB]{240,240,240} \textbf{カラム名} & \textbf{制約} & \textbf{型} & \textbf{説明} \\ \hline
+id & PK & int & 注文ID \\ \hline
+requester\_id & FK & int & 依頼者ID \\ \hline
+store\_id & FK & int & 店舗ID \\ \hline
+deliverer\_id & FK & int & 配達員ID（受注後設定） \\ \hline
+status & NN & varchar & 注文ステータス \\ \hline
+total\_price & NN & int & 合計金額 \\ \hline
+ordered\_at & & datetime & 注文日時 \\ \hline
+\end{tabular}
+\end{table}
+
+\subsubsection*{deliveries テーブル}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+\rowcolor[RGB]{240,240,240} \textbf{カラム名} & \textbf{制約} & \textbf{型} & \textbf{説明} \\ \hline
+id & PK & int & 配達ID \\ \hline
+order\_id & FK & int & 注文ID \\ \hline
+pickup\_time & & datetime & 商品受け取り時間 \\ \hline
+delivery\_time & & datetime & 配達完了時間 \\ \hline
+status & NN & varchar & 配達状況 \\ \hline
+\end{tabular}
+\end{table}

@@ -1,0 +1,125 @@
+\documentclass[lualatex, paper=a4]{jlreq} 
+
+\usepackage{float}
+\usepackage{graphicx} 
+\usepackage{multicol}
+\usepackage{ascmac}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{ifthen}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{longtable} % 表がページをまたぐ場合に対応
+
+% Dart言語定義の追加
+\lstdefinelanguage{Dart}{
+  keywords={class, extends, implements, with, new, true, false, null, var, const, final, dynamic, void, int, double, String, bool, List, Map, if, else, for, while, do, switch, case, default, break, continue, return, assert, try, catch, finally, throw, rethrow, this, super, async, await, yield, import, export, part, library, show, hide},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={@override, @required, Widget, BuildContext, State, StatefulWidget, StatelessWidget, Material, Scaffold, AppBar, Text, Center, Column, Row, Container},
+  ndkeywordstyle=\color{purple}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=true,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{gray}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+
+\lstnewenvironment{mylisting}[1][]%
+  {\lstset{
+    frame=single,
+    basicstyle=\ttfamily\small,
+    numbersep=6pt,
+    tabsize=2,
+    extendedchars=true,
+    xleftmargin=17pt,
+    framexleftmargin=17pt,
+    breaklines=true,
+    numbers=left,
+    language=Dart, % デフォルトをDartに変更
+    captionpos=b,
+    #1
+  }}{}
+
+% 画像読み込み用マクロ（ファイルがない場合は代替テキストを表示）
+\newcommand{\safeincludegraphics}[2][]{%
+  \IfFileExists{#2}{%
+    \includegraphics[#1]{#2}%
+  }{%
+    \fbox{\begin{minipage}{0.8\textwidth}\centering
+      \textcolor{red}{\textbf{画像ファイルが見つかりません:}} \\
+      \detokenize{#2}
+    \end{minipage}}%
+  }%
+}
+
+% hyperrefは最後に読み込むのが通例
+\usepackage[pdfencoding=auto]{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  filecolor=magenta,
+  urlcolor=blue,
+  citecolor=black,
+  pdftitle={内部設計書 - Stellar Delivery},
+  pdfauthor={StellarWorks}
+}
+
+% multirowパッケージの読み込み
+\IfFileExists{multirow.sty}{%
+  \usepackage{multirow}%
+}{%
+  \providecommand{\multirow}[3]{##3}%
+}
+
+\begin{document}
+
+% --- 表紙 ---
+\begin{titlepage}
+  \centering
+  \vspace*{2cm}
+  {\LARGE \bfseries 内部設計書 \par}
+  \vspace{1cm}
+  {\LARGE \bfseries 香美市特化型配達サービス \par}
+  \vspace{1cm}
+   {\LARGE \bfseries Stellar Delivery \par}
+  \vspace{3cm}
+  {\Large 第1版 \par}
+  \vspace{4cm}
+  {\Large \today \par}
+  \vspace{0.5cm}
+  {\LARGE \bfseries StellarWorks \par}
+  \vfill
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{概要}
+\input{概要.tex}
+
+\section{動作環境}
+\input{動作環境.tex}
+
+\section{開発環境}
+\input{開発環境.tex}
+
+\section{コーディング規約}
+\input{コーディング規約.tex}
+
+\section{モジュール設計}
+\input{モジュール設計.tex}
+
+\section{API設計}
+\input{API設計.tex}
+
+\section{データベース設計}
+\input{データベース設計.tex}
+
+\end{document}

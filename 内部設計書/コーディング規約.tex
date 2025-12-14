@@ -1,0 +1,125 @@
+本章では、Flutter の開発における Dart の命名規約およびコーディングスタイルを示す。
+
+\subsection{ケース（表記形式）}
+
+表\ref{table:case} に命令時に用いるケースの定義を示す。
+
+\begin{table}[h]
+\centering
+\caption{命名時に用いるケースの定義}
+\label{table:case}
+\begin{tabular}{|c|c|c|}
+\hline
+ケース & 説明 & 例 \\
+\hline
+lowerCamelCase & 先頭小文字,単語区切り大文字 & userName \\
+UpperCamelCase & 先頭大文字,単語区切り大文字 & UserProfile \\
+snake\_case & 小文字,アンダースコアつなぎ & user\_profile \\
+UPPER\_SNAKE\_CASE & 大文字,アンダースコアつなぎ & MAX\_COUNT \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Dart の命名規約}
+
+表\ref{table:naming} に Dart における対象ごとの命名規約を示す。
+
+\begin{table}[h]
+\centering
+\caption{Dart の命名規約}
+\label{table:naming}
+\begin{tabular}{|c|c|c|}
+\hline
+対象 & ケース & 例 \\
+\hline
+モジュール名/パッケージ名 & snake\_case & user\_profile, my\_package \\
+ファイル名/ディレクトリ名 & snake\_case & user\_detail\_page.dart \\
+クラス名 & UpperCamelCase & UserModel \\
+メソッド/関数名 & lowerCamelCase & getUserData() \\
+変数名 & lowerCamelCase & userCount \\
+定数名 & lowerCamelCase & maxRetryCount \\
+\hline
+\end{tabular}
+\end{table}
+
+以下の点に注意する。
+
+\begin{itemize}
+  \item private でない識別子をアンダースコア（\_）から始めないこと。
+  \item ハンガリアン記法（mUser, kUser など）は使用しない。
+  \item 未使用コールバック引数には \_（または複数個の \_ ）を使用する。
+\end{itemize}
+
+
+\subsection{コーディングスタイル}
+Dart のコーディングスタイルは Effective Dart に従う。
+以下に主な規約を記載する。
+
+\subsubsection{基本スタイル}
+
+\begin{itemize}
+  \item インデントは2スペースとする。
+  \item 空行にはインデントを入れない（スペースを入れない）。
+  \item オブジェクト生成時に new は記述しない。const は必要な場合のみ使用する。
+  \item 再代入しない変数は final として宣言する。
+\end{itemize}
+
+\subsubsection{Widget（Flutter）記述ルール}
+
+\begin{itemize}
+  \item 引数が2つ以上ある Widget は複数行で書く。
+  \item Widget の引数が1つでも、その子 Widget が複数行の場合は親も改行する。
+  \item Widget リストは末尾カンマ（trailing comma）をつけ、自動整形に従う。
+  \item EdgeInsets は複数引数でも1行でよい。
+\end{itemize}
+
+\subsubsection{制御構文}
+
+\begin{itemize}
+  \item if, for, while などの制御構文は中括弧 \{ \} を省略しない。
+  \item ただし、if と else がいずれも1行で完結する場合のみ、省略を許容する。
+\end{itemize}
+
+\subsubsection{コメント}
+
+\begin{itemize}
+  \item // の後には半角スペースを1つ置く。
+  \item 意図が明確なコードに対して不要なコメントを記述しない。
+\end{itemize}
+
+\subsubsection{import / export 規約}
+
+Dart における import 文は、読みやすさと依存関係の明確化のため、
+以下の順序で記述するものとする。
+
+\begin{enumerate}
+  \item \textbf{dart:} 標準ライブラリ
+  \item \textbf{package:} 外部パッケージ
+  \item \textbf{package:（自プロジェクト）} アプリ内 lib/ を package import で参照
+  \item \textbf{相対パス:} ../ や ./ を用いた参照
+\end{enumerate}
+
+その他の注意点：
+
+\begin{itemize}
+  \item import は辞書順で並べる。
+  \item export は import とは別のグループとして最後にまとめる。
+  \item 可能な限り相対 import ではなく package import を使用する。
+\end{itemize}
+
+\subsubsection{書式}
+
+\begin{itemize}
+  \item 原則として1行80文字以内とする。
+  \item dart の自動 formatter に従う。
+\end{itemize}
+
+\subsection{ツール設定}
+
+以下のツールを導入し、自動で規約を適用できるようにする。
+
+\begin{itemize}
+  \item VSCode の "Format on Save" を有効にする。
+  \item \texttt{dart fix --apply} により自動修正を行う。
+  \item \texttt{flutter analyze} でコーディング規約違反を確認する。
+\end{itemize}

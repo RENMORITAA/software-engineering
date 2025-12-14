@@ -1,0 +1,641 @@
+以下に本アプリケーションのモジュール設計を示す。
+
+\begin{itemize}
+  \item overlay は、アプリケーション上で一番上のレイヤーに表示されるウィジェットをまとめたモジュー
+ルについて記述している。
+  \item provider は、アプリケーション全体で使用する共通の変数をまとめたモジュールについて記述して
+いる。
+  \item page は、アプリケーションの画面をまとめたモジュールについて記述している。
+  \item component は、page で用いられるパーツをまとめたモジュールについて記述している。
+\end{itemize}
+
+
+\begin{table}[htbp]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor[RGB]{200,200,200}
+\multicolumn{2}{|c|}{\textbf{overlay モジュール}} \\
+\hline
+\textbf{モジュール名} & \textbf{概要} \\
+\hline
+\multicolumn{2}{|l|}{\textbf{＜共通機能＞}} \\
+\hline
+logout.dart & ログアウトを確定するかどうかを確認するオーバーレイ \\
+withdraw.dart & 退会を確定するかどうかを確認するオーバーレイ \\
+cancel\_inf\_change.dart & 情報の変更をキャンセルするかを確認するオーバーレイ \\
+confirm\_inf\_change.dart & 情報の変更を確定するかを確認するオーバーレイ \\
+rule\_screen.dart & 利用規約を表示するオーバーレイ \\
+\hline
+\multicolumn{2}{|l|}{\textbf{＜依頼側＞}} \\
+\hline
+\multicolumn{2}{|l|}{\textbf{＜配達側＞}} \\
+\hline
+d\_payslip\_change\_date.dart & 配達員の給与明細の表示される期間を変更するモジュール \\
+\hline
+\multicolumn{2}{|l|}{\textbf{＜店舗側＞}} \\
+\hline
+\end{tabularx}
+\caption{overlay モジュールの構成}
+\end{table}
+
+
+\begin{table}[htbp]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor[RGB]{200,200,200}
+\multicolumn{2}{|c|}{\textbf{provider モジュール}} \\
+\hline
+\textbf{モジュール名} & \textbf{概要} \\
+\hline
+change\_user\_role.dart & アプリ全体で使用するプロバイダモジュール \\
+app\_router.gr.dart & RouterをRouterに変換するモジュール \\
+\hline
+\end{tabularx}
+\caption{provider モジュールの構成}
+\end{table}
+
+
+\begin{table}[htbp]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor[RGB]{200,200,200}
+\multicolumn{2}{|c|}{\textbf{page モジュール}} \\
+\hline
+\textbf{モジュール名} & \textbf{概要} \\
+\hline
+\multicolumn{2}{|l|}{\textbf{＜共通機能＞}} \\
+\hline
+change\_root\_page.dart & アプリ全体を包括するモジュール \\
+new\_member.dart & 新規会員登録画面を生成するモジュール \\
+mypage.dart & マイページ画面を表示するモジュール \\
+login\_page.dart & ログイン画面を生成するモジュール \\
+logout\_withdraw\_page.dart & ログアウト・退会画面を生成するモジュール \\
+\hline
+\multicolumn{2}{|l|}{\textbf{＜依頼側＞}} \\
+\hline
+c\_root\_page.dart & 「ホーム」、「カート」、「マップ」、「マイページ」、「通知」を包括するモジュール \\
+c\_info.dart & 依頼者の会員情報画面を表示するモジュール \\
+c\_info\_change.dart & 依頼者の会員情報変更画面を表示するモジュール \\
+c\_address.dart & 配達先住所確認画面を表示するモジュール \\
+c\_address\_change.dart & 配達先住所編集画面を表示するモジュール \\
+c\_address\_add.dart & 配達先住所追加画面を表示するモジュール \\
+c\_banking\_info.dart & 口座情報管理画面を表示するモジュール \\
+c\_banking\_info\_change.dart & 口座情報変更画面を表示するモジュール \\
+c\_banking\_info\_check.dart & 口座情報変更を確認する画面を表示するモジュール \\
+c\_order\_history.dart & 注文履歴一覧画面を表示するモジュール \\
+c\_order\_history\_detail.dart & 注文履歴詳細画面を表示するモジュール \\
+c\_order\_arrival\_report.dart & 商品到着報告画面を表示するモジュール \\
+c\_home.dart & 依頼者のホーム画面を表示するモジュール \\
+c\_payment.dart & 支払い明細画面を表示するモジュール \\
+c\_product\_list.dart & 商品一覧画面を表示するモジュール \\
+c\_order\_check.dart & 注文確認画面を表示するモジュール \\
+c\_order\_confirm.dart & 注文確定画面を表示するモジュール \\
+c\_cart.dart & カート情報を表示するモジュール \\
+c\_map\_search.dart & マップでの店舗検索を行う画面を表示するモジュール \\
+\hline
+\multicolumn{2}{|l|}{\textbf{＜配達側＞}} \\
+\hline
+d\_home.dart & ホーム画面を表示するモジュール \\
+d\_notice.dart & 通知一覧画面を表示するモジュール \\
+d\_notice\_detail.dart & 通知詳細画面を表示するモジュール \\
+d\_job\_select.dart & 求人検索一覧画面を表示するモジュール \\
+d\_job\_detail.dart & 求人情報の詳細画面を表示するモジュール \\
+d\_map.dart & 求人情報より配達先ルートを示したマップを表示するモジュール \\
+d\_banking\_information.dart & 口座情報を示した画面を表示するモジュール \\
+d\_resume\_detail.dart & 履歴書情報を示した画面を表示するモジュール \\
+d\_resume\_change.dart & 履歴書情報を変更する画面を表示するモジュール \\
+d\_payslip.dart & 給与明細を示した画面を表示するモジュール \\
+d\_delivery\_history.dart & 配達履歴の一覧を示した画面を表示するモジュール \\
+d\_delivery\_history\_detail.dart & 配達履歴詳細を示した画面を表示するモジュール \\
+d\_banking\_information\_change.dart & 口座情報変更を行う画面を表示するモジュール \\
+d\_banking\_information\_check.dart & 口座情報の変更を確認する画面を表示するモジュール \\
+d\_job\_map\_select.dart & マップにて配達員先住所(求人情報)を検索する画面を表示するモジュール \\
+d\_root\_page.dart & 「ホーム」、「求人検索」、「マップ」、「受注」、「マイページ」を包括するモジュール \\
+\hline
+\multicolumn{2}{|l|}{\textbf{＜店舗側＞}} \\
+\hline
+s\_root\_page.dart & 「ホーム」、「業務」、「注文管理」、「売上」、「マイページ」を包括するモジュール \\
+s\_info.dart & 店舗の会員情報画面を表示するモジュール \\
+s\_info\_change.dart & 店舗の会員情報変更画面を表示するモジュール \\
+s\_inventory\_status.dart & 店舗の在庫ステータス画面を表示するモジュール \\
+s\_menu\_regist.dart & メニュー情報の新規登録画面を表示するモジュール \\
+s\_menu\_change.dart & メニュー情報の変更画面を表示するモジュール \\
+s\_menu\_delete.dart & メニュー情報の削除画面を表示するモジュール \\
+s\_menu\_edit.dart & メニュー情報設定画面を表示するモジュール \\
+s\_order\_list.dart & 受注一覧画面を表示するモジュール \\
+s\_work.dart & 業務画面を表示するモジュール \\
+s\_home.dart & 店舗ホーム画面を表示するモジュール \\
+s\_delivery\_complete.dart & 受け渡し完了確認画面を表示するモジュール \\
+s\_banking\_info.dart & 口座情報管理画面を表示するモジュール \\
+\hline
+\end{tabularx}
+\caption{page モジュールの構成}
+\end{table}
+
+
+\begin{table}[htbp]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\rowcolor[RGB]{200,200,200}
+\multicolumn{2}{|c|}{\textbf{component モジュール}} \\
+\hline
+\textbf{モジュール名} & \textbf{概要} \\
+\hline
+\multicolumn{2}{|l|}{\textbf{＜共通機能＞}} \\
+\hline
+finish\_screen.dart & 完了画面を生成するコンポーネント \\
+over\_screen\_controller.dart & オーバーレイの表示、非表示の操作を行うコンポーネント \\
+\hline
+\multicolumn{2}{|l|}{\textbf{＜依頼側＞}} \\
+\hline
+c\_number\_count.dart & 注文数のカウントを増加(減少)するボタンを生成するレイヤー \\
+general\_form.dart & 一般ユーザが入力するフォームを出力するコンポーネント \\
+password\_input.dart & パスワードを入力するフォームを作成するコンポーネント \\
+\hline
+\multicolumn{2}{|l|}{\textbf{＜配達側＞}} \\
+\hline
+d\_notice\_change.dart & 通知画面にて配達業務と運営メールの切り替えにて使用するモジュール \\
+d\_job.dart & 求人情報を表示するモジュール(求人検索での求人を選択する際に使用) \\
+button\_set.dart & 任意のテキストを記載したボタンを生成するレイヤー \\
+\hline
+\multicolumn{2}{|l|}{\textbf{＜店舗側＞}} \\
+\hline
+
+\hline
+\end{tabularx}
+\caption{component モジュールの構成}
+\end{table}
+
+
+\subsection{overlay}
+
+\subsubsection{共通機能}
+
+\begin{table}[h]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{withdraw.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{退会を確定するかどうかを確認するオーバーレイ	}  \\ \hline
+責任者 &\multicolumn{2}{l|}{梶本和希} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & Withdraw\\ \cline{2-3}
+& クラス種類 & OverEntry \\ \cline{2-3}
+& 処理概要 & Overlayの内容を返す \\ \cline{2-3}
+& 入力 & Buildcontext context \\ \cline{2-3}
+& 出力 & Maaterial \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+
+&\multicolumn{2}{p{0.9\linewidth}|}{withdraw.dart の Withdraw().show(context) を呼び出すとオーバレイ表示
+
+キャンセルが押されるとWithdraw().hide() によりcontrolle.close が呼び出されオーバレイを閉じる
+
+退会を押すと退会処理後、Withdraw().hide() によりcontrolle.close が呼び出されオーバレイを閉じる} \\ \hline
+\end{tabular}
+\end{table}
+
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/withdraw.pdf}
+  \caption{withdraw.dart の状態遷移図}
+  \label{fig:withdraw.dart}
+\end{figure}
+
+
+\begin{table}[h]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{logout.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{ログアウトを確定するかどうかを確認するオーバーレイ	}  \\ \hline
+責任者 &\multicolumn{2}{l|}{岡林磨目} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & Logout\\ \cline{2-3}
+& クラス種類 & OverEntry\\ \cline{2-3}
+& 処理概要 & Overlayの内容を返す \\ \cline{2-3}
+& 入力 & Buildcontext context\\ \cline{2-3}
+& 出力 & Material\\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{logout.dartのLogout().show(context)を呼び出すとオーバーレイ表示
+
+キャンセルを押すと Logout().hide() によりcontrolle.close が呼び出されオーバレイを閉じる
+
+ログアウトを押すことで login\_page.dart の LoginPage クラスを呼び出すことで、ログイン画面を表示} \\ \hline
+\end{tabular}
+\end{table}
+
+
+%画像の追加
+%なさそう？
+
+
+\begin{table}[h]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{rule\_screen.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{利用規約を表示するオーバーレイ}  \\ \hline
+責任者 &\multicolumn{2}{l|}{岡林磨目} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & RuleScreen\\ \cline{2-3}
+& クラス種類 & OverEntry \\ \cline{2-3}
+& 処理概要 & Overlayの内容を返す \\ \cline{2-3}
+& 入力 & Buildcontext context \\ \cline{2-3}
+& 出力 & Maaterial \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+
+&\multicolumn{2}{p{0.9\linewidth}|}{rule\_screen.dart の RuleScreen().show(context)を呼び出すとオーバーレイ表示
+
+閉じるを押すとRuleScreen().hide()により controlle.closeが呼び出されオーバレイを閉じる} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/RuleScreen.pdf}
+  \caption{rule\_screen.dart の状態遷移図}
+  \label{fig:rule_screen.dart}
+\end{figure}
+
+
+\begin{table}[h]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{cancel\_inf\_change.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{情報の変更をキャンセルするかを確認するオーバーレイ}  \\ \hline
+責任者 &\multicolumn{2}{l|}{岡林磨目} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & CancelInfChange\\ \cline{2-3}
+& クラス種類 & OverEntry \\ \cline{2-3}
+& 処理概要 & Overlayの内容を返す \\ \cline{2-3}
+& 入力 & Buildcontext context \\ \cline{2-3}
+& 出力 & Maaterial \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+
+&\multicolumn{2}{p{0.9\linewidth}|}{cancel\_inf\_change.dartの CancelInfChange().show(context) を呼び出すとオーバレイ表示
+
+いいえを押すとCancelInfChange().hide() によりcontrolle.closeが呼び出されオーバレイを閉じる
+
+はいを押すと変更キャンセル処理後、CancelInfChange().hide()によりcontrolle.closeが呼び出されオーバレイを閉じる} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/CancelInfChange.pdf}
+  \caption{cancel\_inf\_change.dart の状態遷移図}
+  \label{fig:cancel_inf_change.dart}
+\end{figure}
+
+
+
+\begin{table}[h]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{confirm\_inf\_change.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{情報の変更を確定するかを確認するオーバーレイ}  \\ \hline
+責任者 &\multicolumn{2}{l|}{岡林磨目} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & ConfirmInfChange\\ \cline{2-3}
+& クラス種類 & OverEntry \\ \cline{2-3}
+& 処理概要 & Overlayの内容を返す \\ \cline{2-3}
+& 入力 & Buildcontext context \\ \cline{2-3}
+& 出力 & Maaterial \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+
+&\multicolumn{2}{p{0.9\linewidth}|}{confirm\_inf\_change.dart の ConfirmInfChange().show(context) を呼び出すとオーバレイ表示
+
+いいえを押すと ConfirmInfChange().hide() により controlle.close が呼び出されオーバレイを閉じる
+
+はいを押すと変更確定処理後、ConfirmInfChange().hide() により controlle.close が呼び出されオーバレイを閉じる} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/ConfirmInfChange.pdf}
+  \caption{confirm\_inf\_change.dart の状態遷移図}
+  \label{fig:confirm_inf_change.dart}
+\end{figure}
+
+
+
+\subsubsection{配達員}
+
+\begin{table}[h]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{rule\_screen.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{利用規約を表示するオーバーレイ}  \\ \hline
+責任者 &\multicolumn{2}{l|}{岡林磨目} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & RuleScreen\\ \cline{2-3}
+& クラス種類 & OverEntry \\ \cline{2-3}
+& 処理概要 & Overlayの内容を返す \\ \cline{2-3}
+& 入力 & Buildcontext context \\ \cline{2-3}
+& 出力 & Maaterial \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+
+&\multicolumn{2}{p{0.9\linewidth}|}{rule\_screen.dart の RuleScreen().show(context)を呼び出すとオーバーレイ表示
+
+閉じるを押すとRuleScreen().hide()により controlle.closeが呼び出されオーバレイを閉じる} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/RuleScreen.pdf}
+  \caption{rule\_screen.dart の状態遷移図}
+  \label{fig:rule_screen_signedin.dart}
+\end{figure}
+
+
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.5\textwidth]{./状態遷移図/delivery_状態遷移図/Notice_detail.pdf}
+  \caption{配達員アカウント管理画面}
+  \label{fig:a配達員アカウント管理画面}
+\end{figure}
+\subsection{provider}
+
+%画像の追加
+\subsection{provider}
+
+\begin{table}[h]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{change\_user\_role.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{アプリ全体で使用するプロバイダモジュール	}  \\ \hline
+責任者 &\multicolumn{2}{l|}{岡林磨目} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & ChangeUserRole\\ \cline{2-3}
+& クラス種類 & ChangeNotifier \\ \cline{2-3}
+& 処理概要 & アプリ全体で使用する依頼側・配達側・店舗側の判断を行う int 型変数を定義している。
+また、値が変更されると、それに対応した色(UI)へ変更が行われる。 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+\subsection{page}
+\subsubsection{共通}
+
+
+\begin{table}[h]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{change\_root\_page.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{アプリ全体を包括するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{岡林磨目} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & ChangeRootPage\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & アプリの大まかな区別である LoginRoute と RootRoute を包括しているクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+
+&\multicolumn{2}{p{0.9\linewidth}|}{app\_router.gr.dart の LoginRoute クラスを組み込む} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/ChangeRootPage.pdf}
+  \caption{change\_root\_page.dart の状態遷移図}
+  \label{fig:change_root_page.dart}
+\end{figure}
+
+
+
+\begin{table}[h]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{new\_member.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{新規会員登録画面を生成するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{梶本和希} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & NewMember\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 新規会員登録画面のWidgetを動的に変更するクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{new\_member.dart の NewMenberState クラスを組み込む} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & NewMemberState\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 新規会員登録画面を表示するクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{rule\_screen.dart の RuleScreen クラスを呼び出すことで利用規約を表示
+
+login\_page.dart のLoginPageクラスを呼び出しログイン画面を表示
+
+戻るボタンの選択で前のモジュールに戻る} \\ \hline
+
+
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/NewMember.pdf}
+  \caption{new\_member.dart の状態遷移図}
+  \label{fig:new_member.dart}
+\end{figure}
+
+
+
+\begin{table}[h]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{mypage.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{マイページ画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{岡林磨目} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & MyPageRouterPage \\ \cline{2-3}
+& クラス種類 & extends AppRouter \\ \cline{2-3}
+& 処理概要 & MyPage にアクセスするための Router \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Route \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & MyPage\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & マイページ画面を動的に変更するクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{MyPage.dart の MyPageState クラスを組み込む} \\ \hline
+
+
+\multirow{9}{*}{構成要素} & クラス名 & MyPageState\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & マイページ画面の状態を返すクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & State \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{title\_appbar.dart の TitleAppBar クラスを組み込む
+
+mypage.dart の ScrollMyPageDetail クラスを組み込む} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & \\ \cline{2-3}
+& クラス種類 &  \\ \cline{2-3}
+& 処理概要 &  \\ \cline{2-3}
+& 入力 &  \\ \cline{2-3}
+& 出力 &  \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & \\ \cline{2-3}
+& クラス種類 &  \\ \cline{2-3}
+& 処理概要 &  \\ \cline{2-3}
+& 入力 &  \\ \cline{2-3}
+& 出力 &  \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{} \\ \hline
+
+
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/MyPage.pdf}
+  \caption{mypage.dart の状態遷移図}
+  \label{fig:mypage.dart}
+\end{figure}
+
+
+
+\begin{table}[h]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{login\_page.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{ログイン画面を生成するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{梶本和希} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & LoginPage\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & ログイン画面のWidgetを動的に変更するクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{login\_page.dartのLoginPageStateクラスを組み込む} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & LoginPageState \\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & ログイン画面の状態を返すクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & State \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{new\_member.dartのNewMemberクラスを呼び出すことで、新規会員登録画面を表示
+
+login\_page.dartのLoginAppBarクラスを組み込む} \\ \hline
+
+
+\multirow{9}{*}{構成要素} & クラス名 & LoginAppBar\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget,imprementsPrefferdSizeWidget \\ \cline{2-3}
+& 処理概要 & ログイン画面用に作成を行ったAppBarを生成するコンポーネント \\ \cline{2-3}
+& 入力 & ChangeGeneralCorporationstore \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\end{tabular}
+\end{table}
+
+%画像の追加（ファイルが存在する場合のみ表示）
+\IfFileExists{状態遷移図/common_状態遷移図/LoginPage.pdf}{%
+  \begin{figure}[H]
+    \centering
+    \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/LoginPage.pdf}
+    \caption{login\_page.dart の状態遷移図}
+    \label{fig:login_page.dart}
+  \end{figure}
+}{%
+  % 図ファイル未配置時はプレースホルダのみ表示
+  \begin{figure}[H]
+    \centering
+    \fbox{\begin{minipage}{0.7\textwidth}\centering
+      状態遷移図/common\_状態遷移図/LoginPage.pdf が存在しません。
+    \end{minipage}}
+    \caption{login\_page.dart の状態遷移図（ファイル未配置）}
+    \label{fig:login_page.dart}
+  \end{figure}
+}
+
+
+
+\begin{table}[h]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{logout\_withdraw\_page.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{ログアウト・退会画面を生成するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{梶本和希} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & LogoutWithdraw\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 &  ログアウト・退会画面を生成するクラス\\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+
+&\multicolumn{2}{p{0.9\linewidth}|}{withdraw.dartのWithdrawクラスの呼び出すことで退会オーバーレイを表示
+logout.dartのLogoutクラスの呼び出すことでログアウトオーバーレイを表示
+戻るボタンの選択で前のモジュールに戻る} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/LogoutWithdraw.pdf}
+  \caption{logout\_withdraw\_page.dart の状態遷移図}
+  \label{fig:logout_withdraw_page.dart}
+\end{figure}
+
