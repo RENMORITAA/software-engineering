@@ -9,9 +9,9 @@ POST /auth/login
 \centering
 \begin{tabular}{|l|l|}
 \hline
-\textbf{Request} & email, password \\
+\textbf{Request} & email (str), password (str) \\
 \hline
-\textbf{Response} & access\_token, token\_type, user\_role \\
+\textbf{Response} & access\_token (str), token\_type (str), user\_role (str) \\
 \hline
 \end{tabular}
 \end{table}
@@ -23,9 +23,9 @@ POST /auth/register
 \centering
 \begin{tabular}{|l|l|}
 \hline
-\textbf{Request} & email, password, user\_type, profile\_data(name, address, etc.) \\
+\textbf{Request} & email (str), password (str), user\_type (str), profile\_data (dict) \\
 \hline
-\textbf{Response} & user\_id, message \\
+\textbf{Response} & user\_id (int), message (str) \\
 \hline
 \end{tabular}
 \end{table}
@@ -39,7 +39,7 @@ GET /stores/\{store\_id\}/products
 \centering
 \begin{tabular}{|l|l|}
 \hline
-\textbf{Request} & store\_id (path) \\
+\textbf{Request} & store\_id (int) \\
 \hline
 \textbf{Response} & list[product\_object] \\
 \hline
@@ -53,9 +53,9 @@ POST /products
 \centering
 \begin{tabular}{|l|l|}
 \hline
-\textbf{Request} & token, name, price, description, image, stock\_status \\
+\textbf{Request} & token (str), name (str), price (int), description (str), image (str), stock\_status (bool) \\
 \hline
-\textbf{Response} & product\_id, message \\
+\textbf{Response} & product\_id (int), message (str) \\
 \hline
 \end{tabular}
 \end{table}
@@ -69,9 +69,9 @@ POST /orders
 \centering
 \begin{tabular}{|l|l|}
 \hline
-\textbf{Request} & token, store\_id, items[\{product\_id, quantity\}], total\_price \\
+\textbf{Request} & token (str), store\_id (int), items[list\{product\_id (int), quantity (int)\}], total\_price (int) \\
 \hline
-\textbf{Response} & order\_id, message \\
+\textbf{Response} & order\_id (int), message (str) \\
 \hline
 \end{tabular}
 \end{table}
@@ -83,9 +83,9 @@ PUT /orders/\{order\_id\}/status
 \centering
 \begin{tabular}{|l|l|}
 \hline
-\textbf{Request} & token, status (prepared, delivering, delivered) \\
+\textbf{Request} & token (str), status (str: prepared, delivering, delivered) \\
 \hline
-\textbf{Response} & message \\
+\textbf{Response} & message (str) \\
 \hline
 \end{tabular}
 \end{table}
@@ -99,7 +99,7 @@ GET /delivery/jobs
 \centering
 \begin{tabular}{|l|l|}
 \hline
-\textbf{Request} & token, current\_location \\
+\textbf{Request} & token (str), current\_location (str) \\
 \hline
 \textbf{Response} & list[order\_object] \\
 \hline
@@ -113,9 +113,9 @@ POST /delivery/jobs/\{order\_id\}/accept
 \centering
 \begin{tabular}{|l|l|}
 \hline
-\textbf{Request} & token, order\_id \\
+\textbf{Request} & token (str), order\_id (int) \\
 \hline
-\textbf{Response} & message \\
+\textbf{Response} & message (str) \\
 \hline
 \end{tabular}
 \end{table}
