@@ -344,7 +344,6 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 
 
 
-
 %画像の追加
 \subsection{provider}
 
@@ -839,12 +838,589 @@ logout.dartのLogoutクラスの呼び出すことでログアウトオーバー
 
 \subsubsection{配達側}
 
+
+\begin{table}[h]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{d\_notice.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{通知画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{金澤優} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & DRootPage\\ \cline{2-3}
+& クラス種類 & extendsStatelessWidget \\ \cline{2-3}
+& 処理概要 & ログイン以外のアプリの包括を行い、ボトムアップバーを作成するクラス
+ \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+
+&\multicolumn{2}{p{0.9\linewidth}|}{rule\_screen.dart の RuleScreen().show(context)を呼び出すとオーバーレイ表示
+
+閉じるを押すとRuleScreen().hide()により controlle.closeが呼び出されオーバレイを閉じる} \\ \hline
+\end{tabular}
+\end{table}
+
 \begin{figure}[H]
   \centering
-  \safeincludegraphics[width=0.5\textwidth]{./状態遷移図/delivery_状態遷移図/Notice_detail.pdf}
-  \caption{配達員アカウント管理画面}
-  \label{fig:a配達員アカウント管理画面}
+  \includegraphics[width=0.8\textwidth]{./状態遷移図/delivery_状態遷移図/d_root_page.pdf}
+  \caption{d\_root\_page.dart の状態遷移図}
+  \label{fig:d_root_page.dart}
 \end{figure}
+
+\newpage
+
+%d_notice_detail.dart
+\begin{table}[H]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{d\_notice.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{通知画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{金澤優} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & DNotice
+\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 通知画面のWidgetを動的に変更するクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{d\_notice.dartにNoticeStateクラスを組み込む} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DNoticeState \\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 通知画面の状態を返す \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & State \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{d\_notice.dartにDNoticeStateクラスを組み込む} \\ \hline
+
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./状態遷移図/delivery_状態遷移図/d_notice.pdf}
+  \caption{d\_notice.dart の状態遷移図}
+  \label{fig:d_notice}
+\end{figure}
+
+
+\newpage
+
+%d_notice_detail.dart
+\begin{table}[h]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{d\_notice\_detail.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{通知の詳細画面を表示するモジュール} \\ \hline
+責任者 &\multicolumn{2}{l|}{金澤優} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & DNoticeDetail\\ \cline{2-3}
+& クラス種類 & extendsStatelessWidget \\ \cline{2-3}
+& 処理概要 & 任意の通知詳細画面を生成するクラス
+ \\ \cline{2-3}
+& 入力 & List<List<Map>>titles, intisevent, intindex,Stringde tail \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} 
+\\\cline{2-3}
+
+&\multicolumn{2}{p{0.9\linewidth}|}{withdraw.dart の Withdraw().show(context) を呼び出すとオーバレイ表示
+
+キャンセルが押されるとWithdraw().hide() によりcontrolle.close が呼び出されオーバレイを閉じる
+
+退会を押すと退会処理後、Withdraw().hide() によりcontrolle.close が呼び出されオーバレイを閉じる} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./状態遷移図/delivery_状態遷移図/d_notice_detail.pdf}
+  \caption{d\_notice\_detail.dart の状態遷移図}
+  \label{fig:d_notice_detail}
+\end{figure}
+
+\newpage
+
+%d_home.dart
+\begin{table}[H]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{d\_home.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{配達員側のホーム画面を生成するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{金澤優} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & DHomeRoutePage
+\\ \cline{2-3}
+& クラス種類 & extends AppRouter\\ \cline{2-3}
+& 処理概要 & ホーム(Home)をアクセスするためのRouter \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Router \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DHome \\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & ホーム画面のWidgetを動的に変更するクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & State \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{d\_home.dartにDHomeStateクラスを組み込む} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DHomeState \\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & ホーム画面の状態を返すクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & State \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./状態遷移図/delivery_状態遷移図/d_notice.pdf}
+  \caption{d\_home.dart の状態遷移図}
+  \label{fig:d_notice}
+\end{figure}
+
+\newpage
+
+%d_home.dart
+\begin{table}[H]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{d\_resume.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{履歴書情報を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{金澤優} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & DResumeChange
+\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget\\ \cline{2-3}
+& 処理概要 & 履歴書画面のWidgetを動的に変更するクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Router \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{d\_resume.dartにDResumeChangeStateクラスを組み込む} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DHome \\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & ホーム画面のWidgetを動的に変更するクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & State \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{d\_home.dartにDHomeStateクラスを組み込む} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DHomeState \\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & ホーム画面の状態を返すクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & State \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./状態遷移図/delivery_状態遷移図/d_notice.pdf}
+  \caption{d\_home.dart の状態遷移図}
+  \label{fig:d_notice}
+\end{figure}
+
+\newpage
+
+%d_home.dart
+\begin{table}[H]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{d\_member\_information.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{配達員の会員情報を確認する画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{金澤優} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & DMemberInformation
+\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget\\ \cline{2-3}
+& 処理概要 & 配達員の会員情報をWidgetを動的に変更するクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{d\_member\_information.dartのDMemberInformationクラスを組み込む} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DMemberInformationState \\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 配達員の会員情報の状態を返す \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & State \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{d\_home.dartにDHomeStateクラスを組み込む} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DHomeState \\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & ホーム画面の状態を返すクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & State \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{change general corporation.dart の ChangeGeneralCorporation プロバイダを組み込む
+title appbar.dart の TitleAppBar クラスを組み込む
+general mem inf change.dart の GeneralMemInfChange クラスを呼び出し一般会員情報変更
+画面を表示
+pass change.dart の PassChange クラスを呼び出しパスワード変更画面を表示
+戻るボタンの選択で前のモジュールに戻る} \\ \hline
+
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./状態遷移図/delivery_状態遷移図/d_member_information.pdf}
+  \caption{d\_member\_information.dart の状態遷移図}
+  \label{fig:d_notice}
+\end{figure}
+
+\newpage
+
+%d_home.dart
+\begin{table}[H]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{d\_mem\_inf_change.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{配達員の会員情報変更画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{金澤優} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & DMemberInformationChange
+\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget\\ \cline{2-3}
+& 処理概要 & 配達員の会員情報変更画面をWidgetを動的に変更するクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{d_mem_inf_change.dartのDMemberInformationChangeStateクラスを組み込む} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DMemberInformationChangeState \\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 配達員の会員情報変更画面の状態を返す\\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & State \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{change general corporation.dart の ChangeGeneralCorporation プロバイダを組み込む
+
+title appbar.dart の TitleAppBar クラスを組み込む
+
+general mem inf conf.dart のGeneralMemInfConfクラスを呼び出し一般会員情報確認画面を
+表示
+
+戻るボタンの選択で前のモジュールに戻る} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./状態遷移図/delivery_状態遷移図/d_mem_inf_change.pdf}
+  \caption{d\_mem\_inf\_change.dart の状態遷移図}
+  \label{fig:d_mem_inf_change}
+\end{figure}
+
+\newpage
+
+%d_home.dart
+\begin{table}[H]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{d\_banking\_information.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{口座情報を示した画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{金澤優} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & DBankingInformation
+\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget\\ \cline{2-3}
+& 処理概要 & 口座情報確認画面を動的に変更するクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{d_mem_inf_change.dartのDBankingInformationStateクラスを組み込む} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DBankingInformationState \\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 配達員の口座情報変更画面の状態を返す\\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & State \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{change general corporation.dart の ChangeGeneralCorporation プロバイダを組み込む
+
+title appbar.dart の TitleAppBar クラスを組み込む
+
+general mem inf conf.dart のGeneralMemInfConfクラスを呼び出し一般会員情報確認画面を表示
+
+戻るボタンの選択で前のモジュールに戻る} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./状態遷移図/delivery_状態遷移図/d_mem_inf_change.pdf}
+  \caption{d\_banking\_information.dart の状態遷移図}
+  \label{fig:d_mem_inf_change}
+\end{figure}
+
+
+
+\newpage
+
+%d_home.dart
+\begin{table}[H]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{d\_bank\_inf\_change.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{口座情報変更画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{金澤優} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & DBankingInformationChange
+\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget\\ \cline{2-3}
+& 処理概要 & 口座情報変更画面を動的に変更するクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{d_mem_inf_change.dartのDBankingInformationChangeStateクラスを組み込む} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DBankingInformationChangeState \\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 配達員の口座情報変更画面の状態を返す\\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & State \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{change general corporation.dart の ChangeGeneralCorporation プロバイダを組み込む
+
+title appbar.dart の TitleAppBar クラスを組み込む
+
+general mem inf conf.dart のGeneralMemInfConfクラスを呼び出し一般会員情報確認画面を表示
+
+戻るボタンの選択で前のモジュールに戻る} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./状態遷移図/delivery_状態遷移図/d_bank_inf_change.pdf}
+  \caption{d\_bank\_inf\_change.dart の状態遷移図}
+  \label{fig:d_bank_inf_change}
+\end{figure}
+
+\newpage
+
+%d_home.dart
+\begin{table}[H]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{d\_job\_select.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{求人検索一覧画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{金澤優} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & DJobRouterPage
+\\ \cline{2-3}
+& クラス種類 & extends AppRouter\\ \cline{2-3}
+& 処理概要 & JobをアクセスするためのRouter&  \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Router \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DJobSelect \\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 求人検索一覧画面を動的に変更するクラス\\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{d_job_select.dartのDJobSelectStateクラスを組み込む} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DJobSelectState \\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 求人検索一覧画面の状態を返すクラス\\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & State \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{post list.dart の PostList クラスを組み込む
+
+else list.dart の ElseList クラスを呼び出すことでおすすめ、商品数、地域、一覧画面を表示
+search post.dart の SearchPost を呼び出すことで検索結果画面を表示
+
+job_select_detail.dart の JobSelectDetailクラスを呼び出すことで求人詳細画面を表示} \\ \hline
+
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./状態遷移図/delivery_状態遷移図/d_job_select.pdf}
+  \caption{d\_job\_select.dart の状態遷移図}
+  \label{fig:d_job_select}
+\end{figure}
+
+
+\newpage
+
+%d_home.dart
+\begin{table}[H]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{d\_job\_detail.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{求人情報詳細画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{金澤優} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & DJobDetail
+\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget\\ \cline{2-3}
+& 処理概要 & 求人情報詳細画面を動的に変更するクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{d_job_detail.dartのDJobDetailStateクラスを組み込む} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DJobDetailState \\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 求人情報画面の状態を返すクラス\\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & State \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{change general corporation.dart の ChangeGeneralCorporation プロバイダを組み込む
+
+title appbar.dart の TitleAppBar クラスを組み込む
+
+general mem inf conf.dart のGeneralMemInfConfクラスを呼び出し一般会員情報確認画面を表示
+
+戻るボタンの選択で前のモジュールに戻る} \\ \hline
+\end{tabular}
+\end{table}
+
+%上の他クラス・関数との関係を直す
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./状態遷移図/delivery_状態遷移図/d_job_detail.pdf}
+  \caption{d\_job\_detail.dart の状態遷移図}
+  \label{fig:d_job_detail}
+\end{figure}
+
+\newpage
+
+%d_home.dart
+\begin{table}[H]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{d\_map.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{求人情報より配達先ルートを示したマップを表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{金澤優} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & Dmap
+\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget\\ \cline{2-3}
+& 処理概要 & 配達先ルート画面を動的に変更するクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{d_job_detail.dartのDJobDetailStateクラスを組み込む} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DMapDetailState \\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 配達先ルートの状態を返すクラス\\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & State \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{change general corporation.dart の ChangeGeneralCorporation プロバイダを組み込む
+
+title appbar.dart の TitleAppBar クラスを組み込む
+
+general mem inf conf.dart のGeneralMemInfConfクラスを呼び出し一般会員情報確認画面を表示
+
+戻るボタンの選択で前のモジュールに戻る} \\ \hline
+\end{tabular}
+\end{table}
+
+%上の他クラス・関数との関係を直す
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./状態遷移図/delivery_状態遷移図/d_map.pdf}
+  \caption{d\_map.dart の状態遷移図}
+  \label{fig:d_map}
+\end{figure}
+
+\newpage
+
+%d_home.dart
+\begin{table}[H]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{d\_job\_map\_select.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{マップにて配達員先住所(求人情報)を検索する画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{金澤優} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & DJobMapSelect
+\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget\\ \cline{2-3}
+& 処理概要 & マップでの検索画面を動的に変更するクラス  \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{d_job_map_select.dartのDJobMapSelectStateクラスを組み込む} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DJobMapSelectState \\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & マップでの検索画面の状態を返すクラス\\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{d_job_select.dartのDJobSelectStateクラスを組み込む} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DJobSelectState \\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & マップでの検索画面の状態を返すクラス\\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & State \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{戻るボタンの選択で前のモジュールに戻る
+job_list.dartのJobListクラスを読み込む
+} \\ \hline
+
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./状態遷移図/delivery_状態遷移図/d_job_map_select.pdf}
+  \caption{d\_job\_map\_select.dart の状態遷移図}
+  \label{fig:d_job_select}
+\end{figure}
+
+
 \subsection{provider}
 
 
