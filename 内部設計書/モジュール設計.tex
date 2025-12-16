@@ -846,3 +846,114 @@ logout.dartのLogoutクラスの呼び出すことでログアウトオーバー
   \label{fig:a配達員アカウント管理画面}
 \end{figure}
 \subsection{provider}
+
+
+\subsection{component}
+\begin{table}[H]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{overscreen\_controller.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{オーバーレイの表示、非表示の操作を行うコンポーネント}  \\ \hline
+責任者 &\multicolumn{2}{l|}{梶本和希} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & OverScreenController\\ \cline{2-3}
+& クラス種類 & immutable \\ \cline{2-3}
+& 処理概要 & オーバーレイの内容を返す \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+
+&\multicolumn{2}{p{0.9\linewidth}|}{CloseLoadingScreen によってオーバレイを閉じる
+UpdateLoadingScreen によってオーバーレイを表示} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{finishscreen.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{完了画面を生成するコンポーネント}  \\ \hline
+責任者 &\multicolumn{2}{l|}{梶本和希} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & FinishScreen \\ \cline{2-3}
+& クラス種類 & extendsStatelessWidget \\ \cline{2-3}
+& 処理概要 & アイコン、テキストを引数で与えることによって、任意の完了画面を生成するコンポーネント \\ \cline{2-3}
+& 入力 & StringappbarText, IconDataappIcon,Stringtext,StringbuttonTextbool isAppbar \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+
+&\multicolumn{2}{p{0.9\linewidth}|}{titleappbar.dartのTitleAppBarクラスを組み込む
+normalbottomappbar.dartのNormalBottomAppBarクラスを組み込む
+buttonset.dartのButtonSetクラスを組み込む
+LoginRouteの最初の画面へと戻る} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+
+\begin{table}[H]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{botton\_set.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{任意のテキストが書かれたボタンを生成するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{梶本和希} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & ButtonSet \\ \cline{2-3}
+& クラス種類 &  extendsStatelessWidget\\ \cline{2-3}
+& 処理概要 & bodyの呼び出された部分にボタンを設置するコンポーネント \\ \cline{2-3}
+& 入力 & Sting buttonName \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+
+&\multicolumn{2}{p{0.9\linewidth}|}{change\_user\_role.dart のChangeUserRole.dartクラスを組み込む} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{title\_appbar.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{AppBarの下にページタイトルを表示するAppBarを作成するコンポーネント}  \\ \hline
+責任者 &\multicolumn{2}{l|}{梶本和希} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & TitleAppBar \\ \cline{2-3}
+& クラス種類 & extendsStatelessWidget \\ \cline{2-3}
+& 処理概要 & AppBarのbottomにてもう一度AppBarを作成し、そこにページのタイトルを
+表示させるAppBarを生成するコンポーネント \\ \cline{2-3}
+& 入力 & String appbarText, bool isReturn \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+
+&\multicolumn{2}{p{0.9\linewidth}|}{pop を行う} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+
+\begin{table}[H]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{normal\_bottom\_appbar.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{BottomNavigationBarがない画面で用いるBottomAppBarを作成するコンポーネント}  \\ \hline
+責任者 &\multicolumn{2}{l|}{梶本和希} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & NormalBottomAppBar \\ \cline{2-3}
+& クラス種類 & extendsStatelessWidget \\ \cline{2-3}
+& 処理概要 & 色がついただけのBottomAppBarのWidgetを返すコンポーネント \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+\end{tabular}
+\end{table}
