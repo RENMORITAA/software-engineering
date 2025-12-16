@@ -369,6 +369,293 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 \end{table}
 
 
+\begin{table}[H]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{app\_router.gr.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{RouterをRouterに変換するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{岡林磨目} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & \_\$AppRouter \\ \cline{2-3}
+& クラス種類 & extends RootStackRouter \\ \cline{2-3}
+& 処理概要 & Map に Router を入れこむクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Map \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{app\_router.dart を組み込む} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DHomeRouterRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DJobRouterRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DMapRouterRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DHistoryRouterRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & CHomeRouterRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & CCartRouterRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & CMapRouterRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & SHomeRouterRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & SJobRouterRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & SManagementRouterRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & SSalesRouterRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & MyPageRouterRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & LoginRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DHomeRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DJobRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DMapRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DHistoryRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & CHomeRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & CCartRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & CMapRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & SHomeRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & SJobRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & SManagementRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & SSalesRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & MyPageRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & RootRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & ChangeRootRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{app\_router.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{Router のパス位置を定義するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{岡林磨目} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & AppRouter \\ \cline{2-3}
+& クラス種類 & extends \_\$AppRouter \\ \cline{2-3}
+& 処理概要 & Router のパス位置を定義するクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{root_page.dart を組み込む
+
+c_home.dart を組み込む
+
+c_cart.dart を組み込む
+
+c_map_search.dart を組み込む
+
+d_home.dart を組み込む
+
+d_job_select.dart を組み込む
+
+d_job_map_select.dart を組み込む
+
+d_deliverly_history.dart を組み込む
+
+s_home.dart を組み込む
+
+s_work.dart を組み込む
+
+s_order_list.dart を組み込む
+
+s_sales.dart を組み込む
+
+mypage.dart を組み込む
+
+change_root_page.dart を組み込む
+
+login_page.dart を組み込む
+
+app\_router.gr.dart を組み込む} \\ \hline
+\end{tabular}
+\end{table}
+
+
 
 \subsection{page}
 \subsubsection{共通機能}
