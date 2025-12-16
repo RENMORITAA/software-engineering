@@ -339,46 +339,10 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 
 
 
-\subsubsection{配達員}
-
-\begin{table}[H]
-\centering
-%\caption{}
-\small
-\begin{tabular}{|c|l|p{0.4\textwidth}|}
-\hline
-モジュール名 &\multicolumn{2}{l|}{rule\_screen.dart}\\ \hline
-モジュール概要 &\multicolumn{2}{l|}{利用規約を表示するオーバーレイ}  \\ \hline
-責任者 &\multicolumn{2}{l|}{岡林磨目} \\ \hline
-\multirow{9}{*}{構成要素} & クラス名 & RuleScreen\\ \cline{2-3}
-& クラス種類 & OverEntry \\ \cline{2-3}
-& 処理概要 & Overlayの内容を返す \\ \cline{2-3}
-& 入力 & Buildcontext context \\ \cline{2-3}
-& 出力 & Material \\ \cline{2-3}
-&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
-
-&\multicolumn{2}{p{0.9\linewidth}|}{rule\_screen.dart の RuleScreen().show(context)を呼び出すとオーバーレイ表示
-
-閉じるを押すとRuleScreen().hide()により controlle.closeが呼び出されオーバレイを閉じる} \\ \hline
-\end{tabular}
-\end{table}
-
-%画像の追加
-\begin{figure}[H]
-  \centering
-  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/RuleScreen.pdf}
-  \caption{rule\_screen.dart の状態遷移図}
-  \label{fig:rule_screen_signedin.dart}
-\end{figure}
+\subsubsection{配達側}
 
 
-\begin{figure}[H]
-  \centering
-  \safeincludegraphics[width=0.5\textwidth]{./状態遷移図/delivery_状態遷移図/Notice_detail.pdf}
-  \caption{配達員アカウント管理画面}
-  \label{fig:a配達員アカウント管理画面}
-\end{figure}
-\subsection{provider}
+
 
 %画像の追加
 \subsection{provider}
@@ -407,7 +371,7 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 
 
 \subsection{page}
-\subsubsection{共通}
+\subsubsection{共通機能}
 
 
 \begin{table}[H]
@@ -621,6 +585,9 @@ logout.dartのLogoutクラスの呼び出すことでログアウトオーバー
   \caption{logout\_withdraw\_page.dart の状態遷移図}
   \label{fig:logout_withdraw_page.dart}
 \end{figure}
+
+
+
 
 \subsubsection{依頼側}
 
@@ -866,3 +833,15 @@ logout.dartのLogoutクラスの呼び出すことでログアウトオーバー
   \caption{c\_banking\_info.dart の状態遷移図}
   \label{fig:c_banking_info.dart}
 \end{figure}
+
+
+
+\subsubsection{配達側}
+
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.5\textwidth]{./状態遷移図/delivery_状態遷移図/Notice_detail.pdf}
+  \caption{配達員アカウント管理画面}
+  \label{fig:a配達員アカウント管理画面}
+\end{figure}
+\subsection{provider}
