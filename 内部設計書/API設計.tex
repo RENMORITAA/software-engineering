@@ -1,68 +1,123 @@
-\section{API設計}
 バックエンド（FastAPI）で実装する主なAPIエンドポイントを記述する。
 
 \subsection{認証 (Auth)}
 
 \textbf{ログイン} \\
 POST /auth/login
-\begin{itemize}
-    \item \textbf{Request}: email, password
-    \item \textbf{Response}: access\_token, token\_type, user\_role
-\end{itemize}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Request} & email (str), password (str) \\
+\hline
+\textbf{Response} & access\_token (str), token\_type (str), user\_role (str) \\
+\hline
+\end{tabular}
+\end{table}
 
 \textbf{新規登録} \\
 POST /auth/register
-\begin{itemize}
-    \item \textbf{Request}: email, password, user\_type, profile\_data(name, address, etc.)
-    \item \textbf{Response}: user\_id, message
-\end{itemize}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Request} & email (str), password (str), user\_type (str), profile\_data (dict) \\
+\hline
+\textbf{Response} & user\_id (int), message (str) \\
+\hline
+\end{tabular}
+\end{table}
 
 \subsection{商品 (Products)}
 
 \textbf{店舗別商品一覧取得} \\
 GET /stores/\{store\_id\}/products
-\begin{itemize}
-    \item \textbf{Request}: store\_id (path)
-    \item \textbf{Response}: list[product\_object]
-\end{itemize}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Request} & store\_id (int) \\
+\hline
+\textbf{Response} & list[product\_object] \\
+\hline
+\end{tabular}
+\end{table}
 
 \textbf{商品登録（店舗のみ）} \\
 POST /products
-\begin{itemize}
-    \item \textbf{Request}: token, name, price, description, image, stock\_status
-    \item \textbf{Response}: product\_id, message
-\end{itemize}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Request} & token (str), name (str), price (int), description (str), image (str), stock\_status (bool) \\
+\hline
+\textbf{Response} & product\_id (int), message (str) \\
+\hline
+\end{tabular}
+\end{table}
 
 \subsection{注文 (Orders)}
 
 \textbf{注文作成} \\
 POST /orders
-\begin{itemize}
-    \item \textbf{Request}: token, store\_id, items[{product\_id, quantity}], total\_price
-    \item \textbf{Response}: order\_id, message
-\end{itemize}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Request} & token (str), store\_id (int), items[list\{product\_id (int), quantity (int)\}], total\_price (int) \\
+\hline
+\textbf{Response} & order\_id (int), message (str) \\
+\hline
+\end{tabular}
+\end{table}
 
 \textbf{注文ステータス更新} \\
 PUT /orders/\{order\_id\}/status
-\begin{itemize}
-    \item \textbf{Request}: token, status (prepared, delivering, delivered)
-    \item \textbf{Response}: message
-\end{itemize}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Request} & token (str), status (str: prepared, delivering, delivered) \\
+\hline
+\textbf{Response} & message (str) \\
+\hline
+\end{tabular}
+\end{table}
 
 \subsection{配達 (Delivery)}
 
 \textbf{配達可能案件一覧取得} \\
 GET /delivery/jobs
-\begin{itemize}
-    \item \textbf{Request}: token, current\_location
-    \item \textbf{Response}: list[order\_object]
-\end{itemize}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Request} & token (str), current\_location (str) \\
+\hline
+\textbf{Response} & list[order\_object] \\
+\hline
+\end{tabular}
+\end{table}
 
 \textbf{案件受注} \\
 POST /delivery/jobs/\{order\_id\}/accept
-\begin{itemize}
-    \item \textbf{Request}: token, order\_id
-    \item \textbf{Response}: message
-\end{itemize}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Request} & token (str), order\_id (int) \\
+\hline
+\textbf{Response} & message (str) \\
+\hline
+\end{tabular}
+\end{table}
 
 \newpage

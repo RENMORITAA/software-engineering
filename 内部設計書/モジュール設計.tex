@@ -1,10 +1,8 @@
 以下に本アプリケーションのモジュール設計を示す。
 
 \begin{itemize}
-  \item overlay は、アプリケーション上で一番上のレイヤーに表示されるウィジェットをまとめたモジュー
-ルについて記述している。
-  \item provider は、アプリケーション全体で使用する共通の変数をまとめたモジュールについて記述して
-いる。
+  \item overlay は、アプリケーション上で一番上のレイヤーに表示されるウィジェットをまとめたモジュールについて記述している。
+  \item provider は、アプリケーション全体で使用する共通の変数をまとめたモジュールについて記述している。
   \item page は、アプリケーションの画面をまとめたモジュールについて記述している。
   \item component は、page で用いられるパーツをまとめたモジュールについて記述している。
 \end{itemize}
@@ -175,7 +173,7 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 
 \subsubsection{共通機能}
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 %\caption{}
 \small
@@ -209,7 +207,7 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 \end{figure}
 
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 %\caption{}
 \small
@@ -233,11 +231,7 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 \end{table}
 
 
-%画像の追加
-%なさそう？
-
-
-\begin{table}[h]
+\begin{table}[H]
 \centering
 %\caption{}
 \small
@@ -268,7 +262,7 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 \end{figure}
 
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 %\caption{}
 \small
@@ -302,7 +296,7 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 
 
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 %\caption{}
 \small
@@ -338,7 +332,7 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 
 \subsubsection{配達員}
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 %\caption{}
 \small
@@ -380,7 +374,7 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 %画像の追加
 \subsection{provider}
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 %\caption{}
 \small
@@ -407,7 +401,7 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 \subsubsection{共通}
 
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 %\caption{}
 \small
@@ -428,8 +422,6 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 \end{table}
 
 %画像の追加
-
-%画像の追加
 \begin{figure}[H]
   \centering
   \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/ChangeRootPage.pdf}
@@ -439,7 +431,7 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 
 
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 %\caption{}
 \small
@@ -482,7 +474,7 @@ login\_page.dart のLoginPageクラスを呼び出しログイン画面を表示
 
 
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 %\caption{}
 \small
@@ -517,24 +509,6 @@ login\_page.dart のLoginPageクラスを呼び出しログイン画面を表示
 &\multicolumn{2}{p{0.9\linewidth}|}{title\_appbar.dart の TitleAppBar クラスを組み込む
 
 mypage.dart の ScrollMyPageDetail クラスを組み込む} \\ \hline
-
-\multirow{9}{*}{構成要素} & クラス名 & \\ \cline{2-3}
-& クラス種類 &  \\ \cline{2-3}
-& 処理概要 &  \\ \cline{2-3}
-& 入力 &  \\ \cline{2-3}
-& 出力 &  \\ \cline{2-3}
-&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
-&\multicolumn{2}{p{0.9\linewidth}|}{} \\ \hline
-
-\multirow{9}{*}{構成要素} & クラス名 & \\ \cline{2-3}
-& クラス種類 &  \\ \cline{2-3}
-& 処理概要 &  \\ \cline{2-3}
-& 入力 &  \\ \cline{2-3}
-& 出力 &  \\ \cline{2-3}
-&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
-&\multicolumn{2}{p{0.9\linewidth}|}{} \\ \hline
-
-
 \end{tabular}
 \end{table}
 
@@ -548,7 +522,7 @@ mypage.dart の ScrollMyPageDetail クラスを組み込む} \\ \hline
 
 
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 %\caption{}
 \small
@@ -609,7 +583,7 @@ login\_page.dartのLoginAppBarクラスを組み込む} \\ \hline
 
 
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 %\caption{}
 \small
@@ -639,3 +613,247 @@ logout.dartのLogoutクラスの呼び出すことでログアウトオーバー
   \label{fig:logout_withdraw_page.dart}
 \end{figure}
 
+\subsubsection{依頼側}
+
+% 店舗検索・マップ
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{c\_map\_search.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{マップでの店舗検索を行う画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{工藤 愛} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & MapSearch\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & マップと店舗検索バーを表示する \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{GoogleMap Widgetを表示し、検索結果に応じてピンを配置する} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/c_map_search.dart.drawio.pdf}
+  \caption{c\_map\_search.dart の状態遷移図}
+  \label{fig:c_map_search.dart}
+\end{figure}
+
+% 商品一覧
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{c\_product\_list.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{商品一覧画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{工藤 愛} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & ProductList\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 選択された店舗の商品一覧を表示する \\ \cline{2-3}
+& 入力 & int storeId \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{APIから商品情報を取得し、Card Widget等でリスト表示する。商品選択でカートに追加または詳細表示を行う} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/c_product_list.dart.drawio.pdf}
+  \caption{c\_product\_list.dart の状態遷移図}
+  \label{fig:c_product_list.dart}
+\end{figure}
+
+% カート
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{c\_cart.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{カート情報を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{工藤 愛} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & Cart\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 現在カートに入っている商品リストと合計金額を表示する \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{c\_order\_check.dartへ遷移し注文確認を行う} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/c_cart.dart.drawio.pdf}
+  \caption{c\_cart.dart の状態遷移図}
+  \label{fig:c_cart.dart}
+\end{figure}
+
+% 注文確認・確定
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{c\_order\_confirm.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{注文確定画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{工藤 愛} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & OrderConfirm\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 注文内容の最終確認と確定処理を行う \\ \cline{2-3}
+& 入力 & OrderData order \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{APIへ注文データを送信し、成功時に完了画面(finish\_screen.dart)を表示する} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/c_order_confirm.dart.drawio.pdf}
+  \caption{c\_order\_confirm.dart の状態遷移図}
+  \label{fig:c_order_confirm.dart}
+\end{figure}
+
+% 支払い明細
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{c\_payment.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{支払い明細画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{工藤 愛} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & PaymentDetail\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 注文の詳細な支払い内訳を表示する \\ \cline{2-3}
+& 入力 & int orderId \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/c_payment.dart.drawio.pdf}
+  \caption{c\_payment.dart の状態遷移図}
+  \label{fig:c_payment.dart}
+\end{figure}
+
+% 商品到着報告
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{c\_order\_arrival\_report.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{商品到着報告画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{工藤 愛} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & ArrivalReport\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 商品受け取りを確認し、完了報告を行う \\ \cline{2-3}
+& 入力 & int orderId \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{報告ボタン押下でステータス更新APIを呼び出す} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/c_order_arrival_report.dart.drawio.pdf}
+  \caption{c\_order\_arrival\_report.dart の状態遷移図}
+  \label{fig:c_order_arrival_report.dart}
+\end{figure}
+
+% 注文履歴
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{c\_order\_history.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{注文履歴一覧画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{工藤 愛} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & OrderHistory\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 過去の注文履歴をリスト形式で表示する \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{リスト選択でc\_order\_history\_detail.dartへ遷移する} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/c_order_history.dart.drawio.pdf}
+  \caption{c\_order\_history.dart の状態遷移図}
+  \label{fig:c_order_history.dart}
+\end{figure}
+
+% 住所確認・編集
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{c\_address.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{配達先住所確認画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{工藤 愛} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & AddressInfo\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 登録されている配達先住所を表示する \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{編集ボタンでc\_address\_change.dart、追加ボタンでc\_address\_add.dartへ遷移する} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/c_address.dart.drawio.pdf}
+  \caption{c\_address.dart の状態遷移図}
+  \label{fig:c_address.dart}
+\end{figure}
+
+% 口座情報
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{c\_banking\_info.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{口座情報管理画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{工藤 愛} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & BankingInfo\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 登録口座情報を表示する \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{変更ボタンでc\_banking\_info\_change.dartへ遷移する} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/c_banking_info.dart.drawio.pdf}
+  \caption{c\_banking\_info.dart の状態遷移図}
+  \label{fig:c_banking_info.dart}
+\end{figure}
