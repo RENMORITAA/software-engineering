@@ -1,4 +1,4 @@
-以下に本アプリケーションのモジュール設計を示す。
+﻿以下に本アプリケーションのモジュール設計を示す。
 
 \begin{itemize}
   \item overlay は、アプリケーション上で一番上のレイヤーに表示されるウィジェットをまとめたモジュールについて記述している。
@@ -621,37 +621,23 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 & 入力 & なし \\ \cline{2-3}
 & 出力 & なし \\ \cline{2-3}
 &\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
-&\multicolumn{2}{p{0.9\linewidth}|}{root_page.dart を組み込む
-
-c_home.dart を組み込む
-
-c_cart.dart を組み込む
-
-c_map_search.dart を組み込む
-
-d_home.dart を組み込む
-
-d_job_select.dart を組み込む
-
-d_job_map_select.dart を組み込む
-
-d_deliverly_history.dart を組み込む
-
-s_home.dart を組み込む
-
-s_work.dart を組み込む
-
-s_order_list.dart を組み込む
-
-s_sales.dart を組み込む
-
-mypage.dart を組み込む
-
-change_root_page.dart を組み込む
-
-login_page.dart を組み込む
-
-app\_router.gr.dart を組み込む} \\ \hline
+&\multicolumn{2}{p{0.9\linewidth}|}{%
+\detokenize{root_page.dart} を組み込む\newline
+\detokenize{c_home.dart} を組み込む\newline
+\detokenize{c_cart.dart} を組み込む\newline
+\detokenize{c_map_search.dart} を組み込む\newline
+\detokenize{d_home.dart} を組み込む\newline
+\detokenize{d_job_select.dart} を組み込む\newline
+\detokenize{d_job_map_select.dart} を組み込む\newline
+\detokenize{d_deliverly_history.dart} を組み込む\newline
+\detokenize{s_home.dart} を組み込む\newline
+\detokenize{s_work.dart} を組み込む\newline
+\detokenize{s_order_list.dart} を組み込む\newline
+\detokenize{s_sales.dart} を組み込む\newline
+\detokenize{mypage.dart} を組み込む\newline
+\detokenize{change_root_page.dart} を組み込む\newline
+\detokenize{login_page.dart} を組み込む\newline
+\detokenize{app_router.gr.dart} を組み込む} \\ \hline
 \end{tabular}
 \end{table}
 
@@ -900,7 +886,7 @@ logout.dartのLogoutクラスの呼び出すことでログアウトオーバー
 %画像の追加
 \begin{figure}[H]
   \centering
-  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/c_map_search.dart.drawio.pdf}
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/c_map\_search.dart.drawio.pdf}
   \caption{c\_map\_search.dart の状態遷移図}
   \label{fig:c_map_search.dart}
 \end{figure}
@@ -1137,14 +1123,14 @@ logout.dartのLogoutクラスの呼び出すことでログアウトオーバー
 & 入力 & なし \\ \cline{2-3}
 & 出力 & Widget \\ \cline{2-3}
 &\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
-&\multicolumn{2}{p{0.9\linewidth}|}{AutoTabsScaffold等を用い、s_home, s_work, s_order_list, s_sales, mypageを子ルートとして管理する} \\ \hline
+&\multicolumn{2}{p{0.9\linewidth}|}{AutoTabsScaffold等を用い、\texttt{s\_home}、\texttt{s\_work}、\texttt{s\_order\_list}、\texttt{s\_sales}、\texttt{mypage}を子ルートとして管理する} \\ \hline
 \end{tabular}
 \end{table}
 
 %画像の追加
 \begin{figure}[H]
   \centering
-  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/s_root_page.drawio.pdf}
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/s_root\_page.drawio.pdf}
   \caption{s\_root\_page.dart の状態遷移図}
   \label{fig:s_root_page.dart}
 \end{figure}
@@ -1191,7 +1177,7 @@ logout.dartのLogoutクラスの呼び出すことでログアウトオーバー
 & 入力 & なし \\ \cline{2-3}
 & 出力 & Widget \\ \cline{2-3}
 &\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
-&\multicolumn{2}{p{0.9\linewidth}|}{s_inventory_status.dart、s_menu_edit.dartのリンクを持つ} \\ \hline
+&\multicolumn{2}{p{0.9\linewidth}|}{\texttt{s\_inventory\_status.dart}、\texttt{s\_menu\_edit.dart}のリンクを持つ} \\ \hline
 \end{tabular}
 \end{table}
 
@@ -1273,7 +1259,7 @@ logout.dartのLogoutクラスの呼び出すことでログアウトオーバー
 & 入力 & なし \\ \cline{2-3}
 & 出力 & Widget \\ \cline{2-3}
 &\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
-&\multicolumn{2}{p{0.9\linewidth}|}{s_menu_regist.dart, s_menu_change.dart, s_menu_delete.dart の機能を包含または遷移する} \\ \hline
+&\multicolumn{2}{p{0.9\linewidth}|}{\texttt{s\_menu\_regist.dart}, \texttt{s\_menu\_change.dart}, \texttt{s\_menu\_delete.dart} の機能を包含または遷移する} \\ \hline
 \end{tabular}
 \end{table}
 
@@ -1327,7 +1313,7 @@ logout.dartのLogoutクラスの呼び出すことでログアウトオーバー
 & 入力 & なし \\ \cline{2-3}
 & 出力 & Widget \\ \cline{2-3}
 &\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
-&\multicolumn{2}{p{0.9\linewidth}|}{登録完了後、finish_screen.dart を表示し、s_menu_edit.dart に戻る。} \\ \hline
+&\multicolumn{2}{p{0.9\linewidth}|}{登録完了後、\texttt{finish\_screen.dart} を表示し、\texttt{s\_menu\_edit.dart} に戻る。} \\ \hline
 \end{tabular}
 \end{table}
 
@@ -1354,7 +1340,7 @@ logout.dartのLogoutクラスの呼び出すことでログアウトオーバー
 & 入力 & なし \\ \cline{2-3}
 & 出力 & Widget \\ \cline{2-3}
 &\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
-&\multicolumn{2}{p{0.9\linewidth}|}{confirm_inf_change.dart を呼び出して変更の最終確認を行う。} \\ \hline
+&\multicolumn{2}{p{0.9\linewidth}|}{\texttt{confirm\_inf\_change.dart} を呼び出して変更の最終確認を行う。} \\ \hline
 \end{tabular}
 \end{table}
 
@@ -1435,7 +1421,7 @@ logout.dartのLogoutクラスの呼び出すことでログアウトオーバー
 & 入力 & なし \\ \cline{2-3}
 & 出力 & Widget \\ \cline{2-3}
 &\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
-&\multicolumn{2}{p{0.9\linewidth}|}{確定後、finish_screen.dart を表示する。} \\ \hline
+&\multicolumn{2}{p{0.9\linewidth}|}{確定後、\texttt{finish\_screen.dart} を表示する。} \\ \hline
 \end{tabular}
 \end{table}
 
@@ -1443,7 +1429,7 @@ logout.dartのLogoutクラスの呼び出すことでログアウトオーバー
 \begin{figure}[H]
   \centering
   \safeincludegraphics[width=0.75\textwidth]{状態遷移図/s_delivery_complete.drawio.pdf}
-  \caption{s_delivery_complete.dart の状態遷移図}
+  \caption{\texttt{s\_delivery\_complete.dart} の状態遷移図}
   \label{fig:s_delivery_complete.dart}
 \end{figure}
 
@@ -1451,9 +1437,6 @@ logout.dartのLogoutクラスの呼び出すことでログアウトオーバー
 
 
 \subsubsection{配達側}
-
-
-\subsection{provider}
 
 
 \subsection{component}
@@ -1598,3 +1581,7 @@ LoginRouteの最初の画面へと戻る} \\ \hline
 &\multicolumn{2}{p{0.9\linewidth}|}{change\_general\_corporation.dartのChangeGeneralCorporationクラスを組み込む} \\ \hline
 \end{tabular}
 \end{table}
+
+
+
+
