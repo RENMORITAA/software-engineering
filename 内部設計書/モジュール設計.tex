@@ -1122,6 +1122,333 @@ logout.dartのLogoutクラスの呼び出すことでログアウトオーバー
 \end{figure}
 
 
+\subsubsection{店舗側}
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{s\_root\_page.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{「ホーム」、「業務」、「注文管理」、「売上」、「マイページ」を包括するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{江藤 加奈} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & SRootPage\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 下部ナビゲーションバーを制御し、店舗側の主要5画面を切り替える親クラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{AutoTabsScaffold等を用い、s_home, s_work, s_order_list, s_sales, mypageを子ルートとして管理する} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/s_root_page.drawio.pdf}
+  \caption{s\_root\_page.dart の状態遷移図}
+  \label{fig:s_root_page.dart}
+\end{figure}
+
+%店舗ホーム
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{s\_home.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{店舗ホーム画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{江藤 加奈} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & SHomePage\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 本日の注文数、売上概要を表示する \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{PIから店舗のサマリーデータを取得して表示する} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/s_home.drawio.pdf}
+  \caption{s\_home.dart の状態遷移図}
+  \label{fig:s_home.dart}
+\end{figure}
+
+%店舗業務画面
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{s\_work.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{業務画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{江藤 加奈} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & SWorkPage\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & メニュー情報設定と在庫ステータス設定を管理する \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{s_inventory_status.dart、s_menu_edit.dartのリンクを持つ} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/s_work.drawio.pdf}
+  \caption{s\_work.dart の状態遷移図}
+  \label{fig:s_work.dart}
+\end{figure}
+
+
+%店舗受注一覧
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{s\_order\_list.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{受注一覧画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{江藤 加奈} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & SOrderListPage\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 注文一覧を表示する \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{追加！！！！！！} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/s_order_list.drawio.pdf}
+  \caption{s\_order\_list.dart の状態遷移図}
+  \label{fig:s_order_list.dart}
+\end{figure}
+
+%店舗売上
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{s\_sales.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{売上確認画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{江藤 加奈} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & SSalesPage\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 日別の売上集計を表示する \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{追加！！！！！！} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/s_sales.drawio.pdf}
+  \caption{s\_sales.dart の状態遷移図}
+  \label{fig:s_sales.dart}
+\end{figure}
+
+%店舗メニュー設定
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{s\_menu\_edit.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{メニュー情報設定（登録・変更・削除）画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{江藤 加奈} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & SMenuEditPage\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & メニューの一覧表示および編集（追加・更新・削除）の起点となる画面 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{s_menu_regist.dart, s_menu_change.dart, s_menu_delete.dart の機能を包含または遷移する} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/s_menu_edit.drawio.pdf}
+  \caption{s\_menu\_edit.dart の状態遷移図}
+  \label{fig:s_menu_edit.dart}
+\end{figure}
+
+%店舗在庫管理
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{s\_inventory\_status.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{店舗の在庫ステータス画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{江藤 加奈} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & SInventoryStatus\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & メニューごとの「在庫あり/なし」を切り替え、ユーザー画面への反映を制御する。 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{APIと通信し、商品の品切れフラグを更新する。} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/s_inventory_status.drawio.pdf}
+  \caption{s\_inventory\_status.dart の状態遷移図}
+  \label{fig:s_inventory_status.dart}
+\end{figure}
+
+%店舗新規メニュー
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{s\_menu\_regist.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{メニュー情報の新規登録画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{江藤 加奈} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & SMenuRegist\\ \cline{2-3}
+& クラス種類 & extends StatefulWidget \\ \cline{2-3}
+& 処理概要 & 新しいメニューの名前、価格、商品説明、画像などを入力・保存する。 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{登録完了後、finish_screen.dart を表示し、s_menu_edit.dart に戻る。} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/s_menu_regist.drawio.pdf}
+  \caption{s\_menu\_regist.dart の状態遷移図}
+  \label{fig:s_menu_regist.dart}
+\end{figure}
+
+%店舗メニュー情報変更
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{s\_menu\_change.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{メニュー情報の変更画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{江藤 加奈} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & SMenuChange\\ \cline{2-3}
+& クラス種類 & extends StatefulWidget \\ \cline{2-3}
+& 処理概要 & 既存メニューの情報を取得し、修正内容をデータベースに反映させる。 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{confirm_inf_change.dart を呼び出して変更の最終確認を行う。} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/s_menu_change.drawio.pdf}
+  \caption{s\_menu\_change.dart の状態遷移図}
+  \label{fig:s_menu_change.dart}
+\end{figure}
+
+%店舗メニュー削除
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{s\_menu\_delete.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{メニュー情報の削除画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{江藤 加奈} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & SMenuDelete\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 特定のメニューを削除する際の最終確認画面を表示し、削除処理を実行する。 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{API通信を行い、論理削除または物理削除を実行後、一覧へ戻る。} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/s_menu_delete.drawio.pdf}
+  \caption{s\_menu\_delete.dart の状態遷移図}
+  \label{fig:s_menu_delete.dart}
+\end{figure}
+
+%店舗口座情報
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{s\_banking\_info.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{口座情報管理画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{江藤 加奈} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & SBankingInfo\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 売上の振込先となる銀行口座情報の確認および、変更画面への遷移を行う。 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{口座変更時は、共通のバリデーションコンポーネント等を利用する。} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/s_banking_info.drawio.pdf}
+  \caption{s\_banking\_info.dart の状態遷移図}
+  \label{fig:s_banking_info.dart}
+\end{figure}
+
+%店舗受け渡し確認
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{s\_delivery\_complete.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{受け渡し完了確認画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{江藤 加奈} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & SDeliveryComplete\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 配達員または注文者への商品受け渡しが完了したことを確定する。 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{確定後、finish_screen.dart を表示する。} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/s_delivery_complete.drawio.pdf}
+  \caption{s_delivery_complete.dart の状態遷移図}
+  \label{fig:s_delivery_complete.dart}
+\end{figure}
+
+
+
 
 \subsubsection{配達側}
 
