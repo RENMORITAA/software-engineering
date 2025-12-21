@@ -1,4 +1,4 @@
-以下に本アプリケーションのモジュール設計を示す。
+﻿以下に本アプリケーションのモジュール設計を示す。
 
 \begin{itemize}
   \item overlay は、アプリケーション上で一番上のレイヤーに表示されるウィジェットをまとめたモジュールについて記述している。
@@ -57,6 +57,7 @@ app\_router.gr.dart & RouterをRouterに変換するモジュール \\
 
 \begin{table}[htbp]
 \centering
+\footnotesize % ここでフォントサイズを小さくする (\small や \scriptsize も選択肢)
 \begin{tabularx}{\textwidth}{|l|X|}
 \hline
 \rowcolor[RGB]{200,200,200}
@@ -186,7 +187,7 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 & クラス種類 & OverEntry \\ \cline{2-3}
 & 処理概要 & Overlayの内容を返す \\ \cline{2-3}
 & 入力 & Buildcontext context \\ \cline{2-3}
-& 出力 & Maaterial \\ \cline{2-3}
+& 出力 & Material \\ \cline{2-3}
 &\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
 
 &\multicolumn{2}{p{0.9\linewidth}|}{withdraw.dart の Withdraw().show(context) を呼び出すとオーバレイ表示
@@ -201,7 +202,7 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 %画像の追加
 \begin{figure}[H]
   \centering
-  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/withdraw.pdf}
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/common_状態遷移図/withdraw.pdf}
   \caption{withdraw.dart の状態遷移図}
   \label{fig:withdraw.dart}
 \end{figure}
@@ -230,6 +231,15 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 \end{tabular}
 \end{table}
 
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/common_状態遷移図/Logout.pdf}
+  \caption{logout.dart の状態遷移図}
+  \label{fig:logout.dart}
+\end{figure}
+
+
 
 \begin{table}[H]
 \centering
@@ -244,7 +254,7 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 & クラス種類 & OverEntry \\ \cline{2-3}
 & 処理概要 & Overlayの内容を返す \\ \cline{2-3}
 & 入力 & Buildcontext context \\ \cline{2-3}
-& 出力 & Maaterial \\ \cline{2-3}
+& 出力 & Material \\ \cline{2-3}
 &\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
 
 &\multicolumn{2}{p{0.9\linewidth}|}{rule\_screen.dart の RuleScreen().show(context)を呼び出すとオーバーレイ表示
@@ -256,7 +266,7 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 %画像の追加
 \begin{figure}[H]
   \centering
-  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/RuleScreen.pdf}
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/common_状態遷移図/RuleScreen.pdf}
   \caption{rule\_screen.dart の状態遷移図}
   \label{fig:rule_screen.dart}
 \end{figure}
@@ -275,7 +285,7 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 & クラス種類 & OverEntry \\ \cline{2-3}
 & 処理概要 & Overlayの内容を返す \\ \cline{2-3}
 & 入力 & Buildcontext context \\ \cline{2-3}
-& 出力 & Maaterial \\ \cline{2-3}
+& 出力 & Material \\ \cline{2-3}
 &\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
 
 &\multicolumn{2}{p{0.9\linewidth}|}{cancel\_inf\_change.dartの CancelInfChange().show(context) を呼び出すとオーバレイ表示
@@ -289,7 +299,7 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 %画像の追加
 \begin{figure}[H]
   \centering
-  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/CancelInfChange.pdf}
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/common_状態遷移図/CancelInfChange.pdf}
   \caption{cancel\_inf\_change.dart の状態遷移図}
   \label{fig:cancel_inf_change.dart}
 \end{figure}
@@ -309,7 +319,7 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 & クラス種類 & OverEntry \\ \cline{2-3}
 & 処理概要 & Overlayの内容を返す \\ \cline{2-3}
 & 入力 & Buildcontext context \\ \cline{2-3}
-& 出力 & Maaterial \\ \cline{2-3}
+& 出力 & Material \\ \cline{2-3}
 &\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
 
 &\multicolumn{2}{p{0.9\linewidth}|}{confirm\_inf\_change.dart の ConfirmInfChange().show(context) を呼び出すとオーバレイ表示
@@ -323,53 +333,16 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 %画像の追加
 \begin{figure}[H]
   \centering
-  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/ConfirmInfChange.pdf}
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/common_状態遷移図/ConfirmInfChange.pdf}
   \caption{confirm\_inf\_change.dart の状態遷移図}
   \label{fig:confirm_inf_change.dart}
 \end{figure}
 
 
 
-\subsubsection{配達員}
-
-\begin{table}[H]
-\centering
-%\caption{}
-\small
-\begin{tabular}{|c|l|p{0.4\textwidth}|}
-\hline
-モジュール名 &\multicolumn{2}{l|}{rule\_screen.dart}\\ \hline
-モジュール概要 &\multicolumn{2}{l|}{利用規約を表示するオーバーレイ}  \\ \hline
-責任者 &\multicolumn{2}{l|}{岡林磨目} \\ \hline
-\multirow{9}{*}{構成要素} & クラス名 & RuleScreen\\ \cline{2-3}
-& クラス種類 & OverEntry \\ \cline{2-3}
-& 処理概要 & Overlayの内容を返す \\ \cline{2-3}
-& 入力 & Buildcontext context \\ \cline{2-3}
-& 出力 & Maaterial \\ \cline{2-3}
-&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
-
-&\multicolumn{2}{p{0.9\linewidth}|}{rule\_screen.dart の RuleScreen().show(context)を呼び出すとオーバーレイ表示
-
-閉じるを押すとRuleScreen().hide()により controlle.closeが呼び出されオーバレイを閉じる} \\ \hline
-\end{tabular}
-\end{table}
-
-%画像の追加
-\begin{figure}[H]
-  \centering
-  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/RuleScreen.pdf}
-  \caption{rule\_screen.dart の状態遷移図}
-  \label{fig:rule_screen_signedin.dart}
-\end{figure}
+\subsubsection{配達側}
 
 
-\begin{figure}[H]
-  \centering
-  \safeincludegraphics[width=0.5\textwidth]{./状態遷移図/delivery_状態遷移図/Notice_detail.pdf}
-  \caption{配達員アカウント管理画面}
-  \label{fig:a配達員アカウント管理画面}
-\end{figure}
-\subsection{provider}
 
 %画像の追加
 \subsection{provider}
@@ -396,9 +369,282 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 \end{table}
 
 
+\begin{table}[H]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{app\_router.gr.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{RouterをRouterに変換するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{岡林磨目} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & \_\$AppRouter \\ \cline{2-3}
+& クラス種類 & extends RootStackRouter \\ \cline{2-3}
+& 処理概要 & Map に Router を入れこむクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Map \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{app\_router.dart を組み込む} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DHomeRouterRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DJobRouterRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DMapRouterRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DHistoryRouterRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & CHomeRouterRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & CCartRouterRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & CMapRouterRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & SHomeRouterRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & SJobRouterRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & SManagementRouterRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & SSalesRouterRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & MyPageRouterRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & LoginRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DHomeRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DJobRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DMapRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & DHistoryRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & CHomeRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & CCartRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & CMapRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & SHomeRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & SJobRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & SManagementRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & SSalesRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & MyPageRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & RootRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\multirow{9}{*}{構成要素} & クラス名 & ChangeRootRoute \\ \cline{2-3}
+& クラス種類 & extends PageRouteInfo（void） \\ \cline{2-3}
+& 処理概要 & Routeの名前定義 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+
+\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{app\_router.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{Router のパス位置を定義するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{岡林磨目} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & AppRouter \\ \cline{2-3}
+& クラス種類 & extends \_\$AppRouter \\ \cline{2-3}
+& 処理概要 & Router のパス位置を定義するクラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & なし \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{%
+\detokenize{root_page.dart} を組み込む\newline
+\detokenize{c_home.dart} を組み込む\newline
+\detokenize{c_cart.dart} を組み込む\newline
+\detokenize{c_map_search.dart} を組み込む\newline
+\detokenize{d_home.dart} を組み込む\newline
+\detokenize{d_job_select.dart} を組み込む\newline
+\detokenize{d_job_map_select.dart} を組み込む\newline
+\detokenize{d_deliverly_history.dart} を組み込む\newline
+\detokenize{s_home.dart} を組み込む\newline
+\detokenize{s_work.dart} を組み込む\newline
+\detokenize{s_order_list.dart} を組み込む\newline
+\detokenize{s_sales.dart} を組み込む\newline
+\detokenize{mypage.dart} を組み込む\newline
+\detokenize{change_root_page.dart} を組み込む\newline
+\detokenize{login_page.dart} を組み込む\newline
+\detokenize{app_router.gr.dart} を組み込む} \\ \hline
+\end{tabular}
+\end{table}
+
+
 
 \subsection{page}
-\subsubsection{共通}
+\subsubsection{共通機能}
 
 
 \begin{table}[H]
@@ -424,7 +670,7 @@ button\_set.dart & 任意のテキストを記載したボタンを生成する�
 %画像の追加
 \begin{figure}[H]
   \centering
-  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/ChangeRootPage.pdf}
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/common_状態遷移図/ChangeRootPage.pdf}
   \caption{change\_root\_page.dart の状態遷移図}
   \label{fig:change_root_page.dart}
 \end{figure}
@@ -467,7 +713,7 @@ login\_page.dart のLoginPageクラスを呼び出しログイン画面を表示
 %画像の追加
 \begin{figure}[H]
   \centering
-  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/NewMember.pdf}
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/common_状態遷移図/NewMember.pdf}
   \caption{new\_member.dart の状態遷移図}
   \label{fig:new_member.dart}
 \end{figure}
@@ -515,7 +761,7 @@ mypage.dart の ScrollMyPageDetail クラスを組み込む} \\ \hline
 %画像の追加
 \begin{figure}[H]
   \centering
-  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/MyPage.pdf}
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/common_状態遷移図/MyPage.pdf}
   \caption{mypage.dart の状態遷移図}
   \label{fig:mypage.dart}
 \end{figure}
@@ -562,10 +808,10 @@ login\_page.dartのLoginAppBarクラスを組み込む} \\ \hline
 \end{table}
 
 %画像の追加（ファイルが存在する場合のみ表示）
-\IfFileExists{状態遷移図/common_状態遷移図/LoginPage.pdf}{%
+\IfFileExists{状態遷移図/common_状態遷移図/login.pdf}{%
   \begin{figure}[H]
     \centering
-    \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/LoginPage.pdf}
+    \safeincludegraphics[width=0.5\textwidth]{状態遷移図/common_状態遷移図/login.pdf}
     \caption{login\_page.dart の状態遷移図}
     \label{fig:login_page.dart}
   \end{figure}
@@ -608,10 +854,13 @@ logout.dartのLogoutクラスの呼び出すことでログアウトオーバー
 %画像の追加
 \begin{figure}[H]
   \centering
-  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/common_状態遷移図/LogoutWithdraw.pdf}
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/common_状態遷移図/LogoutWithdraw.pdf}
   \caption{logout\_withdraw\_page.dart の状態遷移図}
   \label{fig:logout_withdraw_page.dart}
 \end{figure}
+
+
+
 
 \subsubsection{依頼側}
 
@@ -637,7 +886,7 @@ logout.dartのLogoutクラスの呼び出すことでログアウトオーバー
 %画像の追加
 \begin{figure}[H]
   \centering
-  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/c_map_search.dart.drawio.pdf}
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/c_map\_search.dart.drawio.pdf}
   \caption{c\_map\_search.dart の状態遷移図}
   \label{fig:c_map_search.dart}
 \end{figure}
@@ -664,7 +913,7 @@ logout.dartのLogoutクラスの呼び出すことでログアウトオーバー
 %画像の追加
 \begin{figure}[H]
   \centering
-  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/c_product_list.dart.drawio.pdf}
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/c_product_list.dart.drawio.pdf}
   \caption{c\_product\_list.dart の状態遷移図}
   \label{fig:c_product_list.dart}
 \end{figure}
@@ -691,7 +940,7 @@ logout.dartのLogoutクラスの呼び出すことでログアウトオーバー
 %画像の追加
 \begin{figure}[H]
   \centering
-  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/c_cart.dart.drawio.pdf}
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/c_cart.dart.drawio.pdf}
   \caption{c\_cart.dart の状態遷移図}
   \label{fig:c_cart.dart}
 \end{figure}
@@ -718,7 +967,7 @@ logout.dartのLogoutクラスの呼び出すことでログアウトオーバー
 %画像の追加
 \begin{figure}[H]
   \centering
-  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/c_order_confirm.dart.drawio.pdf}
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/c_order_confirm.dart.drawio.pdf}
   \caption{c\_order\_confirm.dart の状態遷移図}
   \label{fig:c_order_confirm.dart}
 \end{figure}
@@ -745,7 +994,7 @@ logout.dartのLogoutクラスの呼び出すことでログアウトオーバー
 %画像の追加
 \begin{figure}[H]
   \centering
-  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/c_payment.dart.drawio.pdf}
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/c_payment.dart.drawio.pdf}
   \caption{c\_payment.dart の状態遷移図}
   \label{fig:c_payment.dart}
 \end{figure}
@@ -772,7 +1021,7 @@ logout.dartのLogoutクラスの呼び出すことでログアウトオーバー
 %画像の追加
 \begin{figure}[H]
   \centering
-  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/c_order_arrival_report.dart.drawio.pdf}
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/c_order_arrival_report.dart.drawio.pdf}
   \caption{c\_order\_arrival\_report.dart の状態遷移図}
   \label{fig:c_order_arrival_report.dart}
 \end{figure}
@@ -799,7 +1048,7 @@ logout.dartのLogoutクラスの呼び出すことでログアウトオーバー
 %画像の追加
 \begin{figure}[H]
   \centering
-  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/c_order_history.dart.drawio.pdf}
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/c_order_history.dart.drawio.pdf}
   \caption{c\_order\_history.dart の状態遷移図}
   \label{fig:c_order_history.dart}
 \end{figure}
@@ -826,7 +1075,7 @@ logout.dartのLogoutクラスの呼び出すことでログアウトオーバー
 %画像の追加
 \begin{figure}[H]
   \centering
-  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/c_address.dart.drawio.pdf}
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/c_address.dart.drawio.pdf}
   \caption{c\_address.dart の状態遷移図}
   \label{fig:c_address.dart}
 \end{figure}
@@ -853,7 +1102,486 @@ logout.dartのLogoutクラスの呼び出すことでログアウトオーバー
 %画像の追加
 \begin{figure}[H]
   \centering
-  \safeincludegraphics[width=0.75\textwidth]{状態遷移図/c_banking_info.dart.drawio.pdf}
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/c_banking_info.dart.drawio.pdf}
   \caption{c\_banking\_info.dart の状態遷移図}
   \label{fig:c_banking_info.dart}
 \end{figure}
+
+
+\subsubsection{店舗側}
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{s\_root\_page.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{「ホーム」、「業務」、「注文管理」、「売上」、「マイページ」を包括するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{江藤 加奈} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & SRootPage\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 下部ナビゲーションバーを制御し、店舗側の主要5画面を切り替える親クラス \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{AutoTabsScaffold等を用い、\texttt{s\_home}、\texttt{s\_work}、\texttt{s\_order\_list}、\texttt{s\_sales}、\texttt{mypage}を子ルートとして管理する} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/s_root\_page.drawio.pdf}
+  \caption{s\_root\_page.dart の状態遷移図}
+  \label{fig:s_root_page.dart}
+\end{figure}
+
+%店舗ホーム
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{s\_home.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{店舗ホーム画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{江藤 加奈} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & SHomePage\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 本日の注文数、売上概要を表示する \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{PIから店舗のサマリーデータを取得して表示する} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/s_home.drawio.pdf}
+  \caption{s\_home.dart の状態遷移図}
+  \label{fig:s_home.dart}
+\end{figure}
+
+%店舗業務画面
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{s\_work.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{業務画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{江藤 加奈} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & SWorkPage\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & メニュー情報設定と在庫ステータス設定を管理する \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{\texttt{s\_inventory\_status.dart}、\texttt{s\_menu\_edit.dart}のリンクを持つ} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/s_work.drawio.pdf}
+  \caption{s\_work.dart の状態遷移図}
+  \label{fig:s_work.dart}
+\end{figure}
+
+
+%店舗受注一覧
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{s\_order\_list.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{受注一覧画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{江藤 加奈} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & SOrderListPage\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 注文一覧を表示する \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/s_order_list.drawio.pdf}
+  \caption{s\_order\_list.dart の状態遷移図}
+  \label{fig:s_order_list.dart}
+\end{figure}
+
+%店舗売上
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{s\_sales.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{売上確認画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{江藤 加奈} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & SSalesPage\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 日別の売上集計を表示する \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/s_sales.drawio.pdf}
+  \caption{s\_sales.dart の状態遷移図}
+  \label{fig:s_sales.dart}
+\end{figure}
+
+%店舗メニュー設定
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{s\_menu\_edit.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{メニュー情報設定（登録・変更・削除）画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{江藤 加奈} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & SMenuEditPage\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & メニューの一覧表示および編集（追加・更新・削除）の起点となる画面 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{\texttt{s\_menu\_regist.dart}, \texttt{s\_menu\_change.dart}, \texttt{s\_menu\_delete.dart} の機能を包含または遷移する} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/s_menu_edit.drawio.pdf}
+  \caption{s\_menu\_edit.dart の状態遷移図}
+  \label{fig:s_menu_edit.dart}
+\end{figure}
+
+%店舗在庫管理
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{s\_inventory\_status.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{店舗の在庫ステータス画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{江藤 加奈} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & SInventoryStatus\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & メニューごとの「在庫あり/なし」を切り替え、ユーザー画面への反映を制御する。 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{APIと通信し、商品の品切れフラグを更新する。} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/s_inventory_status.drawio.pdf}
+  \caption{s\_inventory\_status.dart の状態遷移図}
+  \label{fig:s_inventory_status.dart}
+\end{figure}
+
+%店舗新規メニュー
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{s\_menu\_regist.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{メニュー情報の新規登録画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{江藤 加奈} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & SMenuRegist\\ \cline{2-3}
+& クラス種類 & extends StatefulWidget \\ \cline{2-3}
+& 処理概要 & 新しいメニューの名前、価格、商品説明、画像などを入力・保存する。 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{登録完了後、\texttt{finish\_screen.dart} を表示し、\texttt{s\_menu\_edit.dart} に戻る。} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/s_menu_regist.drawio.pdf}
+  \caption{s\_menu\_regist.dart の状態遷移図}
+  \label{fig:s_menu_regist.dart}
+\end{figure}
+
+%店舗メニュー情報変更
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{s\_menu\_change.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{メニュー情報の変更画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{江藤 加奈} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & SMenuChange\\ \cline{2-3}
+& クラス種類 & extends StatefulWidget \\ \cline{2-3}
+& 処理概要 & 既存メニューの情報を取得し、修正内容をデータベースに反映させる。 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{\texttt{confirm\_inf\_change.dart} を呼び出して変更の最終確認を行う。} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/s_menu_change.drawio.pdf}
+  \caption{s\_menu\_change.dart の状態遷移図}
+  \label{fig:s_menu_change.dart}
+\end{figure}
+
+%店舗メニュー削除
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{s\_menu\_delete.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{メニュー情報の削除画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{江藤 加奈} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & SMenuDelete\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 特定のメニューを削除する際の最終確認画面を表示し、削除処理を実行する。 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{API通信を行い、論理削除または物理削除を実行後、一覧へ戻る。} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/s_menu_delete.drawio.pdf}
+  \caption{s\_menu\_delete.dart の状態遷移図}
+  \label{fig:s_menu_delete.dart}
+\end{figure}
+
+%店舗口座情報
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{s\_banking\_info.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{口座情報管理画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{江藤 加奈} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & SBankingInfo\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 売上の振込先となる銀行口座情報の確認および、変更画面への遷移を行う。 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{口座変更時は、共通のバリデーションコンポーネント等を利用する。} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/s_banking_info.drawio.pdf}
+  \caption{s\_banking\_info.dart の状態遷移図}
+  \label{fig:s_banking_info.dart}
+\end{figure}
+
+%店舗受け渡し確認
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{s\_delivery\_complete.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{受け渡し完了確認画面を表示するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{江藤 加奈} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & SDeliveryComplete\\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & 配達員または注文者への商品受け渡しが完了したことを確定する。 \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+&\multicolumn{2}{p{0.9\linewidth}|}{確定後、\texttt{finish\_screen.dart} を表示する。} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/s_delivery_complete.drawio.pdf}
+  \caption{\texttt{s\_delivery\_complete.dart} の状態遷移図}
+  \label{fig:s_delivery_complete.dart}
+\end{figure}
+
+
+
+
+\subsubsection{配達側}
+
+
+\subsection{component}
+\begin{table}[H]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{overscreen\_controller.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{オーバーレイの表示、非表示の操作を行うコンポーネント}  \\ \hline
+責任者 &\multicolumn{2}{l|}{梶本和希} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & OverScreenController\\ \cline{2-3}
+& クラス種類 & immutable \\ \cline{2-3}
+& 処理概要 & オーバーレイの内容を返す \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+
+&\multicolumn{2}{p{0.9\linewidth}|}{CloseLoadingScreen によってオーバレイを閉じる
+UpdateLoadingScreen によってオーバーレイを表示} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{finishscreen.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{完了画面を生成するコンポーネント}  \\ \hline
+責任者 &\multicolumn{2}{l|}{梶本和希} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & FinishScreen \\ \cline{2-3}
+& クラス種類 & extendsStatelessWidget \\ \cline{2-3}
+& 処理概要 & アイコン、テキストを引数で与えることによって、任意の完了画面を生成するコンポーネント \\ \cline{2-3}
+& 入力 & StringappbarText, IconDataappIcon,Stringtext,StringbuttonTextbool isAppbar \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+
+&\multicolumn{2}{p{0.9\linewidth}|}{titleappbar.dartのTitleAppBarクラスを組み込む
+normalbottomappbar.dartのNormalBottomAppBarクラスを組み込む
+buttonset.dartのButtonSetクラスを組み込む
+LoginRouteの最初の画面へと戻る} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/common_状態遷移図/FinishScreen.pdf}
+  \caption{FinishScreenの状態遷移図}
+  \label{fig:finishscreen.dart}
+\end{figure}
+
+\begin{table}[H]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{botton\_set.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{任意のテキストが書かれたボタンを生成するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{梶本和希} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & ButtonSet \\ \cline{2-3}
+& クラス種類 &  extendsStatelessWidget\\ \cline{2-3}
+& 処理概要 & bodyの呼び出された部分にボタンを設置するコンポーネント \\ \cline{2-3}
+& 入力 & Sting buttonName \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+
+&\multicolumn{2}{p{0.9\linewidth}|}{change\_user\_role.dart のChangeUserRole.dartクラスを組み込む} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{title\_appbar.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{AppBarの下にページタイトルを表示するAppBarを作成するコンポーネント}  \\ \hline
+責任者 &\multicolumn{2}{l|}{梶本和希} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & TitleAppBar \\ \cline{2-3}
+& クラス種類 & extendsStatelessWidget \\ \cline{2-3}
+& 処理概要 & AppBarのbottomにてもう一度AppBarを作成し、そこにページのタイトルを
+表示させるAppBarを生成するコンポーネント \\ \cline{2-3}
+& 入力 & String appbarText, bool isReturn \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+
+&\multicolumn{2}{p{0.9\linewidth}|}{pop を行う} \\ \hline
+\end{tabular}
+\end{table}
+
+%画像の追加
+\begin{figure}[H]
+  \centering
+  \safeincludegraphics[width=0.5\textwidth]{状態遷移図/common_状態遷移図/TitleAppbar.pdf}
+  \caption{TitleAppbarの状態遷移図}
+  \label{fig:TitleAppbar.dart}
+\end{figure}
+
+
+\begin{table}[H]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{normal\_bottom\_appbar.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{BottomNavigationBarがない画面で用いるBottomAppBarを作成するコンポーネント}  \\ \hline
+責任者 &\multicolumn{2}{l|}{梶本和希} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & NormalBottomAppBar \\ \cline{2-3}
+& クラス種類 & extendsStatelessWidget \\ \cline{2-3}
+& 処理概要 & 色がついただけのBottomAppBarのWidgetを返すコンポーネント \\ \cline{2-3}
+& 入力 & なし \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+
+&\multicolumn{2}{p{0.9\linewidth}|}{なし} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+%\caption{}
+\small
+\begin{tabular}{|c|l|p{0.4\textwidth}|}
+\hline
+モジュール名 &\multicolumn{2}{l|}{button\_set.dart}\\ \hline
+モジュール概要 &\multicolumn{2}{l|}{任意のテキストが書かれたボタンを生成するモジュール}  \\ \hline
+責任者 &\multicolumn{2}{l|}{金澤優} \\ \hline
+\multirow{9}{*}{構成要素} & クラス名 & ButtonSet \\ \cline{2-3}
+& クラス種類 & extends StatelessWidget \\ \cline{2-3}
+& 処理概要 & bodyの呼び出された部分にボタンを設置するコンポーネント \\ \cline{2-3}
+& 入力 & String buttonName \\ \cline{2-3}
+& 出力 & Widget \\ \cline{2-3}
+&\multicolumn{2}{l|}{他クラスとの関係} \\\cline{2-3}
+
+&\multicolumn{2}{p{0.9\linewidth}|}{change\_general\_corporation.dartのChangeGeneralCorporationクラスを組み込む} \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+

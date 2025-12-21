@@ -33,17 +33,20 @@ services:
     ports:
       - "5432:5432"
 
-  api:
-    image: postgrest/postgrest
-    container_name: postgrest_api
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: fastapi_backend
     ports:
-      - "3000:3000"
+      - "8000:8000"
     environment:
-      PGRST_DB_URI: postgres://student:password123@db:5432/university_app
-      PGRST_DB_SCHEMA: public
-      PGRST_DB_ANON_ROLE: student
+      - DATABASE_URL=postgresql://student:password123@db:5432/university_app
+      - SECRET_KEY=supersecretkey
     depends_on:
       - db
+    volumes:
+      - ./backend:/app
 
 volumes:
   db_data:

@@ -36,10 +36,43 @@ dependencies:
   cupertino_icons: ^1.0.8
   postgres: ^3.5.9
   http: ^1.6.0
+  
+  # 状態管理
+  provider: ^6.1.2
+  
+  # ルーティング（AutoRoute）
+  auto_route: ^9.2.2
+  
+  # フォーム検証
+  flutter_form_builder: ^10.2.0
+  form_builder_validators: ^11.0.0
+  
+  # 暗号化
+  crypto: ^3.0.6
+  
+  # 画像キャッシュ
+  cached_network_image: ^3.4.1
+  
+  # 地図
+  google_maps_flutter: ^2.10.0
+  geolocator: ^13.0.2
+  
+  # ローカルストレージ
+  shared_preferences: ^2.3.3
+  
+  # 日付フォーマット
+  intl: ^0.20.0
+  
+  # アイコン
+  flutter_svg: ^2.0.10+1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  # AutoRoute コード生成
+  auto_route_generator: ^9.0.0
+  build_runner: ^2.4.13
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
