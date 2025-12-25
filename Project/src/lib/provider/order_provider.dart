@@ -37,7 +37,8 @@ class OrderProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      _orders = await _orderService.getRequesterOrders(requesterId);
+      final List<dynamic> response = await _orderService.getRequesterOrders(requesterId);
+      _orders = response.map((data) => Order.fromMap(data)).toList();
     } catch (e) {
       _error = e.toString();
     } finally {
@@ -53,7 +54,8 @@ class OrderProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      _orders = await _orderService.getStoreOrders(storeId);
+      final List<dynamic> response = await _orderService.getStoreOrders(storeId);
+      _orders = response.map((data) => Order.fromMap(data)).toList();
     } catch (e) {
       _error = e.toString();
     } finally {
@@ -69,7 +71,8 @@ class OrderProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      _orders = await _orderService.getDelivererOrders(delivererId);
+      final List<dynamic> response = await _orderService.getDelivererOrders(delivererId);
+      _orders = response.map((data) => Order.fromMap(data)).toList();
     } catch (e) {
       _error = e.toString();
     } finally {
@@ -85,7 +88,8 @@ class OrderProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      _currentOrder = await _orderService.getOrderById(orderId);
+      final response = await _orderService.getOrderById(orderId);
+      _currentOrder = Order.fromMap(response);
     } catch (e) {
       _error = e.toString();
     } finally {
@@ -101,8 +105,15 @@ class OrderProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final orderId = await _orderService.createOrder(orderData);
-      return orderId;
+      final response = await _orderService.createOrder(
+        storeId: orderData['store_id'],
+        deliveryAddress: orderData['delivery_address'],
+        details: List<Map<String, dynamic>>.from(orderData['details']),
+        deliveryLatitude: orderData['delivery_latitude'],
+        deliveryLongitude: orderData['delivery_longitude'],
+        notes: orderData['notes'],
+      );
+      return response['id'];
     } catch (e) {
       _error = e.toString();
       return null;

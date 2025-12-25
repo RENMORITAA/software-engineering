@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'config/routes.dart';
 import 'config/theme.dart';
+import 'provider/provider.dart';
 
 void main() {
-  runApp(const StellarDeliveryApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserRoleProvider()),
+        ChangeNotifierProvider(create: (_) => CartProvider()),
+        ChangeNotifierProvider(create: (_) => OrderProvider()),
+        ChangeNotifierProvider(create: (_) => OverScreenController()),
+      ],
+      child: const StellarDeliveryApp(),
+    ),
+  );
 }
 
 class StellarDeliveryApp extends StatelessWidget {
