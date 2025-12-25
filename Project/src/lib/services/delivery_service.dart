@@ -3,6 +3,7 @@ import 'api_service.dart';
 class DeliveryService {
   final ApiService _apiService = ApiService();
 
+  /// 配達可能なジョブ一覧を取得
   Future<List<dynamic>> getDeliveryJobs() async {
     try {
       final response = await _apiService.get('/delivery/jobs');
@@ -12,68 +13,71 @@ class DeliveryService {
     }
   }
 
-  Future<void> acceptJob(int orderId, int delivererId) async {
+  /// 配達ジョブを受諾
+  Future<Map<String, dynamic>> acceptJob(int orderId) async {
     try {
-      await _apiService.post(
-        '/delivery/jobs/$orderId/accept?deliverer_id=$delivererId',
+      final response = await _apiService.post(
+        '/delivery/jobs/$orderId/accept',
         {},
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  /// 自分の配達履歴を取得
+  Future<List<dynamic>> getMyDeliveries() async {
+    try {
+      final response = await _apiService.get('/delivery/my');
+      return response as List<dynamic>;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  /// 配達ステータスを更新
+  Future<void> updateDeliveryStatus(int deliveryId, String status) async {
+    try {
+      await _apiService.put(
+        '/delivery/$deliveryId/status',
+        {'status': status},
       );
     } catch (e) {
       rethrow;
     }
   }
-}
 
-            break;
-          case 'at_store':
-            statusMessage = '配達員が店舗に到着しました';
-            break;
-          case 'picked_up':
-            statusMessage = '商品をお受け取りしました。配達を開始します';
-            break;
-          case 'en_route_to_customer':
-            statusMessage = '配達中です。まもなくお届けします';
-            break;
-          case 'delivered':
-            statusMessage = '配達が完了しました';
-            break;
-        }
-        
-        if (statusMessage.isNotEmpty) {
-          // 依頼者に通知
-          final notification = Notification(
-            userId: requesterId,
-            title: '配達状況更新',
-            message: statusMessage,
-            type: 'delivery',
-          );
-          
-          await _dbHelper.insertNotification(notification.toMap());
-        }
-      }
+  /// 配達員の現在位置を更新
+  Future<void> updateLocation(int deliveryId, double latitude, double longitude) async {
+    try {
+      await _apiService.put(
+        '/delivery/$deliveryId/location',
+        {
+          'latitude': latitude,
+          'longitude': longitude,
+        },
+      );
     } catch (e) {
-      print('配達ステータス通知エラー: $e');
-      // 通知の失敗は配達処理を止めない
+      rethrow;
     }
   }
 
-  // 配達経路の最適化（簡易版）
-  Future<List<Map<String, dynamic>>> optimizeDeliveryRoute(
-    List<Map<String, dynamic>> deliveries,
-  ) async {
+  /// 配達員をオンラインに設定
+  Future<void> setOnline() async {
     try {
-      // 簡単な最適化：距離順でソート
-      // 実際の実装では、より高度なアルゴリズム（TSP）を使用することを推奨
-      deliveries.sort((a, b) {
-        final distanceA = a['distance'] ?? 0.0;
-        final distanceB = b['distance'] ?? 0.0;
-        return distanceA.compareTo(distanceB);
-      });
-      
-      return deliveries;
+      await _apiService.put('/delivery/status/online', {});
     } catch (e) {
-      print('配達経路最適化エラー: $e');
-      return deliveries;
+      rethrow;
+    }
+  }
+
+  /// 配達員をオフラインに設定
+  Future<void> setOffline() async {
+    try {
+      await _apiService.put('/delivery/status/offline', {});
+    } catch (e) {
+      rethrow;
     }
   }
 }

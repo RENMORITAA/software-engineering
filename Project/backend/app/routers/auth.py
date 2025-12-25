@@ -69,13 +69,13 @@ def register(user: schemas.UserCreate, db: Session = Depends(database.get_db)):
     
     # Create profile based on role
     if user.role == "requester":
-        profile = models.RequesterProfile(user_id=new_user.id, name="New User")
+        profile = models.RequesterProfile(user_id=new_user.id, name="新規ユーザー")
         db.add(profile)
     elif user.role == "deliverer":
-        profile = models.DelivererProfile(user_id=new_user.id, name="New Deliverer")
+        profile = models.DelivererProfile(user_id=new_user.id, name="新規配達員")
         db.add(profile)
     elif user.role == "store":
-        profile = models.StoreProfile(user_id=new_user.id, name="New Store")
+        profile = models.StoreProfile(user_id=new_user.id, store_name="新規店舗", address="未設定")
         db.add(profile)
     
     db.commit()
@@ -93,10 +93,64 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": user.email, "role": user.role}, expires_delta=access_token_expires
+        data={"sub": user.email, "role": user.role, "user_id": user.id}, expires_delta=access_token_expires
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
 @router.get("/me", response_model=schemas.User)
 def read_users_me(current_user: models.User = Depends(get_current_user)):
     return current_user
+
+@router.get("/me/profile")
+def get_user_profile(current_user: models.User = Depends(get_current_user), db: Session = Depends(database.get_db)):
+    """Get user profile based on role"""
+    if current_user.role == "requester":
+        profile = db.query(models.RequesterProfile).filter(
+            models.RequesterProfile.user_id == current_user.id
+        ).first()
+        if profile:
+            return {
+                "id": profile.id,
+                "user_id": profile.user_id,
+                "name": profile.name,
+                "phone_number": profile.phone_number,
+                "role": "requester"
+            }
+    elif current_user.role == "deliverer":
+        profile = db.query(models.DelivererProfile).filter(
+            models.DelivererProfile.user_id == current_user.id
+        ).first()
+        if profile:
+            return {
+                "id": profile.id,
+                "user_id": profile.user_id,
+                "name": profile.name,
+                "phone_number": profile.phone_number,
+                "work_status": profile.work_status,
+                "vehicle_type": profile.vehicle_type,
+                "role": "deliverer"
+            }
+    elif current_user.role == "store":
+        profile = db.query(models.StoreProfile).filter(
+            models.StoreProfile.user_id == current_user.id
+        ).first()
+        if profile:
+            return {
+                "id": profile.id,
+                "user_id": profile.user_id,
+                "store_name": profile.store_name,
+                "address": profile.address,
+                "phone_number": profile.phone_number,
+                "business_hours": profile.business_hours,
+                "is_open": profile.is_open,
+                "role": "store"
+            }
+    elif current_user.role == "admin":
+        return {
+            "id": current_user.id,
+            "user_id": current_user.id,
+            "name": "管理者",
+            "role": "admin"
+        }
+    
+    raise HTTPException(status_code=404, detail="Profile not found")
