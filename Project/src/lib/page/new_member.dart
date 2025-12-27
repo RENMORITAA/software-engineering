@@ -19,6 +19,15 @@ class _NewMemberPageState extends State<NewMemberPage> {
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
 
+  // 店舗用フィールド
+  final _storeNameController = TextEditingController();
+  final _storeAddressController = TextEditingController();
+  final _storeDescriptionController = TextEditingController();
+  final _businessHoursController = TextEditingController();
+
+  // 配達員用フィールド
+  String _selectedVehicleType = 'bicycle';
+
   String _selectedRole = 'requester';
   bool _isLoading = false;
   bool _agreedToTerms = false;
@@ -32,6 +41,10 @@ class _NewMemberPageState extends State<NewMemberPage> {
     _confirmPasswordController.dispose();
     _nameController.dispose();
     _phoneController.dispose();
+    _storeNameController.dispose();
+    _storeAddressController.dispose();
+    _storeDescriptionController.dispose();
+    _businessHoursController.dispose();
     super.dispose();
   }
 
@@ -52,6 +65,15 @@ class _NewMemberPageState extends State<NewMemberPage> {
         _emailController.text,
         _passwordController.text,
         _selectedRole,
+        name: _nameController.text,
+        phoneNumber: _phoneController.text.isNotEmpty ? _phoneController.text : null,
+        // 店舗用
+        storeName: _selectedRole == 'store' ? _storeNameController.text : null,
+        storeAddress: _selectedRole == 'store' ? _storeAddressController.text : null,
+        storeDescription: _selectedRole == 'store' ? _storeDescriptionController.text : null,
+        businessHours: _selectedRole == 'store' ? _businessHoursController.text : null,
+        // 配達員用
+        vehicleType: _selectedRole == 'deliverer' ? _selectedVehicleType : null,
       );
 
       if (mounted) {
@@ -144,6 +166,70 @@ class _NewMemberPageState extends State<NewMemberPage> {
                         return null;
                       },
                     ),
+                    // 店舗用追加フィールド
+                    if (_selectedRole == 'store') ...[
+                      const SizedBox(height: 16),
+                      const Text(
+                        '店舗情報',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      GeneralForm(
+                        label: '店舗名',
+                        hint: '〇〇レストラン',
+                        controller: _storeNameController,
+                        prefixIcon: const Icon(Icons.store_outlined),
+                        required: true,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return '店舗名を入力してください';
+                          }
+                          return null;
+                        },
+                      ),
+                      GeneralForm(
+                        label: '店舗住所',
+                        hint: '東京都渋谷区...',
+                        controller: _storeAddressController,
+                        prefixIcon: const Icon(Icons.location_on_outlined),
+                        required: true,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return '店舗住所を入力してください';
+                          }
+                          return null;
+                        },
+                      ),
+                      GeneralForm(
+                        label: '店舗説明',
+                        hint: '美味しい料理をお届けします',
+                        controller: _storeDescriptionController,
+                        prefixIcon: const Icon(Icons.description_outlined),
+                        maxLines: 3,
+                      ),
+                      GeneralForm(
+                        label: '営業時間',
+                        hint: '10:00-22:00',
+                        controller: _businessHoursController,
+                        prefixIcon: const Icon(Icons.access_time),
+                      ),
+                    ],
+                    // 配達員用追加フィールド
+                    if (_selectedRole == 'deliverer') ...[
+                      const SizedBox(height: 16),
+                      const Text(
+                        '配達情報',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      _buildVehicleTypeSelector(),
+                    ],
                     PasswordInput(
                       controller: _passwordController,
                       required: true,
@@ -354,6 +440,87 @@ class _NewMemberPageState extends State<NewMemberPage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildVehicleTypeSelector() {
+    final vehicleTypes = [
+      {'value': 'bicycle', 'icon': Icons.pedal_bike, 'label': '自転車'},
+      {'value': 'motorcycle', 'icon': Icons.two_wheeler, 'label': 'バイク'},
+      {'value': 'car', 'icon': Icons.directions_car, 'label': '車'},
+      {'value': 'walk', 'icon': Icons.directions_walk, 'label': '徒歩'},
+    ];
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            '配達手段',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: vehicleTypes.map((type) {
+              final isSelected = _selectedVehicleType == type['value'];
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _selectedVehicleType = type['value'] as String;
+                  });
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
+                  decoration: BoxDecoration(
+                    color: isSelected
+                        ? Theme.of(context).primaryColor.withValues(alpha: 0.1)
+                        : Colors.grey[100],
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: isSelected
+                          ? Theme.of(context).primaryColor
+                          : Colors.grey[300]!,
+                      width: isSelected ? 2 : 1,
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        type['icon'] as IconData,
+                        color: isSelected
+                            ? Theme.of(context).primaryColor
+                            : Colors.grey[600],
+                        size: 20,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        type['label'] as String,
+                        style: TextStyle(
+                          color: isSelected
+                              ? Theme.of(context).primaryColor
+                              : Colors.grey[700],
+                          fontWeight:
+                              isSelected ? FontWeight.bold : FontWeight.normal,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ],
       ),
     );
   }

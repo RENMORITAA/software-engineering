@@ -23,6 +23,7 @@ RUN git clone https://github.com/flutter/flutter.git ${FLUTTER_HOME} -b stable
 
 # 権限設定（開発時のトラブル防止）
 RUN git config --global --add safe.directory ${FLUTTER_HOME}
+RUN git config --global --add safe.directory /app
 
 # Web開発用の設定を有効化
 RUN flutter config --enable-web

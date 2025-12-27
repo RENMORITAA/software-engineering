@@ -525,8 +525,8 @@ class Delivery {
   }
 }
 
-// 通知モデル
-class Notification {
+// 通知モデル（FlutterのNotificationと名前衝突を避けるためAppNotificationに命名）
+class AppNotification {
   final int? id;
   final int userId;
   final String title;
@@ -535,7 +535,7 @@ class Notification {
   final bool isRead;
   final String? createdAt;
 
-  Notification({
+  AppNotification({
     this.id,
     required this.userId,
     required this.title,
@@ -557,8 +557,8 @@ class Notification {
     };
   }
 
-  factory Notification.fromMap(Map<String, dynamic> map) {
-    return Notification(
+  factory AppNotification.fromMap(Map<String, dynamic> map) {
+    return AppNotification(
       id: map['id']?.toInt(),
       userId: map['user_id']?.toInt() ?? 0,
       title: map['title'] ?? '',

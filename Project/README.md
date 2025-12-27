@@ -197,3 +197,29 @@ class News(Base):
     *   Flutter: 画面の「リロード」ボタンを押すか、ターミナルで `R` を押してホットリスタート。
     *   Backend: ファイル保存で自動リロードされますが、ダメなら `docker-compose restart backend`。
     *   DBスキーマ変更: `docker-compose down -v` でボリューム削除が必要な場合があります。
+
+---
+
+## 7. データベースの確認方法
+
+開発中にデータベースの中身を確認したい場合の接続情報です。
+
+### 接続情報
+*   **Host**: `localhost`
+*   **Port**: `5432`
+*   **Database**: `university_app`
+*   **User**: `student`
+*   **Password**: `password123`
+
+### 確認方法
+1.  **VS Code拡張機能**: "Database Client" などをインストールして接続。
+2.  **GUIツール**: DBeaverやpgAdminなどを使用。
+3.  **コマンドライン**: 以下のコマンドで直接SQLを実行できます。
+
+```powershell
+# テーブル一覧を表示
+docker exec postgres_db psql -U student -d university_app -c "\dt"
+
+# ユーザー一覧を表示
+docker exec postgres_db psql -U student -d university_app -c "SELECT * FROM users;"
+```

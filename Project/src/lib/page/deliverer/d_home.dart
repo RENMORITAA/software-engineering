@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../component/component.dart';
+import '../../provider/provider.dart';
 import 'd_notice.dart';
 
 /// 配達員ホーム画面
@@ -12,10 +14,20 @@ class DHomePage extends StatefulWidget {
 }
 
 class _DHomePageState extends State<DHomePage> {
-  bool _isOnline = false;
+  @override
+  void initState() {
+    super.initState();
+    // 画面表示時にデータを更新
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<DeliveryProvider>().fetchMyDeliveries();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final deliveryProvider = context.watch<DeliveryProvider>();
+    final isOnline = deliveryProvider.isOnline;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -46,10 +58,10 @@ class _DHomePageState extends State<DHomePage> {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: _isOnline ? const Color(0xFFE8F5E9) : Colors.grey[100],
+                color: isOnline ? const Color(0xFFE8F5E9) : Colors.grey[100],
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
-                  color: _isOnline ? const Color(0xFF2E7D32) : Colors.grey[300]!,
+                  color: isOnline ? const Color(0xFF2E7D32) : Colors.grey[300]!,
                   width: 2,
                 ),
               ),
@@ -58,7 +70,7 @@ class _DHomePageState extends State<DHomePage> {
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: _isOnline ? const Color(0xFF2E7D32) : Colors.grey[400],
+                      color: isOnline ? const Color(0xFF2E7D32) : Colors.grey[400],
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(
@@ -73,17 +85,17 @@ class _DHomePageState extends State<DHomePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          _isOnline ? 'オンライン' : 'オフライン',
+                          isOnline ? 'オンライン' : 'オフライン',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: _isOnline
+                            color: isOnline
                                 ? const Color(0xFF2E7D32)
                                 : Colors.grey[600],
                           ),
                         ),
                         Text(
-                          _isOnline ? '注文を受け付けています' : '配達を開始するにはタップ',
+                          isOnline ? '注文を受け付けています' : '配達を開始するにはタップ',
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey[600],
@@ -93,11 +105,9 @@ class _DHomePageState extends State<DHomePage> {
                     ),
                   ),
                   Switch(
-                    value: _isOnline,
+                    value: isOnline,
                     onChanged: (value) {
-                      setState(() {
-                        _isOnline = value;
-                      });
+                      deliveryProvider.toggleOnlineStatus(value);
                     },
                     activeColor: const Color(0xFF2E7D32),
                   ),
@@ -119,7 +129,7 @@ class _DHomePageState extends State<DHomePage> {
                 Expanded(
                   child: _buildStatCard(
                     '配達件数',
-                    '5件',
+                    '${deliveryProvider.myDeliveries.length}件',
                     Icons.local_shipping_outlined,
                     Colors.blue,
                   ),
@@ -128,7 +138,7 @@ class _DHomePageState extends State<DHomePage> {
                 Expanded(
                   child: _buildStatCard(
                     '売上',
-                    '¥3,200',
+                    '¥${deliveryProvider.myDeliveries.fold(0, (sum, item) => sum + (item.deliveryFee ?? 0))}',
                     Icons.attach_money,
                     Colors.orange,
                   ),
@@ -137,7 +147,7 @@ class _DHomePageState extends State<DHomePage> {
             ),
             const SizedBox(height: 24),
             // 現在のステータス
-            if (_isOnline)
+            if (isOnline)
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(

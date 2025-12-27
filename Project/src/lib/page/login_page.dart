@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../component/component.dart';
 import '../../services/auth_service.dart';
+import '../../provider/provider.dart';
 
 /// ログイン画面
 class LoginPage extends StatefulWidget {
@@ -38,21 +40,63 @@ class _LoginPageState extends State<LoginPage> {
       if (mounted) {
         final user = await _authService.getCurrentUser();
         final role = user['role'];
+        final userId = user['id'];
+        final email = user['email'];
+        
+        // プロフィール情報を取得
+        String? userName;
+        String? phoneNumber;
+        String? storeName;
+        String? storeAddress;
+        String? vehicleType;
+        
+        try {
+          if (role == 'requester') {
+            final profile = await _authService.getRequesterProfile();
+            userName = profile['name'];
+            phoneNumber = profile['phone_number'];
+          } else if (role == 'deliverer') {
+            final profile = await _authService.getDelivererProfile();
+            userName = profile['name'];
+            phoneNumber = profile['phone_number'];
+            vehicleType = profile['vehicle_type'];
+          } else if (role == 'store') {
+            final profile = await _authService.getStoreProfile();
+            storeName = profile['store_name'];
+            storeAddress = profile['address'];
+            phoneNumber = profile['phone_number'];
+            userName = storeName; // 店舗の場合は店名をユーザー名として使用
+          }
+        } catch (e) {
+          // プロフィール取得に失敗しても続行
+          debugPrint('プロフィール取得エラー: $e');
+        }
+        
+        // Providerにユーザー情報を保存
+        if (mounted) {
+          context.read<UserRoleProvider>().login(
+            userId: userId,
+            email: email,
+            role: role,
+            name: userName,
+            phoneNumber: phoneNumber,
+            storeName: storeName,
+            storeAddress: storeAddress,
+            vehicleType: vehicleType,
+          );
+        }
         
         if (mounted) {
           if (role == 'requester') {
-            Navigator.pushReplacementNamed(context, '/requestor/home');
+            Navigator.pushReplacementNamed(context, '/requester/home');
           } else if (role == 'deliverer') {
             Navigator.pushReplacementNamed(context, '/deliverer/home');
           } else if (role == 'store') {
             Navigator.pushReplacementNamed(context, '/store/home');
           } else if (role == 'admin' || _emailController.text == 'superuser') {
-             // Superuser or admin can go anywhere, defaulting to requester for now or a dashboard
-             // The user asked for "open all pages", so maybe we just let them in as requester but they can switch?
-             // For now, let's send them to requester home, but maybe we need a role switcher.
-             Navigator.pushReplacementNamed(context, '/requestor/home');
+             Navigator.pushReplacementNamed(context, '/requester/home');
           } else {
-             Navigator.pushReplacementNamed(context, '/requestor/home');
+             Navigator.pushReplacementNamed(context, '/requester/home');
           }
         }
       }

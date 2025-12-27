@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../mypage.dart';
+import '../../provider/provider.dart';
+import '../../services/auth_service.dart';
 
 /// 依頼者マイページラッパー
 class CMyPageWrapper extends StatelessWidget {
@@ -8,17 +11,24 @@ class CMyPageWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = context.watch<UserRoleProvider>();
+    final authService = AuthService();
+    
     return MyPage(
-      userName: '山田 太郎',
-      userEmail: 'user1@test.com',
+      userName: userProvider.userName ?? '依頼者',
+      userEmail: userProvider.userEmail ?? '',
       userRole: 'requester',
-      onLogout: () {
+      onLogout: () async {
         // ログアウト処理
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          '/',
-          (route) => false,
-        );
+        await authService.logout();
+        userProvider.logout();
+        if (context.mounted) {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            '/',
+            (route) => false,
+          );
+        }
       },
       onWithdraw: () {
         // 退会処理

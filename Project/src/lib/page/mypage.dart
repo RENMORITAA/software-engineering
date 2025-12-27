@@ -8,6 +8,7 @@ class MyPage extends StatefulWidget {
   final String userName;
   final String userEmail;
   final String userRole;
+  final Map<String, String>? additionalInfo;
   final VoidCallback onLogout;
   final VoidCallback onWithdraw;
 
@@ -16,6 +17,7 @@ class MyPage extends StatefulWidget {
     required this.userName,
     required this.userEmail,
     required this.userRole,
+    this.additionalInfo,
     required this.onLogout,
     required this.onWithdraw,
   });
@@ -113,6 +115,32 @@ class _MyPageState extends State<MyPage> {
                           ),
                         ),
                       ),
+                      // 追加情報の表示
+                      if (widget.additionalInfo != null) ...[
+                        const SizedBox(height: 12),
+                        ...widget.additionalInfo!.entries.map((entry) => Padding(
+                          padding: const EdgeInsets.only(top: 4),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                '${entry.key}: ',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.white.withValues(alpha: 0.7),
+                                ),
+                              ),
+                              Text(
+                                entry.value,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )),
+                      ],
                     ],
                   ),
                 ),

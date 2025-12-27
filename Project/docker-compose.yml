@@ -16,7 +16,8 @@ services:
       - DB_USER=student
       - DB_PASSWORD=password123
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     working_dir: /app
     tty: true
 
@@ -32,6 +33,11 @@ services:
       - db_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U student -d university_app"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   backend:
     build:
@@ -44,7 +50,8 @@ services:
       - DATABASE_URL=postgresql://student:password123@db:5432/university_app
       - SECRET_KEY=supersecretkey
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - ./backend:/app
 

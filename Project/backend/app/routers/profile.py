@@ -221,3 +221,47 @@ def update_deliverer_banking(
     
     db.commit()
     return {"message": "Banking information updated"}
+
+# ==========================================
+# Store Profile
+# ==========================================
+
+@router.get("/store", response_model=schemas.StoreProfile)
+def get_store_profile(
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(database.get_db)
+):
+    """Get current store's profile"""
+    if current_user.role != "store":
+        raise HTTPException(status_code=403, detail="Only stores can access this endpoint")
+    
+    profile = db.query(models.StoreProfile).filter(
+        models.StoreProfile.user_id == current_user.id
+    ).first()
+    if not profile:
+        raise HTTPException(status_code=404, detail="Profile not found")
+    return profile
+
+@router.put("/store", response_model=schemas.StoreProfile)
+def update_store_profile(
+    profile_update: schemas.StoreProfileUpdate,
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(database.get_db)
+):
+    """Update current store's profile"""
+    if current_user.role != "store":
+        raise HTTPException(status_code=403, detail="Only stores can update their profile")
+    
+    profile = db.query(models.StoreProfile).filter(
+        models.StoreProfile.user_id == current_user.id
+    ).first()
+    if not profile:
+        raise HTTPException(status_code=404, detail="Profile not found")
+    
+    update_data = profile_update.model_dump(exclude_unset=True)
+    for field, value in update_data.items():
+        setattr(profile, field, value)
+    
+    db.commit()
+    db.refresh(profile)
+    return profile

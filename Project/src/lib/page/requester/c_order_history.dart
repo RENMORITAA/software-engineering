@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../component/component.dart';
+import '../../provider/provider.dart';
+import '../../models/database_models.dart';
 
 /// 注文履歴画面
 class COrderHistoryPage extends StatefulWidget {
@@ -14,41 +17,16 @@ class _COrderHistoryPageState extends State<COrderHistoryPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  // モックデータ
-  final List<Map<String, dynamic>> _activeOrders = [
-    {
-      'id': 1,
-      'store': 'テスト食堂',
-      'status': 'preparing',
-      'total': 1600,
-      'items': ['カツ丼', '親子丼'],
-      'orderedAt': '2025-12-21 12:30',
-    },
-  ];
-
-  final List<Map<String, dynamic>> _pastOrders = [
-    {
-      'id': 2,
-      'store': 'カフェ モカ',
-      'status': 'delivered',
-      'total': 1200,
-      'items': ['コーヒー', 'ケーキセット'],
-      'orderedAt': '2025-12-20 14:00',
-    },
-    {
-      'id': 3,
-      'store': 'ラーメン太郎',
-      'status': 'delivered',
-      'total': 900,
-      'items': ['とんこつラーメン'],
-      'orderedAt': '2025-12-19 19:30',
-    },
-  ];
-
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final userId = context.read<UserRoleProvider>().userId;
+      if (userId != null) {
+        context.read<OrderProvider>().fetchRequesterOrders(userId);
+      }
+    });
   }
 
   @override
@@ -103,6 +81,18 @@ class _COrderHistoryPageState extends State<COrderHistoryPage>
 
   @override
   Widget build(BuildContext context) {
+    final orderProvider = context.watch<OrderProvider>();
+    final orders = orderProvider.orders;
+
+    // 注文を分類
+    final activeOrders = orders.where((order) {
+      return order.status != 'delivered' && order.status != 'cancelled';
+    }).toList();
+
+    final pastOrders = orders.where((order) {
+      return order.status == 'delivered' || order.status == 'cancelled';
+    }).toList();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -125,31 +115,33 @@ class _COrderHistoryPageState extends State<COrderHistoryPage>
           ],
         ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          // 進行中の注文
-          _activeOrders.isEmpty
-              ? _buildEmptyState('進行中の注文はありません')
-              : ListView.builder(
-                  padding: const EdgeInsets.all(16),
-                  itemCount: _activeOrders.length,
-                  itemBuilder: (context, index) {
-                    return _buildOrderCard(_activeOrders[index], true);
-                  },
-                ),
-          // 過去の注文
-          _pastOrders.isEmpty
-              ? _buildEmptyState('過去の注文はありません')
-              : ListView.builder(
-                  padding: const EdgeInsets.all(16),
-                  itemCount: _pastOrders.length,
-                  itemBuilder: (context, index) {
-                    return _buildOrderCard(_pastOrders[index], false);
-                  },
-                ),
-        ],
-      ),
+      body: orderProvider.isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : TabBarView(
+              controller: _tabController,
+              children: [
+                // 進行中の注文
+                activeOrders.isEmpty
+                    ? _buildEmptyState('進行中の注文はありません')
+                    : ListView.builder(
+                        padding: const EdgeInsets.all(16),
+                        itemCount: activeOrders.length,
+                        itemBuilder: (context, index) {
+                          return _buildOrderCard(activeOrders[index], true);
+                        },
+                      ),
+                // 過去の注文
+                pastOrders.isEmpty
+                    ? _buildEmptyState('過去の注文はありません')
+                    : ListView.builder(
+                        padding: const EdgeInsets.all(16),
+                        itemCount: pastOrders.length,
+                        itemBuilder: (context, index) {
+                          return _buildOrderCard(pastOrders[index], false);
+                        },
+                      ),
+              ],
+            ),
     );
   }
 
@@ -176,8 +168,8 @@ class _COrderHistoryPageState extends State<COrderHistoryPage>
     );
   }
 
-  Widget _buildOrderCard(Map<String, dynamic> order, bool isActive) {
-    final status = order['status'] as String;
+  Widget _buildOrderCard(Order order, bool isActive) {
+    final status = order.status;
 
     return GestureDetector(
       onTap: () {
@@ -208,7 +200,7 @@ class _COrderHistoryPageState extends State<COrderHistoryPage>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        order['store'] as String,
+                        '店舗ID: ${order.storeId}', // TODO: 店舗名を表示
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -237,7 +229,7 @@ class _COrderHistoryPageState extends State<COrderHistoryPage>
                   const SizedBox(height: 12),
                   // 注文内容
                   Text(
-                    (order['items'] as List).join(', '),
+                    '${order.orderDetails.length}点の商品',
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey[600],
@@ -249,14 +241,14 @@ class _COrderHistoryPageState extends State<COrderHistoryPage>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        order['orderedAt'] as String,
+                        order.orderedAt?.toString().split('.')[0] ?? '',
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.grey[500],
                         ),
                       ),
                       Text(
-                        '¥${order['total']}',
+                        '¥${order.totalPrice}',
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -361,7 +353,7 @@ class _COrderHistoryPageState extends State<COrderHistoryPage>
     );
   }
 
-  void _showOrderDetail(Map<String, dynamic> order) {
+  void _showOrderDetail(Order order) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -372,14 +364,14 @@ class _COrderHistoryPageState extends State<COrderHistoryPage>
 }
 
 class _OrderDetailPage extends StatelessWidget {
-  final Map<String, dynamic> order;
+  final Order order;
 
   const _OrderDetailPage({required this.order});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TitleAppBar(
+      appBar: const TitleAppBar(
         title: '注文詳細',
         showBackButton: true,
       ),
@@ -399,7 +391,7 @@ class _OrderDetailPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '注文番号: #${order['id']}',
+                    '注文番号: #${order.id}',
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -407,7 +399,7 @@ class _OrderDetailPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    '注文日時: ${order['orderedAt']}',
+                    '注文日時: ${order.orderedAt}',
                     style: TextStyle(
                       color: Colors.grey[600],
                     ),
@@ -436,7 +428,7 @@ class _OrderDetailPage extends StatelessWidget {
                   ),
                   const SizedBox(width: 12),
                   Text(
-                    order['store'] as String,
+                    '店舗ID: ${order.storeId}',
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -464,9 +456,15 @@ class _OrderDetailPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  ...(order['items'] as List).map((item) => Padding(
+                  ...order.orderDetails.map((item) => Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4),
-                        child: Text('・$item'),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('${item.productName} x ${item.quantity}'),
+                            Text('¥${item.unitPrice * item.quantity}'),
+                          ],
+                        ),
                       )),
                   const Divider(),
                   Row(
@@ -477,7 +475,7 @@ class _OrderDetailPage extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        '¥${order['total']}',
+                        '¥${order.totalPrice}',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
