@@ -22,6 +22,16 @@ docker-compose up --build -d
 *   **API ドキュメント (Swagger)**: [http://localhost:8000/docs](http://localhost:8000/docs)
     *   ここでAPIのテスト実行が可能です。
 
+### テストアカウント
+開発用のテストアカウントが用意されています。パスワードはすべて `password` です。
+
+| ロール | メールアドレス | パスワード |
+|--------|----------------|------------|
+| 依頼者 | user1@test.com | password |
+| 店舗 | store1@test.com | password |
+| 配達員 | deliverer1@test.com | password |
+| 管理者 | admin@stellar.local | password |
+
 ### 停止コマンド
 ```powershell
 docker-compose down
