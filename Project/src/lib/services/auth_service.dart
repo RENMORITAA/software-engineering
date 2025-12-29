@@ -27,13 +27,53 @@ class AuthService {
     }
   }
 
-  Future<void> register(String email, String password, String role) async {
+  Future<void> register(
+    String email,
+    String password,
+    String role, {
+    String? name,
+    String? phoneNumber,
+    // 店舗用
+    String? storeName,
+    String? storeAddress,
+    String? storeDescription,
+    String? businessHours,
+    // 配達員用
+    String? vehicleType,
+  }) async {
     try {
-      await _apiService.post('/auth/register', {
+      // ユーザー登録
+      final userResponse = await _apiService.post('/auth/register', {
         'email': email,
         'password': password,
         'role': role,
       });
+
+      // 登録成功後、プロフィール情報を更新
+      // まずログインしてトークンを取得
+      await login(email, password);
+
+      // ロールに応じたプロフィール更新
+      if (role == 'requester' && name != null) {
+        await _apiService.put('/profile/requester', {
+          'name': name,
+          'phone_number': phoneNumber,
+        });
+      } else if (role == 'deliverer' && name != null) {
+        await _apiService.put('/profile/deliverer', {
+          'name': name,
+          'phone_number': phoneNumber,
+          'vehicle_type': vehicleType,
+        });
+      } else if (role == 'store' && storeName != null) {
+        await _apiService.put('/profile/store', {
+          'store_name': storeName,
+          'address': storeAddress,
+          'description': storeDescription,
+          'phone_number': phoneNumber,
+          'business_hours': businessHours,
+        });
+      }
     } catch (e) {
       rethrow;
     }
@@ -52,6 +92,33 @@ class AuthService {
   Future<Map<String, dynamic>> getCurrentUser() async {
     try {
       final response = await _apiService.get('/auth/me');
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Map<String, dynamic>> getRequesterProfile() async {
+    try {
+      final response = await _apiService.get('/profile/requester');
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Map<String, dynamic>> getDelivererProfile() async {
+    try {
+      final response = await _apiService.get('/profile/deliverer');
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Map<String, dynamic>> getStoreProfile() async {
+    try {
+      final response = await _apiService.get('/profile/store');
       return response;
     } catch (e) {
       rethrow;

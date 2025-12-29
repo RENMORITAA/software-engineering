@@ -14,12 +14,25 @@ class UserRoleProvider extends ChangeNotifier {
   UserRole _currentRole = UserRole.requester;
   int? _userId;
   String? _userEmail;
+  String? _userName;
+  String? _phoneNumber;
+  // 店舗用
+  String? _storeName;
+  String? _storeAddress;
+  // 配達員用
+  String? _vehicleType;
+  
   bool _isLoggedIn = false;
 
   // ゲッター
   UserRole get currentRole => _currentRole;
   int? get userId => _userId;
   String? get userEmail => _userEmail;
+  String? get userName => _userName;
+  String? get phoneNumber => _phoneNumber;
+  String? get storeName => _storeName;
+  String? get storeAddress => _storeAddress;
+  String? get vehicleType => _vehicleType;
   bool get isLoggedIn => _isLoggedIn;
 
   /// ロールのプレフィックスを取得
@@ -83,11 +96,37 @@ class UserRoleProvider extends ChangeNotifier {
     required int userId,
     required String email,
     required String role,
+    String? name,
+    String? phoneNumber,
+    String? storeName,
+    String? storeAddress,
+    String? vehicleType,
   }) {
     _userId = userId;
     _userEmail = email;
+    _userName = name;
+    _phoneNumber = phoneNumber;
+    _storeName = storeName;
+    _storeAddress = storeAddress;
+    _vehicleType = vehicleType;
     _currentRole = _parseRole(role);
     _isLoggedIn = true;
+    notifyListeners();
+  }
+
+  /// プロフィール情報を更新
+  void updateProfile({
+    String? name,
+    String? phoneNumber,
+    String? storeName,
+    String? storeAddress,
+    String? vehicleType,
+  }) {
+    if (name != null) _userName = name;
+    if (phoneNumber != null) _phoneNumber = phoneNumber;
+    if (storeName != null) _storeName = storeName;
+    if (storeAddress != null) _storeAddress = storeAddress;
+    if (vehicleType != null) _vehicleType = vehicleType;
     notifyListeners();
   }
 
@@ -95,6 +134,11 @@ class UserRoleProvider extends ChangeNotifier {
   void logout() {
     _userId = null;
     _userEmail = null;
+    _userName = null;
+    _phoneNumber = null;
+    _storeName = null;
+    _storeAddress = null;
+    _vehicleType = null;
     _currentRole = UserRole.requester;
     _isLoggedIn = false;
     notifyListeners();

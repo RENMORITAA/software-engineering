@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../provider/provider.dart';
+import 'c_product_list.dart';
 
 /// 依頼者ホーム画面
 class CHomePage extends StatefulWidget {
@@ -10,7 +13,18 @@ class CHomePage extends StatefulWidget {
 
 class _CHomePageState extends State<CHomePage> {
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<StoreProvider>().fetchStores();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final storeProvider = context.watch<StoreProvider>();
+    final stores = storeProvider.stores;
+
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(
@@ -263,12 +277,19 @@ class _CHomePageState extends State<CHomePage> {
               ),
             ),
             // 店舗リスト
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) => _buildStoreCard(index),
-                childCount: 5,
-              ),
-            ),
+            storeProvider.isLoading
+                ? const SliverToBoxAdapter(
+                    child: Center(child: CircularProgressIndicator()),
+                  )
+                : SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        final store = stores[index] as Map<String, dynamic>;
+                        return _buildStoreCard(store);
+                      },
+                      childCount: stores.length,
+                    ),
+                  ),
             const SliverToBoxAdapter(
               child: SizedBox(height: 20),
             ),
@@ -314,22 +335,20 @@ class _CHomePageState extends State<CHomePage> {
     );
   }
 
-  Widget _buildStoreCard(int index) {
-    final stores = [
-      {'name': 'テスト食堂', 'category': '和食', 'time': '20-30分', 'rating': 4.5},
-      {'name': 'カフェ モカ', 'category': 'カフェ', 'time': '15-25分', 'rating': 4.2},
-      {'name': 'ラーメン太郎', 'category': 'ラーメン', 'time': '25-35分', 'rating': 4.7},
-      {'name': '寿司処 さくら', 'category': '寿司', 'time': '30-40分', 'rating': 4.8},
-      {'name': 'ピザハウス', 'category': 'イタリアン', 'time': '35-45分', 'rating': 4.3},
-    ];
-
-    final store = stores[index];
-
+  Widget _buildStoreCard(Map<String, dynamic> store) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: GestureDetector(
         onTap: () {
-          // TODO: 店舗詳細画面に遷移
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => CProductListPage(
+                storeId: store['id'],
+                storeName: store['store_name'],
+              ),
+            ),
+          );
         },
         child: Container(
           decoration: BoxDecoration(
@@ -354,12 +373,20 @@ class _CHomePageState extends State<CHomePage> {
                   borderRadius: const BorderRadius.horizontal(
                     left: Radius.circular(12),
                   ),
+                  image: store['store_image_url'] != null
+                      ? DecorationImage(
+                          image: NetworkImage(store['store_image_url']),
+                          fit: BoxFit.cover,
+                        )
+                      : null,
                 ),
-                child: Icon(
-                  Icons.store,
-                  size: 40,
-                  color: Colors.grey[400],
-                ),
+                child: store['store_image_url'] == null
+                    ? Icon(
+                        Icons.store,
+                        size: 40,
+                        color: Colors.grey[400],
+                      )
+                    : null,
               ),
               // 店舗情報
               Expanded(
@@ -369,7 +396,7 @@ class _CHomePageState extends State<CHomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        store['name'] as String,
+                        store['store_name'],
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -377,11 +404,13 @@ class _CHomePageState extends State<CHomePage> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        store['category'] as String,
+                        store['description'] ?? '説明なし',
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.grey[600],
                         ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 8),
                       Row(
@@ -392,9 +421,9 @@ class _CHomePageState extends State<CHomePage> {
                             color: Colors.amber[600],
                           ),
                           const SizedBox(width: 4),
-                          Text(
-                            '${store['rating']}',
-                            style: const TextStyle(
+                          const Text(
+                            '4.5', // 仮
+                            style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                             ),
@@ -407,9 +436,9 @@ class _CHomePageState extends State<CHomePage> {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            store['time'] as String,
+                            '20-30分', // 仮
                             style: TextStyle(
-                              fontSize: 14,
+                              fontSize: 12,
                               color: Colors.grey[600],
                             ),
                           ),
