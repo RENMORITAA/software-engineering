@@ -265,6 +265,56 @@ CREATE TABLE IF NOT EXISTS store_sales (
 );
 
 -- ==========================================
+-- 画像管理テーブル
+-- ==========================================
+
+CREATE TABLE IF NOT EXISTS images (
+    id SERIAL PRIMARY KEY,
+    filename VARCHAR(255) NOT NULL,
+    original_filename VARCHAR(255) NOT NULL,
+    file_path VARCHAR(500) NOT NULL,
+    file_size INTEGER,
+    mime_type VARCHAR(100),
+    uploaded_by INTEGER NOT NULL REFERENCES users(id),
+    entity_type VARCHAR(50),
+    entity_id INTEGER,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- ==========================================
+-- レシピ詳細テーブル
+-- ==========================================
+
+-- 商品レシピ情報
+CREATE TABLE IF NOT EXISTS product_recipes (
+    id SERIAL PRIMARY KEY,
+    product_id INTEGER UNIQUE NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+    preparation_time INTEGER,
+    calories INTEGER,
+    allergens TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- レシピ材料
+CREATE TABLE IF NOT EXISTS recipe_ingredients (
+    id SERIAL PRIMARY KEY,
+    recipe_id INTEGER NOT NULL REFERENCES product_recipes(id) ON DELETE CASCADE,
+    name VARCHAR(100) NOT NULL,
+    quantity VARCHAR(50),
+    display_order INTEGER DEFAULT 0
+);
+
+-- レシピ手順
+CREATE TABLE IF NOT EXISTS recipe_steps (
+    id SERIAL PRIMARY KEY,
+    recipe_id INTEGER NOT NULL REFERENCES product_recipes(id) ON DELETE CASCADE,
+    step_number INTEGER NOT NULL,
+    description TEXT NOT NULL,
+    image_url VARCHAR(500)
+);
+
+-- ==========================================
 -- インデックス
 -- ==========================================
 

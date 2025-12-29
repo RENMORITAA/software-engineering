@@ -569,3 +569,168 @@ class AppNotification {
     );
   }
 }
+
+// ==========================================
+// 画像モデル
+// ==========================================
+
+class AppImage {
+  final int? id;
+  final String filename;
+  final String originalFilename;
+  final String filePath;
+  final int? fileSize;
+  final String? mimeType;
+  final int uploadedBy;
+  final String? entityType;
+  final int? entityId;
+  final String? createdAt;
+
+  AppImage({
+    this.id,
+    required this.filename,
+    required this.originalFilename,
+    required this.filePath,
+    this.fileSize,
+    this.mimeType,
+    required this.uploadedBy,
+    this.entityType,
+    this.entityId,
+    this.createdAt,
+  });
+
+  factory AppImage.fromMap(Map<String, dynamic> map) {
+    return AppImage(
+      id: map['id']?.toInt(),
+      filename: map['filename'] ?? '',
+      originalFilename: map['original_filename'] ?? '',
+      filePath: map['file_path'] ?? '',
+      fileSize: map['file_size']?.toInt(),
+      mimeType: map['mime_type'],
+      uploadedBy: map['uploaded_by']?.toInt() ?? 0,
+      entityType: map['entity_type'],
+      entityId: map['entity_id']?.toInt(),
+      createdAt: map['created_at'],
+    );
+  }
+}
+
+// ==========================================
+// レシピモデル
+// ==========================================
+
+class RecipeIngredient {
+  final int? id;
+  final int recipeId;
+  final String name;
+  final String? quantity;
+  final int displayOrder;
+
+  RecipeIngredient({
+    this.id,
+    this.recipeId = 0,
+    required this.name,
+    this.quantity,
+    this.displayOrder = 0,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'quantity': quantity,
+      'display_order': displayOrder,
+    };
+  }
+
+  factory RecipeIngredient.fromMap(Map<String, dynamic> map) {
+    return RecipeIngredient(
+      id: map['id']?.toInt(),
+      recipeId: map['recipe_id']?.toInt() ?? 0,
+      name: map['name'] ?? '',
+      quantity: map['quantity'],
+      displayOrder: map['display_order'] ?? 0,
+    );
+  }
+}
+
+class RecipeStep {
+  final int? id;
+  final int recipeId;
+  final int stepNumber;
+  final String description;
+  final String? imageUrl;
+
+  RecipeStep({
+    this.id,
+    this.recipeId = 0,
+    required this.stepNumber,
+    required this.description,
+    this.imageUrl,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'step_number': stepNumber,
+      'description': description,
+      'image_url': imageUrl,
+    };
+  }
+
+  factory RecipeStep.fromMap(Map<String, dynamic> map) {
+    return RecipeStep(
+      id: map['id']?.toInt(),
+      recipeId: map['recipe_id']?.toInt() ?? 0,
+      stepNumber: map['step_number'] ?? 0,
+      description: map['description'] ?? '',
+      imageUrl: map['image_url'],
+    );
+  }
+}
+
+class ProductRecipe {
+  final int? id;
+  final int productId;
+  final int? preparationTime;
+  final int? calories;
+  final String? allergens;
+  final List<RecipeIngredient> ingredients;
+  final List<RecipeStep> steps;
+
+  ProductRecipe({
+    this.id,
+    required this.productId,
+    this.preparationTime,
+    this.calories,
+    this.allergens,
+    this.ingredients = const [],
+    this.steps = const [],
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'preparation_time': preparationTime,
+      'calories': calories,
+      'allergens': allergens,
+      'ingredients': ingredients.map((i) => i.toMap()).toList(),
+      'steps': steps.map((s) => s.toMap()).toList(),
+    };
+  }
+
+  factory ProductRecipe.fromMap(Map<String, dynamic> map) {
+    return ProductRecipe(
+      id: map['id']?.toInt(),
+      productId: map['product_id']?.toInt() ?? 0,
+      preparationTime: map['preparation_time']?.toInt(),
+      calories: map['calories']?.toInt(),
+      allergens: map['allergens'],
+      ingredients: (map['ingredients'] as List<dynamic>?)
+              ?.map((i) => RecipeIngredient.fromMap(i))
+              .toList() ??
+          [],
+      steps: (map['steps'] as List<dynamic>?)
+              ?.map((s) => RecipeStep.fromMap(s))
+              .toList() ??
+          [],
+    );
+  }
+}

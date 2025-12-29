@@ -233,3 +233,172 @@ docker exec postgres_db psql -U student -d university_app -c "\dt"
 # ユーザー一覧を表示
 docker exec postgres_db psql -U student -d university_app -c "SELECT * FROM users;"
 ```
+
+---
+
+## 8. AWS クラウド環境へのデプロイ
+
+本番環境でアプリを公開するためのAWS構成例です。
+
+### 推奨アーキテクチャ
+
+```
+                    ┌─────────────────┐
+                    │   CloudFront    │ ← Flutter Web (S3から配信)
+                    └────────┬────────┘
+                             │
+                    ┌────────▼────────┐
+                    │  Application    │
+                    │  Load Balancer  │
+                    └────────┬────────┘
+                             │
+              ┌──────────────┼──────────────┐
+              │              │              │
+      ┌───────▼───────┐      │      ┌───────▼───────┐
+      │  ECS Fargate  │      │      │  ECS Fargate  │
+      │  (FastAPI)    │      │      │  (FastAPI)    │
+      └───────┬───────┘      │      └───────┬───────┘
+              │              │              │
+              └──────────────┼──────────────┘
+                             │
+                    ┌────────▼────────┐
+                    │    RDS          │
+                    │  (PostgreSQL)   │
+                    └─────────────────┘
+                             │
+                    ┌────────▼────────┐
+                    │      S3         │ ← 画像ストレージ
+                    └─────────────────┘
+```
+
+### 必要なAWSサービス
+
+| サービス | 用途 | 概算費用/月 |
+|----------|------|-------------|
+| **ECS Fargate** | FastAPI バックエンド | $30〜50 |
+| **RDS PostgreSQL** | データベース (db.t3.micro) | $15〜25 |
+| **S3** | 画像ストレージ + Flutter Web ホスティング | $5〜10 |
+| **CloudFront** | CDN (Flutter Web配信) | $5〜10 |
+| **ALB** | ロードバランサー | $20〜25 |
+| **ECR** | Dockerイメージ保存 | $1〜5 |
+
+**合計: 約 $80〜130/月** (小規模運用時)
+
+### デプロイ手順（概要）
+
+#### 1. ECR にDockerイメージをプッシュ
+
+```bash
+# ECRにログイン
+aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin <account-id>.dkr.ecr.ap-northeast-1.amazonaws.com
+
+# イメージをビルド＆プッシュ
+docker build -t stellar-backend ./backend
+docker tag stellar-backend:latest <account-id>.dkr.ecr.ap-northeast-1.amazonaws.com/stellar-backend:latest
+docker push <account-id>.dkr.ecr.ap-northeast-1.amazonaws.com/stellar-backend:latest
+```
+
+#### 2. RDS PostgreSQL を作成
+
+*   **エンジン**: PostgreSQL 15
+*   **インスタンス**: db.t3.micro (開発) / db.t3.small (本番)
+*   **セキュリティグループ**: ECSからのみ接続許可
+
+#### 3. ECS Fargate でバックエンドを起動
+
+*   **タスク定義**: ECRのイメージを指定
+*   **環境変数**:
+    ```
+    DATABASE_URL=postgresql://user:pass@rds-endpoint:5432/dbname
+    SECRET_KEY=your-production-secret-key
+    ```
+
+#### 4. S3 + CloudFront で Flutter Web をホスティング
+
+```bash
+# Flutter Webをビルド
+cd src
+flutter build web --release
+
+# S3にアップロード
+aws s3 sync build/web s3://your-bucket-name --delete
+
+# CloudFrontのキャッシュを無効化
+aws cloudfront create-invalidation --distribution-id XXXXX --paths "/*"
+```
+
+#### 5. 環境変数の変更
+
+Flutter側の `lib/services/api_service.dart` を本番URLに変更:
+
+```dart
+// 開発時
+static const String baseUrl = 'http://localhost:8000';
+
+// 本番時
+static const String baseUrl = 'https://api.your-domain.com';
+```
+
+### 画像ストレージのS3対応
+
+本番環境では画像をS3に保存するように変更が必要です。
+`backend/app/routers/images.py` を修正してboto3を使用します。
+
+```python
+import boto3
+
+s3_client = boto3.client('s3')
+BUCKET_NAME = 'your-image-bucket'
+
+# アップロード時
+s3_client.upload_fileobj(file.file, BUCKET_NAME, unique_filename)
+file_path = f"https://{BUCKET_NAME}.s3.amazonaws.com/{unique_filename}"
+```
+
+---
+
+## 9. API エンドポイント一覧
+
+主要なAPIエンドポイントの一覧です。詳細は http://localhost:8000/docs で確認できます。
+
+### 認証 (`/auth`)
+| メソッド | パス | 説明 |
+|----------|------|------|
+| POST | `/auth/register` | 新規ユーザー登録 |
+| POST | `/auth/login` | ログイン（トークン取得） |
+| GET | `/auth/me` | 現在のユーザー情報 |
+| GET | `/auth/me/profile` | 現在のユーザーのプロフィール |
+
+### 商品 (`/products`)
+| メソッド | パス | 説明 |
+|----------|------|------|
+| GET | `/products/` | 全商品一覧 |
+| GET | `/products/{id}` | 商品詳細 |
+| GET | `/products/store/{store_id}` | 店舗の商品一覧 |
+| POST | `/products/` | 商品作成（店舗のみ） |
+| PUT | `/products/{id}` | 商品更新（店舗のみ） |
+| DELETE | `/products/{id}` | 商品削除（店舗のみ） |
+
+### レシピ (`/recipes`) ※新規追加
+| メソッド | パス | 説明 |
+|----------|------|------|
+| GET | `/recipes/product/{product_id}` | 商品のレシピ取得 |
+| POST | `/recipes/product/{product_id}` | レシピ作成（店舗のみ） |
+| PUT | `/recipes/product/{product_id}` | レシピ更新（店舗のみ） |
+| DELETE | `/recipes/product/{product_id}` | レシピ削除（店舗のみ） |
+
+### 画像 (`/images`) ※新規追加
+| メソッド | パス | 説明 |
+|----------|------|------|
+| POST | `/images/upload` | 画像アップロード |
+| GET | `/images/{id}` | 画像情報取得 |
+| GET | `/images/entity/{type}/{id}` | エンティティの画像一覧 |
+| DELETE | `/images/{id}` | 画像削除 |
+
+### 注文 (`/orders`)
+| メソッド | パス | 説明 |
+|----------|------|------|
+| POST | `/orders/` | 注文作成 |
+| GET | `/orders/my` | 自分の注文履歴 |
+| GET | `/orders/{id}` | 注文詳細 |
+| PUT | `/orders/{id}/status` | 注文ステータス更新 |

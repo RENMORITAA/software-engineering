@@ -152,6 +152,7 @@ class Product(Base):
     store = relationship("StoreProfile", back_populates="products")
     category = relationship("ProductCategory", back_populates="products")
     order_details = relationship("OrderDetail", back_populates="product")
+    recipe = relationship("ProductRecipe", back_populates="product", uselist=False)
 
 
 # ==========================================
@@ -315,3 +316,68 @@ class StoreSales(Base):
     created_at = Column(DateTime, server_default=func.now())
 
     store = relationship("StoreProfile", back_populates="sales")
+
+
+# ==========================================
+# 画像管理モデル
+# ==========================================
+
+class Image(Base):
+    __tablename__ = "images"
+
+    id = Column(Integer, primary_key=True, index=True)
+    filename = Column(String(255), nullable=False)
+    original_filename = Column(String(255), nullable=False)
+    file_path = Column(String(500), nullable=False)  # S3のURLまたはローカルパス
+    file_size = Column(Integer)  # バイト単位
+    mime_type = Column(String(100))  # image/jpeg, image/png など
+    uploaded_by = Column(Integer, ForeignKey("users.id"), nullable=False)
+    entity_type = Column(String(50))  # product, store, user など
+    entity_id = Column(Integer)  # 関連するエンティティのID
+    created_at = Column(DateTime, server_default=func.now())
+
+    uploader = relationship("User")
+
+
+# ==========================================
+# レシピ詳細モデル（商品に紐づく）
+# ==========================================
+
+class ProductRecipe(Base):
+    __tablename__ = "product_recipes"
+
+    id = Column(Integer, primary_key=True, index=True)
+    product_id = Column(Integer, ForeignKey("products.id", ondelete="CASCADE"), unique=True, nullable=False)
+    preparation_time = Column(Integer)  # 調理時間（分）
+    calories = Column(Integer)  # カロリー
+    allergens = Column(Text)  # アレルゲン情報（カンマ区切り）
+    created_at = Column(DateTime, server_default=func.now())
+    updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
+
+    product = relationship("Product", back_populates="recipe")
+    ingredients = relationship("RecipeIngredient", back_populates="recipe", cascade="all, delete-orphan")
+    steps = relationship("RecipeStep", back_populates="recipe", cascade="all, delete-orphan")
+
+
+class RecipeIngredient(Base):
+    __tablename__ = "recipe_ingredients"
+
+    id = Column(Integer, primary_key=True, index=True)
+    recipe_id = Column(Integer, ForeignKey("product_recipes.id", ondelete="CASCADE"), nullable=False)
+    name = Column(String(100), nullable=False)
+    quantity = Column(String(50))  # 例: "100g", "大さじ1"
+    display_order = Column(Integer, default=0)
+
+    recipe = relationship("ProductRecipe", back_populates="ingredients")
+
+
+class RecipeStep(Base):
+    __tablename__ = "recipe_steps"
+
+    id = Column(Integer, primary_key=True, index=True)
+    recipe_id = Column(Integer, ForeignKey("product_recipes.id", ondelete="CASCADE"), nullable=False)
+    step_number = Column(Integer, nullable=False)
+    description = Column(Text, nullable=False)
+    image_url = Column(String(500))  # 手順ごとの画像
+
+    recipe = relationship("ProductRecipe", back_populates="steps")
