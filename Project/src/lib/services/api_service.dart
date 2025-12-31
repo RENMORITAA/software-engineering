@@ -32,14 +32,20 @@ class ApiService {
 
   Future<dynamic> post(String endpoint, Map<String, dynamic> data, {bool isFormData = false}) async {
     final headers = await _getHeaders();
+    
+    dynamic body;
     if (isFormData) {
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
+      // フォームデータとしてエンコード
+      body = data.entries.map((e) => '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value.toString())}').join('&');
+    } else {
+      body = jsonEncode(data);
     }
 
     final response = await http.post(
       Uri.parse('$baseUrl$endpoint'),
       headers: headers,
-      body: isFormData ? data : jsonEncode(data),
+      body: body,
     );
     return _handleResponse(response);
   }

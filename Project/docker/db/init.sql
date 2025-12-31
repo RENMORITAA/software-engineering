@@ -282,25 +282,25 @@ CREATE INDEX IF NOT EXISTS idx_deliveries_deliverer ON deliveries(deliverer_id);
 -- テストデータ
 -- ==========================================
 
--- 管理者ユーザー
+-- 管理者ユーザー (パスワード: password)
 INSERT INTO users (email, password, role) VALUES 
-('admin@stellar.local', '$2b$12$IPWl7OKTMjManRmISrHPiuvv8WW300YNzVowyuAbLSfGBU0maoFJC', 'admin');
+('admin@stellar.local', '$2b$12$IxeZh7y7ZSVP0rPEMWUlcuZm4whjG6MQf283oiu5SNVOcrfK/v3/6', 'admin');
 
--- テスト依頼者
+-- テスト依頼者 (パスワード: password)
 INSERT INTO users (email, password, role) VALUES 
-('user1@test.com', '$2b$12$IPWl7OKTMjManRmISrHPiuvv8WW300YNzVowyuAbLSfGBU0maoFJC', 'requester');
+('user1@test.com', '$2b$12$IxeZh7y7ZSVP0rPEMWUlcuZm4whjG6MQf283oiu5SNVOcrfK/v3/6', 'requester');
 INSERT INTO requester_profiles (user_id, name, phone_number) VALUES 
 (2, '山田太郎', '090-1234-5678');
 
--- テスト店舗
+-- テスト店舗 (パスワード: password)
 INSERT INTO users (email, password, role) VALUES 
-('store1@test.com', '$2b$12$IPWl7OKTMjManRmISrHPiuvv8WW300YNzVowyuAbLSfGBU0maoFJC', 'store');
+('store1@test.com', '$2b$12$IxeZh7y7ZSVP0rPEMWUlcuZm4whjG6MQf283oiu5SNVOcrfK/v3/6', 'store');
 INSERT INTO store_profiles (user_id, store_name, address, phone_number, business_hours) VALUES 
 (3, 'テスト食堂', '高知県香美市土佐山田町1-1-1', '0887-52-1234', '10:00-20:00');
 
--- テスト配達員
+-- テスト配達員 (パスワード: password)
 INSERT INTO users (email, password, role) VALUES 
-('deliverer1@test.com', '$2b$12$IPWl7OKTMjManRmISrHPiuvv8WW300YNzVowyuAbLSfGBU0maoFJC', 'deliverer');
+('deliverer1@test.com', '$2b$12$IxeZh7y7ZSVP0rPEMWUlcuZm4whjG6MQf283oiu5SNVOcrfK/v3/6', 'deliverer');
 INSERT INTO deliverer_profiles (user_id, name, phone_number, vehicle_type) VALUES 
 (4, '佐藤一郎', '090-8765-4321', 'バイク');
 
@@ -311,9 +311,9 @@ INSERT INTO products (store_id, name, description, price, is_available) VALUES
 (1, 'うどん', '讃岐風うどん', 500, true),
 (1, 'カレーライス', '特製スパイスカレー', 800, true);
 
--- スーパーユーザーの初期データ
+-- スーパーユーザーの初期データ (パスワード: password)
 INSERT INTO users (email, password, role, is_active)
-VALUES ('superuser', '$2b$12$IPWl7OKTMjManRmISrHPiuvv8WW300YNzVowyuAbLSfGBU0maoFJC', 'admin', TRUE)
+VALUES ('superuser', '$2b$12$IxeZh7y7ZSVP0rPEMWUlcuZm4whjG6MQf283oiu5SNVOcrfK/v3/6', 'admin', TRUE)
 ON CONFLICT (email) DO NOTHING;
 
 -- スーパーユーザーのプロフィール（必要に応じて）
