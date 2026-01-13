@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../mypage.dart';
 import '../../provider/provider.dart';
 import '../../services/auth_service.dart';
+import '../../config/routes.dart';
 
 /// 店舗マイページラッパー
 class SMyPageWrapper extends StatelessWidget {
@@ -27,17 +28,21 @@ class SMyPageWrapper extends StatelessWidget {
         if (context.mounted) {
           Navigator.pushNamedAndRemoveUntil(
             context,
-            '/',
+            AppRoutes.login,
             (route) => false,
           );
         }
       },
-      onWithdraw: () {
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          '/',
-          (route) => false,
-        );
+      onWithdraw: () async {
+        await authService.logout();
+        userProvider.logout();
+        if (context.mounted) {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            AppRoutes.login,
+            (route) => false,
+          );
+        }
       },
     );
   }

@@ -1,9 +1,23 @@
+import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'api_service.dart';
 
+/// 認証サービス
+/// トークン管理、ログイン状態の永続化、セッション管理を担当
 class AuthService {
   final ApiService _apiService = ApiService();
+  
+  // SharedPreferencesのキー
+  static const String _tokenKey = 'auth_token';
+  static const String _userKey = 'current_user';
+  static const String _roleKey = 'user_role';
+  static const String _loginTimeKey = 'login_time';
+  
+  // トークンの有効期限（24時間）
+  static const int _tokenExpiryHours = 24;
 
+  /// ログイン
   Future<Map<String, dynamic>> login(String email, String password) async {
     try {
       final response = await _apiService.post(
@@ -17,14 +31,44 @@ class AuthService {
 
       final token = response['access_token'];
       if (token != null) {
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('auth_token', token);
-        // ロールなどの情報も保存する場合はここでデコードするか、APIレスポンスに含める
+        await _saveAuthData(token);
       }
       return response;
     } catch (e) {
       rethrow;
     }
+  }
+
+  /// 認証データを保存
+  Future<void> _saveAuthData(String token) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_tokenKey, token);
+    await prefs.setInt(_loginTimeKey, DateTime.now().millisecondsSinceEpoch);
+  }
+
+  /// ユーザー情報を保存
+  Future<void> saveUserInfo(Map<String, dynamic> user) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_userKey, jsonEncode(user));
+    if (user['role'] != null) {
+      await prefs.setString(_roleKey, user['role']);
+    }
+  }
+
+  /// 保存されたユーザー情報を取得
+  Future<Map<String, dynamic>?> getSavedUserInfo() async {
+    final prefs = await SharedPreferences.getInstance();
+    final userJson = prefs.getString(_userKey);
+    if (userJson != null) {
+      return jsonDecode(userJson) as Map<String, dynamic>;
+    }
+    return null;
+  }
+
+  /// 保存されたロールを取得
+  Future<String?> getSavedRole() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_roleKey);
   }
 
   Future<void> register(
@@ -79,14 +123,54 @@ class AuthService {
     }
   }
 
+  /// ログアウト（すべての認証データをクリア）
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('auth_token');
+    await prefs.remove(_tokenKey);
+    await prefs.remove(_userKey);
+    await prefs.remove(_roleKey);
+    await prefs.remove(_loginTimeKey);
   }
 
+  /// ログイン状態を確認（トークンの存在と有効期限をチェック）
   Future<bool> isLoggedIn() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.containsKey('auth_token');
+    final token = prefs.getString(_tokenKey);
+    
+    if (token == null) return false;
+    
+    // トークンの有効期限をチェック
+    final loginTime = prefs.getInt(_loginTimeKey);
+    if (loginTime != null) {
+      final loginDateTime = DateTime.fromMillisecondsSinceEpoch(loginTime);
+      final now = DateTime.now();
+      final difference = now.difference(loginDateTime);
+      
+      if (difference.inHours >= _tokenExpiryHours) {
+        // トークン期限切れ - ログアウト
+        debugPrint('[AuthService] Token expired, logging out');
+        await logout();
+        return false;
+      }
+    }
+    
+    return true;
+  }
+
+  /// トークンの有効性をサーバーで確認
+  Future<bool> validateToken() async {
+    try {
+      final isLogged = await isLoggedIn();
+      if (!isLogged) return false;
+      
+      // サーバーに問い合わせてトークンが有効か確認
+      await _apiService.get('/auth/me');
+      return true;
+    } catch (e) {
+      debugPrint('[AuthService] Token validation failed: $e');
+      await logout();
+      return false;
+    }
   }
 
   Future<Map<String, dynamic>> getCurrentUser() async {

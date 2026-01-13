@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../mypage.dart';
 import '../../provider/provider.dart';
 import '../../services/auth_service.dart';
+import '../../config/routes.dart';
 
 /// 依頼者マイページラッパー
 class CMyPageWrapper extends StatelessWidget {
@@ -19,24 +20,28 @@ class CMyPageWrapper extends StatelessWidget {
       userEmail: userProvider.userEmail ?? '',
       userRole: 'requester',
       onLogout: () async {
-        // ログアウト処理
+        // ログアウト処理（トークンとユーザー情報をクリア）
         await authService.logout();
         userProvider.logout();
         if (context.mounted) {
           Navigator.pushNamedAndRemoveUntil(
             context,
-            '/',
+            AppRoutes.login,
             (route) => false,
           );
         }
       },
-      onWithdraw: () {
+      onWithdraw: () async {
         // 退会処理
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          '/',
-          (route) => false,
-        );
+        await authService.logout();
+        userProvider.logout();
+        if (context.mounted) {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            AppRoutes.login,
+            (route) => false,
+          );
+        }
       },
     );
   }

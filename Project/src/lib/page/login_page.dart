@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../component/component.dart';
 import '../../services/auth_service.dart';
 import '../../provider/provider.dart';
+import '../../config/routes.dart';
 
 /// ログイン画面
 class LoginPage extends StatefulWidget {
@@ -39,9 +40,12 @@ class _LoginPageState extends State<LoginPage> {
 
       if (mounted) {
         final user = await _authService.getCurrentUser();
-        final role = user['role'];
+        final role = user['role'] as String?;
         final userId = user['id'];
         final email = user['email'];
+        
+        // ユーザー情報をAuthServiceに保存（永続化）
+        await _authService.saveUserInfo(user);
         
         // プロフィール情報を取得
         String? userName;
@@ -77,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
           context.read<UserRoleProvider>().login(
             userId: userId,
             email: email,
-            role: role,
+            role: role ?? 'requester',
             name: userName,
             phoneNumber: phoneNumber,
             storeName: storeName,
@@ -87,17 +91,19 @@ class _LoginPageState extends State<LoginPage> {
         }
         
         if (mounted) {
-          if (role == 'requester') {
-            Navigator.pushReplacementNamed(context, '/requester/home');
-          } else if (role == 'deliverer') {
-            Navigator.pushReplacementNamed(context, '/deliverer/home');
-          } else if (role == 'store') {
-            Navigator.pushReplacementNamed(context, '/store/home');
-          } else if (role == 'admin' || _emailController.text == 'superuser') {
-             Navigator.pushReplacementNamed(context, '/requester/home');
-          } else {
-             Navigator.pushReplacementNamed(context, '/requester/home');
+          // ロールに応じたホーム画面へ遷移
+          String targetRoute;
+          switch (role) {
+            case 'deliverer':
+              targetRoute = AppRoutes.delivererHome;
+              break;
+            case 'store':
+              targetRoute = AppRoutes.storeHome;
+              break;
+            default:
+              targetRoute = AppRoutes.requestorHome;
           }
+          Navigator.pushReplacementNamed(context, targetRoute);
         }
       }
     } catch (e) {

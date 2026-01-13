@@ -1,12 +1,23 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import '../config/env_config.dart';
 
 class ApiService {
-  // Android Emulator: 10.0.2.2, iOS Simulator: 127.0.0.1, Web: 127.0.0.1
-  // 実機の場合はPCのIPアドレスを指定してください
-  // Webの場合はlocalhostでOK
-  static const String baseUrl = 'http://localhost:8000';
+  /// API Base URL（EnvConfigから取得）
+  /// 
+  /// 環境ごとに自動で切り替わる:
+  /// - local: http://localhost:8000
+  /// - staging: https://staging-api.example.com
+  /// - production: https://api.example.com
+  /// 
+  /// --dart-defineで上書き可能:
+  /// flutter run --dart-define=API_BASE_URL=http://192.168.1.100:8000
+  static String get baseUrl => EnvConfig.apiBaseUrl;
+
+  /// タイムアウト時間
+  Duration get timeout => Duration(seconds: EnvConfig.apiTimeout);
 
   Future<String?> getToken() async {
     final prefs = await SharedPreferences.getInstance();
@@ -21,16 +32,24 @@ class ApiService {
     };
   }
 
+  void _log(String message) {
+    if (EnvConfig.enableLogging) {
+      debugPrint('[ApiService] $message');
+    }
+  }
+
   Future<dynamic> get(String endpoint) async {
+    _log('GET $baseUrl$endpoint');
     final headers = await _getHeaders();
     final response = await http.get(
       Uri.parse('$baseUrl$endpoint'),
       headers: headers,
-    );
+    ).timeout(timeout);
     return _handleResponse(response);
   }
 
   Future<dynamic> post(String endpoint, Map<String, dynamic> data, {bool isFormData = false}) async {
+    _log('POST $baseUrl$endpoint');
     final headers = await _getHeaders();
     
     dynamic body;
@@ -46,26 +65,28 @@ class ApiService {
       Uri.parse('$baseUrl$endpoint'),
       headers: headers,
       body: body,
-    );
+    ).timeout(timeout);
     return _handleResponse(response);
   }
 
   Future<dynamic> put(String endpoint, Map<String, dynamic> data) async {
+    _log('PUT $baseUrl$endpoint');
     final headers = await _getHeaders();
     final response = await http.put(
       Uri.parse('$baseUrl$endpoint'),
       headers: headers,
       body: jsonEncode(data),
-    );
+    ).timeout(timeout);
     return _handleResponse(response);
   }
 
   Future<dynamic> delete(String endpoint) async {
+    _log('DELETE $baseUrl$endpoint');
     final headers = await _getHeaders();
     final response = await http.delete(
       Uri.parse('$baseUrl$endpoint'),
       headers: headers,
-    );
+    ).timeout(timeout);
     return _handleResponse(response);
   }
 
