@@ -15,6 +15,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => StoreProvider()),
         ChangeNotifierProvider(create: (_) => OverScreenController()),
         ChangeNotifierProvider(create: (_) => NotificationProvider()),
+        ChangeNotifierProvider(create: (_) => LocationProvider()),
       ],
       child: const StellarDeliveryApp(),
     ),

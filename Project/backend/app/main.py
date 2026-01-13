@@ -1,12 +1,19 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+import os
 from .database import engine, Base
-from .routers import auth, products, orders, delivery, stores, notifications, profile
+from .routers import auth, products, orders, delivery, stores, notifications, profile, uploads
 
 # Create tables
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Stellar Delivery API")
+
+# アップロードディレクトリを作成・マウント
+UPLOAD_DIR = "/app/uploads"
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
 
 # CORS configuration
 origins = [
@@ -31,6 +38,7 @@ app.include_router(delivery.router)
 app.include_router(stores.router)
 app.include_router(notifications.router)
 app.include_router(profile.router)
+app.include_router(uploads.router)
 
 @app.get("/")
 def read_root():

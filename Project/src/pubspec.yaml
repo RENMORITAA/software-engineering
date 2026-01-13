@@ -52,9 +52,14 @@ dependencies:
   # 画像キャッシュ
   cached_network_image: ^3.4.1
   
+  # 画像選択
+  image_picker: ^1.1.2
+  
   # 地図
   google_maps_flutter: ^2.10.0
+  google_maps_flutter_web: ^0.5.10
   geolocator: ^13.0.2
+  geolocator_web: ^4.1.1
   
   # ローカルストレージ
   shared_preferences: ^2.3.3
