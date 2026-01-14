@@ -19,7 +19,7 @@ class EnvConfig {
   factory EnvConfig() => _instance;
   EnvConfig._internal();
 
-  /// 環境名 (local, staging, production)
+  /// 環境名 (local, docker, staging, production)
   static const String environment = String.fromEnvironment(
     'ENV',
     defaultValue: 'local',
@@ -34,9 +34,17 @@ class EnvConfig {
   /// 環境ごとのデフォルトAPI Base URL
   static const Map<String, String> _defaultApiBaseUrls = {
     'local': 'http://localhost:8000',
+    'docker': 'http://localhost:8000',
     'staging': 'https://staging-api.example.com',
     'production': 'https://api.example.com',
   };
+
+  /// モックAPIを利用するか（--dart-defineで上書き可能）
+  /// デフォルト: 全環境でfalse（必要なときだけ明示的にtrueへ）
+  static const bool useMockApi = bool.fromEnvironment(
+    'USE_MOCK_API',
+    defaultValue: false,
+  );
 
   /// API Base URLを取得
   /// 優先順位: --dart-define > 環境別デフォルト > ローカル
@@ -62,7 +70,7 @@ class EnvConfig {
   }
 
   /// デバッグモードかどうか
-  static bool get isDebug => environment == 'local' || environment == 'staging';
+  static bool get isDebug => environment == 'local' || environment == 'staging' || environment == 'docker';
 
   /// 本番環境かどうか
   static bool get isProduction => environment == 'production';
@@ -82,6 +90,7 @@ class EnvConfig {
       print('│ ENV: $environment');
       print('│ API Base URL: $apiBaseUrl');
       print('│ WS Base URL: $wsBaseUrl');
+      print('│ Use Mock API: $useMockApi');
       print('│ Debug Mode: $isDebug');
       print('│ API Timeout: ${apiTimeout}s');
       print('└─────────────────────────────────────');
@@ -92,11 +101,14 @@ class EnvConfig {
 /// 環境タイプの列挙型
 enum Environment {
   local,
+  docker,
   staging,
   production;
 
   static Environment get current {
     switch (EnvConfig.environment) {
+      case 'docker':
+        return Environment.docker;
       case 'staging':
         return Environment.staging;
       case 'production':

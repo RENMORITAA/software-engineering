@@ -32,6 +32,16 @@ class AuthService {
       final token = response['access_token'];
       if (token != null) {
         await _saveAuthData(token);
+        
+        // トークン取得直後にユーザー情報を取得して保存
+        try {
+          final userInfo = await _apiService.get('/auth/me');
+          if (userInfo['role'] != null) {
+            await saveUserInfo(userInfo);
+          }
+        } catch (e) {
+          debugPrint('[AuthService] Failed to fetch user info after login: $e');
+        }
       }
       return response;
     } catch (e) {
@@ -52,7 +62,28 @@ class AuthService {
     await prefs.setString(_userKey, jsonEncode(user));
     if (user['role'] != null) {
       await prefs.setString(_roleKey, user['role']);
+      debugPrint('[AuthService] Saved role: ${user['role']}');
     }
+    // 名前情報も保存
+    if (user['name'] != null) {
+      await prefs.setString('user_name', user['name']);
+    }
+    if (user['id'] != null) {
+      final userId = user['id'] is String ? int.parse(user['id']) : user['id'] as int;
+      await prefs.setInt('user_id', userId);
+    }
+  }
+
+  /// 保存されたユーザー名を取得
+  Future<String?> getSavedUserName() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('user_name');
+  }
+
+  /// 保存されたユーザーIDを取得
+  Future<int?> getSavedUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('user_id');
   }
 
   /// 保存されたユーザー情報を取得
@@ -68,7 +99,9 @@ class AuthService {
   /// 保存されたロールを取得
   Future<String?> getSavedRole() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(_roleKey);
+    final role = prefs.getString(_roleKey);
+    debugPrint('[AuthService] Retrieved role: $role');
+    return role;
   }
 
   Future<void> register(
@@ -94,7 +127,7 @@ class AuthService {
       });
 
       // 登録成功後、プロフィール情報を更新
-      // まずログインしてトークンを取得
+      // まずログインしてトークンを取得（この中でロール情報も保存される）
       await login(email, password);
 
       // ロールに応じたプロフィール更新

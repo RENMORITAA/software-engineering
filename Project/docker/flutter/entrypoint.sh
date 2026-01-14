@@ -37,5 +37,23 @@ fi
 # 依存関係の取得
 flutter pub get
 
-# コマンド実行
+# 実行コマンドを組み立て（dart-defineを自動付与）
+API_BASE_URL=${API_BASE_URL:-http://localhost:8000}
+ENV=${ENV:-docker}
+USE_MOCK_API=${USE_MOCK_API:-false}
+WEB_PORT=${WEB_PORT:-8080}
+WEB_HOSTNAME=${WEB_HOSTNAME:-0.0.0.0}
+
+if [ "$1" = "flutter" ] && [ "$2" = "run" ]; then
+        shift 2
+        set -- flutter run \
+            -d web-server \
+            --web-port="${WEB_PORT}" \
+            --web-hostname="${WEB_HOSTNAME}" \
+            --dart-define="ENV=${ENV}" \
+            --dart-define="API_BASE_URL=${API_BASE_URL}" \
+            --dart-define="USE_MOCK_API=${USE_MOCK_API}" \
+            "$@"
+fi
+
 exec "$@"

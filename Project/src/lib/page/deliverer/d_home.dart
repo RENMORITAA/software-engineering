@@ -26,7 +26,9 @@ class _DHomePageState extends State<DHomePage> {
   @override
   Widget build(BuildContext context) {
     final deliveryProvider = context.watch<DeliveryProvider>();
+    final userProvider = context.watch<UserRoleProvider>();
     final isOnline = deliveryProvider.isOnline;
+    final userName = userProvider.userName ?? '名前不明';
 
     return Scaffold(
       appBar: AppBar(
@@ -54,6 +56,17 @@ class _DHomePageState extends State<DHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // ユーザーグリーティング
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: Text(
+                'こんにちは、$userName さん',
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
             // オンライン/オフライン切り替え
             Container(
               padding: const EdgeInsets.all(20),

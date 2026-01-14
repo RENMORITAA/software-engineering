@@ -3,17 +3,15 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../config/env_config.dart';
+import 'mock_api_service.dart';
 
 class ApiService {
+  /// モックAPIを使うかどうか
+  static bool get _useMockApi => EnvConfig.useMockApi;
+
+  static final MockApiService _mockApiService = MockApiService();
+
   /// API Base URL（EnvConfigから取得）
-  /// 
-  /// 環境ごとに自動で切り替わる:
-  /// - local: http://localhost:8000
-  /// - staging: https://staging-api.example.com
-  /// - production: https://api.example.com
-  /// 
-  /// --dart-defineで上書き可能:
-  /// flutter run --dart-define=API_BASE_URL=http://192.168.1.100:8000
   static String get baseUrl => EnvConfig.apiBaseUrl;
 
   /// タイムアウト時間
@@ -39,6 +37,10 @@ class ApiService {
   }
 
   Future<dynamic> get(String endpoint) async {
+    if (_useMockApi) {
+      return _mockApiService.get(endpoint);
+    }
+
     _log('GET $baseUrl$endpoint');
     final headers = await _getHeaders();
     final response = await http.get(
@@ -49,13 +51,16 @@ class ApiService {
   }
 
   Future<dynamic> post(String endpoint, Map<String, dynamic> data, {bool isFormData = false}) async {
+    if (_useMockApi) {
+      return _mockApiService.post(endpoint, data, isFormData: isFormData);
+    }
+
     _log('POST $baseUrl$endpoint');
     final headers = await _getHeaders();
     
     dynamic body;
     if (isFormData) {
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
-      // フォームデータとしてエンコード
       body = data.entries.map((e) => '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value.toString())}').join('&');
     } else {
       body = jsonEncode(data);
@@ -70,6 +75,10 @@ class ApiService {
   }
 
   Future<dynamic> put(String endpoint, Map<String, dynamic> data) async {
+    if (_useMockApi) {
+      return _mockApiService.put(endpoint, data);
+    }
+
     _log('PUT $baseUrl$endpoint');
     final headers = await _getHeaders();
     final response = await http.put(
@@ -81,6 +90,10 @@ class ApiService {
   }
 
   Future<dynamic> delete(String endpoint) async {
+    if (_useMockApi) {
+      return _mockApiService.delete(endpoint);
+    }
+
     _log('DELETE $baseUrl$endpoint');
     final headers = await _getHeaders();
     final response = await http.delete(

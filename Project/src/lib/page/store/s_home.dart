@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../provider/provider.dart';
 
 import 's_info.dart';
 import 's_inventory_status.dart';
@@ -16,6 +18,9 @@ class _SHomePageState extends State<SHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = context.watch<UserRoleProvider>();
+    final storeName = userProvider.storeName ?? '店舗名不明';
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -42,6 +47,17 @@ class _SHomePageState extends State<SHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // ストア名表示
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: Text(
+                storeName,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
             // 営業中/準備中切り替え
             Container(
               padding: const EdgeInsets.all(20),

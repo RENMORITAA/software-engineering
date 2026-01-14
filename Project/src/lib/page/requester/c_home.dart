@@ -23,7 +23,9 @@ class _CHomePageState extends State<CHomePage> {
   @override
   Widget build(BuildContext context) {
     final storeProvider = context.watch<StoreProvider>();
+    final userProvider = context.watch<UserRoleProvider>();
     final stores = storeProvider.stores;
+    final userName = userProvider.userName ?? '名前不明';
 
     return Scaffold(
       body: SafeArea(
@@ -56,9 +58,9 @@ class _CHomePageState extends State<CHomePage> {
                               ),
                             ),
                             const SizedBox(height: 4),
-                            const Text(
-                              '山田 太郎 さん',
-                              style: TextStyle(
+                            Text(
+                              '$userName さん',
+                              style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,

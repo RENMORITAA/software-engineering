@@ -30,27 +30,41 @@ class _AuthGuardState extends State<AuthGuard> {
   }
 
   Future<void> _checkAuth() async {
-    final isLoggedIn = await _authService.isLoggedIn();
-    
-    if (!isLoggedIn) {
-      _redirectToLogin();
-      return;
-    }
-
-    // ロールチェック
-    if (widget.allowedRoles != null && widget.allowedRoles!.isNotEmpty) {
-      final role = await _authService.getSavedRole();
-      if (role == null || !widget.allowedRoles!.contains(role)) {
+    try {
+      final isLoggedIn = await _authService.isLoggedIn();
+      
+      if (!isLoggedIn) {
         _redirectToLogin();
         return;
       }
-    }
 
-    if (mounted) {
-      setState(() {
-        _isAuthenticated = true;
-        _isChecking = false;
-      });
+      // ロールチェック
+      if (widget.allowedRoles != null && widget.allowedRoles!.isNotEmpty) {
+        final role = await _authService.getSavedRole();
+        // ロール情報がない、またはロールが許可されていない場合
+        if (role == null) {
+          debugPrint('[AuthGuard] No saved role found, logging out');
+          await _authService.logout();
+          _redirectToLogin();
+          return;
+        }
+        
+        if (!widget.allowedRoles!.contains(role)) {
+          debugPrint('[AuthGuard] Role not allowed: $role, required: ${widget.allowedRoles}');
+          _redirectToLogin();
+          return;
+        }
+      }
+
+      if (mounted) {
+        setState(() {
+          _isAuthenticated = true;
+          _isChecking = false;
+        });
+      }
+    } catch (e) {
+      debugPrint('[AuthGuard] Auth check error: $e');
+      _redirectToLogin();
     }
   }
 
@@ -104,24 +118,38 @@ class _GuestGuardState extends State<GuestGuard> {
   }
 
   Future<void> _checkAuth() async {
-    final isLoggedIn = await _authService.isLoggedIn();
-    
-    if (isLoggedIn) {
-      // すでにログイン済みならホームへリダイレクト
-      final role = await _authService.getSavedRole();
-      _redirectToHome(role);
-      return;
-    }
+    try {
+      final isLoggedIn = await _authService.isLoggedIn();
+      
+      if (isLoggedIn) {
+        // すでにログイン済みならホームへリダイレクト
+        final role = await _authService.getSavedRole();
+        if (role != null) {
+          _redirectToHome(role);
+          return;
+        }
+        // ロール情報がない場合はログアウト状態として扱う
+        await _authService.logout();
+      }
 
-    if (mounted) {
-      setState(() {
-        _shouldShowPage = true;
-        _isChecking = false;
-      });
+      if (mounted) {
+        setState(() {
+          _shouldShowPage = true;
+          _isChecking = false;
+        });
+      }
+    } catch (e) {
+      debugPrint('[GuestGuard] Auth check error: $e');
+      if (mounted) {
+        setState(() {
+          _shouldShowPage = true;
+          _isChecking = false;
+        });
+      }
     }
   }
 
-  void _redirectToHome(String? role) {
+  void _redirectToHome(String role) {
     if (!mounted) return;
     
     String route;
@@ -157,5 +185,83 @@ class _GuestGuardState extends State<GuestGuard> {
     }
 
     return widget.child;
+  }
+}
+/// ルート（/）パスのガード
+/// ログイン状態に基づいて適切なページへリダイレクト
+class RootGuard extends StatefulWidget {
+  const RootGuard({super.key});
+
+  @override
+  State<RootGuard> createState() => _RootGuardState();
+}
+
+class _RootGuardState extends State<RootGuard> {
+  final AuthService _authService = AuthService();
+  bool _isChecking = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkAuth();
+  }
+
+  Future<void> _checkAuth() async {
+    try {
+      final isLoggedIn = await _authService.isLoggedIn();
+      
+      if (!mounted) return;
+
+      if (isLoggedIn) {
+        // すでにログイン済みならロールに応じたホームへ
+        final role = await _authService.getSavedRole();
+        if (role != null) {
+          _redirectToHome(role);
+          return;
+        }
+        // ロール情報がない場合はログアウト
+        await _authService.logout();
+      }
+
+      // ログインしていなければログイン画面へ
+      if (mounted) {
+        Navigator.of(context).pushReplacementNamed('/login');
+      }
+    } catch (e) {
+      debugPrint('[RootGuard] Auth check error: $e');
+      if (mounted) {
+        Navigator.of(context).pushReplacementNamed('/login');
+      }
+    }
+  }
+
+  void _redirectToHome(String role) {
+    if (!mounted) return;
+    
+    String route;
+    switch (role) {
+      case 'requester':
+        route = '/requester/home';
+        break;
+      case 'deliverer':
+        route = '/deliverer/home';
+        break;
+      case 'store':
+        route = '/store/home';
+        break;
+      default:
+        route = '/requester/home';
+    }
+    
+    Navigator.of(context).pushReplacementNamed(route);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
   }
 }

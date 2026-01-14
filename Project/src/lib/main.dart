@@ -41,7 +41,7 @@ class StellarDeliveryApp extends StatelessWidget {
       theme: AppTheme.lightTheme, // 共通テーマの適用
       
       // ルーティング設定
-      initialRoute: AppRoutes.login,
+      initialRoute: AppRoutes.root,
       onGenerateRoute: AppRoutes.generateRoute,
       
       debugShowCheckedModeBanner: false,
