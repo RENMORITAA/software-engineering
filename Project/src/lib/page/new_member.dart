@@ -77,11 +77,13 @@ class _NewMemberPageState extends State<NewMemberPage> {
       );
 
       if (mounted) {
-        // 登録成功後、ログイン画面に遷移
-        Navigator.pushReplacementNamed(context, '/');
+        // 登録成功後、ログイン画面へ遷移
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('会員登録が完了しました')),
+          const SnackBar(content: Text('会員登録が完了しました。ログインしてください。')),
         );
+        
+        // ログイン画面へ遷移
+        Navigator.pushReplacementNamed(context, '/login');
       }
     } catch (e) {
       if (mounted) {

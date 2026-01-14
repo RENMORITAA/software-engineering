@@ -62,8 +62,16 @@ class AppRoutes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final path = settings.name ?? '/';
     
-    // ルート（/）またはログイン - GuestGuardで既にログイン済みならホームへ
-    if (path == root || path == login) {
+    // ルート（/） - RootGuardで認証状態を確認
+    if (path == root) {
+      return MaterialPageRoute(
+        builder: (_) => const RootGuard(),
+        settings: settings,
+      );
+    }
+    
+    // ログイン - GuestGuardで既にログイン済みならホームへ
+    if (path == login) {
       return MaterialPageRoute(
         builder: (_) => const GuestGuard(child: LoginPage()),
         settings: settings,
@@ -114,9 +122,9 @@ class AppRoutes {
       );
     }
 
-    // 不明なルートはログインページへ
+    // 不明なルートはルート（/）へ
     return MaterialPageRoute(
-      builder: (_) => const GuestGuard(child: LoginPage()),
+      builder: (_) => const RootGuard(),
       settings: settings,
     );
   }
