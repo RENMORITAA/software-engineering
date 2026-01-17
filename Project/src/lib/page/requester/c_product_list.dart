@@ -1,11 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+﻿import "package:flutter/material.dart";
+import "package:provider/provider.dart";
 
-import '../../component/component.dart';
-import '../../provider/provider.dart';
-import '../../models/database_models.dart';
+import "../../component/component.dart";
+import "../../models/database_models.dart";
+import "../../provider/cart_provider.dart";
+import "../../provider/provider.dart";
 
-/// 商品一覧画面（店舗詳細）
+/// 店舗ごとの商品一覧
 class CProductListPage extends StatefulWidget {
   final int? storeId;
   final String? storeName;
@@ -23,7 +24,7 @@ class CProductListPage extends StatefulWidget {
 class _CProductListPageState extends State<CProductListPage> {
   final TextEditingController _searchController = TextEditingController();
   String _selectedCategory = 'すべて';
-  final List<String> _categories = ['すべて', '料理', 'カフェ', 'ファスト', 'ラーメン', '食料品'];
+  final List<String> _categories = ['すべて', '和食', 'カフェ', 'ファストフード', 'ラーメン', '食料品'];
 
   @override
   void initState() {
@@ -48,12 +49,12 @@ class _CProductListPageState extends State<CProductListPage> {
 
     return Scaffold(
       appBar: TitleAppBar(
-        title: widget.storeName ?? '商品を探す',
+        title: widget.storeName ?? '店舗一覧',
         showBackButton: true,
       ),
       body: Column(
         children: [
-          // 検索バー
+          // 検索
           Padding(
             padding: const EdgeInsets.all(16),
             child: TextField(
@@ -73,22 +74,44 @@ class _CProductListPageState extends State<CProductListPage> {
                 ),
               ),
               onChanged: (value) {
-                // TODO: 検索処理
+                // TODO: 検索フィルタ
               },
             ),
           ),
-          // 商品リスト
+          // カテゴリフィルタ
+          SizedBox(
+            height: 44,
+            child: ListView.separated(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                final category = _categories[index];
+                final isSelected = _selectedCategory == category;
+                return ChoiceChip(
+                  label: Text(category),
+                  selected: isSelected,
+                  onSelected: (_) {
+                    setState(() => _selectedCategory = category);
+                    // TODO: カテゴリフィルタ
+                  },
+                );
+              },
+              separatorBuilder: (_, __) => const SizedBox(width: 8),
+              itemCount: _categories.length,
+            ),
+          ),
+          const SizedBox(height: 12),
+          // 商品一覧
           Expanded(
             child: storeProvider.isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : products.isEmpty
-                    ? const Center(child: Text('商品がありません'))
+                    ? const Center(child: Text('商品が見つかりません'))
                     : ListView.builder(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         itemCount: products.length,
                         itemBuilder: (context, index) {
                           final productData = products[index];
-                          // Productモデルに変換（APIレスポンスがMapの場合）
                           final product = Product.fromMap(productData);
                           return _buildProductItem(product);
                         },
@@ -107,7 +130,7 @@ class _CProductListPageState extends State<CProductListPage> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: Colors.black.withOpacity(0.05),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),

@@ -35,7 +35,7 @@ class _DJobSelectPageState extends State<DJobSelectPage> {
       ),
       body: Column(
         children: [
-          // フィルターバー
+          // フィルターバ�E
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             color: Colors.white,
@@ -50,7 +50,7 @@ class _DJobSelectPageState extends State<DJobSelectPage> {
                     ),
                     child: const TextField(
                       decoration: InputDecoration(
-                        hintText: 'エリア・店舗名で検索',
+                          hintText: 'エリア・店舗名で検索',
                         border: InputBorder.none,
                         icon: Icon(Icons.search),
                       ),
@@ -61,7 +61,7 @@ class _DJobSelectPageState extends State<DJobSelectPage> {
                 IconButton(
                   icon: const Icon(Icons.filter_list),
                   onPressed: () {
-                    // TODO: フィルター設定
+                    // TODO: フィルター設宁E
                   },
                 ),
                 IconButton(
@@ -73,7 +73,7 @@ class _DJobSelectPageState extends State<DJobSelectPage> {
               ],
             ),
           ),
-          // 求人リスト
+          // 求人リスチE
           Expanded(
             child: deliveryProvider.isLoading
                 ? const Center(child: CircularProgressIndicator())

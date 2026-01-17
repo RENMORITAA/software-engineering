@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../component/component.dart';
@@ -6,7 +6,7 @@ import '../../provider/provider.dart';
 import '../../models/database_models.dart';
 import '../../services/profile_service.dart';
 
-/// 住所管理画面
+/// 菴乗園邂｡逅・判髱｢
 class CAddressManagementPage extends StatefulWidget {
   const CAddressManagementPage({super.key});
 
@@ -33,7 +33,7 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('住所の取得に失敗しました: $e')),
+          SnackBar(content: Text('菴乗園縺ｮ蜿門ｾ励↓螟ｱ謨励＠縺ｾ縺励◆: $e')),
         );
       }
     } finally {
@@ -47,7 +47,7 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const TitleAppBar(
-        title: '住所管理',
+        title: '菴乗園邂｡逅・,
         showBackButton: true,
       ),
       body: _isLoading
@@ -65,7 +65,7 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
         onPressed: () => _showAddAddressDialog(),
         backgroundColor: Theme.of(context).primaryColor,
         icon: const Icon(Icons.add, color: Colors.white),
-        label: const Text('住所を追加', style: TextStyle(color: Colors.white)),
+        label: const Text('菴乗園繧定ｿｽ蜉', style: TextStyle(color: Colors.white)),
       ),
     );
   }
@@ -82,7 +82,7 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
           ),
           const SizedBox(height: 16),
           Text(
-            '登録された住所がありません',
+            '逋ｻ骭ｲ縺輔ｌ縺滉ｽ乗園縺後≠繧翫∪縺帙ｓ',
             style: TextStyle(
               fontSize: 16,
               color: Colors.grey[600],
@@ -92,7 +92,7 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
           ElevatedButton.icon(
             onPressed: () => _showAddAddressDialog(),
             icon: const Icon(Icons.add),
-            label: const Text('住所を追加'),
+            label: const Text('菴乗園繧定ｿｽ蜉'),
           ),
         ],
       ),
@@ -142,7 +142,7 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
               if (address.isDefault) ...[
                 const SizedBox(width: 8),
                 const Text(
-                  'デフォルト',
+                  '繝・ヵ繧ｩ繝ｫ繝・,
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.green,
@@ -168,7 +168,7 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
                       children: [
                         Icon(Icons.edit, size: 18),
                         SizedBox(width: 8),
-                        Text('編集'),
+                        Text('邱ｨ髮・),
                       ],
                     ),
                   ),
@@ -179,7 +179,7 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
                         children: [
                           Icon(Icons.check_circle, size: 18),
                           SizedBox(width: 8),
-                          Text('デフォルトに設定'),
+                          Text('繝・ヵ繧ｩ繝ｫ繝医↓險ｭ螳・),
                         ],
                       ),
                     ),
@@ -189,7 +189,7 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
                       children: [
                         Icon(Icons.delete, size: 18, color: Colors.red),
                         SizedBox(width: 8),
-                        Text('削除', style: TextStyle(color: Colors.red)),
+                        Text('蜑企勁', style: TextStyle(color: Colors.red)),
                       ],
                     ),
                   ),
@@ -208,7 +208,7 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '〒${address.postalCode}',
+                      '縲・{address.postalCode}',
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey[600],
@@ -250,7 +250,7 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
 
   void _showAddressFormDialog(RequesterAddress? address) {
     final isEdit = address != null;
-    final labelController = TextEditingController(text: address?.label ?? '自宅');
+    final labelController = TextEditingController(text: address?.label ?? '閾ｪ螳・);
     final postalCodeController =
         TextEditingController(text: address?.postalCode ?? '');
     final prefectureController =
@@ -264,7 +264,7 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(isEdit ? '住所を編集' : '住所を追加'),
+        title: Text(isEdit ? '菴乗園繧堤ｷｨ髮・ : '菴乗園繧定ｿｽ蜉'),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -272,7 +272,7 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
               TextField(
                 controller: labelController,
                 decoration: const InputDecoration(
-                  labelText: 'ラベル（自宅、会社など）',
+                  labelText: '繝ｩ繝吶Ν・郁・螳・∽ｼ夂､ｾ縺ｪ縺ｩ・・,
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -280,7 +280,7 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
               TextField(
                 controller: postalCodeController,
                 decoration: const InputDecoration(
-                  labelText: '郵便番号',
+                  labelText: '驛ｵ萓ｿ逡ｪ蜿ｷ',
                   border: OutlineInputBorder(),
                   hintText: '123-4567',
                 ),
@@ -290,7 +290,7 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
               TextField(
                 controller: prefectureController,
                 decoration: const InputDecoration(
-                  labelText: '都道府県',
+                  labelText: '驛ｽ驕灘ｺ懃恁',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -298,7 +298,7 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
               TextField(
                 controller: cityController,
                 decoration: const InputDecoration(
-                  labelText: '市区町村',
+                  labelText: '蟶ょ玄逕ｺ譚・,
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -306,7 +306,7 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
               TextField(
                 controller: addressLine1Controller,
                 decoration: const InputDecoration(
-                  labelText: '番地',
+                  labelText: '逡ｪ蝨ｰ',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -314,7 +314,7 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
               TextField(
                 controller: addressLine2Controller,
                 decoration: const InputDecoration(
-                  labelText: '建物名・部屋番号（任意）',
+                  labelText: '蟒ｺ迚ｩ蜷阪・驛ｨ螻狗分蜿ｷ・井ｻｻ諢擾ｼ・,
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -324,7 +324,7 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('キャンセル'),
+            child: const Text('繧ｭ繝｣繝ｳ繧ｻ繝ｫ'),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -343,18 +343,18 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
                   Navigator.pop(context);
                   _fetchAddresses();
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(isEdit ? '住所を更新しました' : '住所を追加しました')),
+                    SnackBar(content: Text(isEdit ? '菴乗園繧呈峩譁ｰ縺励∪縺励◆' : '菴乗園繧定ｿｽ蜉縺励∪縺励◆')),
                   );
                 }
               } catch (e) {
                 if (mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('エラー: $e')),
+                    SnackBar(content: Text('繧ｨ繝ｩ繝ｼ: $e')),
                   );
                 }
               }
             },
-            child: Text(isEdit ? '更新' : '追加'),
+            child: Text(isEdit ? '譖ｴ譁ｰ' : '霑ｽ蜉'),
           ),
         ],
       ),
@@ -365,12 +365,12 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('住所を削除'),
-        content: const Text('この住所を削除してもよろしいですか？'),
+        title: const Text('菴乗園繧貞炎髯､'),
+        content: const Text('縺薙・菴乗園繧貞炎髯､縺励※繧ゅｈ繧阪＠縺・〒縺吶°・・),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('キャンセル'),
+            child: const Text('繧ｭ繝｣繝ｳ繧ｻ繝ｫ'),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
@@ -382,19 +382,19 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
                     Navigator.pop(context);
                     _fetchAddresses();
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('住所を削除しました')),
+                      const SnackBar(content: Text('菴乗園繧貞炎髯､縺励∪縺励◆')),
                     );
                   }
                 }
               } catch (e) {
                 if (mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('エラー: $e')),
+                    SnackBar(content: Text('繧ｨ繝ｩ繝ｼ: $e')),
                   );
                 }
               }
             },
-            child: const Text('削除'),
+            child: const Text('蜑企勁'),
           ),
         ],
       ),
@@ -402,9 +402,9 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
   }
 
   void _setDefaultAddress(RequesterAddress address) {
-    // TODO: APIでデフォルト住所を設定
+    // TODO: API縺ｧ繝・ヵ繧ｩ繝ｫ繝井ｽ乗園繧定ｨｭ螳・
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('デフォルト住所に設定しました')),
+      const SnackBar(content: Text('繝・ヵ繧ｩ繝ｫ繝井ｽ乗園縺ｫ險ｭ螳壹＠縺ｾ縺励◆')),
     );
     _fetchAddresses();
   }

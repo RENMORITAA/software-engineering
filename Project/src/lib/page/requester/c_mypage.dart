@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../mypage.dart';
+import '../unified_mypage.dart';
 import '../../provider/provider.dart';
 import '../../services/auth_service.dart';
 import '../../config/routes.dart';
 
-/// 依頼者マイページラッパー
+/// 依頼者向けマイページ
 class CMyPageWrapper extends StatelessWidget {
   const CMyPageWrapper({super.key});
 
@@ -15,12 +15,18 @@ class CMyPageWrapper extends StatelessWidget {
     final userProvider = context.watch<UserRoleProvider>();
     final authService = AuthService();
     
-    return MyPage(
+    return UnifiedMyPage(
       userName: userProvider.userName ?? '依頼者',
       userEmail: userProvider.userEmail ?? '',
       userRole: 'requester',
+      roleSpecificSettings: [
+        {
+          'icon': Icons.location_on_outlined,
+          'title': '住所管理',
+          'onTap': () {},
+        },
+      ],
       onLogout: () async {
-        // ログアウト処理（トークンとユーザー情報をクリア）
         await authService.logout();
         userProvider.logout();
         if (context.mounted) {
@@ -32,7 +38,6 @@ class CMyPageWrapper extends StatelessWidget {
         }
       },
       onWithdraw: () async {
-        // 退会処理
         await authService.logout();
         userProvider.logout();
         if (context.mounted) {

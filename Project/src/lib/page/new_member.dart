@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
-import '../../component/component.dart';
-import '../../overlay/overlay.dart';
-import '../../services/auth_service.dart';
+﻿import "package:flutter/material.dart";
+
+import "../component/component.dart";
+import "../overlay/overlay.dart";
+import "../services/auth_service.dart";
 
 /// 新規会員登録画面
 class NewMemberPage extends StatefulWidget {
@@ -77,12 +78,9 @@ class _NewMemberPageState extends State<NewMemberPage> {
       );
 
       if (mounted) {
-        // 登録成功後、ログイン画面へ遷移
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('会員登録が完了しました。ログインしてください。')),
+          const SnackBar(content: Text('会員登録が完了しました。ログインしてください')),
         );
-        
-        // ログイン画面へ遷移
         Navigator.pushReplacementNamed(context, '/login');
       }
     } catch (e) {
@@ -115,7 +113,6 @@ class _NewMemberPageState extends State<NewMemberPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    // ロール選択
                     const Text(
                       '会員種別を選択',
                       style: TextStyle(
@@ -163,12 +160,8 @@ class _NewMemberPageState extends State<NewMemberPage> {
                       controller: _phoneController,
                       keyboardType: TextInputType.phone,
                       prefixIcon: const Icon(Icons.phone_outlined),
-                      validator: (value) {
-                        // 任意項目
-                        return null;
-                      },
                     ),
-                    // 店舗用追加フィールド
+                    // 店舗用フィールド
                     if (_selectedRole == 'store') ...[
                       const SizedBox(height: 16),
                       const Text(
@@ -181,7 +174,7 @@ class _NewMemberPageState extends State<NewMemberPage> {
                       const SizedBox(height: 8),
                       GeneralForm(
                         label: '店舗名',
-                        hint: '〇〇レストラン',
+                        hint: 'レストラン〇〇',
                         controller: _storeNameController,
                         prefixIcon: const Icon(Icons.store_outlined),
                         required: true,
@@ -219,11 +212,11 @@ class _NewMemberPageState extends State<NewMemberPage> {
                         prefixIcon: const Icon(Icons.access_time),
                       ),
                     ],
-                    // 配達員用追加フィールド
+                    // 配達員用フィールド
                     if (_selectedRole == 'deliverer') ...[
                       const SizedBox(height: 16),
                       const Text(
-                        '配達情報',
+                        '配達手段',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -261,7 +254,7 @@ class _NewMemberPageState extends State<NewMemberPage> {
                       },
                     ),
                     const SizedBox(height: 16),
-                    // 利用規約同意
+                    // 利用規約
                     Row(
                       children: [
                         Checkbox(
@@ -286,7 +279,7 @@ class _NewMemberPageState extends State<NewMemberPage> {
                                   color: Colors.grey[700],
                                 ),
                                 children: [
-                                  const TextSpan(text: ''),
+                                  const TextSpan(text: '私は'),
                                   TextSpan(
                                     text: '利用規約',
                                     style: TextStyle(
@@ -294,7 +287,7 @@ class _NewMemberPageState extends State<NewMemberPage> {
                                       decoration: TextDecoration.underline,
                                     ),
                                   ),
-                                  const TextSpan(text: 'に同意する'),
+                                  const TextSpan(text: 'に同意します'),
                                 ],
                               ),
                             ),
@@ -312,7 +305,6 @@ class _NewMemberPageState extends State<NewMemberPage> {
                       icon: Icons.person_add,
                     ),
                     const SizedBox(height: 16),
-                    // ログインへ戻る
                     TextButton(
                       onPressed: () {
                         Navigator.pop(context);
@@ -326,7 +318,6 @@ class _NewMemberPageState extends State<NewMemberPage> {
             ),
           ),
         ),
-        // 利用規約オーバーレイ
         if (_showTerms)
           RuleScreenOverlay(
             onClose: () {
@@ -395,7 +386,7 @@ class _NewMemberPageState extends State<NewMemberPage> {
       child: Container(
         padding: const EdgeInsets.all(16),
         color: isSelected
-            ? Theme.of(context).primaryColor.withValues(alpha: 0.1)
+            ? Theme.of(context).primaryColor.withOpacity(0.1)
             : Colors.transparent,
         child: Row(
           children: [
@@ -447,7 +438,7 @@ class _NewMemberPageState extends State<NewMemberPage> {
   }
 
   Widget _buildVehicleTypeSelector() {
-    final vehicleTypes = [
+    final List<Map<String, dynamic>> vehicleTypes = [
       {'value': 'bicycle', 'icon': Icons.pedal_bike, 'label': '自転車'},
       {'value': 'motorcycle', 'icon': Icons.two_wheeler, 'label': 'バイク'},
       {'value': 'car', 'icon': Icons.directions_car, 'label': '車'},
@@ -460,7 +451,7 @@ class _NewMemberPageState extends State<NewMemberPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            '配達手段',
+            '配達手段を選択',
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,
@@ -485,7 +476,7 @@ class _NewMemberPageState extends State<NewMemberPage> {
                   ),
                   decoration: BoxDecoration(
                     color: isSelected
-                        ? Theme.of(context).primaryColor.withValues(alpha: 0.1)
+                        ? Theme.of(context).primaryColor.withOpacity(0.1)
                         : Colors.grey[100],
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(

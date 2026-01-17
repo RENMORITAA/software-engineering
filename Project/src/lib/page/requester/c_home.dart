@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../../provider/provider.dart';
-import 'c_product_list.dart';
+﻿import "package:flutter/material.dart";
+import "package:provider/provider.dart";
+
+import "../../provider/provider.dart";
+import "c_product_list.dart";
 
 /// 依頼者ホーム画面
 class CHomePage extends StatefulWidget {
@@ -54,7 +55,7 @@ class _CHomePageState extends State<CHomePage> {
                               'こんにちは',
                               style: TextStyle(
                                 fontSize: 14,
-                                color: Colors.white.withValues(alpha: 0.8),
+                                color: Colors.white.withOpacity(0.8),
                               ),
                             ),
                             const SizedBox(height: 4),
@@ -108,7 +109,7 @@ class _CHomePageState extends State<CHomePage> {
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.15),
+                        color: Colors.white.withOpacity(0.15),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Row(
@@ -126,7 +127,7 @@ class _CHomePageState extends State<CHomePage> {
                                   '配達先',
                                   style: TextStyle(
                                     fontSize: 12,
-                                    color: Colors.white.withValues(alpha: 0.8),
+                                    color: Colors.white.withOpacity(0.8),
                                   ),
                                 ),
                                 const Text(
@@ -174,7 +175,7 @@ class _CHomePageState extends State<CHomePage> {
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.08),
+                          color: Colors.black.withOpacity(0.08),
                           blurRadius: 10,
                           offset: const Offset(0, 2),
                         ),
@@ -185,7 +186,7 @@ class _CHomePageState extends State<CHomePage> {
                         Icon(Icons.search, color: Colors.grey[400]),
                         const SizedBox(width: 12),
                         Text(
-                          '店舗・商品を検索',
+                          '店舗商品を検索',
                           style: TextStyle(
                             color: Colors.grey[400],
                             fontSize: 16,
@@ -229,7 +230,7 @@ class _CHomePageState extends State<CHomePage> {
                           ),
                           _buildCategoryItem(
                             icon: Icons.fastfood,
-                            label: 'ファスト',
+                            label: 'ファストフード',
                             color: Colors.red,
                           ),
                           _buildCategoryItem(
@@ -318,7 +319,7 @@ class _CHomePageState extends State<CHomePage> {
               width: 60,
               height: 60,
               decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.1),
+                color: color.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Icon(icon, color: color, size: 28),
@@ -358,7 +359,7 @@ class _CHomePageState extends State<CHomePage> {
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.08),
+                color: Colors.black.withOpacity(0.08),
                 blurRadius: 10,
                 offset: const Offset(0, 2),
               ),
@@ -398,7 +399,7 @@ class _CHomePageState extends State<CHomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        store['store_name'],
+                        store['store_name'] ?? '店舗名未設定',
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -434,14 +435,14 @@ class _CHomePageState extends State<CHomePage> {
                           Icon(
                             Icons.access_time,
                             size: 16,
-                            color: Colors.grey[600],
+                            color: Colors.grey.shade600,
                           ),
                           const SizedBox(width: 4),
                           Text(
                             '20-30分', // 仮
                             style: TextStyle(
                               fontSize: 12,
-                              color: Colors.grey[600],
+                              color: Colors.grey.shade600,
                             ),
                           ),
                         ],

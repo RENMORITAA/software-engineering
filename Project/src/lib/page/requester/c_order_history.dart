@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+﻿import "package:flutter/material.dart";
+import "package:provider/provider.dart";
 
-import '../../component/component.dart';
-import '../../provider/provider.dart';
-import '../../models/database_models.dart';
+import "../../component/component.dart";
+import "../../models/database_models.dart";
+import "../../provider/provider.dart";
 
-/// 注文履歴画面
+/// 注文履歴
 class COrderHistoryPage extends StatefulWidget {
   const COrderHistoryPage({super.key});
 
@@ -40,13 +40,13 @@ class _COrderHistoryPageState extends State<COrderHistoryPage>
       case 'pending':
         return '受付待ち';
       case 'accepted':
-        return '受付済み';
+        return '準備中';
       case 'preparing':
         return '調理中';
       case 'ready_for_pickup':
         return '受け取り待ち';
       case 'picked_up':
-        return '配達員受取済';
+        return '配達中';
       case 'delivering':
         return '配達中';
       case 'delivered':
@@ -67,7 +67,6 @@ class _COrderHistoryPageState extends State<COrderHistoryPage>
         return Colors.blue;
       case 'ready_for_pickup':
       case 'picked_up':
-        return Colors.purple;
       case 'delivering':
         return Colors.green;
       case 'delivered':
@@ -84,30 +83,25 @@ class _COrderHistoryPageState extends State<COrderHistoryPage>
     final orderProvider = context.watch<OrderProvider>();
     final orders = orderProvider.orders;
 
-    // 注文を分類
-    final activeOrders = orders.where((order) {
-      return order.status != 'delivered' && order.status != 'cancelled';
-    }).toList();
-
-    final pastOrders = orders.where((order) {
-      return order.status == 'delivered' || order.status == 'cancelled';
-    }).toList();
+    final activeOrders = orders
+        .where((order) => order.status != 'delivered' && order.status != 'cancelled')
+        .toList();
+    final pastOrders = orders
+        .where((order) => order.status == 'delivered' || order.status == 'cancelled')
+        .toList();
 
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           '注文履歴',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Theme.of(context).primaryColor,
         centerTitle: true,
         bottom: TabBar(
           controller: _tabController,
           labelColor: Colors.white,
-          unselectedLabelColor: Colors.white60,
+          unselectedLabelColor: Colors.white70,
           indicatorColor: Colors.white,
           tabs: const [
             Tab(text: '進行中'),
@@ -120,7 +114,6 @@ class _COrderHistoryPageState extends State<COrderHistoryPage>
           : TabBarView(
               controller: _tabController,
               children: [
-                // 進行中の注文
                 activeOrders.isEmpty
                     ? _buildEmptyState('進行中の注文はありません')
                     : ListView.builder(
@@ -130,7 +123,6 @@ class _COrderHistoryPageState extends State<COrderHistoryPage>
                           return _buildOrderCard(activeOrders[index], true);
                         },
                       ),
-                // 過去の注文
                 pastOrders.isEmpty
                     ? _buildEmptyState('過去の注文はありません')
                     : ListView.builder(
@@ -147,348 +139,145 @@ class _COrderHistoryPageState extends State<COrderHistoryPage>
 
   Widget _buildEmptyState(String message) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.receipt_long_outlined,
-            size: 80,
-            color: Colors.grey[300],
-          ),
-          const SizedBox(height: 16),
-          Text(
-            message,
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.grey[600],
-            ),
-          ),
-        ],
+      child: Text(
+        message,
+        style: const TextStyle(color: Colors.grey),
       ),
     );
   }
 
   Widget _buildOrderCard(Order order, bool isActive) {
-    final status = order.status;
-
-    return GestureDetector(
-      onTap: () {
-        _showOrderDetail(order);
-      },
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.08),
-              blurRadius: 10,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
+    return Card(
+      margin: const EdgeInsets.only(bottom: 12),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // ヘッダー
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '店舗ID: ${order.storeId}', // TODO: 店舗名を表示
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          color: _getStatusColor(status).withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: Text(
-                          _getStatusText(status),
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: _getStatusColor(status),
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '注文ID: ${order.id ?? '-'}',
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+                Chip(
+                  label: Text(_getStatusText(order.status)),
+                  backgroundColor: _getStatusColor(order.status).withOpacity(0.1),
+                  labelStyle: TextStyle(color: _getStatusColor(order.status)),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text('合計: ¥${order.totalPrice}'),
+            const SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    order.deliveryAddress,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 12),
-                  // 注文内容
-                  Text(
-                    '${order.orderDetails.length}点の商品',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[600],
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  order.orderedAt ?? '',
+                  style: const TextStyle(color: Colors.grey, fontSize: 12),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => OrderDetailPage(order: order),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  // 日時と金額
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        order.orderedAt?.toString().split('.')[0] ?? '',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey[500],
-                        ),
-                      ),
-                      Text(
-                        '¥${order.totalPrice}',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                  );
+                },
+                child: Text(isActive ? '進行状況を見る' : '詳細を見る'),
               ),
             ),
-            // 進行中の場合はステータスバーを表示
-            if (isActive) ...[
-              const Divider(height: 1),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: _buildProgressBar(status),
-              ),
-            ],
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildProgressBar(String status) {
-    final steps = ['受付', '調理', '配達', '完了'];
-    int currentStep = 0;
-
-    switch (status) {
-      case 'pending':
-        currentStep = 0;
-        break;
-      case 'accepted':
-      case 'preparing':
-        currentStep = 1;
-        break;
-      case 'ready_for_pickup':
-      case 'picked_up':
-      case 'delivering':
-        currentStep = 2;
-        break;
-      case 'delivered':
-        currentStep = 3;
-        break;
-    }
-
-    return Row(
-      children: steps.asMap().entries.map((entry) {
-        final index = entry.key;
-        final step = entry.value;
-        final isCompleted = index <= currentStep;
-        final isLast = index == steps.length - 1;
-
-        return Expanded(
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    Container(
-                      width: 24,
-                      height: 24,
-                      decoration: BoxDecoration(
-                        color: isCompleted
-                            ? Theme.of(context).primaryColor
-                            : Colors.grey[300],
-                        shape: BoxShape.circle,
-                      ),
-                      child: isCompleted
-                          ? const Icon(
-                              Icons.check,
-                              size: 14,
-                              color: Colors.white,
-                            )
-                          : null,
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      step,
-                      style: TextStyle(
-                        fontSize: 10,
-                        color:
-                            isCompleted ? Colors.black87 : Colors.grey[400],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              if (!isLast)
-                Expanded(
-                  child: Container(
-                    height: 2,
-                    color: isCompleted
-                        ? Theme.of(context).primaryColor
-                        : Colors.grey[300],
-                  ),
-                ),
-            ],
-          ),
-        );
-      }).toList(),
-    );
-  }
-
-  void _showOrderDetail(Order order) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => _OrderDetailPage(order: order),
       ),
     );
   }
 }
 
-class _OrderDetailPage extends StatelessWidget {
+class OrderDetailPage extends StatelessWidget {
   final Order order;
 
-  const _OrderDetailPage({required this.order});
+  const OrderDetailPage({super.key, required this.order});
+
+  int _stepFromStatus(String status) {
+    switch (status) {
+      case 'pending':
+        return 0;
+      case 'accepted':
+      case 'preparing':
+        return 1;
+      case 'ready_for_pickup':
+      case 'picked_up':
+      case 'delivering':
+        return 2;
+      case 'delivered':
+        return 3;
+      default:
+        return 0;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final steps = ['受付', '準備中', '配達中', '完了'];
+    final currentStep = _stepFromStatus(order.status);
+
     return Scaffold(
       appBar: const TitleAppBar(
         title: '注文詳細',
         showBackButton: true,
       ),
-      body: SingleChildScrollView(
+      body: ListView(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // 注文番号
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '注文番号: #${order.id}',
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    '注文日時: ${order.orderedAt}',
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 16),
-            // 店舗情報
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 48,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Icon(Icons.store, color: Colors.grey[400]),
-                  ),
-                  const SizedBox(width: 12),
-                  Text(
-                    '店舗ID: ${order.storeId}',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 16),
-            // 注文内容
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    '注文内容',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  ...order.orderDetails.map((item) => Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('${item.productName} x ${item.quantity}'),
-                            Text('¥${item.unitPrice * item.quantity}'),
-                          ],
-                        ),
-                      )),
-                  const Divider(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        '合計',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        '¥${order.totalPrice}',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+        children: [
+          Stepper(
+            currentStep: currentStep,
+            controlsBuilder: (context, _) => const SizedBox.shrink(),
+            steps: List.generate(steps.length, (index) {
+              return Step(
+                title: Text(steps[index]),
+                content: const SizedBox.shrink(),
+                isActive: index <= currentStep,
+                state: index < currentStep ? StepState.complete : StepState.indexed,
+              );
+            }),
+          ),
+          const SizedBox(height: 16),
+          Text('配送先: ${order.deliveryAddress}'),
+          const SizedBox(height: 8),
+          Text('合計: ¥${order.totalPrice}'),
+          const SizedBox(height: 16),
+          const Text(
+            '注文商品',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+          const SizedBox(height: 8),
+          ...order.orderDetails.map((detail) {
+            return ListTile(
+              contentPadding: EdgeInsets.zero,
+              title: Text(detail.productName),
+              subtitle: Text('数量: ${detail.quantity}'),
+              trailing: Text('¥${detail.subtotal}'),
+            );
+          }).toList(),
+        ],
       ),
     );
   }

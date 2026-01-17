@@ -32,7 +32,7 @@ class DDeliveryHistoryPage extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: Colors.black.withOpacity(0.05),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -54,7 +54,7 @@ class DDeliveryHistoryPage extends StatelessWidget {
               children: [
                 const Icon(Icons.store, size: 16, color: Colors.grey),
                 const SizedBox(width: 8),
-                Text('店舗名 ${index + 1}'),
+                Text('店舗${index + 1}'),
               ],
             ),
             const SizedBox(height: 4),

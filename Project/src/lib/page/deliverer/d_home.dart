@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 
 import '../../component/component.dart';
 import '../../provider/provider.dart';
-import 'd_notice.dart';
 
 /// 配達員ホーム画面
 class DHomePage extends StatefulWidget {
@@ -43,9 +42,8 @@ class _DHomePageState extends State<DHomePage> {
           IconButton(
             icon: const Icon(Icons.notifications_outlined),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const DNoticePage()),
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('通知はマイページで確認できます')),
               );
             },
           ),
@@ -56,7 +54,7 @@ class _DHomePageState extends State<DHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ユーザーグリーティング
+            // ユーザーグリーチE��ング
             Padding(
               padding: const EdgeInsets.only(bottom: 16),
               child: Text(
@@ -67,7 +65,7 @@ class _DHomePageState extends State<DHomePage> {
                 ),
               ),
             ),
-            // オンライン/オフライン切り替え
+            // オンライン/オフライン刁E��替ぁE
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
@@ -108,7 +106,7 @@ class _DHomePageState extends State<DHomePage> {
                           ),
                         ),
                         Text(
-                          isOnline ? '注文を受け付けています' : '配達を開始するにはタップ',
+                          isOnline ? '注文を受け付けています' : '配達を開始するにはタップしてください',
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey[600],
@@ -159,7 +157,7 @@ class _DHomePageState extends State<DHomePage> {
               ],
             ),
             const SizedBox(height: 24),
-            // 現在のステータス
+            // 現在のスチE�Eタス
             if (isOnline)
               Container(
                 padding: const EdgeInsets.all(16),
@@ -200,7 +198,7 @@ class _DHomePageState extends State<DHomePage> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: Colors.black.withOpacity(0.05),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),

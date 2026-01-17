@@ -5,7 +5,7 @@ import '../../config/routes.dart';
 import '../../utils/url_helper.dart';
 import 'd_home.dart';
 import 'd_job_select.dart';
-import 'd_map.dart';
+import 'd_delivery_map.dart';
 import 'd_delivery_history.dart';
 import 'd_mypage.dart';
 
@@ -22,12 +22,12 @@ class DRootPage extends StatefulWidget {
 class _DRootPageState extends State<DRootPage> {
   late int _currentIndex;
 
-  final List<Widget> _pages = const [
-    DHomePage(),
-    DJobSelectPage(),
-    DMapPage(),
-    DDeliveryHistoryPage(),
-    DMyPageWrapper(),
+  late final List<Widget> _pages = [
+    const DHomePage(),
+    const DJobSelectPage(),
+    const DDeliveryMapPage(),
+    const DDeliveryHistoryPage(),
+    const DMyPageWrapper(),
   ];
 
   @override
@@ -42,7 +42,7 @@ class _DRootPageState extends State<DRootPage> {
 
   void _updateUrl(int index) {
     if (index >= 0 && index < AppRoutes.delivererRoutes.length) {
-      // ブラウザのURLを直接更新（Flutterのナビゲーションを使わない）
+      // ブラウザのURLを直接更新�E�Elutterのナビゲーションを使わなぁE��E
       UrlHelper.replaceUrl(AppRoutes.delivererRoutes[index]);
     }
   }
@@ -67,7 +67,7 @@ class _DRootPageState extends State<DRootPage> {
         currentIndex: _currentIndex,
         onTap: _onTabTap,
         items: delivererNavItems,
-        selectedItemColor: const Color(0xFF2E7D32), // 配達員カラー（緑）
+        selectedItemColor: const Color(0xFF2E7D32), // 配達員カラー�E�緑！E
       ),
     );
   }

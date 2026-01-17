@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../../component/component.dart';
 
 class SBankingInfoPage extends StatelessWidget {
@@ -7,21 +7,21 @@ class SBankingInfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const TitleAppBar(title: '口座情報', backgroundColor: Color(0xFFE65100)),
+      appBar: const TitleAppBar(title: '蜿｣蠎ｧ諠・ｱ', backgroundColor: Color(0xFFE65100)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            const GeneralForm(label: '銀行名', initialValue: 'テスト銀行'),
+            const GeneralForm(label: '驫陦悟錐', initialValue: '繝・せ繝磯橿陦・),
             const SizedBox(height: 16),
-            const GeneralForm(label: '支店名', initialValue: '本店'),
+            const GeneralForm(label: '謾ｯ蠎怜錐', initialValue: '譛ｬ蠎・),
             const SizedBox(height: 16),
-            const GeneralForm(label: '口座番号', initialValue: '7654321'),
+            const GeneralForm(label: '蜿｣蠎ｧ逡ｪ蜿ｷ', initialValue: '7654321'),
             const SizedBox(height: 16),
-            const GeneralForm(label: '口座名義', initialValue: 'テストショクドウ'),
+            const GeneralForm(label: '蜿｣蠎ｧ蜷咲ｾｩ', initialValue: '繝・せ繝医す繝ｧ繧ｯ繝峨え'),
             const SizedBox(height: 32),
             SingleButton(
-              text: '変更する',
+              text: '螟画峩縺吶ｋ',
               onPressed: () {},
               color: const Color(0xFFE65100),
             ),

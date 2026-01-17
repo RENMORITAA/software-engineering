@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../component/component.dart';
+import '../component/component.dart';
 import '../../services/auth_service.dart';
 import '../../provider/provider.dart';
 import '../../config/routes.dart';
@@ -44,10 +44,10 @@ class _LoginPageState extends State<LoginPage> {
         final userId = user['id'];
         final email = user['email'];
         
-        // ユーザー情報をAuthServiceに保存（永続化）
+        // ユーザー惁E��をAuthServiceに保存（永続化�E�E
         await _authService.saveUserInfo(user);
         
-        // プロフィール情報を取得
+        // プロフィール惁E��を取征E
         String? userName;
         String? phoneNumber;
         String? storeName;
@@ -69,14 +69,14 @@ class _LoginPageState extends State<LoginPage> {
             storeName = profile['store_name'];
             storeAddress = profile['address'];
             phoneNumber = profile['phone_number'];
-            userName = storeName; // 店舗の場合は店名をユーザー名として使用
+            userName = storeName; // 店�Eの場合�E店名をユーザー名として使用
           }
         } catch (e) {
-          // プロフィール取得に失敗しても続行
+          // プロフィール取得に失敗しても続衁E
           debugPrint('プロフィール取得エラー: $e');
         }
         
-        // Providerにユーザー情報を保存
+        // Providerにユーザー惁E��を保孁E
         if (mounted) {
           context.read<UserRoleProvider>().login(
             userId: userId,
@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
         }
         
         if (mounted) {
-          // ロールに応じたホーム画面へ遷移
+          // ロールに応じた�Eーム画面へ遷移
           String targetRoute;
           switch (role) {
             case 'deliverer':
@@ -171,15 +171,15 @@ class _LoginPageState extends State<LoginPage> {
                   required: true,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'メールアドレスを入力してください';
+                      return 'メールアドレスを�E力してください';
                     }
                     if (!value.contains('@')) {
-                      return '有効なメールアドレスを入力してください';
+                      return '有効なメールアドレスを�E力してください';
                     }
                     return null;
                   },
                 ),
-                // パスワード
+                // パスワーチE
                 PasswordInput(
                   controller: _passwordController,
                   required: true,
@@ -188,18 +188,18 @@ class _LoginPageState extends State<LoginPage> {
                       return 'パスワードを入力してください';
                     }
                     if (value.length < 6) {
-                      return 'パスワードは6文字以上で入力してください';
+                      return 'パスワード�E6斁E��以上で入力してください';
                     }
                     return null;
                   },
                 ),
                 const SizedBox(height: 8),
-                // パスワードを忘れた場合
+                // パスワードを忘れた場吁E
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
                     onPressed: () {
-                      // TODO: パスワードリセット画面に遷移
+                      // TODO: パスワードリセチE��画面に遷移
                     },
                     child: Text(
                       'パスワードをお忘れの方',
@@ -219,14 +219,14 @@ class _LoginPageState extends State<LoginPage> {
                   icon: Icons.login,
                 ),
                 const SizedBox(height: 24),
-                // 区切り線
+                // 区刁E��緁E
                 Row(
                   children: [
                     Expanded(child: Divider(color: Colors.grey[300])),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
-                        'または',
+                        'また�E',
                         style: TextStyle(
                           color: Colors.grey[500],
                           fontSize: 14,

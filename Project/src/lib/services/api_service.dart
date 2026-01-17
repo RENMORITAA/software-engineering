@@ -113,4 +113,9 @@ class ApiService {
       throw Exception('API Error: ${response.statusCode} ${response.body}');
     }
   }
+
+  // Order status update
+  Future<dynamic> updateOrderStatus(int orderId, String status) async {
+    return await put('/orders/$orderId/status', {'status': status});
+  }
 }

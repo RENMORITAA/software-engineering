@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import "package:flutter/material.dart";
 
-import '../../component/component.dart';
+import "../../component/component.dart";
 
-/// メニュー管理画面
+/// メニュー編集（ダミー）
 class SMenuEditPage extends StatelessWidget {
   const SMenuEditPage({super.key});
 
@@ -10,28 +10,24 @@ class SMenuEditPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const TitleAppBar(
-        title: 'メニュー管理',
+        title: 'メニュー編集',
         showBackButton: false,
         backgroundColor: Color(0xFFE65100),
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(16),
-        itemCount: 10,
-        itemBuilder: (context, index) {
-          return _buildMenuCard(context, index);
-        },
+        itemCount: 5,
+        itemBuilder: (context, index) => _buildMenuCard(index),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // TODO: 新規メニュー追加
-        },
+        onPressed: () {},
         backgroundColor: const Color(0xFFE65100),
         child: const Icon(Icons.add),
       ),
     );
   }
 
-  Widget _buildMenuCard(BuildContext context, int index) {
+  Widget _buildMenuCard(int index) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
@@ -39,7 +35,7 @@ class SMenuEditPage extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: Colors.black.withOpacity(0.05),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -50,11 +46,9 @@ class SMenuEditPage extends StatelessWidget {
           Container(
             width: 100,
             height: 100,
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: const BorderRadius.horizontal(
-                left: Radius.circular(12),
-              ),
+            decoration: const BoxDecoration(
+              color: Color(0xFFF5F5F5),
+              borderRadius: BorderRadius.horizontal(left: Radius.circular(12)),
             ),
             child: const Icon(Icons.fastfood, color: Colors.grey),
           ),
@@ -64,29 +58,13 @@ class SMenuEditPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'メニュー名 ${index + 1}',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
+                  Text('メニュー${index + 1}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                   const SizedBox(height: 4),
-                  Text(
-                    '¥800',
-                    style: TextStyle(
-                      color: Colors.orange[800],
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  const Text('¥800', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.orange)),
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      Switch(
-                        value: true,
-                        onChanged: (value) {},
-                        activeColor: const Color(0xFFE65100),
-                      ),
+                      Switch(value: true, onChanged: (_) {}, activeColor: const Color(0xFFE65100)),
                       const Text('販売中'),
                     ],
                   ),
@@ -94,12 +72,7 @@ class SMenuEditPage extends StatelessWidget {
               ),
             ),
           ),
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () {
-              // TODO: 編集画面へ
-            },
-          ),
+          IconButton(icon: const Icon(Icons.edit), onPressed: () {}),
         ],
       ),
     );

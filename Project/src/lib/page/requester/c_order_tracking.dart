@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../component/component.dart';
 import '../../provider/provider.dart';
 import '../../models/database_models.dart';
 
-/// 注文追跡画面
+/// 豕ｨ譁・ｿｽ霍｡逕ｻ髱｢
 class COrderTrackingPage extends StatefulWidget {
   final int orderId;
 
@@ -27,21 +27,21 @@ class _COrderTrackingPageState extends State<COrderTrackingPage> {
   String _getStatusText(String status) {
     switch (status) {
       case 'pending':
-        return '注文確認中';
+        return '豕ｨ譁・｢ｺ隱堺ｸｭ';
       case 'accepted':
-        return '店舗が注文を受け付けました';
+        return '蠎苓・縺梧ｳｨ譁・ｒ蜿励￠莉倥￠縺ｾ縺励◆';
       case 'preparing':
-        return '調理中です';
+        return '隱ｿ逅・ｸｭ縺ｧ縺・;
       case 'ready_for_pickup':
-        return '配達員を待っています';
+        return '驟埼＃蜩｡繧貞ｾ・▲縺ｦ縺・∪縺・;
       case 'picked_up':
-        return '配達員が商品を受け取りました';
+        return '驟埼＃蜩｡縺悟膚蜩√ｒ蜿励￠蜿悶ｊ縺ｾ縺励◆';
       case 'delivering':
-        return '配達中です';
+        return '驟埼＃荳ｭ縺ｧ縺・;
       case 'delivered':
-        return '配達完了';
+        return '驟埼＃螳御ｺ・;
       case 'cancelled':
-        return 'キャンセルされました';
+        return '繧ｭ繝｣繝ｳ繧ｻ繝ｫ縺輔ｌ縺ｾ縺励◆';
       default:
         return status;
     }
@@ -50,21 +50,21 @@ class _COrderTrackingPageState extends State<COrderTrackingPage> {
   String _getStatusDescription(String status) {
     switch (status) {
       case 'pending':
-        return 'お店が注文を確認しています。しばらくお待ちください。';
+        return '縺雁ｺ励′豕ｨ譁・ｒ遒ｺ隱阪＠縺ｦ縺・∪縺吶ゅ＠縺ｰ繧峨￥縺雁ｾ・■縺上□縺輔＞縲・;
       case 'accepted':
-        return 'お店が注文を受け付けました。調理を開始します。';
+        return '縺雁ｺ励′豕ｨ譁・ｒ蜿励￠莉倥￠縺ｾ縺励◆縲りｪｿ逅・ｒ髢句ｧ九＠縺ｾ縺吶・;
       case 'preparing':
-        return 'お店で料理を準備中です。もう少しお待ちください。';
+        return '縺雁ｺ励〒譁咏炊繧呈ｺ門ｙ荳ｭ縺ｧ縺吶ゅｂ縺・ｰ代＠縺雁ｾ・■縺上□縺輔＞縲・;
       case 'ready_for_pickup':
-        return '料理が完成しました。配達員が受け取りに向かっています。';
+        return '譁咏炊縺悟ｮ梧・縺励∪縺励◆縲る・驕泌藤縺悟女縺大叙繧翫↓蜷代°縺｣縺ｦ縺・∪縺吶・;
       case 'picked_up':
-        return '配達員が商品を受け取り、あなたの元へ向かっています。';
+        return '驟埼＃蜩｡縺悟膚蜩√ｒ蜿励￠蜿悶ｊ縲√≠縺ｪ縺溘・蜈・∈蜷代°縺｣縺ｦ縺・∪縺吶・;
       case 'delivering':
-        return '配達員が配達中です。まもなく到着します。';
+        return '驟埼＃蜩｡縺碁・驕比ｸｭ縺ｧ縺吶ゅ∪繧ゅ↑縺丞芦逹縺励∪縺吶・;
       case 'delivered':
-        return 'ご注文の品が届きました。ご利用ありがとうございます。';
+        return '縺疲ｳｨ譁・・蜩√′螻翫″縺ｾ縺励◆縲ゅ＃蛻ｩ逕ｨ縺ゅｊ縺後→縺・＃縺悶＞縺ｾ縺吶・;
       case 'cancelled':
-        return 'この注文はキャンセルされました。';
+        return '縺薙・豕ｨ譁・・繧ｭ繝｣繝ｳ繧ｻ繝ｫ縺輔ｌ縺ｾ縺励◆縲・;
       default:
         return '';
     }
@@ -121,7 +121,7 @@ class _COrderTrackingPageState extends State<COrderTrackingPage> {
 
     return Scaffold(
       appBar: const TitleAppBar(
-        title: '注文を追跡',
+        title: '豕ｨ譁・ｒ霑ｽ霍｡',
         showBackButton: true,
       ),
       body: orderProvider.isLoading
@@ -144,7 +144,7 @@ class _COrderTrackingPageState extends State<COrderTrackingPage> {
           ),
           const SizedBox(height: 16),
           Text(
-            '注文が見つかりません',
+            '豕ｨ譁・′隕九▽縺九ｊ縺ｾ縺帙ｓ',
             style: TextStyle(
               fontSize: 16,
               color: Colors.grey[600],
@@ -153,7 +153,7 @@ class _COrderTrackingPageState extends State<COrderTrackingPage> {
           const SizedBox(height: 24),
           ElevatedButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('戻る'),
+            child: const Text('謌ｻ繧・),
           ),
         ],
       ),
@@ -167,7 +167,7 @@ class _COrderTrackingPageState extends State<COrderTrackingPage> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          // 地図プレースホルダー
+          // 蝨ｰ蝗ｳ繝励Ξ繝ｼ繧ｹ繝帙Ν繝繝ｼ
           Container(
             height: 200,
             color: Colors.grey[200],
@@ -182,14 +182,14 @@ class _COrderTrackingPageState extends State<COrderTrackingPage> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    '配達位置を追跡中...',
+                    '驟埼＃菴咲ｽｮ繧定ｿｽ霍｡荳ｭ...',
                     style: TextStyle(color: Colors.grey[600]),
                   ),
                 ],
               ),
             ),
           ),
-          // ステータス表示
+          // 繧ｹ繝・・繧ｿ繧ｹ陦ｨ遉ｺ
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(24),
@@ -232,12 +232,12 @@ class _COrderTrackingPageState extends State<COrderTrackingPage> {
               ],
             ),
           ),
-          // 進捗バー
+          // 騾ｲ謐励ヰ繝ｼ
           Padding(
             padding: const EdgeInsets.all(24),
             child: _buildProgressSteps(status),
           ),
-          // 注文詳細
+          // 豕ｨ譁・ｩｳ邏ｰ
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 16),
             padding: const EdgeInsets.all(16),
@@ -256,7 +256,7 @@ class _COrderTrackingPageState extends State<COrderTrackingPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  '注文詳細',
+                  '豕ｨ譁・ｩｳ邏ｰ',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -266,7 +266,7 @@ class _COrderTrackingPageState extends State<COrderTrackingPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('注文番号'),
+                    const Text('豕ｨ譁・分蜿ｷ'),
                     Text('#${order.id}'),
                   ],
                 ),
@@ -274,17 +274,17 @@ class _COrderTrackingPageState extends State<COrderTrackingPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('店舗'),
-                    Text('店舗ID: ${order.storeId}'),
+                    const Text('蠎苓・'),
+                    Text('蠎苓・ID: ${order.storeId}'),
                   ],
                 ),
                 const SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('合計金額'),
+                    const Text('蜷郁ｨ磯≡鬘・),
                     Text(
-                      '¥${order.totalPrice}',
+                      'ﾂ･${order.totalPrice}',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -293,7 +293,7 @@ class _COrderTrackingPageState extends State<COrderTrackingPage> {
             ),
           ),
           const SizedBox(height: 16),
-          // 配達先
+          // 驟埼＃蜈・
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 16),
             padding: const EdgeInsets.all(16),
@@ -312,7 +312,7 @@ class _COrderTrackingPageState extends State<COrderTrackingPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  '配達先',
+                  '驟埼＃蜈・,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -335,7 +335,7 @@ class _COrderTrackingPageState extends State<COrderTrackingPage> {
             ),
           ),
           const SizedBox(height: 24),
-          // アクションボタン
+          // 繧｢繧ｯ繧ｷ繝ｧ繝ｳ繝懊ち繝ｳ
           if (status != 'delivered' && status != 'cancelled')
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -344,23 +344,23 @@ class _COrderTrackingPageState extends State<COrderTrackingPage> {
                   Expanded(
                     child: OutlinedButton.icon(
                       onPressed: () {
-                        // TODO: サポートに連絡
+                        // TODO: 繧ｵ繝昴・繝医↓騾｣邨｡
                       },
                       icon: const Icon(Icons.support_agent),
-                      label: const Text('サポートに連絡'),
+                      label: const Text('繧ｵ繝昴・繝医↓騾｣邨｡'),
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        // リフレッシュ
+                        // 繝ｪ繝輔Ξ繝・す繝･
                         context
                             .read<OrderProvider>()
                             .fetchOrderDetail(widget.orderId);
                       },
                       icon: const Icon(Icons.refresh),
-                      label: const Text('更新'),
+                      label: const Text('譖ｴ譁ｰ'),
                     ),
                   ),
                 ],
@@ -374,10 +374,10 @@ class _COrderTrackingPageState extends State<COrderTrackingPage> {
 
   Widget _buildProgressSteps(String currentStatus) {
     final steps = [
-      {'status': 'accepted', 'label': '受付'},
-      {'status': 'preparing', 'label': '調理'},
-      {'status': 'picked_up', 'label': '受取'},
-      {'status': 'delivered', 'label': '配達'},
+      {'status': 'accepted', 'label': '蜿嶺ｻ・},
+      {'status': 'preparing', 'label': '隱ｿ逅・},
+      {'status': 'picked_up', 'label': '蜿怜叙'},
+      {'status': 'delivered', 'label': '驟埼＃'},
     ];
 
     final statusOrder = [
