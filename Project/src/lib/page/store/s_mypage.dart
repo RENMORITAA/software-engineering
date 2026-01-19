@@ -19,6 +19,7 @@ class SMyPageWrapper extends StatelessWidget {
       userName: userProvider.storeName ?? userProvider.userName ?? '店舗',
       userEmail: userProvider.userEmail ?? '',
       userRole: 'store',
+      accessToken: userProvider.accessToken ?? '',
       additionalInfo: userProvider.storeAddress != null
           ? {'住所': userProvider.storeAddress!}
           : null,

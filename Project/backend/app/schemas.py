@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 from typing import List, Optional
 from datetime import datetime, date
 from decimal import Decimal
@@ -13,6 +13,13 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     password: str
+
+class PasswordChangeRequest(BaseModel):
+    current_password: str = Field(..., min_length=1, description="現在のパスワード")
+    new_password: str = Field(..., min_length=4, description="新しいパスワード（4文字以上推奨）")
+
+    class Config:
+        from_attributes = True
 
 class User(UserBase):
     id: int

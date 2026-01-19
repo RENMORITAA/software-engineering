@@ -19,6 +19,7 @@ class DMyPageWrapper extends StatelessWidget {
       userName: userProvider.userName ?? '配達員',
       userEmail: userProvider.userEmail ?? '',
       userRole: 'deliverer',
+      accessToken: userProvider.accessToken ?? '',
       additionalInfo: userProvider.vehicleType != null
           ? {'配送手段': userProvider.vehicleType!}
           : null,

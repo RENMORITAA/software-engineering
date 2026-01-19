@@ -19,6 +19,7 @@ class CMyPageWrapper extends StatelessWidget {
       userName: userProvider.userName ?? '依頼者',
       userEmail: userProvider.userEmail ?? '',
       userRole: 'requester',
+      accessToken: userProvider.accessToken ?? '',
       roleSpecificSettings: [
         {
           'icon': Icons.location_on_outlined,

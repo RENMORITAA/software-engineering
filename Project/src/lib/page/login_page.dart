@@ -78,10 +78,13 @@ class _LoginPageState extends State<LoginPage> {
         
         // Providerにユーザー情報を保存
         if (mounted) {
+          final String? token = user['access_token'] ?? user['token'];
+          
           context.read<UserRoleProvider>().login(
             userId: userId,
             email: email,
             role: role ?? 'requester',
+            accessToken: token ?? '',
             name: userName,
             phoneNumber: phoneNumber,
             storeName: storeName,

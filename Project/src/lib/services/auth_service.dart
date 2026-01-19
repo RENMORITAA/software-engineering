@@ -104,6 +104,12 @@ class AuthService {
     return prefs.getString('user_name');
   }
 
+  /// 保存されたトークンを取得（パスワード変更などで使用）
+  Future<String?> getToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_tokenKey);
+  }
+
   /// 保存されたユーザーIDを取得
   Future<int?> getSavedUserId() async {
     final prefs = await SharedPreferences.getInstance();

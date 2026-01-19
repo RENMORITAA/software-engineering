@@ -30,6 +30,8 @@ class UserRoleProvider extends ChangeNotifier {
   String? get userEmail => _userEmail;
   String? get userName => _userName;
   String? get phoneNumber => _phoneNumber;
+  String? get accessToken => _accessToken;
+  String? _accessToken;
   String? get storeName => _storeName;
   String? get storeAddress => _storeAddress;
   String? get vehicleType => _vehicleType;
@@ -96,6 +98,7 @@ class UserRoleProvider extends ChangeNotifier {
     required int userId,
     required String email,
     required String role,
+    required String accessToken,
     String? name,
     String? phoneNumber,
     String? storeName,
@@ -110,6 +113,7 @@ class UserRoleProvider extends ChangeNotifier {
     _storeAddress = storeAddress;
     _vehicleType = vehicleType;
     _currentRole = _parseRole(role);
+    _accessToken = accessToken;
     _isLoggedIn = true;
     notifyListeners();
   }
@@ -139,6 +143,7 @@ class UserRoleProvider extends ChangeNotifier {
     _storeName = null;
     _storeAddress = null;
     _vehicleType = null;
+    _accessToken = null;
     _currentRole = UserRole.requester;
     _isLoggedIn = false;
     notifyListeners();

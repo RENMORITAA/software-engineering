@@ -202,3 +202,20 @@ def get_user_profile(current_user: models.User = Depends(get_current_user), db: 
         }
     
     raise HTTPException(status_code=404, detail="Profile not found")
+
+
+@router.post("/change-password")
+async def change_password(
+    request: schemas.PasswordChangeRequest, # 新しいスキーマが必要
+    db: Session = Depends(database.get_db),
+    current_user: models.User = Depends(get_current_user) # ログイン中であること
+):
+    # 1. 現在のパスワードが正しいかチェック
+    if not verify_password(request.current_password, current_user.hashed_password):
+        raise HTTPException(status_code=400, detail="現在のパスワードが正しくありません")
+    
+    # 2. 新しいパスワードをハッシュ化して保存
+    current_user.hashed_password = get_password_hash(request.new_password)
+    db.commit()
+    
+    return {"message": "パスワードを変更しました"}

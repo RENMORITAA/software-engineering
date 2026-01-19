@@ -1,6 +1,8 @@
+import '../services/auth_service.dart';
 import 'package:flutter/material.dart';
-
 import '../component/component.dart';
+import 'package:http/http.dart' as http; 
+import 'dart:convert';
 
 /// 統合マイページ＆設定画面
 /// 全ロール（依頼者・配達員・店舗）共通で使用可能
@@ -8,6 +10,7 @@ class UnifiedMyPage extends StatefulWidget {
   final String userName;
   final String userEmail;
   final String userRole;
+  final String accessToken;
   final Map<String, String>? additionalInfo;
   final VoidCallback onLogout;
   final VoidCallback onWithdraw;
@@ -18,6 +21,7 @@ class UnifiedMyPage extends StatefulWidget {
     required this.userName,
     required this.userEmail,
     required this.userRole,
+    required this.accessToken,
     this.additionalInfo,
     required this.onLogout,
     required this.onWithdraw,
@@ -30,7 +34,14 @@ class UnifiedMyPage extends StatefulWidget {
 
 class _UnifiedMyPageState extends State<UnifiedMyPage> with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  bool _isEditing = false;
+
+  bool _isEditing = false;              // プロフィール編集モード
+  bool _isChangingPassword = false;     // パスワード変更中
+
+  // パスワード用コントローラー
+  final TextEditingController _currentPwController = TextEditingController();
+  final TextEditingController _newPwController = TextEditingController();
+  final TextEditingController _confirmPwController = TextEditingController();
 
   @override
   void initState() {
@@ -41,6 +52,10 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> with SingleTickerProvider
   @override
   void dispose() {
     _tabController.dispose();
+    // 追加：使い終わったらメモリを解放する
+    _currentPwController.dispose();
+    _newPwController.dispose();
+    _confirmPwController.dispose();
     super.dispose();
   }
 
@@ -572,57 +587,97 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> with SingleTickerProvider
   void _showPasswordChangeDialog() {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('パスワード変更'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              decoration: InputDecoration(
-                labelText: '現在のパスワード',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
+      builder: (context) => StatefulBuilder(
+        builder: (context, setDialogState) { // ← ここに builder が必要です
+          return AlertDialog( // ← ここで AlertDialog を返します
+            title: const Text('パスワード変更'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: _currentPwController,
+                  decoration: const InputDecoration(labelText: '現在のパスワード'),
+                  obscureText: true,
                 ),
-              ),
-              obscureText: true,
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              decoration: InputDecoration(
-                labelText: '新しいパスワード',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
+                TextField(
+                  controller: _newPwController,
+                  decoration: const InputDecoration(labelText: '新しいパスワード'),
+                  obscureText: true,
                 ),
-              ),
-              obscureText: true,
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              decoration: InputDecoration(
-                labelText: '新しいパスワード（確認）',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
+                TextField(
+                  controller: _confirmPwController,
+                  decoration: const InputDecoration(labelText: '新しいパスワード（確認）'),
+                  obscureText: true,
                 ),
-              ),
-              obscureText: true,
+              ],
             ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('キャンセル'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('パスワードを変更しました')),
-              );
-              Navigator.pop(context);
-            },
-            child: const Text('変更'),
-          ),
-        ],
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('キャンセル'),
+              ),
+              ElevatedButton(
+                onPressed: _isChangingPassword
+                    ? null
+                    : () async {
+                        if (_newPwController.text != _confirmPwController.text) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('新しいパスワードが一致しません')),
+                          );
+                          return;
+                        }
+
+                        setDialogState(() => _isChangingPassword = true);
+
+                        try {
+                          final authService = AuthService();
+                          final token = await authService.getToken();
+
+                          final response = await http.post(
+                            Uri.parse('http://localhost:8000/auth/change-password'),
+                            headers: {
+                              'Content-Type': 'application/json',
+                              'Authorization': 'Bearer $token',
+                            },
+                            body: jsonEncode({
+                              'current_password': _currentPwController.text,
+                              'new_password': _newPwController.text,
+                            }),
+                          );
+
+                          if (response.statusCode == 200) {
+                            if (mounted) {
+                              Navigator.pop(context);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('パスワードを変更しました')),
+                              );
+                            }
+                          } else {
+                            throw Exception('変更に失敗しました');
+                          }
+                        } catch (e) {
+                          if (mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('エラー：パスワードを変更できませんでした')),
+                            );
+                          }
+                        } finally {
+                          if (mounted) {
+                            setDialogState(() => _isChangingPassword = false);
+                            setState(() => _isChangingPassword = false);
+                          }
+                        }
+                      },
+                child: _isChangingPassword
+                    ? const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(strokeWidth: 2))
+                    : const Text('変更'),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
