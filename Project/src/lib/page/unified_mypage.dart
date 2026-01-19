@@ -37,6 +37,10 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> with SingleTickerProvider
 
   bool _isEditing = false;              // プロフィール編集モード
   bool _isChangingPassword = false;     // パスワード変更中
+  
+  bool _isCurrentPwVisible = false;    // 現在のパスワード表示フラグ
+  bool _isNewPwVisible = false;        // 新しいパスワード表示フラグ
+  bool _isConfirmPwVisible = false;    // 確認用パスワード表示フラグ
 
   // パスワード用コントローラー
   final TextEditingController _currentPwController = TextEditingController();
@@ -594,26 +598,62 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> with SingleTickerProvider
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                // 1. 現在のパスワード
                 TextField(
                   controller: _currentPwController,
-                  decoration: const InputDecoration(labelText: '現在のパスワード'),
-                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: '現在のパスワード',
+                    suffixIcon: IconButton(
+                      icon: Icon(_isCurrentPwVisible ? Icons.visibility : Icons.visibility_off),
+                      onPressed: () => setDialogState(() => _isCurrentPwVisible = !_isCurrentPwVisible),
+                    ),
+                  ),
+                  obscureText: !_isCurrentPwVisible, // 変数と連動
                 ),
+                // 2. 新しいパスワード
                 TextField(
                   controller: _newPwController,
-                  decoration: const InputDecoration(labelText: '新しいパスワード'),
-                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: '新しいパスワード',
+                    suffixIcon: IconButton(
+                      icon: Icon(_isNewPwVisible ? Icons.visibility : Icons.visibility_off),
+                      onPressed: () => setDialogState(() => _isNewPwVisible = !_isNewPwVisible),
+                    ),
+                  ),
+                  obscureText: !_isNewPwVisible, // 変数と連動
                 ),
+                // 3. 確認用パスワード
                 TextField(
                   controller: _confirmPwController,
-                  decoration: const InputDecoration(labelText: '新しいパスワード（確認）'),
-                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: '新しいパスワード（確認）',
+                    suffixIcon: IconButton(
+                      icon: Icon(_isConfirmPwVisible ? Icons.visibility : Icons.visibility_off),
+                      onPressed: () => setDialogState(() => _isConfirmPwVisible = !_isConfirmPwVisible),
+                    ),
+                  ),
+                  obscureText: !_isConfirmPwVisible, // 変数と連動
                 ),
               ],
             ),
             actions: [
               TextButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () {
+                  // 1. 親画面の変数をリセット（目のマークを非表示状態に戻す）
+                  setState(() {
+                    _isCurrentPwVisible = false;
+                    _isNewPwVisible = false;
+                    _isConfirmPwVisible = false;
+                  });
+
+                  // 2. 入力コントローラーをクリア（文字を消す）
+                  _currentPwController.clear();
+                  _newPwController.clear();
+                  _confirmPwController.clear();
+
+                  // 3. ダイアログを閉じる
+                  Navigator.pop(context);
+                },
                 child: const Text('キャンセル'),
               ),
               ElevatedButton(
