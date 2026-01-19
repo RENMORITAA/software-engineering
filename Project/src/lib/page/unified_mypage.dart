@@ -246,25 +246,7 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> with SingleTickerProvider
               ),
             ],
           ),
-          const SizedBox(height: 16),
-          _buildCard(
-            title: 'アプリ設定',
-            children: [
-              _buildSettingTile(
-                Icons.language_outlined,
-                '言語',
-                trailing: const Text('日本語'),
-                onTap: () {},
-              ),
-              const Divider(height: 1),
-              _buildSettingTile(
-                Icons.palette_outlined,
-                'テーマ',
-                trailing: const Text('ライト'),
-                onTap: () {},
-              ),
-            ],
-          ),
+          //言語設定等の設定を消しました
           const SizedBox(height: 16),
           _buildCard(
             title: 'その他',
