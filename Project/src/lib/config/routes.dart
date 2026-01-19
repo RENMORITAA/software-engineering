@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../page/login_page.dart';
+import '../pages/forgot_password_page.dart';
 import '../page/new_member.dart';
 import '../page/requester/c_root_page.dart';
 import '../page/deliverer/d_root_page.dart';
@@ -11,6 +12,7 @@ class AppRoutes {
   // 認証
   static const String root = '/';
   static const String login = '/login';
+  static const String forgotPassword = '/forgot-password';
   static const String register = '/register';
 
   // 依頼側（ユーザー）
@@ -74,6 +76,14 @@ class AppRoutes {
     if (path == login) {
       return MaterialPageRoute(
         builder: (_) => const GuestGuard(child: LoginPage()),
+        settings: settings,
+      );
+    }
+
+    // パスワードリセット
+    if (path == forgotPassword) {
+      return MaterialPageRoute(
+        builder: (_) => const GuestGuard(child: ForgotPasswordPage()),
         settings: settings,
       );
     }
