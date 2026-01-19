@@ -1,4 +1,6 @@
+import secrets
 from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from datetime import timedelta, datetime
@@ -98,11 +100,50 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     return {"access_token": access_token, "token_type": "bearer"}
 
 @router.post("/password-reset-request")
-def request_password_reset(request: schemas.PasswordResetRequest, db: Session = Depends(database.get_db)):
+async def request_password_reset(request: schemas.PasswordResetRequest, db: Session = Depends(database.get_db)):
+    # ユーザー確認
     user = db.query(models.User).filter(models.User.email == request.email).first()
     if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-    return {"message": "Success"}
+        raise HTTPException(status_code=404, detail="ユーザーが見つかりません")
+
+    # 1. 仮パスワード生成（6文字のランダム英数字）
+    temp_pw = secrets.token_urlsafe(6) 
+    
+    # 2. DB更新（ハッシュ化して保存）
+    user.hashed_password = get_password_hash(temp_pw)
+    db.commit()
+
+    # 3. Gmail送信設定
+    conf = ConnectionConfig(
+        MAIL_USERNAME = "kut.stellarworks@gmail.com",
+        MAIL_PASSWORD = "jvwrqlkeysmgirsh",
+        MAIL_FROM = "kut.stellarworks@gmail.com",
+        MAIL_PORT = 587,
+        MAIL_SERVER = "smtp.gmail.com",
+        MAIL_STARTTLS = True,
+        MAIL_SSL_TLS = False,
+        USE_CREDENTIALS = True
+    )
+
+    # 4. メールの内容
+    message = MessageSchema(
+        subject="【アプリ名】仮パスワードの発行",
+        recipients=[user.email],
+        body=f"ご利用ありがとうございます。\n\n仮パスワードを発行しました： {temp_pw}\n\nこのパスワードでログイン後、マイページよりパスワードの変更をお願いします。",
+        subtype="plain"
+    )
+
+    # 5. 送信実行
+    fm = FastMail(conf)
+    try:
+        await fm.send_message(message)
+    except Exception as e:
+        # メール送信に失敗しても、デバッグ用にコンソールにパスワードを出す
+        print(f"Mail Error: {e}")
+        print(f"Debug Password: {temp_pw}")
+        raise HTTPException(status_code=500, detail="メール送信に失敗しました")
+
+    return {"message": "仮パスワードをメールで送信しました"}
 
 @router.get("/me", response_model=schemas.User)
 def read_users_me(current_user: models.User = Depends(get_current_user)):

@@ -53,7 +53,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('パスワード再設定')),
+      appBar: AppBar(title: const Text('仮パスワード発行')),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -63,7 +63,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const Text(
-                  '登録済みのメールアドレスを入力してください。\nパスワード再設定用のリンクをお送りします。',
+                  '登録済みのメールアドレスを入力してください。\n仮パスワードを発行し、お送りします。',
                   style: TextStyle(color: Colors.grey),
                 ),
                 const SizedBox(height: 32),
