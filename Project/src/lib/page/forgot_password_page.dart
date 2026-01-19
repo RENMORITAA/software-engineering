@@ -77,7 +77,33 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     if (value == null || value.isEmpty) return 'メールアドレスを入力してください';
                     if (!value.contains('@')) return '有効なメールアドレスを入力してください';
                     return null;
-                  },
+                  }, 
+
+                    /*validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'メールアドレスを入力してください';
+                      }
+
+                      // 前後の空白を除去
+                      final trimmed = value.trim();
+
+                      // 危険な文字の排除（XSS・インジェクション対策）
+                      final dangerousPattern = RegExp(r"[<>'\;()]");
+                      if (dangerousPattern.hasMatch(trimmed)) {
+                        return '不正な文字が含まれています';
+                      }
+
+                      // RFC に近いメールアドレス形式チェック
+                      final emailPattern = RegExp(
+                        r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+                      );
+                      if (!emailPattern.hasMatch(trimmed)) {
+                        return '有効なメールアドレスを入力してください';
+                      }
+
+                      return null;
+                    },
+                    */
                 ),
                 const SizedBox(height: 24),
                 SingleButton(
