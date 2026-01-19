@@ -49,6 +49,30 @@ class AuthService {
     }
   }
 
+  /// パスワードリセットメールを送信
+  Future<void> sendPasswordResetEmail(String email) async {
+  try {
+    await _apiService.post('/auth/password-reset-request', {
+      'email': email,
+    });
+  } catch (e) {
+    final errStr = e.toString();
+    
+    // 1. サーバーに繋がらない場合 (画像のエラー)
+    if (errStr.contains('Failed to fetch') || errStr.contains('SocketException')) {
+      throw 'サーバーに接続できません。';
+    }
+
+    // 2. ユーザーが見つからない場合 (404)
+    if (errStr.contains('404')) {
+      throw 'このメールアドレスは登録されていません。';
+    }
+
+    // 3. その他（422エラーなど）
+    rethrow;
+  }
+}
+
   /// 認証データを保存
   Future<void> _saveAuthData(String token) async {
     final prefs = await SharedPreferences.getInstance();

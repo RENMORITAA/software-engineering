@@ -97,6 +97,13 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
+@router.post("/password-reset-request")
+def request_password_reset(request: schemas.PasswordResetRequest, db: Session = Depends(database.get_db)):
+    user = db.query(models.User).filter(models.User.email == request.email).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return {"message": "Success"}
+
 @router.get("/me", response_model=schemas.User)
 def read_users_me(current_user: models.User = Depends(get_current_user)):
     return current_user

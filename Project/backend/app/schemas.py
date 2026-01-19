@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from typing import List, Optional
 from datetime import datetime, date
 from decimal import Decimal
@@ -21,6 +21,9 @@ class User(UserBase):
 
     class Config:
         from_attributes = True
+
+class PasswordResetRequest(BaseModel):
+    email: str
 
 class Token(BaseModel):
     access_token: str
