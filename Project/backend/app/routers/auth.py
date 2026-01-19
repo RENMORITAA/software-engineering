@@ -127,7 +127,7 @@ async def request_password_reset(request: schemas.PasswordResetRequest, db: Sess
 
     # 4. メールの内容
     message = MessageSchema(
-        subject="【アプリ名】仮パスワードの発行",
+        subject="【StellarWorks】仮パスワードの発行",
         recipients=[user.email],
         body=f"ご利用ありがとうございます。\n\n仮パスワードを発行しました： {temp_pw}\n\nこのパスワードでログイン後、マイページよりパスワードの変更をお願いします。",
         subtype="plain"
