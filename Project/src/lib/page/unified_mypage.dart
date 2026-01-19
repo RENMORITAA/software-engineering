@@ -247,6 +247,7 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> with SingleTickerProvider
             ],
           ),
           //言語設定等の設定を消しました
+
           const SizedBox(height: 16),
           _buildCard(
             title: 'その他',
