@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../page/login_page.dart';
-import '../pages/forgot_password_page.dart';
+import '../page/forgot_password_page.dart';
 import '../page/new_member.dart';
 import '../page/requester/c_root_page.dart';
 import '../page/deliverer/d_root_page.dart';
