@@ -196,24 +196,19 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
                 _buildMenuSection(
                   title: '履歴',
                   items: [
-                    if (widget.userRole == 'requester')
+                    if (widget.userRole == 'requester') ...[
                       _MenuItem(icon: Icons.receipt_long_outlined, title: '注文履歴', onTap: () {}),
-                    if (widget.userRole == 'deliverer')
+                      _MenuItem(icon: Icons.payments_outlined, title: '支払い明細', onTap: () {}),
+                    ],
+                    if (widget.userRole == 'deliverer') ...[
                       _MenuItem(icon: Icons.local_shipping_outlined, title: '配達履歴', onTap: () {}),
-                    if (widget.userRole == 'store')
+                      _MenuItem(icon: Icons.payments_outlined, title: '給与明細', onTap: () {}),
+                    ],
+                    if (widget.userRole == 'store') ...[
                       _MenuItem(icon: Icons.bar_chart_outlined, title: '売上管理', onTap: () {}),
+                    ],
                   ],
                 ),
-
-                if (widget.roleSpecificSettings != null && widget.roleSpecificSettings!.isNotEmpty)
-                  _buildMenuSection(
-                    title: 'サービス設定',
-                    items: widget.roleSpecificSettings!.map((s) => _MenuItem(
-                      icon: s['icon'] ?? Icons.settings,
-                      title: s['title'] ?? '',
-                      onTap: s['onTap'] ?? () {},
-                    )).toList(),
-                  ),
 
                 _buildMenuSection(
                   title: 'その他',
