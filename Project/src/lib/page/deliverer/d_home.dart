@@ -5,6 +5,7 @@ import '../../component/component.dart';
 import '../../provider/provider.dart';
 
 import 'd_mypage.dart';
+import 'd_notification.dart';
 
 /// 配達員ホーム画面
 class DHomePage extends StatefulWidget {
