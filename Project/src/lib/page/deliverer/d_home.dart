@@ -86,7 +86,7 @@ class _DHomePageState extends State<DHomePage> {
                     ),
                     child: const Icon(
                       Icons.power_settings_new,
-                      color: Colors.grey,
+                      color: Colors.white,
                       size: 32,
                     ),
                   ),
@@ -117,10 +117,15 @@ class _DHomePageState extends State<DHomePage> {
                   ),
                   Switch(
                     value: isOnline,
-                    onChanged: (value) {
-                      deliveryProvider.toggleOnlineStatus(value);
-                    },
-                    activeColor: const Color(0xFF2E7D32),
+                    onChanged: deliveryProvider.isLoading
+                        ? null
+                        : (value) {
+                            deliveryProvider.toggleOnlineStatus(value);
+                          },
+                    activeColor: const Color(0xFF2E7D32),        // ON：つまみ
+                    activeTrackColor: const Color(0xFF81C784),   // ON：背景（任意）
+                    inactiveThumbColor: Colors.grey.shade400,    // OFF：つまみ
+                    inactiveTrackColor: Colors.grey.shade300,    // OFF：背景
                   ),
                 ],
               ),
