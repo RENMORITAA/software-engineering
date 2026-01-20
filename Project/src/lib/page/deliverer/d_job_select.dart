@@ -182,9 +182,21 @@ class _DJobSelectPageState extends State<DJobSelectPage> {
                       context: context,
                       builder: (_) => ListView(
                         shrinkWrap: true,
-                        children: const [
-                          ListTile(title: Text('距離が近い順')),
-                          ListTile(title: Text('報酬が高い順')),
+                        children: [
+                          ListTile(
+                            title: const Text('距離が近い順'),
+                            onTap: () {
+                              // ここに処理を書く
+                              Navigator.pop(context); // シートを閉じる
+                            },
+                          ),
+                          ListTile(
+                            title: const Text('報酬が高い順'),
+                            onTap: () {
+                              // ここに処理を書く
+                              Navigator.pop(context);
+                            },
+                          ),
                         ],
                       ),
                     );
