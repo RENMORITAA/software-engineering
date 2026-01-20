@@ -120,11 +120,23 @@ class _DHomePageState extends State<DHomePage> {
   onChanged: (value) {
     deliveryProvider.toggleOnlineStatus(value);
   },
-  activeColor: const Color(0xFF2E7D32), // ONの時のつまみの色
-  activeTrackColor: const Color(0xFF81C784), // ONの時のトラックの色
-  inactiveThumbColor: Colors.grey[400], // OFFの時のつまみの色
-  inactiveTrackColor: Colors.grey[300], // OFFの時のトラックの色
-),
+  thumbColor: WidgetStateProperty.resolveWith<Color>(
+    (Set<WidgetState> states) {
+      if (states.contains(WidgetState.selected)) {
+        return const Color(0xFF2E7D32); // ONの時
+      }
+      return Colors.grey[400]!; // OFFの時
+    },
+  ),
+  trackColor: WidgetStateProperty.resolveWith<Color>(
+    (Set<WidgetState> states) {
+      if (states.contains(WidgetState.selected)) {
+        return const Color(0xFF81C784); // ONの時
+      }
+      return Colors.grey[300]!; // OFFの時
+    },
+  ),
+)
                 ],
               ),
             ),
