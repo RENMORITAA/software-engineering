@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import '../../component/component.dart';
 import '../../provider/provider.dart';
 
+import 'd_mypage.dart';
+
 /// 配達員ホーム画面
 class DHomePage extends StatefulWidget {
   const DHomePage({super.key});
@@ -42,8 +44,11 @@ class _DHomePageState extends State<DHomePage> {
           IconButton(
             icon: const Icon(Icons.notifications_outlined),
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('通知はマイページで確認できます')),
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const DMyPageWrapper(),
+                ),
               );
             },
           ),
