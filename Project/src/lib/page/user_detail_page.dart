@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 import '../provider/change_user_role.dart';
+import '../services/auth_service.dart';
 
 class UserDetailPage extends StatefulWidget {
   final String userName;
@@ -22,6 +26,11 @@ class UserDetailPage extends StatefulWidget {
 
 class _UserDetailPageState extends State<UserDetailPage> {
   bool _isEditing = false;
+  bool _isLoading = false;
+  final AuthService _authService = AuthService();
+  final ImagePicker _picker = ImagePicker();
+  XFile? _pickedImage;
+  String? _serverImageUrl;
 
   // 各入力項目のコントローラー
   late TextEditingController _nameController;
@@ -29,57 +38,88 @@ class _UserDetailPageState extends State<UserDetailPage> {
   late TextEditingController _phoneController;
 
   late String _selectedTransport;
-  final List<String> _transportOptions = ['自動車', 'バイク', '軽自動車', '徒歩'];
-  
+  final List<String> _transportOptions = ['自動車', 'バイク', '自転車', '徒歩'];
+
   late TextEditingController _storeNameController;
   late TextEditingController _storeAddressController;
   late TextEditingController _storeDescriptionController;
-  late TextEditingController _openingHoursController;
+  late TextEditingController _businessHoursController;
 
   @override
   void initState() {
     super.initState();
-    // 引数で受け取ったデータをコントローラーの初期値としてセット
-    final info = widget.additionalInfo ?? {};
     _nameController = TextEditingController(text: widget.userName);
     _emailController = TextEditingController(text: widget.userEmail);
-    _phoneController = TextEditingController(text: info['phone_number']?.toString() ?? '');
-    
-    // 配達手段の初期値
-    _selectedTransport = _mapVehicleType(info['vehicle_type']?.toString() ?? 'walk');
-    
-    // 店舗用初期値
-    _storeNameController = TextEditingController(text: info['store_name']?.toString() ?? '');
-    _storeAddressController = TextEditingController(text: info['store_address']?.toString() ?? '');
-    _storeDescriptionController = TextEditingController(text: info['store_description']?.toString() ?? '');
-    _openingHoursController = TextEditingController(text: info['business_hours']?.toString() ?? '');
+    _phoneController = TextEditingController();
+    _storeNameController = TextEditingController();
+    _storeAddressController = TextEditingController();
+    _storeDescriptionController = TextEditingController();
+    _businessHoursController = TextEditingController();
+    _selectedTransport = '徒歩';
+
+    _loadInitialData();
   }
 
-  // 内部的な値を日本語に変換するヘルパー
+  Future<void> _loadInitialData() async {
+    final savedInfo = await _authService.getSavedUserInfo();
+    final info = savedInfo ?? widget.additionalInfo ?? {};
+
+    if (mounted) {
+      setState(() {
+        if (info['name'] != null) _nameController.text = info['name'].toString();
+        if (info['email'] != null) _emailController.text = info['email'].toString();
+        
+        // 電話番号の読み込み（複数のキーをチェック）
+        final phone = info['phone_number'] ?? info['phoneNumber'] ?? info['phone'];
+        if (phone != null) _phoneController.text = phone.toString();
+
+        if (widget.userRole == 'deliverer') {
+          _selectedTransport = _mapVehicleType(info['vehicle_type']?.toString() ?? 'walk');
+        } else if (widget.userRole == 'store') {
+          _storeNameController.text = info['store_name']?.toString() ?? '';
+          _storeAddressController.text = info['address']?.toString() ?? '';
+          _storeDescriptionController.text = info['description']?.toString() ?? '';
+          _businessHoursController.text = info['business_hours']?.toString() ?? '';
+        }
+
+        String? imagePath = (widget.userRole == 'deliverer') ? info['resume_image'] : info['license_image'];
+        if (imagePath != null && imagePath.isNotEmpty) {
+          final host = kIsWeb ? "127.0.0.1" : "10.0.2.2";
+          _serverImageUrl = "http://$host:8000$imagePath";
+        }
+      });
+    }
+  }
+
   String _mapVehicleType(String type) {
     switch (type) {
       case 'car': return '自動車';
       case 'motorcycle': return 'バイク';
-      case 'bicycle': return '自転車'; 
+      case 'bicycle': return '自転車';
       case 'walk': return '徒歩';
       default: return '徒歩';
     }
   }
 
+  String _reverseMapVehicle(String val) {
+    if (val == '自動車') return 'car';
+    if (val == 'バイク') return 'motorcycle';
+    if (val == '自転車  ') return 'bicycle';
+    return 'walk';
+  }
+
   @override
   void dispose() {
-    // 全てのコントローラーを破棄
     _nameController.dispose();
     _emailController.dispose();
     _phoneController.dispose();
     _storeNameController.dispose();
     _storeAddressController.dispose();
     _storeDescriptionController.dispose();
-    _openingHoursController.dispose();
+    _businessHoursController.dispose();
     super.dispose();
   }
 
-  // 以前の確定/キャンセルボタンのデザインを再現したダイアログ
   void _showConfirmDialog() {
     showDialog(
       context: context,
@@ -93,23 +133,9 @@ class _UserDetailPageState extends State<UserDetailPage> {
             child: const Text('キャンセル', style: TextStyle(color: Colors.grey)),
           ),
           ElevatedButton(
-            onPressed: () {
-              // --- Providerのデータを更新 ---
-              final userProvider = Provider.of<UserRoleProvider>(context, listen: false);
-              userProvider.updateProfile(
-                name: _nameController.text,
-                phoneNumber: _phoneController.text,
-                storeName: _storeNameController.text,
-                storeAddress: _storeAddressController.text,
-                vehicleType: widget.userRole == 'deliverer' ? _selectedTransport : null,
-              );
-
+            onPressed: () async {
               Navigator.pop(context);
-              setState(() => _isEditing = false);
-              
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('情報を更新しました')),
-              );
+              _saveProfile();
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF1A237E),
@@ -122,67 +148,119 @@ class _UserDetailPageState extends State<UserDetailPage> {
     );
   }
 
+  Future<void> _saveProfile() async {
+    setState(() => _isLoading = true);
+    try {
+      final data = {
+        'name': _nameController.text,
+        'phone_number': _phoneController.text,
+      };
+      if (widget.userRole == 'deliverer') {
+        data['vehicle_type'] = _reverseMapVehicle(_selectedTransport);
+      } else if (widget.userRole == 'store') {
+        data['store_name'] = _storeNameController.text;
+        data['address'] = _storeAddressController.text;
+        data['description'] = _storeDescriptionController.text;
+        data['business_hours'] = _businessHoursController.text;
+      }
+
+      await _authService.updateProfile(
+        role: widget.userRole,
+        data: data,
+        imageFile: _pickedImage,
+      );
+
+      if (mounted) {
+        setState(() {
+          _isEditing = false;
+          _isLoading = false;
+          _pickedImage = null;
+        });
+        await _loadInitialData();
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('情報を更新しました')));
+      }
+    } catch (e) {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('会員情報'),
-        backgroundColor: const Color(0xFF1A237E),
-        foregroundColor: Colors.white,
-        actions: [
-          if (_isEditing)
-            const Center(child: Text('変更中：', style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold))),
-          TextButton(
-            onPressed: () => _isEditing ? _showConfirmDialog() : setState(() => _isEditing = true),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(_isEditing ? Icons.check_circle : Icons.edit, color: _isEditing ? Colors.orange : Colors.white),
-                Text(_isEditing ? '完了' : '変更', style: TextStyle(color: _isEditing ? Colors.orange : Colors.white, fontSize: 10)),
-              ],
-            ),
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // オレンジバー
-            if (_isEditing)
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(12),
-                margin: const EdgeInsets.only(bottom: 20),
-                decoration: BoxDecoration(
-                  color: Colors.orange[50],
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.orange),
-                ),
-                child: const Row(
+    return Stack(
+      children: [
+        Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            title: const Text('会員情報'),
+            backgroundColor: const Color(0xFF1A237E),
+            foregroundColor: Colors.white,
+            actions: [
+              TextButton(
+                onPressed: () => _isEditing ? _showConfirmDialog() : setState(() => _isEditing = true),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.edit_note, color: Colors.orange),
-                    SizedBox(width: 8),
-                    Text('現在情報を変更中です', style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold)),
+                    Icon(_isEditing ? Icons.check_circle : Icons.edit, color: _isEditing ? Colors.orange : Colors.white),
+                    Text(_isEditing ? '完了' : '変更', style: TextStyle(color: _isEditing ? Colors.orange : Colors.white, fontSize: 10)),
                   ],
                 ),
               ),
-
-            _buildSectionTitle('基本情報'),
-            _buildCustomField('名前', _nameController),
-            _buildCustomField('メールアドレス', _emailController),
-            _buildCustomField('電話番号', _phoneController),
-
-            if (widget.userRole == 'deliverer') ...[
-              const SizedBox(height: 20),
-              _buildSectionTitle('配達員情報'),
-              _buildDropdownField('配達手段', _selectedTransport),
-              _buildUploadField('履歴書'),
             ],
-          ],
+          ),
+          body: SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // オレンジの警告バー
+                if (_isEditing)
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(12),
+                    margin: const EdgeInsets.only(bottom: 20),
+                    decoration: BoxDecoration(
+                      color: Colors.orange[50],
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Colors.orange),
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(Icons.edit_note, color: Colors.orange),
+                        SizedBox(width: 8),
+                        Text('現在情報を変更中です', style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                  ),
+
+                _buildSectionTitle('基本情報'),
+                _buildCustomField('名前', _nameController),
+                _buildCustomField('メールアドレス', _emailController, enabled: false),
+                _buildCustomField('電話番号', _phoneController),
+
+                if (widget.userRole == 'deliverer') ...[
+                  const SizedBox(height: 20),
+                  _buildSectionTitle('配達員情報'),
+                  _buildDropdownField('配達手段', _selectedTransport),
+                  _buildUploadField('履歴書'),
+                ],
+
+                if (widget.userRole == 'store') ...[
+                  const SizedBox(height: 20),
+                  _buildSectionTitle('店舗情報'),
+                  _buildCustomField('店舗名', _storeNameController),
+                  _buildCustomField('住所', _storeAddressController),
+                  _buildCustomField('店舗説明', _storeDescriptionController),
+                  _buildCustomField('営業時間', _businessHoursController),
+                  _buildUploadField('営業許可証'),
+                ],
+                const SizedBox(height: 40),
+              ],
+            ),
+          ),
         ),
-      ),
+        if (_isLoading)
+          Container(color: Colors.black45, child: const Center(child: CircularProgressIndicator(color: Colors.orange))),
+      ],
     );
   }
 
@@ -193,20 +271,20 @@ class _UserDetailPageState extends State<UserDetailPage> {
     );
   }
 
-  // 枠線を黒(black87)に統一したフィールド
-  Widget _buildCustomField(String label, TextEditingController controller) {
+  // 以前の黒太枠デザインを適用したフィールド
+  Widget _buildCustomField(String label, TextEditingController controller, {bool enabled = true}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: TextField(
         controller: controller,
-        enabled: _isEditing,
+        enabled: _isEditing && enabled,
         style: const TextStyle(color: Colors.black, fontSize: 16),
         decoration: InputDecoration(
           labelText: label,
           labelStyle: const TextStyle(color: Colors.black87),
           floatingLabelBehavior: FloatingLabelBehavior.always,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-          // 非編集時も黒い枠線を表示
+          // 黒い枠線(black87)に統一
           disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: const BorderSide(color: Colors.black87),
@@ -238,15 +316,15 @@ class _UserDetailPageState extends State<UserDetailPage> {
         child: _isEditing
             ? DropdownButtonHideUnderline(
                 child: DropdownButton<String>(
-                  value: _transportOptions.contains(value) ? value : _transportOptions.last,
+                  value: _transportOptions.contains(_selectedTransport) ? _selectedTransport : '徒歩',
                   isExpanded: true,
                   onChanged: (val) => setState(() => _selectedTransport = val!),
                   items: _transportOptions.map((v) => DropdownMenuItem(value: v, child: Text(v))).toList(),
                 ),
               )
             : Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                child: Text(value, style: const TextStyle(fontSize: 16, color: Colors.black)),
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: Text(_selectedTransport, style: const TextStyle(fontSize: 16, color: Colors.black)),
               ),
       ),
     );
@@ -255,29 +333,48 @@ class _UserDetailPageState extends State<UserDetailPage> {
   Widget _buildUploadField(String label) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
-      child: InputDecorator(
-        decoration: InputDecoration(
-          labelText: label,
-          labelStyle: const TextStyle(color: Colors.black87),
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Colors.black87),
+      child: InkWell(
+        onTap: _isEditing ? _pickImage : null,
+        child: InputDecorator(
+          decoration: InputDecoration(
+            labelText: label,
+            labelStyle: const TextStyle(color: Colors.black87),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Colors.black87),
+            ),
           ),
-        ),
-        child: const Padding(
-          padding: EdgeInsets.symmetric(vertical: 12),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.add_a_photo, color: Colors.grey),
-              SizedBox(width: 8),
-              Text('画像をアップロード', style: TextStyle(color: Colors.grey)),
-            ],
+          child: Container(
+            constraints: const BoxConstraints(minHeight: 100),
+            alignment: Alignment.center,
+            child: _buildImageContent(),
           ),
         ),
       ),
     );
+  }
+
+  Widget _buildImageContent() {
+    if (_pickedImage != null) {
+      return kIsWeb ? Image.network(_pickedImage!.path, height: 120) : Image.file(File(_pickedImage!.path), height: 120);
+    }
+    if (_serverImageUrl != null) {
+      return Image.network('$_serverImageUrl?t=${DateTime.now().millisecondsSinceEpoch}', height: 120);
+    }
+    return const Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(Icons.add_a_photo, color: Colors.grey),
+        SizedBox(width: 8),
+        Text('[変更]から画像をアップロード', style: TextStyle(color: Colors.grey)),
+      ],
+    );
+  }
+
+  Future<void> _pickImage() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    if (image != null) setState(() => _pickedImage = image);
   }
 }
