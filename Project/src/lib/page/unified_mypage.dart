@@ -4,6 +4,9 @@ import '../overlay/overlay.dart';
 import '../services/auth_service.dart';
 import 'package:http/http.dart' as http; 
 import 'dart:convert';
+import 'user_detail_page.dart';
+import 'package:provider/provider.dart';
+import '../provider/provider.dart';
 
 /// 統合マイページ（メニュー一覧レイアウト版）
 class UnifiedMyPage extends StatefulWidget {
@@ -172,7 +175,30 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
                     _MenuItem(
                       icon: Icons.person_outline,
                       title: '会員情報',
-                      onTap: () {},
+                      // unified_mypage.dart の「会員情報」リストタイルの onTap 部分
+                        onTap: () {
+                        // Providerを取得
+                        final userProvider = Provider.of<UserRoleProvider>(context, listen: false);
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UserDetailPage(
+                              // userProvider.userName と userProvider.userEmail に修正
+                              userName: userProvider.userName ?? '名前未設定',
+                              userEmail: userProvider.userEmail ?? '',
+                              // userRole は文字列で渡す必要があるため roleToString() を使用
+                              userRole: userProvider.roleToString(), 
+                              additionalInfo: {
+                                'phone_number': userProvider.phoneNumber,
+                                'vehicle_type': userProvider.vehicleType,
+                                'store_name': userProvider.storeName,
+                                'store_address': userProvider.storeAddress,
+                              },
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     _MenuItem(
                       icon: Icons.lock_outline,
