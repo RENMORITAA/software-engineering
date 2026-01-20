@@ -15,6 +15,8 @@ class DJobSelectPage extends StatefulWidget {
 
 class _DJobSelectPageState extends State<DJobSelectPage> {
   String _searchQuery = '';
+  double _maxDistance = 5.0; // 最大距離フィルター
+  int _minReward = 0; // 最低報酬フィルター
   
   // ダミーデータ
   final List<Map<String, dynamic>> _dummyJobs = [
@@ -118,6 +120,107 @@ class _DJobSelectPageState extends State<DJobSelectPage> {
     });
   }
 
+  void _showFilterDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        double tempMaxDistance = _maxDistance;
+        int tempMinReward = _minReward;
+
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            return AlertDialog(
+              title: const Text('フィルター設定'),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    '最大距離',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Slider(
+                          value: tempMaxDistance,
+                          min: 0.5,
+                          max: 5.0,
+                          divisions: 9,
+                          label: '${tempMaxDistance.toStringAsFixed(1)}km',
+                          onChanged: (value) {
+                            setDialogState(() {
+                              tempMaxDistance = value;
+                            });
+                          },
+                        ),
+                      ),
+                      Text('${tempMaxDistance.toStringAsFixed(1)}km'),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  const Text(
+                    '最低報酬',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Slider(
+                          value: tempMinReward.toDouble(),
+                          min: 0,
+                          max: 1000,
+                          divisions: 10,
+                          label: '¥$tempMinReward',
+                          onChanged: (value) {
+                            setDialogState(() {
+                              tempMinReward = value.toInt();
+                            });
+                          },
+                        ),
+                      ),
+                      Text('¥$tempMinReward'),
+                    ],
+                  ),
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _maxDistance = 5.0;
+                      _minReward = 0;
+                    });
+                    Navigator.pop(context);
+                  },
+                  child: const Text('リセット'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('キャンセル'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _maxDistance = tempMaxDistance;
+                      _minReward = tempMinReward;
+                    });
+                    Navigator.pop(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF2E7D32),
+                    foregroundColor: Colors.white,
+                  ),
+                  child: const Text('適用'),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final deliveryProvider = context.watch<DeliveryProvider>();
@@ -135,8 +238,13 @@ class _DJobSelectPageState extends State<DJobSelectPage> {
       final storeAddress =
           (job['store_address'] ?? '').toString().toLowerCase();
 
-      return storeName.contains(query) ||
+      final matchesSearch = storeName.contains(query) ||
           storeAddress.contains(query);
+
+      final matchesDistance = (job['distance'] ?? 0.0) <= _maxDistance;
+      final matchesReward = (job['reward'] ?? 0) >= _minReward;
+
+      return matchesSearch && matchesDistance && matchesReward;
     }).toList();
 
     return Scaffold(
@@ -175,32 +283,26 @@ class _DJobSelectPageState extends State<DJobSelectPage> {
                   ),
                 ),
                 const SizedBox(width: 12),
-                IconButton(
-                  icon: const Icon(Icons.filter_list),
-                  onPressed: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (_) => ListView(
-                        shrinkWrap: true,
-                        children: [
-                          ListTile(
-                            title: const Text('距離が近い順'),
-                            onTap: () {
-                              // ここに処理を書く
-                              Navigator.pop(context); // シートを閉じる
-                            },
+                Stack(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.filter_list),
+                      onPressed: _showFilterDialog,
+                    ),
+                    if (_maxDistance < 5.0 || _minReward > 0)
+                      Positioned(
+                        right: 8,
+                        top: 8,
+                        child: Container(
+                          width: 8,
+                          height: 8,
+                          decoration: const BoxDecoration(
+                            color: Color(0xFF2E7D32),
+                            shape: BoxShape.circle,
                           ),
-                          ListTile(
-                            title: const Text('報酬が高い順'),
-                            onTap: () {
-                              // ここに処理を書く
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ],
+                        ),
                       ),
-                    );
-                  },
+                  ],
                 ),
                 IconButton(
                   icon: const Icon(Icons.refresh),
@@ -211,6 +313,39 @@ class _DJobSelectPageState extends State<DJobSelectPage> {
               ],
             ),
           ),
+          // フィルター適用状態の表示
+          if (_maxDistance < 5.0 || _minReward > 0)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              color: const Color(0xFFE8F5E9),
+              child: Row(
+                children: [
+                  const Icon(Icons.filter_alt, size: 16, color: Color(0xFF2E7D32)),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'フィルター: ${_maxDistance < 5.0 ? '距離 ${_maxDistance.toStringAsFixed(1)}km以下' : ''}${_maxDistance < 5.0 && _minReward > 0 ? '、' : ''}${_minReward > 0 ? '報酬 ¥$_minReward以上' : ''}',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Color(0xFF2E7D32),
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      setState(() {
+                        _maxDistance = 5.0;
+                        _minReward = 0;
+                      });
+                    },
+                    child: const Text(
+                      'クリア',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           // 求人リスト
           Expanded(
             child: deliveryProvider.isLoading
