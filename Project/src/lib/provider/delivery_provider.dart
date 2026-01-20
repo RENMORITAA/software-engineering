@@ -70,30 +70,29 @@ class DeliveryProvider extends ChangeNotifier {
     }
   }
 
-  /// オンライン/オフライン切り替え
   Future<void> toggleOnlineStatus(bool isOnline) async {
-    _isLoading = true;
-    notifyListeners();
+  final previous = _isOnline;
 
-    try {
-      if (isOnline) {
-        await _deliveryService.setOnline();
-      } else {
-        await _deliveryService.setOffline();
-      }
-      _isOnline = isOnline;
-      if (_isOnline) {
-        fetchDeliveryJobs();
-      }
-    } catch (e) {
-      _error = e.toString();
-      // エラー時は状態を戻す
-      _isOnline = !isOnline;
-    } finally {
-      _isLoading = false;
-      notifyListeners();
+  _isOnline = isOnline; // 先に反映
+  _isLoading = true;
+  notifyListeners();
+
+  try {
+    if (isOnline) {
+      await _deliveryService.setOnline();
+      fetchDeliveryJobs();
+    } else {
+      await _deliveryService.setOffline();
     }
+  } catch (e) {
+    _error = e.toString();
+    _isOnline = previous; // 失敗時のみ戻す
+  } finally {
+    _isLoading = false;
+    notifyListeners();
   }
+}
+
   
   /// 配達ステータス更新
   Future<bool> updateDeliveryStatus(int deliveryId, String status) async {
