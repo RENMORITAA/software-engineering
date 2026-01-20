@@ -178,9 +178,15 @@ class _DJobSelectPageState extends State<DJobSelectPage> {
                 IconButton(
                   icon: const Icon(Icons.filter_list),
                   onPressed: () {
-                    // TODO: フィルター設定
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('フィルター機能は準備中です')),
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (_) => ListView(
+                        shrinkWrap: true,
+                        children: const [
+                          ListTile(title: Text('距離が近い順')),
+                          ListTile(title: Text('報酬が高い順')),
+                        ],
+                      ),
                     );
                   },
                 ),
