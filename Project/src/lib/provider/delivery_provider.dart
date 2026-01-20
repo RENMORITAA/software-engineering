@@ -73,20 +73,24 @@ class DeliveryProvider extends ChangeNotifier {
   Future<void> toggleOnlineStatus(bool isOnline) async {
   final previous = _isOnline;
 
-  _isOnline = isOnline; // 先に反映
+  _isOnline = isOnline;
   _isLoading = true;
   notifyListeners();
 
   try {
     if (isOnline) {
       await _deliveryService.setOnline();
-      fetchDeliveryJobs();
+      try {
+        await fetchDeliveryJobs();
+      } catch (e) {
+        debugPrint('fetchDeliveryJobs failed: $e');
+      }
     } else {
       await _deliveryService.setOffline();
     }
   } catch (e) {
+    _isOnline = previous;
     _error = e.toString();
-    _isOnline = previous; // 失敗時のみ戻す
   } finally {
     _isLoading = false;
     notifyListeners();
