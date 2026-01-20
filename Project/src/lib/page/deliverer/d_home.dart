@@ -47,7 +47,7 @@ class _DHomePageState extends State<DHomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => const DMyPageWrapper(),
+                  builder: (_) => const DNotification(),
                 ),
               );
             },
