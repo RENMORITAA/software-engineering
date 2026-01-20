@@ -86,7 +86,7 @@ class _DHomePageState extends State<DHomePage> {
                     ),
                     child: const Icon(
                       Icons.power_settings_new,
-                      color: Colors.white,
+                      color: Colors.grey,
                       size: 32,
                     ),
                   ),
