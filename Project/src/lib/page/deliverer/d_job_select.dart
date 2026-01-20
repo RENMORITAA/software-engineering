@@ -128,17 +128,33 @@ class _DJobSelectPageState extends State<DJobSelectPage> {
         : deliveryProvider.availableJobs;
     
     final filteredJobs = jobs.where((job) {
-      final query = _searchQuery.toLowerCase();
+    final query = _searchQuery.toLowerCase();
 
-      final storeName =
-          (job['store_name'] ?? '').toString().toLowerCase();
-      final storeAddress =
-          (job['store_address'] ?? '').toString().toLowerCase();
+    final storeName =
+        (job['store_name'] ?? '').toString().toLowerCase();
+    final storeAddress =
+        (job['store_address'] ?? '').toString().toLowerCase();
 
-      return storeName.contains(query) ||
-          storeAddress.contains(query);
-    }).toList();
+    return storeName.contains(query) ||
+        storeAddress.contains(query);
+  }).toList();
 
+  // ★ ここで並び替え
+  switch (_sortType) {
+    case JobSortType.distanceAsc:
+      filteredJobs.sort((a, b) =>
+          (a['distance'] ?? 0).compareTo(b['distance'] ?? 0));
+      break;
+
+    case JobSortType.rewardDesc:
+      filteredJobs.sort((a, b) =>
+          (b['reward'] ?? 0).compareTo(a['reward'] ?? 0));
+      break;
+
+    case JobSortType.none:
+      // 何もしない
+      break;
+  }
     return Scaffold(
       appBar: const TitleAppBar(
         title: '求人を探す',
