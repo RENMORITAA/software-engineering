@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../component/component.dart';
 
 /// 配達履歴画面
@@ -25,6 +24,10 @@ class DDeliveryHistoryPage extends StatelessWidget {
   }
 
   Widget _buildHistoryCard(BuildContext context, int index) {
+    final date = '2025年12月${21 - index}日';
+    final storeName = '店舗${index + 1}';
+    final price = 500 + (index * 50);
+
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
@@ -41,10 +44,8 @@ class DDeliveryHistoryPage extends StatelessWidget {
       child: ListTile(
         contentPadding: const EdgeInsets.all(16),
         title: Text(
-          '2025年12月${21 - index}日',
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
+          date,
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +55,7 @@ class DDeliveryHistoryPage extends StatelessWidget {
               children: [
                 const Icon(Icons.store, size: 16, color: Colors.grey),
                 const SizedBox(width: 8),
-                Text('店舗${index + 1}'),
+                Text(storeName),
               ],
             ),
             const SizedBox(height: 4),
@@ -67,23 +68,103 @@ class DDeliveryHistoryPage extends StatelessWidget {
             ),
           ],
         ),
-        trailing: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(
-              '¥${500 + (index * 50)}',
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF2E7D32),
-              ),
-            ),
-          ],
+        trailing: Text(
+          '¥$price',
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF2E7D32),
+          ),
         ),
         onTap: () {
-          // TODO: 詳細画面へ
+          // 詳細画面へ遷移
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DDeliveryHistoryDetailPage(
+                date: date,
+                storeName: storeName,
+                price: price,
+              ),
+            ),
+          );
         },
+      ),
+    );
+  }
+}
+
+/// 配達履歴詳細画面
+class DDeliveryHistoryDetailPage extends StatelessWidget {
+  final String date;
+  final String storeName;
+  final int price;
+
+  const DDeliveryHistoryDetailPage({
+    super.key,
+    required this.date,
+    required this.storeName,
+    required this.price,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: const TitleAppBar(
+        title: '配達詳細',
+        showBackButton: true,
+        backgroundColor: Color(0xFF2E7D32),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Center(
+              child: Icon(Icons.check_circle, size: 64, color: Colors.green),
+            ),
+            const SizedBox(height: 16),
+            const Center(
+              child: Text(
+                '配達完了',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+            const SizedBox(height: 32),
+            const Divider(),
+            _buildDetailRow('配達日', date),
+            _buildDetailRow('店舗名', storeName),
+            _buildDetailRow('報酬合計', '¥$price', isBold: true),
+            _buildDetailRow('配達ID', 'DEL-2025-00$price'), // ダミーID
+            const Divider(),
+            const SizedBox(height: 24),
+            const Text(
+              '配達先情報',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            const Text('東京都渋谷区道玄坂1-2-3\nサンプルビル 405号室'),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDetailRow(String label, String value, {bool isBold = false}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label, style: const TextStyle(color: Colors.grey)),
+          Text(
+            value,
+            style: TextStyle(
+              fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+              fontSize: isBold ? 18 : 14,
+            ),
+          ),
+        ],
       ),
     );
   }
