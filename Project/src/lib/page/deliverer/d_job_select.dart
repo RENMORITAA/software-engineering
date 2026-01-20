@@ -186,14 +186,27 @@ class _DJobSelectPageState extends State<DJobSelectPage> {
                           ListTile(
                             title: const Text('距離が近い順'),
                             onTap: () {
-                              // ここに処理を書く
-                              Navigator.pop(context); // シートを閉じる
+                              setState(() {
+                                _sortType = JobSortType.distanceAsc;
+                              });
+                              Navigator.pop(context);
                             },
                           ),
                           ListTile(
                             title: const Text('報酬が高い順'),
                             onTap: () {
-                              // ここに処理を書く
+                              setState(() {
+                                _sortType = JobSortType.rewardDesc;
+                              });
+                              Navigator.pop(context);
+                            },
+                          ),
+                          ListTile(
+                            title: const Text('並び替え解除'),
+                            onTap: () {
+                              setState(() {
+                                _sortType = JobSortType.none;
+                              });
                               Navigator.pop(context);
                             },
                           ),
@@ -202,6 +215,7 @@ class _DJobSelectPageState extends State<DJobSelectPage> {
                     );
                   },
                 ),
+
                 IconButton(
                   icon: const Icon(Icons.refresh),
                   onPressed: () {
