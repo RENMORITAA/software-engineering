@@ -116,17 +116,15 @@ class _DHomePageState extends State<DHomePage> {
                     ),
                   ),
                   Switch(
-                    value: isOnline,
-                    onChanged: deliveryProvider.isLoading
-                        ? null
-                        : (value) {
-                            deliveryProvider.toggleOnlineStatus(value);
-                          },
-                    activeColor: const Color(0xFF2E7D32),        // ON：つまみ
-                    activeTrackColor: const Color(0xFF81C784),   // ON：背景（任意）
-                    inactiveThumbColor: Colors.grey.shade400,    // OFF：つまみ
-                    inactiveTrackColor: Colors.grey.shade300,    // OFF：背景
-                  ),
+  value: isOnline,
+  onChanged: (value) {
+    deliveryProvider.toggleOnlineStatus(value);
+  },
+  activeColor: const Color(0xFF2E7D32), // ONの時のつまみの色
+  activeTrackColor: const Color(0xFF81C784), // ONの時のトラックの色
+  inactiveThumbColor: Colors.grey[400], // OFFの時のつまみの色
+  inactiveTrackColor: Colors.grey[300], // OFFの時のトラックの色
+),
                 ],
               ),
             ),
