@@ -4,8 +4,11 @@ import 'package:provider/provider.dart';
 import '../../component/component.dart';
 import '../../provider/provider.dart';
 import '../../models/database_models.dart';
+import '../../widgets/widgets.dart';
+import '../../services/delivery_simulation_service.dart';
+import '../../services/location_service.dart';
 
-/// 豕ｨ譁・ｿｽ霍｡逕ｻ髱｢
+/// 注文追跡画面（Leaflet地図統合版）
 class COrderTrackingPage extends StatefulWidget {
   final int orderId;
 
@@ -16,12 +19,34 @@ class COrderTrackingPage extends StatefulWidget {
 }
 
 class _COrderTrackingPageState extends State<COrderTrackingPage> {
+  final DeliverySimulationService _simulationService = DeliverySimulationService();
+  Stream<LocationData>? _delivererLocationStream;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<OrderProvider>().fetchOrderDetail(widget.orderId);
+      _startDeliveryTracking();
     });
+  }
+
+  @override
+  void dispose() {
+    _simulationService.dispose();
+    super.dispose();
+  }
+
+  void _startDeliveryTracking() {
+    // デモ用の座標でシミュレーション開始
+    _delivererLocationStream = _simulationService.startSimulation(
+      startLat: 35.6812, // 店舗位置（例：東京）
+      startLng: 139.7671,
+      endLat: 35.6895, // 依頼者位置（例：新宿近郊）
+      endLng: 139.6917,
+      updateIntervalSeconds: 3,
+    );
+    setState(() {});
   }
 
   String _getStatusText(String status) {
