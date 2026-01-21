@@ -9,6 +9,8 @@ import 's_order_management.dart';
 import 's_menu_edit.dart';
 import 's_mypage.dart';
 
+import 's_sales.dart'; 
+
 /// 店舗側ルートページ
 class SRootPage extends StatefulWidget {
   final int initialIndex;
@@ -26,6 +28,7 @@ class _SRootPageState extends State<SRootPage> {
     const SHomePage(),
     const SOrderManagementPage(),
     const SMenuEditPage(),
+    const SSalesPage(),             // （売上）
     const SMyPageWrapper(),
   ];
 
