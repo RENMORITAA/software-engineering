@@ -2,7 +2,8 @@
 import 'package:provider/provider.dart';
 import '../../provider/provider.dart';
 import 'c_product_list.dart';
-import 'c_notification.dart'; // 通知画面をインポート
+import 'c_notification.dart';
+import 'c_address_edit.dart'; // 住所編集画面をインポート
 
 class CHomePage extends StatefulWidget {
   const CHomePage({super.key});
@@ -15,6 +16,9 @@ class _CHomePageState extends State<CHomePage> {
   // 状態管理用の変数
   String _searchQuery = '';
   String _selectedCategory = 'すべて';
+  
+  // 現在の表示住所（初期値）
+  String _currentAddress = '高知県香美市土佐山田町...';
 
   @override
   void initState() {
@@ -35,12 +39,9 @@ class _CHomePageState extends State<CHomePage> {
       final name = (store['store_name'] ?? '').toString().toLowerCase();
       final desc = (store['description'] ?? '').toString().toLowerCase();
       
-      // 検索ワードに一致するか
       final matchesSearch = name.contains(_searchQuery.toLowerCase()) || 
                             desc.contains(_searchQuery.toLowerCase());
       
-      // カテゴリに一致するか
-      // ※簡易的に名前や説明にカテゴリ名が含まれているかで判定
       final matchesCategory = _selectedCategory == 'すべて' || 
                               name.contains(_selectedCategory) || 
                               desc.contains(_selectedCategory);
@@ -62,7 +63,7 @@ class _CHomePageState extends State<CHomePage> {
               // 2. 検索バー
               SliverToBoxAdapter(child: _buildActiveSearchBar()),
 
-              // 3. カテゴリ (タップでフィルタリング)
+              // 3. カテゴリ
               SliverToBoxAdapter(child: _buildCategorySection()),
 
               // 4. おすすめ店舗 見出し
@@ -94,7 +95,7 @@ class _CHomePageState extends State<CHomePage> {
     );
   }
 
-  // --- 動的ヘッダー (通知画面への遷移を追加) ---
+  // --- 動的ヘッダー (通知画面への遷移) ---
   Widget _buildDynamicHeader(BuildContext context, String name) {
     return Container(
       padding: const EdgeInsets.all(20),
@@ -118,14 +119,13 @@ class _CHomePageState extends State<CHomePage> {
               ),
               IconButton(
                 onPressed: () {
-                  // 通知画面へ遷移
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const CNotificationPage()),
                   );
                 },
                 icon: const Badge(
-                  label: Text('3'), // 未読数
+                  label: Text('3'),
                   backgroundColor: Colors.red,
                   child: Icon(Icons.notifications_outlined, color: Colors.white, size: 28),
                 ),
@@ -133,14 +133,14 @@ class _CHomePageState extends State<CHomePage> {
             ],
           ),
           const SizedBox(height: 20),
-          _buildAddressSelector(),
+          _buildAddressSelector(context), // contextを渡すように変更
         ],
       ),
     );
   }
 
-  // --- 住所セレクター ---
-  Widget _buildAddressSelector() {
+  // --- 住所セレクター (住所編集画面への遷移を実装) ---
+  Widget _buildAddressSelector(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -151,20 +151,39 @@ class _CHomePageState extends State<CHomePage> {
         children: [
           const Icon(Icons.location_on, color: Colors.white),
           const SizedBox(width: 12),
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('配達先', style: TextStyle(fontSize: 11, color: Colors.white70)),
-                Text('高知県香美市土佐山田町...', 
-                  style: TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w500), 
+                const Text('配達先', style: TextStyle(fontSize: 11, color: Colors.white70)),
+                Text(
+                  _currentAddress, // 状態変数を使用
+                  style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w500), 
                   overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
           ),
           TextButton(
-            onPressed: () { /* 住所変更画面へ */ },
+            onPressed: () async {
+              // 住所編集画面へ遷移し、結果を待機
+              final result = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CAddressEditPage(
+                    initialAddress: _currentAddress,
+                    userRole: 'requester',
+                  ),
+                ),
+              );
+
+              // 戻り値（新しい住所）があれば更新
+              if (result != null && result is String && result.isNotEmpty) {
+                setState(() {
+                  _currentAddress = result;
+                });
+              }
+            },
             child: const Text('変更', style: TextStyle(color: Colors.white)),
           ),
         ],
@@ -294,7 +313,6 @@ class _CHomePageState extends State<CHomePage> {
           ),
           child: Row(
             children: [
-              // 画像部分
               Container(
                 width: 100, height: 100,
                 decoration: BoxDecoration(
@@ -308,7 +326,6 @@ class _CHomePageState extends State<CHomePage> {
                   ? Icon(Icons.store, size: 40, color: Colors.grey[400]) 
                   : null,
               ),
-              // 情報部分
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(12),
@@ -345,7 +362,6 @@ class _CHomePageState extends State<CHomePage> {
     );
   }
 
-  // --- 店舗がない時の表示 ---
   Widget _buildEmptyState() {
     return SliverToBoxAdapter(
       child: Center(
