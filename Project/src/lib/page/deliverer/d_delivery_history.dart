@@ -1,32 +1,90 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+
 import '../../component/component.dart';
+import '../../provider/provider.dart';
+import '../../models/database_models.dart';
 
 /// 配達履歴画面
-class DDeliveryHistoryPage extends StatelessWidget {
+class DDeliveryHistoryPage extends StatefulWidget {
   const DDeliveryHistoryPage({super.key});
 
   @override
+  State<DDeliveryHistoryPage> createState() => _DDeliveryHistoryPageState();
+}
+
+class _DDeliveryHistoryPageState extends State<DDeliveryHistoryPage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<DeliveryProvider>().fetchMyDeliveries();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final deliveryProvider = context.watch<DeliveryProvider>();
+    final deliveries = deliveryProvider.myDeliveries;
+
     return Scaffold(
       appBar: const TitleAppBar(
         title: '配達履歴',
         showBackButton: false,
         backgroundColor: Color(0xFF2E7D32),
       ),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: 10,
-        itemBuilder: (context, index) {
-          return _buildHistoryCard(context, index);
-        },
+      body: deliveryProvider.isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : deliveries.isEmpty
+              ? _buildEmptyState()
+              : RefreshIndicator(
+                  onRefresh: () => deliveryProvider.fetchMyDeliveries(),
+                  child: ListView.builder(
+                    padding: const EdgeInsets.all(16),
+                    itemCount: deliveries.length,
+                    itemBuilder: (context, index) {
+                      return _buildHistoryCard(context, deliveries[index]);
+                    },
+                  ),
+                ),
+    );
+  }
+
+  Widget _buildEmptyState() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.local_shipping_outlined,
+            size: 80,
+            color: Colors.grey[300],
+          ),
+          const SizedBox(height: 16),
+          Text(
+            '配達履歴がありません',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey[600],
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildHistoryCard(BuildContext context, int index) {
-    final date = '2025年12月${21 - index}日';
-    final storeName = '店舗${index + 1}';
-    final price = 500 + (index * 50);
+  Widget _buildHistoryCard(BuildContext context, Delivery delivery) {
+    final dateFormat = DateFormat('yyyy年MM月dd日');
+    final timeFormat = DateFormat('HH:mm');
+    final date = delivery.createdAt != null
+        //? dateFormat.format(delivery.createdAt!)
+        ? dateFormat.format(DateTime.parse(delivery.createdAt!))
+        : '日付不明';
+    final time = delivery.deliveryTime != null
+        //? timeFormat.format(delivery.deliveryTime!)
+        ? timeFormat.format(DateTime.parse(delivery.deliveryTime!))
+        : '';
 
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
@@ -53,23 +111,37 @@ class DDeliveryHistoryPage extends StatelessWidget {
             const SizedBox(height: 8),
             Row(
               children: [
-                const Icon(Icons.store, size: 16, color: Colors.grey),
+                const Icon(Icons.schedule, size: 16, color: Colors.grey),
                 const SizedBox(width: 8),
-                Text(storeName),
+                Text(time.isNotEmpty ? time : '時刻不明'),
               ],
             ),
             const SizedBox(height: 4),
             Row(
               children: [
-                const Icon(Icons.check_circle, size: 16, color: Colors.green),
+                Icon(
+                  _getStatusIcon(delivery.status),
+                  size: 16,
+                  color: _getStatusColor(delivery.status),
+                ),
                 const SizedBox(width: 8),
-                const Text('配達完了'),
+                Text(_getStatusText(delivery.status)),
               ],
             ),
+            if (delivery.distanceKm != null) ...[
+              const SizedBox(height: 4),
+              Row(
+                children: [
+                  const Icon(Icons.straighten, size: 16, color: Colors.grey),
+                  const SizedBox(width: 8),
+                  Text('${delivery.distanceKm!.toStringAsFixed(1)}km'),
+                ],
+              ),
+            ],
           ],
         ),
         trailing: Text(
-          '¥$price',
+          '¥${delivery.deliveryFee ?? 0}',
           style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -77,14 +149,11 @@ class DDeliveryHistoryPage extends StatelessWidget {
           ),
         ),
         onTap: () {
-          // 詳細画面へ遷移
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => DDeliveryHistoryDetailPage(
-                date: date,
-                storeName: storeName,
-                price: price,
+                delivery: delivery,
               ),
             ),
           );
@@ -92,23 +161,66 @@ class DDeliveryHistoryPage extends StatelessWidget {
       ),
     );
   }
+
+  IconData _getStatusIcon(String status) {
+    switch (status) {
+      case 'completed':
+        return Icons.check_circle;
+      case 'delivering':
+        return Icons.local_shipping;
+      case 'picked_up':
+        return Icons.shopping_bag;
+      default:
+        return Icons.info;
+    }
+  }
+
+  Color _getStatusColor(String status) {
+    switch (status) {
+      case 'completed':
+        return Colors.green;
+      case 'delivering':
+        return Colors.blue;
+      case 'picked_up':
+        return Colors.orange;
+      default:
+        return Colors.grey;
+    }
+  }
+
+  String _getStatusText(String status) {
+    switch (status) {
+      case 'completed':
+        return '配達完了';
+      case 'delivering':
+        return '配達中';
+      case 'picked_up':
+        return '商品受取済';
+      case 'at_store':
+        return '店舗到着';
+      case 'heading_store':
+        return '店舗へ向かっています';
+      case 'assigned':
+        return '割当済';
+      default:
+        return status;
+    }
+  }
 }
 
 /// 配達履歴詳細画面
 class DDeliveryHistoryDetailPage extends StatelessWidget {
-  final String date;
-  final String storeName;
-  final int price;
+  final Delivery delivery;
 
   const DDeliveryHistoryDetailPage({
     super.key,
-    required this.date,
-    required this.storeName,
-    required this.price,
+    required this.delivery,
   });
 
   @override
   Widget build(BuildContext context) {
+    final dateFormat = DateFormat('yyyy年MM月dd日 HH:mm');
+
     return Scaffold(
       appBar: const TitleAppBar(
         title: '配達詳細',
@@ -120,30 +232,76 @@ class DDeliveryHistoryDetailPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Center(
-              child: Icon(Icons.check_circle, size: 64, color: Colors.green),
+            Center(
+              child: Icon(
+                delivery.status == 'completed'
+                    ? Icons.check_circle
+                    : Icons.local_shipping,
+                size: 64,
+                color: delivery.status == 'completed'
+                    ? Colors.green
+                    : Colors.blue,
+              ),
             ),
             const SizedBox(height: 16),
-            const Center(
+            Center(
               child: Text(
-                '配達完了',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                _getStatusText(delivery.status),
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             const SizedBox(height: 32),
             const Divider(),
-            _buildDetailRow('配達日', date),
-            _buildDetailRow('店舗名', storeName),
-            _buildDetailRow('報酬合計', '¥$price', isBold: true),
-            _buildDetailRow('配達ID', 'DEL-2025-00$price'), // ダミーID
+            if (delivery.createdAt != null)
+              _buildDetailRow(
+                '配達日時',
+                //dateFormat.format(delivery.createdAt!),
+                dateFormat.format(DateTime.parse(delivery.createdAt!)),
+              ),
+            if (delivery.deliveryFee != null)
+              _buildDetailRow(
+                '報酬',
+                '¥${delivery.deliveryFee}',
+                isBold: true,
+              ),
+            if (delivery.distanceKm != null)
+              _buildDetailRow(
+                '配達距離',
+                '${delivery.distanceKm!.toStringAsFixed(1)}km',
+              ),
+            _buildDetailRow('配達ID', 'DEL-${delivery.id}'),
+            if (delivery.pickupTime != null)
+              _buildDetailRow(
+                '商品受取時刻',
+                //DateFormat('HH:mm').format(delivery.pickupTime!),
+                DateFormat('HH:mm').format(DateTime.parse(delivery.pickupTime!)),
+              ),
+            if (delivery.deliveryTime != null)
+              _buildDetailRow(
+                '配達完了時刻',
+                //DateFormat('HH:mm').format(delivery.deliveryTime!),
+                DateFormat('HH:mm').format(DateTime.parse(delivery.deliveryTime!)),
+              ),
             const Divider(),
             const SizedBox(height: 24),
-            const Text(
-              '配達先情報',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            const Text('東京都渋谷区道玄坂1-2-3\nサンプルビル 405号室'),
+            if (delivery.currentLatitude != null &&
+                delivery.currentLongitude != null) ...[
+              const Text(
+                '最終位置',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                '緯度: ${delivery.currentLatitude!.toStringAsFixed(6)}\n'
+                '経度: ${delivery.currentLongitude!.toStringAsFixed(6)}',
+              ),
+            ],
           ],
         ),
       ),
@@ -167,5 +325,24 @@ class DDeliveryHistoryDetailPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String _getStatusText(String status) {
+    switch (status) {
+      case 'completed':
+        return '配達完了';
+      case 'delivering':
+        return '配達中';
+      case 'picked_up':
+        return '商品受取済';
+      case 'at_store':
+        return '店舗到着';
+      case 'heading_store':
+        return '店舗へ向かっています';
+      case 'assigned':
+        return '割当済';
+      default:
+        return status;
+    }
   }
 }
