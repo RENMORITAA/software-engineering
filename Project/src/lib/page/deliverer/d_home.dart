@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../../component/component.dart';
 import '../../provider/provider.dart';
 
-import 'd_mypage.dart';
 import 'd_notification.dart';
 
 /// 配達員ホーム画面
@@ -19,7 +18,6 @@ class _DHomePageState extends State<DHomePage> {
   @override
   void initState() {
     super.initState();
-    // 画面表示時にデータを更新
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<DeliveryProvider>().fetchMyDeliveries();
     });
@@ -31,6 +29,31 @@ class _DHomePageState extends State<DHomePage> {
     final userProvider = context.watch<UserRoleProvider>();
     final isOnline = deliveryProvider.isOnline;
     final userName = userProvider.userName ?? '名前不明';
+
+    // 今日の配達データを計算
+    final deliveries = deliveryProvider.myDeliveries;
+    final todayDeliveries = deliveries.where((d) {
+      //final deliveryDate = d.createdAt;
+      final createdAt = d.createdAt != null
+    ? DateTime.tryParse(d.createdAt!)
+    : null;
+
+      final today = DateTime.now();
+      //return deliveryDate?.year == today.year &&
+          //deliveryDate?.month == today.month &&
+          //deliveryDate?.day == today.day;
+          return createdAt != null &&
+    createdAt.year == today.year &&
+    createdAt.month == today.month &&
+    createdAt.day == today.day;
+
+    }).toList();
+    
+    final todayCount = todayDeliveries.length;
+    final todayEarnings = todayDeliveries.fold<int>(
+      0,
+      (sum, d) => sum + (d.deliveryFee ?? 0),
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -55,152 +78,181 @@ class _DHomePageState extends State<DHomePage> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // ユーザーグリーチE  ング
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: Text(
-                'こんにちは、$userName さん',
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-            // オンライン/オフライン刁E  替ぁE
-            Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: isOnline ? const Color(0xFFE8F5E9) : Colors.grey[100],
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(
-                  color: isOnline ? const Color(0xFF2E7D32) : Colors.grey[300]!,
-                  width: 2,
-                ),
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: isOnline ? const Color(0xFF2E7D32) : Colors.grey[400],
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.power_settings_new,
-                      color: Colors.white,
-                      size: 32,
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          isOnline ? 'オンライン' : 'オフライン',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: isOnline
-                                ? const Color(0xFF2E7D32)
-                                : Colors.grey[600],
-                          ),
-                        ),
-                        Text(
-                          isOnline ? '注文を受け付けています' : '配達を開始するにはタップしてください',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Switch(
-  value: isOnline,
-  onChanged: (value) {
-    deliveryProvider.toggleOnlineStatus(value);
-  },
-  thumbColor: WidgetStateProperty.resolveWith<Color>(
-    (Set<WidgetState> states) {
-      if (states.contains(WidgetState.selected)) {
-        return const Color(0xFF2E7D32); // ONの時
-      }
-      return Colors.grey[400]!; // OFFの時
-    },
-  ),
-  trackColor: WidgetStateProperty.resolveWith<Color>(
-    (Set<WidgetState> states) {
-      if (states.contains(WidgetState.selected)) {
-        return const Color(0xFF81C784); // ONの時
-      }
-      return Colors.grey[300]!; // OFFの時
-    },
-  ),
-)
-                ],
-              ),
-            ),
-            const SizedBox(height: 24),
-            // 今日の実績
-            const Text(
-              '今日の実績',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: _buildStatCard(
-                    '配達件数',
-                    '${deliveryProvider.myDeliveries.length}件',
-                    Icons.local_shipping_outlined,
-                    Colors.blue,
+      body: RefreshIndicator(
+        onRefresh: () => deliveryProvider.fetchMyDeliveries(),
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // ユーザーグリーティング
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: Text(
+                  'こんにちは、$userName さん',
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: _buildStatCard(
-                    '売上',
-                    '¥${deliveryProvider.myDeliveries.fold(0, (sum, item) => sum + (item.deliveryFee ?? 0))}',
-                    Icons.attach_money,
-                    Colors.orange,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
-            // 現在のスチE Eタス
-            if (isOnline)
+              ),
+              // オンライン/オフライン切替
               Container(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.blue[50],
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.blue[100]!),
+                  color: isOnline ? const Color(0xFFE8F5E9) : Colors.grey[100],
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: isOnline ? const Color(0xFF2E7D32) : Colors.grey[300]!,
+                    width: 2,
+                  ),
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.info_outline, color: Colors.blue),
-                    const SizedBox(width: 12),
-                    const Expanded(
-                      child: Text(
-                        '現在、近くのエリアで注文が増加しています。',
-                        style: TextStyle(color: Colors.blue),
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: isOnline ? const Color(0xFF2E7D32) : Colors.grey[400],
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.power_settings_new,
+                        color: Colors.white,
+                        size: 32,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            isOnline ? 'オンライン' : 'オフライン',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: isOnline
+                                  ? const Color(0xFF2E7D32)
+                                  : Colors.grey[600],
+                            ),
+                          ),
+                          Text(
+                            isOnline ? '注文を受け付けています' : '配達を開始するにはタップしてください',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Switch(
+                      value: isOnline,
+                      onChanged: deliveryProvider.isLoading
+                          ? null
+                          : (value) {
+                              deliveryProvider.toggleOnlineStatus(value);
+                            },
+                      thumbColor: WidgetStateProperty.resolveWith<Color>(
+                        (Set<WidgetState> states) {
+                          if (states.contains(WidgetState.selected)) {
+                            return const Color(0xFF2E7D32);
+                          }
+                          return Colors.grey[400]!;
+                        },
+                      ),
+                      trackColor: WidgetStateProperty.resolveWith<Color>(
+                        (Set<WidgetState> states) {
+                          if (states.contains(WidgetState.selected)) {
+                            return const Color(0xFF81C784);
+                          }
+                          return Colors.grey[300]!;
+                        },
                       ),
                     ),
                   ],
                 ),
               ),
-          ],
+              const SizedBox(height: 24),
+              // 今日の実績
+              const Text(
+                '今日の実績',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildStatCard(
+                      '配達件数',
+                      '$todayCount件',
+                      Icons.local_shipping_outlined,
+                      Colors.blue,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: _buildStatCard(
+                      '売上',
+                      '¥$todayEarnings',
+                      Icons.attach_money,
+                      Colors.orange,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+              // 現在のステータス
+              if (isOnline)
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.blue[50],
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.blue[100]!),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.info_outline, color: Colors.blue),
+                      const SizedBox(width: 12),
+                      const Expanded(
+                        child: Text(
+                          '現在、近くのエリアで注文が増加しています。',
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              // エラー表示
+              if (deliveryProvider.error != null)
+                Container(
+                  margin: const EdgeInsets.only(top: 16),
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.red[50],
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.red[100]!),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.error_outline, color: Colors.red),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          deliveryProvider.error!,
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
