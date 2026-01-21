@@ -37,7 +37,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
   late TextEditingController _phoneController;
 
   late String _selectedTransport;
-  final List<String> _transportOptions = ['自動車', 'バイク', '自転車', '徒歩'];
+  final List<String> _transportOptions = ['車', 'バイク', '自転車', '徒歩'];
 
   late TextEditingController _storeNameController;
   late TextEditingController _storeAddressController;
@@ -91,7 +91,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
 
   String _mapVehicleType(String type) {
     switch (type) {
-      case 'car': return '自動車';
+      case 'car': return '車';
       case 'motorcycle': return 'バイク';
       case 'bicycle': return '自転車';
       case 'walk': return '徒歩';
@@ -100,7 +100,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
   }
 
   String _reverseMapVehicle(String val) {
-    if (val == '自動車') return 'car';
+    if (val == '車') return 'car';
     if (val == 'バイク') return 'motorcycle';
     if (val == '自転車') return 'bicycle';
     return 'walk';
