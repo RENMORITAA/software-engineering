@@ -18,100 +18,6 @@ class _DJobSelectPageState extends State<DJobSelectPage> {
   double _maxDistance = 5.0; // 最大距離フィルター
   int _minReward = 0; // 最低報酬フィルター
   
-  // ダミーデータ
-  final List<Map<String, dynamic>> _dummyJobs = [
-    {
-      'id': 'job_001',
-      'store_name': 'マクドナルド 渋谷店',
-      'store_address': '東京都渋谷区道玄坂1-2-3',
-      'delivery_address': '東京都渋谷区神南1-5-8',
-      'reward': 800,
-      'distance': 1.2,
-      'time': 15,
-    },
-    {
-      'id': 'job_002',
-      'store_name': 'スターバックス 新宿店',
-      'store_address': '東京都新宿区新宿3-14-1',
-      'delivery_address': '東京都新宿区西新宿1-6-1',
-      'reward': 650,
-      'distance': 0.8,
-      'time': 10,
-    },
-    {
-      'id': 'job_003',
-      'store_name': 'すき家 池袋東口店',
-      'store_address': '東京都豊島区南池袋1-28-1',
-      'delivery_address': '東京都豊島区東池袋1-10-1',
-      'reward': 900,
-      'distance': 1.5,
-      'time': 20,
-    },
-    {
-      'id': 'job_004',
-      'store_name': 'ガスト 品川店',
-      'store_address': '東京都港区高輪3-13-1',
-      'delivery_address': '東京都港区高輪4-10-18',
-      'reward': 750,
-      'distance': 1.0,
-      'time': 12,
-    },
-    {
-      'id': 'job_005',
-      'store_name': 'CoCo壱番屋 秋葉原店',
-      'store_address': '東京都千代田区外神田1-15-9',
-      'delivery_address': '東京都千代田区神田練塀町3',
-      'reward': 850,
-      'distance': 1.3,
-      'time': 18,
-    },
-    {
-      'id': 'job_006',
-      'store_name': '吉野家 上野店',
-      'store_address': '東京都台東区上野6-1-6',
-      'delivery_address': '東京都台東区東上野2-18-6',
-      'reward': 700,
-      'distance': 0.9,
-      'time': 11,
-    },
-    {
-      'id': 'job_007',
-      'store_name': 'ケンタッキー 六本木店',
-      'store_address': '東京都港区六本木3-2-1',
-      'delivery_address': '東京都港区六本木7-4-4',
-      'reward': 950,
-      'distance': 1.8,
-      'time': 22,
-    },
-    {
-      'id': 'job_008',
-      'store_name': 'サイゼリヤ 中野店',
-      'store_address': '東京都中野区中野5-52-15',
-      'delivery_address': '東京都中野区本町2-31-2',
-      'reward': 600,
-      'distance': 0.7,
-      'time': 9,
-    },
-    {
-      'id': 'job_009',
-      'store_name': 'デニーズ 目黒店',
-      'store_address': '東京都品川区上大崎2-13-45',
-      'delivery_address': '東京都品川区上大崎3-1-1',
-      'reward': 800,
-      'distance': 1.1,
-      'time': 14,
-    },
-    {
-      'id': 'job_010',
-      'store_name': 'モスバーガー 恵比寿店',
-      'store_address': '東京都渋谷区恵比寿南1-5-5',
-      'delivery_address': '東京都渋谷区恵比寿4-20-3',
-      'reward': 880,
-      'distance': 1.4,
-      'time': 17,
-    },
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -224,25 +130,24 @@ class _DJobSelectPageState extends State<DJobSelectPage> {
   @override
   Widget build(BuildContext context) {
     final deliveryProvider = context.watch<DeliveryProvider>();
+    final jobs = deliveryProvider.availableJobs;
     
-    // Providerから取得したデータとダミーデータを結合
-    final jobs = deliveryProvider.availableJobs.isEmpty 
-        ? _dummyJobs 
-        : deliveryProvider.availableJobs;
-    
+    // フィルタリング処理
     final filteredJobs = jobs.where((job) {
       final query = _searchQuery.toLowerCase();
 
-      final storeName =
-          (job['store_name'] ?? '').toString().toLowerCase();
-      final storeAddress =
-          (job['store_address'] ?? '').toString().toLowerCase();
+      // store_nameとstore_addressで検索
+      final storeName = (job['store_name'] ?? '').toString().toLowerCase();
+      final storeAddress = (job['store_address'] ?? '').toString().toLowerCase();
 
-      final matchesSearch = storeName.contains(query) ||
-          storeAddress.contains(query);
+      final matchesSearch = storeName.contains(query) || storeAddress.contains(query);
 
-      final matchesDistance = (job['distance'] ?? 0.0) <= _maxDistance;
-      final matchesReward = (job['reward'] ?? 0) >= _minReward;
+      // distanceとrewardでフィルター
+      final distance = _parseDouble(job['distance']);
+      final reward = _parseInt(job['delivery_fee'] ?? job['reward']);
+
+      final matchesDistance = distance <= _maxDistance;
+      final matchesReward = reward >= _minReward;
 
       return matchesSearch && matchesDistance && matchesReward;
     }).toList();
@@ -351,7 +256,34 @@ class _DJobSelectPageState extends State<DJobSelectPage> {
             child: deliveryProvider.isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : filteredJobs.isEmpty
-                    ? const Center(child: Text('現在、利用可能な求人はありません'))
+                    ? Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.work_off_outlined,
+                              size: 64,
+                              color: Colors.grey[400],
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              '現在、利用可能な求人はありません',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'オンラインにすると新しい求人が表示されます',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey[500],
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
                     : RefreshIndicator(
                         onRefresh: () =>
                             context.read<DeliveryProvider>().fetchDeliveryJobs(),
@@ -360,57 +292,73 @@ class _DJobSelectPageState extends State<DJobSelectPage> {
                           itemCount: filteredJobs.length,
                           itemBuilder: (context, index) {
                             final job = filteredJobs[index];
-                            // Map<String, dynamic> に変換して渡す
+                            
+                            // バックエンドのデータ構造に合わせてマッピング
                             final jobMap = {
-                              'id': job['id'],
-                              'storeName': job['store_name'],
-                              'storeAddress': job['store_address'],
-                              'deliveryAddress': job['delivery_address'],
-                              'reward': job['reward'],
-                              'distance': job['distance'] ?? 0.0,
-                              'time': job['time'] ?? 15,
+                              'id': job['order_id'] ?? job['id'],
+                              'storeName': job['store_name'] ?? '店舗名不明',
+                              'storeAddress': job['store_address'] ?? '',
+                              'deliveryAddress': job['delivery_address'] ?? '',
+                              'reward': _parseInt(job['delivery_fee'] ?? job['reward']),
+                              'distance': _parseDouble(job['distance_km'] ?? job['distance']),
+                              'time': _parseInt(job['estimated_time'] ?? 15),
                             };
 
                             return DJobCard(
                               job: jobMap,
                               onTap: () {
-                                // 詳細表示
-                                showDialog(
+                                _showJobDetail(context, job);
+                              },
+                              onButtonPressed: () async {
+                                final orderId = _parseInt(job['order_id'] ?? job['id']);
+                                
+                                // 確認ダイアログ
+                                final confirm = await showDialog<bool>(
                                   context: context,
                                   builder: (context) => AlertDialog(
-                                    title: Text(job['store_name']),
-                                    content: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text('店舗: ${job['store_address']}'),
-                                        const SizedBox(height: 8),
-                                        Text('配達先: ${job['delivery_address']}'),
-                                        const SizedBox(height: 8),
-                                        Text('報酬: ¥${job['reward']}'),
-                                        const SizedBox(height: 8),
-                                        Text('距離: ${job['distance']}km'),
-                                        const SizedBox(height: 8),
-                                        Text('推定時間: ${job['time']}分'),
-                                      ],
+                                    title: const Text('求人受諾確認'),
+                                    content: Text(
+                                      '${job['store_name'] ?? '店舗名不明'}の配達を受諾しますか?\n\n報酬: ¥${jobMap['reward']}',
                                     ),
                                     actions: [
                                       TextButton(
-                                        onPressed: () => Navigator.pop(context),
-                                        child: const Text('閉じる'),
+                                        onPressed: () => Navigator.pop(context, false),
+                                        child: const Text('キャンセル'),
+                                      ),
+                                      ElevatedButton(
+                                        onPressed: () => Navigator.pop(context, true),
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color(0xFF2E7D32),
+                                          foregroundColor: Colors.white,
+                                        ),
+                                        child: const Text('受諾する'),
                                       ),
                                     ],
                                   ),
                                 );
-                              },
-                              onButtonPressed: () async {
-                                final success = await context
-                                    .read<DeliveryProvider>()
-                                    .acceptJob(job['id']);
-                                if (success && mounted) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text('求人を受諾しました')),
-                                  );
+
+                                if (confirm == true && mounted) {
+                                  final success = await context
+                                      .read<DeliveryProvider>()
+                                      .acceptJob(orderId);
+                                  
+                                  if (success && mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('求人を受諾しました'),
+                                        backgroundColor: Color(0xFF2E7D32),
+                                      ),
+                                    );
+                                  } else if (mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          '求人の受諾に失敗しました: ${deliveryProvider.error ?? "不明なエラー"}',
+                                        ),
+                                        backgroundColor: Colors.red,
+                                      ),
+                                    );
+                                  }
                                 }
                               },
                             );
@@ -421,5 +369,153 @@ class _DJobSelectPageState extends State<DJobSelectPage> {
         ],
       ),
     );
+  }
+
+  void _showJobDetail(BuildContext context, Map<String, dynamic> job) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) => DraggableScrollableSheet(
+        initialChildSize: 0.7,
+        minChildSize: 0.5,
+        maxChildSize: 0.9,
+        expand: false,
+        builder: (context, scrollController) => SingleChildScrollView(
+          controller: scrollController,
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 4,
+                    margin: const EdgeInsets.only(bottom: 20),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                ),
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF2E7D32),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Icon(
+                        Icons.store,
+                        color: Colors.white,
+                        size: 32,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            job['store_name'] ?? '店舗名不明',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            job['store_address'] ?? '',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 24),
+                Divider(color: Colors.grey[300]),
+                const SizedBox(height: 16),
+                _buildDetailRow(Icons.location_on, '配達先', job['delivery_address'] ?? ''),
+                const SizedBox(height: 12),
+                _buildDetailRow(Icons.attach_money, '報酬', '¥${_parseInt(job['delivery_fee'] ?? job['reward'])}'),
+                const SizedBox(height: 12),
+                _buildDetailRow(Icons.straighten, '距離', '${_parseDouble(job['distance_km'] ?? job['distance']).toStringAsFixed(1)}km'),
+                const SizedBox(height: 12),
+                _buildDetailRow(Icons.access_time, '推定時間', '${_parseInt(job['estimated_time'] ?? 15)}分'),
+                if (job['notes'] != null && job['notes'].toString().isNotEmpty) ...[
+                  const SizedBox(height: 12),
+                  _buildDetailRow(Icons.note, '備考', job['notes'].toString()),
+                ],
+                const SizedBox(height: 24),
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton(
+                    onPressed: () => Navigator.pop(context),
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                    ),
+                    child: const Text('閉じる'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDetailRow(IconData icon, String label, String value) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(icon, size: 20, color: const Color(0xFF2E7D32)),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey[600],
+                ),
+              ),
+              Text(
+                value,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  double _parseDouble(dynamic value) {
+    if (value == null) return 0.0;
+    if (value is double) return value;
+    if (value is int) return value.toDouble();
+    if (value is String) return double.tryParse(value) ?? 0.0;
+    return 0.0;
+  }
+
+  int _parseInt(dynamic value) {
+    if (value == null) return 0;
+    if (value is int) return value;
+    if (value is double) return value.toInt();
+    if (value is String) return int.tryParse(value) ?? 0;
+    return 0;
   }
 }

@@ -81,5 +81,9 @@ class ProductService {
       rethrow;
     }
   }
-}
 
+  /// 商品を追加（createProductのエイリアス）
+  Future<dynamic> addProduct(Map<String, dynamic> productData) async {
+    return await createProduct(productData);
+  }
+}
