@@ -22,17 +22,16 @@ class CustomButton extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: color ?? Theme.of(context).primaryColor,
+          foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
+          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         onPressed: isLoading ? null : onPressed,
         child: isLoading
             ? const CircularProgressIndicator(color: Colors.white)
-            : Text(
-                text,
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
+            : Text(text),
       ),
     );
   }

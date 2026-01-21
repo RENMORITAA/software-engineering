@@ -45,16 +45,15 @@ class ButtonSet extends StatelessWidget {
                 foregroundColor: secondaryColor ?? Colors.grey[700],
                 side: BorderSide(
                   color: secondaryColor ?? Colors.grey[400]!,
+                  width: 2,
                 ),
                 padding: const EdgeInsets.symmetric(vertical: 14),
+                textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               icon: secondaryIcon != null
                   ? Icon(secondaryIcon, size: 20)
                   : const SizedBox.shrink(),
-              label: Text(
-                secondaryText,
-                style: const TextStyle(fontSize: 16),
-              ),
+              label: Text(secondaryText),
             ),
           ),
           const SizedBox(width: 16),
@@ -65,7 +64,9 @@ class ButtonSet extends StatelessWidget {
                   : null,
               style: ElevatedButton.styleFrom(
                 backgroundColor: primaryColor ?? Theme.of(context).primaryColor,
+                foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: 14),
+                textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               icon: isLoading
                   ? const SizedBox(
@@ -79,10 +80,7 @@ class ButtonSet extends StatelessWidget {
                   : (primaryIcon != null
                       ? Icon(primaryIcon, size: 20)
                       : const SizedBox.shrink()),
-              label: Text(
-                primaryText,
-                style: const TextStyle(fontSize: 16),
-              ),
+              label: Text(primaryText),
             ),
           ),
         ],
@@ -123,8 +121,10 @@ class SingleButton extends StatelessWidget {
             foregroundColor: color ?? Theme.of(context).primaryColor,
             side: BorderSide(
               color: color ?? Theme.of(context).primaryColor,
+              width: 2,
             ),
             padding: const EdgeInsets.symmetric(vertical: 16),
+            textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           icon: isLoading
               ? SizedBox(
@@ -138,10 +138,7 @@ class SingleButton extends StatelessWidget {
               : (icon != null
                   ? Icon(icon, size: 20)
                   : const SizedBox.shrink()),
-          label: Text(
-            text,
-            style: const TextStyle(fontSize: 16),
-          ),
+          label: Text(text),
         ),
       );
     }
@@ -152,7 +149,9 @@ class SingleButton extends StatelessWidget {
         onPressed: enabled && !isLoading ? onPressed : null,
         style: ElevatedButton.styleFrom(
           backgroundColor: color ?? Theme.of(context).primaryColor,
+          foregroundColor: Colors.white,
           padding: const EdgeInsets.symmetric(vertical: 16),
+          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         icon: isLoading
             ? const SizedBox(
@@ -166,10 +165,7 @@ class SingleButton extends StatelessWidget {
             : (icon != null
                 ? Icon(icon, size: 20)
                 : const SizedBox.shrink()),
-        label: Text(
-          text,
-          style: const TextStyle(fontSize: 16),
-        ),
+        label: Text(text),
       ),
     );
   }

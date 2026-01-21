@@ -86,7 +86,8 @@ class OrderService {
   }
 
   /// 店舗の注文履歴を取得 (自分の店舗)
-  Future<List<dynamic>> getStoreOrders(int storeId) async {
+  Future<List<dynamic>> getStoreOrders() async {
+    // バックエンド側でログイン中店舗ユーザーの注文を返す
     return getMyOrders();
   }
 

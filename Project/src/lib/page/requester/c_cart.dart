@@ -2,7 +2,9 @@
 import "package:provider/provider.dart";
 
 import "../../component/component.dart";
+import "../../page/requester/c_order_confirmation.dart";
 import "../../provider/cart_provider.dart";
+import "../../provider/order_provider.dart";
 
 class CCartPage extends StatelessWidget {
   const CCartPage({super.key});
@@ -14,8 +16,8 @@ class CCartPage extends StatelessWidget {
         title: 'カート',
         showBackButton: false,
       ),
-      body: Consumer<CartProvider>(
-        builder: (context, cartProvider, _) {
+      body: Consumer2<CartProvider, OrderProvider>(
+        builder: (context, cartProvider, orderProvider, _) {
           if (cartProvider.isEmpty) {
             return const Center(
               child: Text('カートは空です'),
@@ -62,11 +64,67 @@ class CCartPage extends StatelessWidget {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('注文を確定しました（ダミー）')),
-                            );
-                          },
+                          onPressed: orderProvider.isLoading
+                              ? null
+                              : () async {
+                                  final storeId = cartProvider.selectedStoreId;
+                                  final details = cartProvider.buildOrderDetailsPayload();
+
+                                  if (storeId == null) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(content: Text('店舗情報が取得できません')),
+                                    );
+                                    return;
+                                  }
+
+                                  if (details.isEmpty) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(content: Text('商品情報が不足しています')),
+                                    );
+                                    return;
+                                  }
+
+                                  final address = cartProvider.deliveryAddress.isEmpty
+                                      ? '住所未設定'
+                                      : cartProvider.deliveryAddress;
+
+                                  final payload = {
+                                    'store_id': storeId,
+                                    'delivery_address': address,
+                                    'delivery_latitude': null,
+                                    'delivery_longitude': null,
+                                    'notes': cartProvider.notes.isEmpty ? null : cartProvider.notes,
+                                    'details': details,
+                                  };
+
+                                  final orderId = await orderProvider.createOrder(payload);
+
+                                  if (orderId != null) {
+                                    final storeName = cartProvider.selectedStoreName ?? '店舗';
+                                    final totalPrice = cartProvider.totalPrice;
+
+                                    // 履歴に即時反映（createOrder 内で再取得済み）
+                                    cartProvider.clear();
+
+                                    if (!context.mounted) return;
+
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => COrderConfirmationPage(
+                                          orderId: orderId,
+                                          storeName: storeName,
+                                          totalPrice: totalPrice,
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    final error = orderProvider.error ?? '注文の作成に失敗しました';
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text(error)),
+                                    );
+                                  }
+                                },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF1A237E),
                             foregroundColor: Colors.white,

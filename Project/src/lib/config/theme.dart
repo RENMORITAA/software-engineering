@@ -7,11 +7,16 @@ class AppTheme {
   static const Color scaffoldBackgroundColor = Color(0xFFF5F5F5);
 
   static final ThemeData lightTheme = ThemeData(
+    useMaterial3: true,
     primaryColor: primaryColor,
     scaffoldBackgroundColor: scaffoldBackgroundColor,
-    colorScheme: ColorScheme.fromSwatch().copyWith(
+    colorScheme: ColorScheme.fromSwatch(
+      primarySwatch: Colors.indigo,
+      brightness: Brightness.light,
+    ).copyWith(
       primary: primaryColor,
       secondary: accentColor,
+      surface: Colors.white,
     ),
     appBarTheme: const AppBarTheme(
       backgroundColor: primaryColor,
@@ -27,6 +32,24 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
+        textStyle: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        foregroundColor: primaryColor,
+        side: const BorderSide(color: primaryColor, width: 2),
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        textStyle: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
@@ -36,6 +59,5 @@ class AppTheme {
       filled: true,
       fillColor: Colors.white,
     ),
-    useMaterial3: true,
   );
 }

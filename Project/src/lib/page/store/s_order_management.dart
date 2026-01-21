@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../component/component.dart';
+import '../../models/database_models.dart';
+import '../../provider/order_provider.dart';
 
-/// 注文管理画面（店舗向け）
-/// 注文状況の確認と状態更新機能
+/// Store order management for the current store user.
+/// Fetches from /orders/my and allows basic status updates.
 class SOrderManagementPage extends StatefulWidget {
   const SOrderManagementPage({super.key});
 
@@ -14,12 +17,15 @@ class SOrderManagementPage extends StatefulWidget {
 class _SOrderManagementPageState extends State<SOrderManagementPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  String _selectedStatus = '受付';
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<OrderProvider>().fetchStoreOrders();
+    });
   }
 
   @override
@@ -30,93 +36,59 @@ class _SOrderManagementPageState extends State<SOrderManagementPage>
 
   @override
   Widget build(BuildContext context) {
+    final orderProvider = context.watch<OrderProvider>();
+
     return Scaffold(
       appBar: const TitleAppBar(
-        title: '注文管理',
+        title: 'Order Management',
         showBackButton: false,
       ),
       body: Column(
         children: [
-          // ステータスタブ
           Container(
             color: Colors.white,
             child: TabBar(
               controller: _tabController,
               tabs: const [
-                Tab(text: '受付'),
-                Tab(text: '準備中'),
-                Tab(text: '受け渡し待ち'),
-                Tab(text: '完了'),
+                Tab(text: 'Pending'),
+                Tab(text: 'Preparing'),
+                Tab(text: 'Ready'),
+                Tab(text: 'Completed'),
               ],
               labelColor: Colors.green,
               unselectedLabelColor: Colors.grey,
               indicatorColor: Colors.green,
             ),
           ),
-          // 注文リスト
           Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                _buildOrderList('受付'),
-                _buildOrderList('準備中'),
-                _buildOrderList('受け渡し待ち'),
-                _buildOrderList('完了'),
-              ],
-            ),
+            child: orderProvider.isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : TabBarView(
+                    controller: _tabController,
+                    children: [
+                      _buildOrderList(orderProvider.orders, 'Pending'),
+                      _buildOrderList(orderProvider.orders, 'Preparing'),
+                      _buildOrderList(orderProvider.orders, 'Ready'),
+                      _buildOrderList(orderProvider.orders, 'Completed'),
+                    ],
+                  ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildOrderList(String status) {
-    // サンプルデータ（本番環境ではAPIから取得）
-    final orders = [
-      {
-        'id': 1001,
-        'userName': '山田太郎',
-        'items': '味噌ラーメン × 2\n餃子 × 1',
-        'total': 3800,
-        'time': '15:30',
-        'notes': '味噌は濃いめでお願いします',
-      },
-      {
-        'id': 1002,
-        'userName': '鈴木花子',
-        'items': 'カツ丼 × 1\n味噌汁 × 1',
-        'total': 1500,
-        'time': '15:45',
-        'notes': '',
-      },
-      {
-        'id': 1003,
-        'userName': '佐藤次郎',
-        'items': 'チャーハン × 1\n唐揚げ × 2',
-        'total': 2400,
-        'time': '16:00',
-        'notes': '唐揚げは辛めでお願いします',
-      },
-    ];
+  Widget _buildOrderList(List<Order> allOrders, String tabLabel) {
+    final filtered = _filterByTab(allOrders, tabLabel);
 
-    if (orders.isEmpty) {
+    if (filtered.isEmpty) {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.assignment_turned_in,
-              size: 64,
-              color: Colors.grey[300],
-            ),
+            Icon(Icons.assignment_turned_in, size: 64, color: Colors.grey[300]),
             const SizedBox(height: 16),
-            Text(
-              '注文がありません',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey[600],
-              ),
-            ),
+            Text('No orders yet', style: TextStyle(color: Colors.grey[600])),
           ],
         ),
       );
@@ -124,21 +96,20 @@ class _SOrderManagementPageState extends State<SOrderManagementPage>
 
     return ListView.separated(
       padding: const EdgeInsets.all(16),
-      itemCount: orders.length,
+      itemCount: filtered.length,
       separatorBuilder: (_, __) => const SizedBox(height: 12),
       itemBuilder: (context, index) {
-        final order = orders[index];
-        return _buildOrderCard(order, status);
+        return _buildOrderCard(filtered[index], tabLabel);
       },
     );
   }
 
-  Widget _buildOrderCard(Map<String, dynamic> order, String currentStatus) {
+  Widget _buildOrderCard(Order order, String currentStatusLabel) {
     final statusColors = {
-      '受付': Colors.blue,
-      '準備中': Colors.orange,
-      '受け渡し待ち': Colors.purple,
-      '完了': Colors.green,
+      'Pending': Colors.blue,
+      'Preparing': Colors.orange,
+      'Ready': Colors.purple,
+      'Completed': Colors.green,
     };
 
     return Container(
@@ -158,55 +129,38 @@ class _SOrderManagementPageState extends State<SOrderManagementPage>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ヘッダー：注文ID、顧客名、ステータス
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '注文 #${order['id']}',
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  Text('Order #${order.id ?? '-'}',
+                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 4),
-                  Text(
-                    order['userName'] as String,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey[600],
-                    ),
-                  ),
+                  Text('Requester ID: ${order.requesterId}',
+                      style: TextStyle(fontSize: 12, color: Colors.grey[600])),
                 ],
               ),
               Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 6,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
-                  color: statusColors[currentStatus]?.withOpacity(0.1),
+                  color: statusColors[currentStatusLabel]?.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: statusColors[currentStatus] ?? Colors.grey,
-                  ),
+                  border: Border.all(color: statusColors[currentStatusLabel] ?? Colors.grey),
                 ),
                 child: Text(
-                  currentStatus,
+                  currentStatusLabel,
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
-                    color: statusColors[currentStatus] ?? Colors.grey,
+                    color: statusColors[currentStatusLabel] ?? Colors.grey,
                   ),
                 ),
               ),
             ],
           ),
           const SizedBox(height: 12),
-          // 注文内容
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
@@ -216,27 +170,22 @@ class _SOrderManagementPageState extends State<SOrderManagementPage>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  '注文内容',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-                  ),
-                ),
+                const Text('Items', style: TextStyle(fontSize: 12, color: Colors.grey)),
                 const SizedBox(height: 8),
-                Text(
-                  order['items'] as String,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    height: 1.6,
+                ...order.orderDetails.map(
+                  (d) => Padding(
+                    padding: const EdgeInsets.only(bottom: 4),
+                    child: Text(
+                      '${d.productName} x${d.quantity} (${d.unitPrice})',
+                      style: const TextStyle(fontSize: 13, height: 1.4),
+                    ),
                   ),
                 ),
               ],
             ),
           ),
           const SizedBox(height: 12),
-          // 特記事項（ある場合）
-          if ((order['notes'] as String).isNotEmpty)
+          if ((order.notes ?? '').isNotEmpty)
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
@@ -247,128 +196,119 @@ class _SOrderManagementPageState extends State<SOrderManagementPage>
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(
-                    Icons.info_outline,
-                    size: 16,
-                    color: Colors.amber[700],
-                  ),
+                  Icon(Icons.info_outline, size: 16, color: Colors.amber[700]),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      order['notes'] as String,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.amber[900],
-                      ),
+                      order.notes ?? '',
+                      style: TextStyle(fontSize: 12, color: Colors.amber[900]),
                     ),
                   ),
                 ],
               ),
             ),
-          if ((order['notes'] as String).isNotEmpty)
-            const SizedBox(height: 12),
-          // フッター：金額と時刻
+          const SizedBox(height: 12),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Text('Total', style: TextStyle(fontSize: 12, color: Colors.grey)),
+              Text('Ordered At', style: TextStyle(fontSize: 12, color: Colors.grey)),
+            ],
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                '¥${order['total']}',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green,
-                ),
-              ),
-              Text(
-                order['time'] as String,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey[600],
-                ),
-              ),
+              Text('${order.totalPrice}',
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              Text(order.orderedAt ?? '-', style: const TextStyle(fontSize: 14)),
             ],
           ),
           const SizedBox(height: 12),
-          // ステータス更新ボタン
-          if (currentStatus != '完了')
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  _showStatusUpdateDialog(order['id'] as int);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: statusColors[currentStatus],
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                ),
-                child: const Text(
-                  'ステータス更新',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
+          _buildActionButtons(order),
         ],
       ),
     );
   }
 
-  void _showStatusUpdateDialog(int orderId) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('ステータス更新'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('注文 #$orderId のステータスを更新します'),
-              const SizedBox(height: 16),
-              const Text(
-                '新しいステータス',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: ['準備中', '受け渡し待ち', '完了'].map((status) {
-                  return ChoiceChip(
-                    label: Text(status),
-                    selected: _selectedStatus == status,
-                    onSelected: (selected) {
-                      setState(() {
-                        _selectedStatus = status;
-                      });
-                    },
-                  );
-                }).toList(),
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('キャンセル'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      '注文 #$orderId を「$_selectedStatus」に更新しました',
-                    ),
-                  ),
-                );
-                Navigator.pop(context);
-              },
-              child: const Text('確定'),
-            ),
-          ],
-        );
-      },
+  Widget _buildActionButtons(Order order) {
+    final buttons = <Widget>[];
+
+    if (order.id == null) {
+      return const SizedBox.shrink();
+    }
+
+    void add(String label, Color color, String nextStatus) {
+      buttons.add(
+        _buildActionButton(label, color, () async {
+          final ok = await context.read<OrderProvider>().updateOrderStatus(order.id!, nextStatus);
+          if (!mounted) return;
+          if (ok) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Updated to $nextStatus')),
+            );
+            context.read<OrderProvider>().fetchStoreOrders();
+          } else {
+            final err = context.read<OrderProvider>().error ?? 'Update failed';
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(err)));
+          }
+        }),
+      );
+    }
+
+    switch (order.status) {
+      case 'pending':
+        add('Accept Order', Colors.blue, 'accepted');
+        add('Cancel', Colors.red, 'cancelled');
+        break;
+      case 'accepted':
+        add('Start Preparing', Colors.orange, 'preparing');
+        break;
+      case 'preparing':
+        add('Mark Ready', Colors.purple, 'ready_for_pickup');
+        break;
+      case 'ready_for_pickup':
+        add('Mark Delivered', Colors.green, 'delivered');
+        break;
+      default:
+        break;
+    }
+
+    if (buttons.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    return Row(
+      children: buttons
+          .map((b) => Expanded(child: Padding(padding: const EdgeInsets.only(right: 8), child: b)))
+          .toList(),
     );
+  }
+
+  Widget _buildActionButton(String label, Color color, VoidCallback onPressed) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: color,
+        foregroundColor: Colors.white,
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      ),
+      child: Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
+    );
+  }
+
+  List<Order> _filterByTab(List<Order> orders, String tab) {
+    switch (tab) {
+      case 'Pending':
+        return orders.where((o) => o.status == 'pending' || o.status == 'accepted').toList();
+      case 'Preparing':
+        return orders.where((o) => o.status == 'preparing').toList();
+      case 'Ready':
+        return orders.where((o) => o.status == 'ready_for_pickup').toList();
+      case 'Completed':
+        return orders.where((o) => o.status == 'delivered' || o.status == 'cancelled').toList();
+      default:
+        return orders;
+    }
   }
 }
