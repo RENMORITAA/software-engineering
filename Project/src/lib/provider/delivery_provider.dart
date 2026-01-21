@@ -71,31 +71,32 @@ class DeliveryProvider extends ChangeNotifier {
   }
 
   Future<void> toggleOnlineStatus(bool isOnline) async {
-  final previous = _isOnline;
+    final previous = _isOnline;
 
-  _isOnline = isOnline;
-  _isLoading = true;
-  notifyListeners();
+    _isOnline = isOnline;
+    _isLoading = true;
+    notifyListeners();
 
-  try {
-    if (isOnline) {
-      await _deliveryService.setOnline();
+    try {
+      if (isOnline) {
+        await _deliveryService.setOnline();
+      } else {
+        await _deliveryService.setOffline();
+      }
+      // オンライン/オフライン関係なく常に求人を取得
       try {
         await fetchDeliveryJobs();
       } catch (e) {
         debugPrint('fetchDeliveryJobs failed: $e');
       }
-    } else {
-      await _deliveryService.setOffline();
+    } catch (e) {
+      _isOnline = previous;
+      _error = e.toString();
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
-  } catch (e) {
-    _isOnline = previous;
-    _error = e.toString();
-  } finally {
-    _isLoading = false;
-    notifyListeners();
   }
-}
 
   
   /// 配達ステータス更新

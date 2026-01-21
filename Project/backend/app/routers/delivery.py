@@ -19,9 +19,9 @@ def get_delivery_jobs(
     if current_user.role != "deliverer":
         raise HTTPException(status_code=403, detail="Only deliverers can access this endpoint")
     
-    # Get orders that are ready for pickup and not yet assigned
+    # Get orders that are preparing or ready for pickup and not yet assigned
     orders = db.query(models.Order).filter(
-        models.Order.status == "ready_for_pickup",
+        models.Order.status.in_(["preparing", "ready_for_pickup"]),
         models.Order.deliverer_id == None
     ).all()
     
