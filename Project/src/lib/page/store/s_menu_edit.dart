@@ -350,7 +350,7 @@ class _SMenuEditPageState extends State<SMenuEditPage> {
               Navigator.pop(context);
               
               final success = await context.read<StoreProvider>().updateProduct(
-                product.id,
+                product.id ?? 0,
                 {
                   'name': nameController.text,
                   'description': descriptionController.text,
@@ -381,7 +381,7 @@ class _SMenuEditPageState extends State<SMenuEditPage> {
 
   Future<void> _toggleProductAvailability(Product product, bool isAvailable) async {
     final success = await context.read<StoreProvider>().updateProductAvailability(
-      product.id,
+      product.id ?? 0,
       isAvailable,
     );
     

@@ -202,7 +202,7 @@ class _SInventoryStatusPageState extends State<SInventoryStatusPage> {
   Future<void> _updateStock(Product product, int newStock) async {
     try {
       final success = await context.read<StoreProvider>().updateProductStock(
-        product.id,
+        product.id ?? 0,
         newStock,
       );
 
