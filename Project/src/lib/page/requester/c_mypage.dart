@@ -27,15 +27,17 @@ class CMyPageWrapper extends StatelessWidget {
           'icon': Icons.location_on_outlined,
           'title': '住所管理',
           'onTap': () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => AddressEditPage(
-                  initialAddress: userProvider.address ?? '',
-                  userRole: 'requester',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => AddressEditPage(
+                    initialAddress: '',
+                    userRole: 'requester',
+                  ),
                 ),
-              ),
-            );
+              );
+            },
 
           },
         },
