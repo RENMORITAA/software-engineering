@@ -39,6 +39,7 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
   bool _showLogout = false;
   bool _showWithdraw = false;
   bool _isEditing = false;
+  bool _showTerms = false;
 
   // 編集用コントローラー
   late TextEditingController _nameController;
@@ -240,7 +241,11 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
                   title: 'その他',
                   items: [
                     _MenuItem(icon: Icons.notifications_outlined, title: '通知設定', onTap: () {}),
-                    _MenuItem(icon: Icons.description_outlined, title: '利用規約', onTap: () {}),
+                    _MenuItem(
+                      icon: Icons.description_outlined, 
+                      title: '利用規約', 
+                      onTap: () => setState(() => _showTerms = true),
+                    ),
                     _MenuItem(icon: Icons.help_outline, title: 'ヘルプ・お問い合わせ', onTap: () {}),
                   ],
                 ),
@@ -294,6 +299,13 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
               widget.onWithdraw();
             },
             onCancel: () => setState(() => _showWithdraw = false),
+          ),
+
+        if (_showTerms)
+          RuleScreenOverlay(
+            onClose: () => setState(() => _showTerms = false),
+            showAgreeButton: false, 
+            onAgree: () {}, 
           ),
       ],
     );
