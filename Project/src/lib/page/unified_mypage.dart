@@ -249,7 +249,7 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
                 _buildMenuSection(
                   title: 'その他',
                   items: [
-                    _MenuItem(icon: Icons.notifications_outlined, title: '通知設定', onTap: () {}),
+                    //_MenuItem(icon: Icons.notifications_outlined, title: '通知設定', onTap: () {}),
                     _MenuItem(
                       icon: Icons.description_outlined, 
                       title: '利用規約', 
