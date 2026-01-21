@@ -6,8 +6,7 @@ import '../../provider/provider.dart';
 import '../../services/auth_service.dart';
 import '../../config/routes.dart';
 
-import 'c_address_edit.dart';
-
+import './c_address_edit.dart';
 /// 依頼者向けマイページ
 class CMyPageWrapper extends StatelessWidget {
   const CMyPageWrapper({super.key});
@@ -27,18 +26,12 @@ class CMyPageWrapper extends StatelessWidget {
           'icon': Icons.location_on_outlined,
           'title': '住所管理',
           'onTap': () {
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => AddressEditPage(
-                    initialAddress: '',
-                    userRole: 'requester',
-                  ),
-                ),
-              );
-            },
-
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AddressEditPage(),
+              ),
+            );
           },
         },
       ],

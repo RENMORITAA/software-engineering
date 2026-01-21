@@ -211,7 +211,14 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
                       _MenuItem(
                         icon: Icons.location_on_outlined,
                         title: '住所管理',
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddressEditPage(),
+                            ),
+                          );
+                        },
                       ),
                     _MenuItem(
                       icon: Icons.account_balance_outlined,
