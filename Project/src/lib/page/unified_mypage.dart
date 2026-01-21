@@ -9,6 +9,10 @@ import 'package:provider/provider.dart';
 import '../provider/provider.dart';
 import 'help_contact_page.dart';
 import 'requester/c_address_edit.dart';
+import 'requester/c_order_history.dart';
+import 'deliverer/d_delivery_history.dart';
+import 'store/s_order_management.dart';
+import 'store/s_sales.dart';
 import 'banking_info_page.dart';
 
 /// 統合マイページ（メニュー一覧レイアウト版）
@@ -48,7 +52,7 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
   late TextEditingController _nameController;
   late TextEditingController _emailController;
 
-  // --- 追加：パスワード変更用 ---
+  // パスワード変更用
   final TextEditingController _currentPwController = TextEditingController();
   final TextEditingController _newPwController = TextEditingController();
   final TextEditingController _confirmPwController = TextEditingController();
@@ -57,7 +61,6 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
   bool _isNewPwVisible = false;
   bool _isConfirmPwVisible = false;
   bool _isChangingPassword = false;
-  // --- ここまで ---
 
   @override
   void initState() {
@@ -70,11 +73,9 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
   void dispose() {
     _nameController.dispose();
     _emailController.dispose();
-    // --- 追加：コントローラーの破棄 ---
     _currentPwController.dispose();
     _newPwController.dispose();
     _confirmPwController.dispose();
-    // --- ここまで ---
     super.dispose();
   }
 
@@ -179,19 +180,14 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
                     _MenuItem(
                       icon: Icons.person_outline,
                       title: '会員情報',
-                      // unified_mypage.dart の「会員情報」リストタイルの onTap 部分
-                        onTap: () {
-                        // Providerを取得
+                      onTap: () {
                         final userProvider = Provider.of<UserRoleProvider>(context, listen: false);
-
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => UserDetailPage(
-                              // userProvider.userName と userProvider.userEmail に修正
                               userName: userProvider.userName ?? '名前未設定',
                               userEmail: userProvider.userEmail ?? '',
-                              // userRole は文字列で渡す必要があるため roleToString() を使用
                               userRole: userProvider.roleToString(), 
                               additionalInfo: {
                                 'phone_number': userProvider.phoneNumber,
@@ -217,7 +213,7 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => CAddressEditPage(),
+                              builder: (context) => const CAddressEditPage(),
                             ),
                           );
                         },
@@ -229,7 +225,6 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            // 修正：widget.userRole を引数として渡す
                             builder: (context) => BankingInfoPage(role: widget.userRole),
                           ),
                         );
@@ -242,16 +237,60 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
                   title: '履歴',
                   items: [
                     if (widget.userRole == 'requester') ...[
-                      _MenuItem(icon: Icons.receipt_long_outlined, title: '注文履歴', onTap: () {}),
+                      _MenuItem(
+                        icon: Icons.receipt_long_outlined, 
+                        title: '注文履歴', 
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const COrderHistoryPage(),
+                            ),
+                          );
+                        }
+                      ),
                       _MenuItem(icon: Icons.payments_outlined, title: '支払い明細', onTap: () {}),
                     ],
                     if (widget.userRole == 'deliverer') ...[
-                      _MenuItem(icon: Icons.local_shipping_outlined, title: '配達履歴', onTap: () {}),
+                      _MenuItem(
+                        icon: Icons.local_shipping_outlined, 
+                        title: '配達履歴', 
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const DDeliveryHistoryPage(),
+                            ),
+                          );
+                        }
+                      ),
                       _MenuItem(icon: Icons.payments_outlined, title: '給与明細', onTap: () {}),
                     ],
                     if (widget.userRole == 'store') ...[
-                      _MenuItem(icon: Icons.receipt_long, title: '注文管理', onTap: () {}),
-                      _MenuItem(icon: Icons.bar_chart_outlined, title: '売上管理', onTap: () {}),
+                      _MenuItem(
+                        icon: Icons.receipt_long, 
+                        title: '注文管理', 
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SOrderManagementPage(),
+                            ),
+                          );
+                        }
+                      ),
+                      _MenuItem(
+                        icon: Icons.bar_chart_outlined, 
+                        title: '売上管理', 
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SSalesPage(),
+                            ),
+                          );
+                        }
+                      ),
                     ],
                   ],
                 ),
@@ -259,7 +298,6 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
                 _buildMenuSection(
                   title: 'その他',
                   items: [
-                    //_MenuItem(icon: Icons.notifications_outlined, title: '通知設定', onTap: () {}),
                     _MenuItem(
                       icon: Icons.description_outlined, 
                       title: '利用規約', 
@@ -271,7 +309,7 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) =>  HelpContactPage()),
+                          MaterialPageRoute(builder: (context) => HelpContactPage()),
                         );
                       },
                     ),
@@ -311,6 +349,7 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
           ),
         ),
 
+        // --- 修正箇所：オーバーレイの表示管理 ---
         if (_showLogout)
           LogoutOverlay(
             onConfirm: () {
@@ -406,7 +445,6 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
     );
   }
 
-  // --- パスワード変更ダイアログ（デザイン修正版） ---
   void _showPasswordChangeDialog() {
     showDialog(
       context: context,
@@ -447,7 +485,6 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
             actions: [
               TextButton(
                 onPressed: () {
-                  // --- キャンセル時に全てリセット ---
                   _resetPasswordFields();
                   Navigator.pop(context);
                 },
@@ -463,13 +500,10 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
                           );
                           return;
                         }
-
                         setDialogState(() => _isChangingPassword = true);
-
                         try {
                           final authService = AuthService();
                           final token = await authService.getToken();
-
                           final response = await http.post(
                             Uri.parse('http://localhost:8000/auth/change-password'),
                             headers: {
@@ -484,7 +518,6 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
 
                           if (response.statusCode == 200) {
                             if (mounted) {
-                              // --- 成功時も全てリセットしてから閉じる ---
                               _resetPasswordFields();
                               Navigator.pop(context);
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -523,21 +556,17 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
     );
   }
 
-  // --- 状態をデフォルトに戻す共通メソッド ---
   void _resetPasswordFields() {
     setState(() {
-      // 入力内容をクリア
       _currentPwController.clear();
       _newPwController.clear();
       _confirmPwController.clear();
-      // 表示状態（目のアイコン）を非表示に戻す
       _isCurrentPwVisible = false;
       _isNewPwVisible = false;
       _isConfirmPwVisible = false;
     });
   }
 
-  // ダイアログ用テキストフィールドの補助ウィジェット
   Widget _buildDialogTextField({
     required TextEditingController controller,
     required String label,

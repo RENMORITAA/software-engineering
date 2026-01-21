@@ -31,7 +31,7 @@ class _DDeliveryHistoryPageState extends State<DDeliveryHistoryPage> {
     return Scaffold(
       appBar: const TitleAppBar(
         title: '配達履歴',
-        showBackButton: false,
+        showBackButton: true,
         backgroundColor: Color(0xFF2E7D32),
       ),
       body: deliveryProvider.isLoading

@@ -41,7 +41,7 @@ class _SOrderManagementPageState extends State<SOrderManagementPage>
     return Scaffold(
       appBar: const TitleAppBar(
         title: 'Order Management',
-        showBackButton: false,
+        showBackButton: true,
       ),
       body: Column(
         children: [

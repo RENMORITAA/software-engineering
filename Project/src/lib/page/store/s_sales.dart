@@ -32,7 +32,7 @@ class _SSalesPageState extends State<SSalesPage>
     return Scaffold(
       appBar: const TitleAppBar(
         title: '売上管理',
-        showBackButton: false,
+        showBackButton: true,
       ),
       body: Column(
         children: [
