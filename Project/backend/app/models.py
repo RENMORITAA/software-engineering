@@ -18,10 +18,11 @@ class User(Base):
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
 
-    requester_profile = relationship("RequesterProfile", back_populates="user", uselist=False)
-    deliverer_profile = relationship("DelivererProfile", back_populates="user", uselist=False)
-    store_profile = relationship("StoreProfile", back_populates="user", uselist=False)
-    notifications = relationship("Notification", back_populates="user")
+    # 【重要】cascade="all, delete-orphan" を追加
+    requester_profile = relationship("RequesterProfile", back_populates="user", uselist=False, cascade="all, delete-orphan")
+    deliverer_profile = relationship("DelivererProfile", back_populates="user", uselist=False, cascade="all, delete-orphan")
+    store_profile = relationship("StoreProfile", back_populates="user", uselist=False, cascade="all, delete-orphan")
+    notifications = relationship("Notification", back_populates="user", cascade="all, delete-orphan")
 
 
 class RequesterProfile(Base):
@@ -37,7 +38,8 @@ class RequesterProfile(Base):
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
 
     user = relationship("User", back_populates="requester_profile")
-    addresses = relationship("RequesterAddress", back_populates="requester")
+    # 【重要】cascadeを追加
+    addresses = relationship("RequesterAddress", back_populates="requester", cascade="all, delete-orphan")
     orders = relationship("Order", back_populates="requester")
 
 
@@ -82,7 +84,8 @@ class DelivererProfile(Base):
 
     user = relationship("User", back_populates="deliverer_profile")
     deliveries = relationship("Delivery", back_populates="deliverer")
-    payouts = relationship("DelivererPayout", back_populates="deliverer")
+    # 【重要】cascadeを追加
+    payouts = relationship("DelivererPayout", back_populates="deliverer", cascade="all, delete-orphan")
 
 
 class StoreProfile(Base):
@@ -110,10 +113,11 @@ class StoreProfile(Base):
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
 
     user = relationship("User", back_populates="store_profile")
-    categories = relationship("ProductCategory", back_populates="store")
-    products = relationship("Product", back_populates="store")
+    # 【重要】cascadeを追加
+    categories = relationship("ProductCategory", back_populates="store", cascade="all, delete-orphan")
+    products = relationship("Product", back_populates="store", cascade="all, delete-orphan")
     orders = relationship("Order", back_populates="store")
-    sales = relationship("StoreSales", back_populates="store")
+    sales = relationship("StoreSales", back_populates="store", cascade="all, delete-orphan")
 
 
 # ==========================================
@@ -166,7 +170,6 @@ class Order(Base):
     store_id = Column(Integer, ForeignKey("store_profiles.id"), nullable=False)
     deliverer_id = Column(Integer, ForeignKey("deliverer_profiles.id"))
     status = Column(String(30), nullable=False, default="pending")
-    # pending, accepted, preparing, ready_for_pickup, picked_up, delivering, delivered, cancelled
     subtotal = Column(Integer, nullable=False)
     delivery_fee = Column(Integer, nullable=False, default=0)
     total_price = Column(Integer, nullable=False)
@@ -183,9 +186,10 @@ class Order(Base):
 
     requester = relationship("RequesterProfile", back_populates="orders")
     store = relationship("StoreProfile", back_populates="orders")
-    order_details = relationship("OrderDetail", back_populates="order")
-    delivery = relationship("Delivery", back_populates="order", uselist=False)
-    payment = relationship("Payment", back_populates="order", uselist=False)
+    # 【重要】cascadeを追加
+    order_details = relationship("OrderDetail", back_populates="order", cascade="all, delete-orphan")
+    delivery = relationship("Delivery", back_populates="order", uselist=False, cascade="all, delete-orphan")
+    payment = relationship("Payment", back_populates="order", uselist=False, cascade="all, delete-orphan")
 
 
 class OrderDetail(Base):
@@ -215,7 +219,6 @@ class Delivery(Base):
     order_id = Column(Integer, ForeignKey("orders.id", ondelete="CASCADE"), unique=True, nullable=False)
     deliverer_id = Column(Integer, ForeignKey("deliverer_profiles.id"), nullable=False)
     status = Column(String(30), nullable=False, default="assigned")
-    # assigned, heading_store, at_store, picked_up, delivering, arrived, completed
     pickup_time = Column(DateTime)
     delivery_time = Column(DateTime)
     current_latitude = Column(Numeric(10, 8))
@@ -227,7 +230,8 @@ class Delivery(Base):
 
     order = relationship("Order", back_populates="delivery")
     deliverer = relationship("DelivererProfile", back_populates="deliveries")
-    location_history = relationship("DeliveryLocationHistory", back_populates="delivery")
+    # 【重要】cascadeを追加
+    location_history = relationship("DeliveryLocationHistory", back_populates="delivery", cascade="all, delete-orphan")
 
 
 class DeliveryLocationHistory(Base):
@@ -253,7 +257,7 @@ class Notification(Base):
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     title = Column(String(200), nullable=False)
     message = Column(Text, nullable=False)
-    type = Column(String(50), nullable=False)  # order_update, delivery_update, payment, system, promotion
+    type = Column(String(50), nullable=False) 
     related_order_id = Column(Integer, ForeignKey("orders.id"))
     is_read = Column(Boolean, default=False)
     created_at = Column(DateTime, server_default=func.now())
@@ -269,11 +273,10 @@ class Payment(Base):
     __tablename__ = "payments"
 
     id = Column(Integer, primary_key=True, index=True)
-    order_id = Column(Integer, ForeignKey("orders.id"), unique=True, nullable=False)
+    order_id = Column(Integer, ForeignKey("orders.id", ondelete="CASCADE"), unique=True, nullable=False)
     amount = Column(Integer, nullable=False)
     payment_method = Column(String(50), nullable=False)
     payment_status = Column(String(20), nullable=False, default="pending")
-    # pending, completed, failed, refunded
     transaction_id = Column(String(100))
     paid_at = Column(DateTime)
     created_at = Column(DateTime, server_default=func.now())
@@ -285,13 +288,12 @@ class DelivererPayout(Base):
     __tablename__ = "deliverer_payouts"
 
     id = Column(Integer, primary_key=True, index=True)
-    deliverer_id = Column(Integer, ForeignKey("deliverer_profiles.id"), nullable=False)
-    period_start = Column(Date, nullable=False)
+    # 【重要】ondelete="CASCADE" を追加
+    deliverer_id = Column(Integer, ForeignKey("deliverer_profiles.id", ondelete="CASCADE"), nullable=False)
     period_end = Column(Date, nullable=False)
     total_deliveries = Column(Integer, nullable=False, default=0)
     total_amount = Column(Integer, nullable=False, default=0)
     status = Column(String(20), nullable=False, default="pending")
-    # pending, processing, completed
     paid_at = Column(DateTime)
     created_at = Column(DateTime, server_default=func.now())
 
@@ -302,7 +304,8 @@ class StoreSales(Base):
     __tablename__ = "store_sales"
 
     id = Column(Integer, primary_key=True, index=True)
-    store_id = Column(Integer, ForeignKey("store_profiles.id"), nullable=False)
+    # 【重要】ondelete="CASCADE" を追加
+    store_id = Column(Integer, ForeignKey("store_profiles.id", ondelete="CASCADE"), nullable=False)
     period_start = Column(Date, nullable=False)
     period_end = Column(Date, nullable=False)
     total_orders = Column(Integer, nullable=False, default=0)
