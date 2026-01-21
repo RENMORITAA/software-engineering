@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'user_detail_page.dart';
 import 'package:provider/provider.dart';
 import '../provider/provider.dart';
+import 'help_contact_page.dart';
 
 /// 統合マイページ（メニュー一覧レイアウト版）
 class UnifiedMyPage extends StatefulWidget {
@@ -246,7 +247,16 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
                       title: '利用規約', 
                       onTap: () => setState(() => _showTerms = true),
                     ),
-                    _MenuItem(icon: Icons.help_outline, title: 'ヘルプ・お問い合わせ', onTap: () {}),
+                    _MenuItem(
+                      icon: Icons.help_outline, 
+                      title: 'ヘルプ・お問い合わせ', 
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) =>  HelpContactPage()),
+                        );
+                      },
+                    ),
                   ],
                 ),
 
