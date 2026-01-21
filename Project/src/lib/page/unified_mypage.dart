@@ -250,6 +250,7 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
                       _MenuItem(icon: Icons.payments_outlined, title: '給与明細', onTap: () {}),
                     ],
                     if (widget.userRole == 'store') ...[
+                      _MenuItem(icon: Icons.receipt_long, title: '注文管理', onTap: () {}),
                       _MenuItem(icon: Icons.bar_chart_outlined, title: '売上管理', onTap: () {}),
                     ],
                   ],
