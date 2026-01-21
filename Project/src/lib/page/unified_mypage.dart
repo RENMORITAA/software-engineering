@@ -8,6 +8,7 @@ import 'user_detail_page.dart';
 import 'package:provider/provider.dart';
 import '../provider/provider.dart';
 import 'help_contact_page.dart';
+import 'requester/c_address_edit.dart';
 
 /// 統合マイページ（メニュー一覧レイアウト版）
 class UnifiedMyPage extends StatefulWidget {
@@ -215,7 +216,7 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => AddressEditPage(),
+                              builder: (context) => CAddressEditPage(),
                             ),
                           );
                         },

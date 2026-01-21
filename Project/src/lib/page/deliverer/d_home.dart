@@ -60,7 +60,7 @@ class _DHomePageState extends State<DHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ユーザーグリーチE��ング
+            // ユーザーグリーチE  ング
             Padding(
               padding: const EdgeInsets.only(bottom: 16),
               child: Text(
@@ -71,7 +71,7 @@ class _DHomePageState extends State<DHomePage> {
                 ),
               ),
             ),
-            // オンライン/オフライン刁E��替ぁE
+            // オンライン/オフライン刁E  替ぁE
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
@@ -178,7 +178,7 @@ class _DHomePageState extends State<DHomePage> {
               ],
             ),
             const SizedBox(height: 24),
-            // 現在のスチE�Eタス
+            // 現在のスチE Eタス
             if (isOnline)
               Container(
                 padding: const EdgeInsets.all(16),
