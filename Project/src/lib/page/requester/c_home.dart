@@ -30,273 +30,309 @@ class _CHomePageState extends State<CHomePage> {
 
     return Scaffold(
       body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            // ヘッダー
-            SliverToBoxAdapter(
-              child: Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: const BorderRadius.vertical(
-                    bottom: Radius.circular(24),
+        child: RefreshIndicator(
+          onRefresh: () => storeProvider.fetchStores(),
+          child: CustomScrollView(
+            slivers: [
+              // ヘッダー
+              SliverToBoxAdapter(
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: const BorderRadius.vertical(
+                      bottom: Radius.circular(24),
+                    ),
                   ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'こんにちは',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.white.withOpacity(0.8),
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              '$userName さん',
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            // TODO: 通知画面に遷移
-                          },
-                          icon: Stack(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Icon(
-                                Icons.notifications_outlined,
-                                color: Colors.white,
-                                size: 28,
+                              Text(
+                                'こんにちは',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.white.withOpacity(0.8),
+                                ),
                               ),
-                              Positioned(
-                                right: 0,
-                                top: 0,
-                                child: Container(
-                                  padding: const EdgeInsets.all(4),
-                                  decoration: const BoxDecoration(
-                                    color: Colors.red,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: const Text(
-                                    '3',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
+                              const SizedBox(height: 4),
+                              Text(
+                                '$userName さん',
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
                                 ),
                               ),
                             ],
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    // 配達先住所
-                    Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.location_on,
-                            color: Colors.white,
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                          IconButton(
+                            onPressed: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('通知機能は準備中です')),
+                              );
+                            },
+                            icon: Stack(
                               children: [
-                                Text(
-                                  '配達先',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.white.withOpacity(0.8),
-                                  ),
+                                const Icon(
+                                  Icons.notifications_outlined,
+                                  color: Colors.white,
+                                  size: 28,
                                 ),
-                                const Text(
-                                  '高知県香美市土佐山田町123',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500,
+                                Positioned(
+                                  right: 0,
+                                  top: 0,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(4),
+                                    decoration: const BoxDecoration(
+                                      color: Colors.red,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: const Text(
+                                      '0',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          TextButton(
-                            onPressed: () {
-                              // TODO: 住所変更
-                            },
-                            child: const Text(
-                              '変更',
-                              style: TextStyle(color: Colors.white),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      // 配達先住所
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.15),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.location_on,
+                              color: Colors.white,
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '配達先',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.white.withOpacity(0.8),
+                                    ),
+                                  ),
+                                  const Text(
+                                    '高知県香美市土佐山田町123',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('住所変更機能は準備中です')),
+                                );
+                              },
+                              child: const Text(
+                                '変更',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              // 検索バー
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: GestureDetector(
+                    onTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('検索機能は準備中です')),
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 14,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.08),
+                            blurRadius: 10,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(Icons.search, color: Colors.grey[400]),
+                          const SizedBox(width: 12),
+                          Text(
+                            '店舗・商品を検索',
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                              fontSize: 16,
                             ),
                           ),
                         ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ),
-            // 検索バー
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: GestureDetector(
-                  onTap: () {
-                    // TODO: 検索画面に遷移
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 14,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.08),
-                          blurRadius: 10,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(Icons.search, color: Colors.grey[400]),
-                        const SizedBox(width: 12),
-                        Text(
-                          '店舗商品を検索',
-                          style: TextStyle(
-                            color: Colors.grey[400],
-                            fontSize: 16,
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
                 ),
               ),
-            ),
-            // カテゴリ
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'カテゴリ',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    SizedBox(
-                      height: 100,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          _buildCategoryItem(
-                            icon: Icons.restaurant,
-                            label: '料理',
-                            color: Colors.orange,
-                          ),
-                          _buildCategoryItem(
-                            icon: Icons.local_cafe,
-                            label: 'カフェ',
-                            color: Colors.brown,
-                          ),
-                          _buildCategoryItem(
-                            icon: Icons.fastfood,
-                            label: 'ファストフード',
-                            color: Colors.red,
-                          ),
-                          _buildCategoryItem(
-                            icon: Icons.ramen_dining,
-                            label: 'ラーメン',
-                            color: Colors.amber,
-                          ),
-                          _buildCategoryItem(
-                            icon: Icons.local_grocery_store,
-                            label: '食料品',
-                            color: Colors.green,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            // おすすめ店舗
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'おすすめ店舗',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
+              // カテゴリ
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'カテゴリ',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),
-                        TextButton(
-                          onPressed: () {
-                            // TODO: 店舗一覧に遷移
-                          },
-                          child: const Text('すべて見る'),
+                      ),
+                      const SizedBox(height: 12),
+                      SizedBox(
+                        height: 100,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            _buildCategoryItem(
+                              icon: Icons.restaurant,
+                              label: '料理',
+                              color: Colors.orange,
+                            ),
+                            _buildCategoryItem(
+                              icon: Icons.local_cafe,
+                              label: 'カフェ',
+                              color: Colors.brown,
+                            ),
+                            _buildCategoryItem(
+                              icon: Icons.fastfood,
+                              label: 'ファストフード',
+                              color: Colors.red,
+                            ),
+                            _buildCategoryItem(
+                              icon: Icons.ramen_dining,
+                              label: 'ラーメン',
+                              color: Colors.amber,
+                            ),
+                            _buildCategoryItem(
+                              icon: Icons.local_grocery_store,
+                              label: '食料品',
+                              color: Colors.green,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            // 店舗リスト
-            storeProvider.isLoading
-                ? const SliverToBoxAdapter(
-                    child: Center(child: CircularProgressIndicator()),
-                  )
-                : SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        final store = stores[index] as Map<String, dynamic>;
-                        return _buildStoreCard(store);
-                      },
-                      childCount: stores.length,
-                    ),
+                      ),
+                    ],
                   ),
-            const SliverToBoxAdapter(
-              child: SizedBox(height: 20),
-            ),
-          ],
+                ),
+              ),
+              // おすすめ店舗
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'おすすめ店舗',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('店舗一覧画面に遷移')),
+                          );
+                        },
+                        child: const Text('すべて見る'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              // 店舗リスト
+              storeProvider.isLoading
+                  ? const SliverToBoxAdapter(
+                      child: Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(32.0),
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                    )
+                  : stores.isEmpty
+                      ? SliverToBoxAdapter(
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(32.0),
+                              child: Column(
+                                children: [
+                                  Icon(
+                                    Icons.store_mall_directory_outlined,
+                                    size: 64,
+                                    color: Colors.grey[300],
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Text(
+                                    '店舗が見つかりません',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.grey[600],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                      : SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              final store = stores[index] as Map<String, dynamic>;
+                              return _buildStoreCard(store);
+                            },
+                            childCount: stores.length > 5 ? 5 : stores.length,
+                          ),
+                        ),
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 20),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -311,7 +347,9 @@ class _CHomePageState extends State<CHomePage> {
       padding: const EdgeInsets.only(right: 16),
       child: GestureDetector(
         onTap: () {
-          // TODO: カテゴリ別店舗一覧に遷移
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('$labelカテゴリを選択')),
+          );
         },
         child: Column(
           children: [
@@ -425,7 +463,7 @@ class _CHomePageState extends State<CHomePage> {
                           ),
                           const SizedBox(width: 4),
                           const Text(
-                            '4.5', // 仮
+                            '4.5',
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
@@ -439,7 +477,7 @@ class _CHomePageState extends State<CHomePage> {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            '20-30分', // 仮
+                            '20-30分',
                             style: TextStyle(
                               fontSize: 12,
                               color: Colors.grey.shade600,
