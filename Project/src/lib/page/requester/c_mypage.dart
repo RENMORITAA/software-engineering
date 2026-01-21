@@ -6,14 +6,13 @@ import '../../provider/provider.dart';
 import '../../services/auth_service.dart';
 import '../../config/routes.dart';
 
-
-
 /// 依頼者向けマイページラッパー
 class CMyPageWrapper extends StatelessWidget {
   const CMyPageWrapper({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // watchを使用しているため、状態変更時に再ビルドされます
     final userProvider = context.watch<UserRoleProvider>();
     final authService = AuthService();
     
@@ -51,70 +50,45 @@ class CMyPageWrapper extends StatelessWidget {
           },
         },
       ],
+      // ログアウト処理の修正
       onLogout: () async {
-        final confirm = await showDialog<bool>(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('ログアウト'),
-            content: const Text('ログアウトしてもよろしいですか？'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context, false),
-                child: const Text('キャンセル'),
-              ),
-              ElevatedButton(
-                onPressed: () => Navigator.pop(context, true),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  foregroundColor: Colors.white,
-                ),
-                child: const Text('ログアウト'),
-              ),
-            ],
-          ),
-        );
+        // 【修正点】ここで showDialog は行わない。
+        // UnifiedMyPage 側で確認ダイアログを出してからこの関数が呼ばれる設計にするため。
 
-        if (confirm == true) {
+        try {
+          // 1. サーバー側のログアウトセッション破棄
           await authService.logout();
+          
+          // 2. ローカルの状態（Provider）をクリア
           userProvider.logout();
+          
           if (context.mounted) {
+            // 3. 全ての画面履歴を消してログイン画面へ強制遷移
+            // これにより、戻るボタンで「山田太郎」画面に戻るのを防ぎます
             Navigator.pushNamedAndRemoveUntil(
               context,
               AppRoutes.login,
               (route) => false,
             );
           }
+        } catch (e) {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('ログアウト中にエラーが発生しました')),
+            );
+          }
         }
       },
+      // 退会処理の修正
       onWithdraw: () async {
-        final confirm = await showDialog<bool>(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('退会'),
-            content: const Text(
-              '退会すると、すべてのデータが削除されます。\nこの操作は取り消せません。\n本当に退会しますか？',
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context, false),
-                child: const Text('キャンセル'),
-              ),
-              ElevatedButton(
-                onPressed: () => Navigator.pop(context, true),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  foregroundColor: Colors.white,
-                ),
-                child: const Text('退会する'),
-              ),
-            ],
-          ),
-        );
+        // 【修正点】退会も同様に、UnifiedMyPage 側のダイアログで
+        // 「はい」が押された時のみこの処理が走るようにします。
 
-        if (confirm == true) {
-          // TODO: 退会API呼び出し
+        try {
+          // TODO: 実際の退会API（deleteUser等）をここで呼ぶ
           await authService.logout();
           userProvider.logout();
+          
           if (context.mounted) {
             Navigator.pushNamedAndRemoveUntil(
               context,
@@ -122,7 +96,13 @@ class CMyPageWrapper extends StatelessWidget {
               (route) => false,
             );
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('退会しました')),
+              const SnackBar(content: Text('退会処理が完了しました')),
+            );
+          }
+        } catch (e) {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('退会処理中にエラーが発生しました')),
             );
           }
         }
