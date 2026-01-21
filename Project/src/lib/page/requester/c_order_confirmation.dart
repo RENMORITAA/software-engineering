@@ -198,8 +198,8 @@ class COrderConfirmationPage extends StatelessWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        // 配達追跡画面へ遷移（実装予定）
-                        Navigator.pop(context);
+                        // 注文履歴ページへ遷移
+                        Navigator.pushNamed(context, '/requester/order-history');
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF1A237E),
@@ -210,7 +210,7 @@ class COrderConfirmationPage extends StatelessWidget {
                         ),
                       ),
                       child: const Text(
-                        '配達を追跡する',
+                        '注文履歴を見る',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -223,7 +223,12 @@ class COrderConfirmationPage extends StatelessWidget {
                     width: double.infinity,
                     child: OutlinedButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        // 依頼者ホーム画面に遷移
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          '/requester/home',
+                          (route) => false,
+                        );
                       },
                       style: OutlinedButton.styleFrom(
                         foregroundColor: const Color(0xFF1A237E),
