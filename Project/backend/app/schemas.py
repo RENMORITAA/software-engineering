@@ -41,6 +41,16 @@ class TokenData(BaseModel):
 
 
 # ==========================================
+# Profile 共通：銀行口座情報スキーマ (追加)
+# ==========================================
+class BankingUpdate(BaseModel):
+    bank_name: str
+    bank_branch: str
+    bank_account_type: str
+    bank_account_number: str
+    bank_account_holder: str
+
+# ==========================================
 # RequesterProfile Schemas
 # ==========================================
 
@@ -77,12 +87,24 @@ class RequesterProfileUpdate(BaseModel):
     name: Optional[str] = None
     phone_number: Optional[str] = None
     default_address_id: Optional[int] = None
+    # --- 銀行情報を追加 ---
+    bank_name: Optional[str] = None
+    bank_branch: Optional[str] = None
+    bank_account_type: Optional[str] = None
+    bank_account_number: Optional[str] = None
+    bank_account_holder: Optional[str] = None
 
 class RequesterProfile(RequesterProfileBase):
     id: int
     user_id: int
     default_address_id: Optional[int] = None
     addresses: List[RequesterAddress] = []
+    # --- 銀行情報を追加 ---
+    bank_name: Optional[str] = None
+    bank_branch: Optional[str] = None
+    bank_account_type: Optional[str] = None
+    bank_account_number: Optional[str] = None
+    bank_account_holder: Optional[str] = None
 
     class Config:
         from_attributes = True
@@ -152,6 +174,12 @@ class StoreProfileUpdate(BaseModel):
     phone_number: Optional[str] = None
     business_hours: Optional[str] = None
     is_open: Optional[bool] = None
+    # --- 銀行情報を追加 ---
+    bank_name: Optional[str] = None
+    bank_branch: Optional[str] = None
+    bank_account_type: Optional[str] = None
+    bank_account_number: Optional[str] = None
+    bank_account_holder: Optional[str] = None
 
 class StoreProfile(StoreProfileBase):
     id: int
@@ -162,6 +190,12 @@ class StoreProfile(StoreProfileBase):
     business_license: Optional[str] = None
     store_image_url: Optional[str] = None
     is_open: bool = True
+    # --- 銀行情報を追加 ---
+    bank_name: Optional[str] = None
+    bank_branch: Optional[str] = None
+    bank_account_type: Optional[str] = None
+    bank_account_number: Optional[str] = None
+    bank_account_holder: Optional[str] = None
 
     class Config:
         from_attributes = True

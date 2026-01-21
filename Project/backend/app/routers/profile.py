@@ -10,6 +10,47 @@ router = APIRouter(
 )
 
 # ==========================================
+# 共通エンドポイント: 銀行口座情報
+# ==========================================
+
+@router.put("/{role}/banking")
+def update_banking_info(
+    role: str,
+    data: schemas.BankingUpdate,
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(database.get_db)
+):
+    """
+    依頼者・店舗・配達員 共通の銀行口座情報更新エンドポイント
+    """
+    if current_user.role != role:
+        raise HTTPException(status_code=403, detail="権限がありません")
+
+    # ロールに応じたプロフィールを取得
+    if role == "requester":
+        profile = db.query(models.RequesterProfile).filter(models.RequesterProfile.user_id == current_user.id).first()
+    elif role == "store":
+        profile = db.query(models.StoreProfile).filter(models.StoreProfile.user_id == current_user.id).first()
+    elif role == "deliverer":
+        profile = db.query(models.DelivererProfile).filter(models.DelivererProfile.user_id == current_user.id).first()
+    else:
+        raise HTTPException(status_code=400, detail="不正なロールです")
+
+    if not profile:
+        raise HTTPException(status_code=404, detail="プロフィールが見つかりません")
+
+    # 銀行情報を更新
+    profile.bank_name = data.bank_name
+    profile.bank_branch = data.bank_branch
+    profile.bank_account_type = data.bank_account_type
+    profile.bank_account_number = data.bank_account_number
+    profile.bank_account_holder = data.bank_account_holder
+
+    db.commit()
+    return {"message": f"{role}の口座情報を更新しました"}
+
+
+# ==========================================
 # Requester Profile
 # ==========================================
 
@@ -93,7 +134,6 @@ def add_requester_address(
     if not profile:
         raise HTTPException(status_code=404, detail="Profile not found")
     
-    # If this is the first address or marked as default, set it as default
     if address.is_default:
         db.query(models.RequesterAddress).filter(
             models.RequesterAddress.requester_id == profile.id
@@ -115,7 +155,6 @@ def add_requester_address(
     db.commit()
     db.refresh(db_address)
     
-    # Update default address in profile
     if address.is_default:
         profile.default_address_id = db_address.id
         db.commit()
@@ -192,35 +231,6 @@ def update_deliverer_profile(
     db.commit()
     db.refresh(profile)
     return profile
-
-@router.put("/deliverer/banking")
-def update_deliverer_banking(
-    bank_name: str,
-    bank_branch: str,
-    bank_account_type: str,
-    bank_account_number: str,
-    bank_account_holder: str,
-    current_user: models.User = Depends(get_current_user),
-    db: Session = Depends(database.get_db)
-):
-    """Update deliverer's banking information"""
-    if current_user.role != "deliverer":
-        raise HTTPException(status_code=403, detail="Only deliverers can update banking info")
-    
-    profile = db.query(models.DelivererProfile).filter(
-        models.DelivererProfile.user_id == current_user.id
-    ).first()
-    if not profile:
-        raise HTTPException(status_code=404, detail="Profile not found")
-    
-    profile.bank_name = bank_name
-    profile.bank_branch = bank_branch
-    profile.bank_account_type = bank_account_type
-    profile.bank_account_number = bank_account_number
-    profile.bank_account_holder = bank_account_holder
-    
-    db.commit()
-    return {"message": "Banking information updated"}
 
 # ==========================================
 # Store Profile

@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../provider/provider.dart';
 import 'help_contact_page.dart';
 import 'requester/c_address_edit.dart';
+import 'banking_info_page.dart';
 
 /// 統合マイページ（メニュー一覧レイアウト版）
 class UnifiedMyPage extends StatefulWidget {
@@ -224,7 +225,15 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
                     _MenuItem(
                       icon: Icons.account_balance_outlined,
                       title: '口座情報',
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            // 修正：widget.userRole を引数として渡す
+                            builder: (context) => BankingInfoPage(role: widget.userRole),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),

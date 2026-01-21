@@ -79,6 +79,9 @@ class AuthService {
         'email': email,
         'password': password,
         'role': role,
+        'name': name,
+        'store_name': storeName,
+        'store_address': storeAddress,
       });
 
       // 2. 自動ログイン（トークン取得）
@@ -137,9 +140,10 @@ class AuthService {
   }
 
   // ---------------------------------------------------------------------------
-  // 2. プロフィール更新
+  // 2. プロフィール・口座情報更新
   // ---------------------------------------------------------------------------
 
+  /// プロフィールの更新（画像対応）
   Future<void> updateProfile({
     required String role,
     required Map<String, dynamic> data,
@@ -153,14 +157,11 @@ class AuthService {
       final Uri uri = Uri.parse('$baseUrl$endpoint');
 
       if (imageFile == null) {
-        // 画像なし更新
         await _apiService.put(endpoint, data);
       } else {
-        // 画像あり更新 (MultipartRequest)
         final request = http.MultipartRequest('PUT', uri);
         request.headers['Authorization'] = 'Bearer $token';
 
-        // データをフィールドに追加
         data.forEach((key, value) {
           if (value != null) request.fields[key] = value.toString();
         });
@@ -179,7 +180,6 @@ class AuthService {
           request.files.add(await http.MultipartFile.fromPath(imageFieldName, imageFile.path));
         }
 
-        // タイムアウトを40秒に延長し、レスポンスを待機
         final streamedResponse = await request.send().timeout(const Duration(seconds: 40));
         final response = await http.Response.fromStream(streamedResponse);
         
@@ -188,18 +188,9 @@ class AuthService {
         }
       }
 
-      // 重要：サーバーの最新データを取得して同期
-      final baseInfo = await getCurrentUser();
-      Map<String, dynamic> detail = {};
-      try {
-        if (role == 'store') detail = await getStoreProfile();
-        if (role == 'deliverer') detail = await getDelivererProfile();
-        if (role == 'requester') detail = await getRequesterProfile();
-      } catch (e) {
-        debugPrint('Post-update detail fetch failed: $e');
-      }
-      
-      await saveUserInfo({...baseInfo, ...detail});
+      // プロフィール更新時もデータを反映
+      await saveUserInfo(data);
+      await _refreshAndSaveUserInfo(role);
       
     } catch (e) {
       debugPrint('updateProfile error: $e');
@@ -207,11 +198,65 @@ class AuthService {
     }
   }
 
+  /// 口座情報の更新
+  Future<void> updateBankingInfo({required String role, required Map<String, dynamic> data}) async {
+    try {
+      final String endpoint = '/profile/$role/banking';
+      await _apiService.put(endpoint, data);
+      
+      // 【修正ポイント】サーバーからの再取得を待つ前に、
+      // 入力された最新データを直接ローカルキャッシュに上書き保存します。
+      // これにより、通信ラグによる「戻り現象」を防ぎます。
+      await saveUserInfo(data);
+      
+      // その後、整合性を保つために最新状態をサーバーからバックグラウンドで同期
+      await _refreshAndSaveUserInfo(role);
+    } catch (e) {
+      debugPrint('updateBankingInfo error: $e');
+      rethrow;
+    }
+  }
+
+  /// 最新のプロフィールを取得する
+  Future<Map<String, dynamic>?> getUserProfile() async {
+    try {
+      final String? role = await getSavedRole();
+      if (role == null) return null;
+
+      Map<String, dynamic> detail = {};
+      if (role == 'store') detail = await getStoreProfile();
+      if (role == 'deliverer') detail = await getDelivererProfile();
+      if (role == 'requester') detail = await getRequesterProfile();
+      
+      // サーバーから取得した詳細情報をキャッシュにも反映
+      await saveUserInfo(detail);
+      
+      return detail;
+    } catch (e) {
+      debugPrint('getUserProfile error: $e');
+      return null;
+    }
+  }
+
+  /// サーバーから最新情報を取得し、SharedPreferencesを更新する内部メソッド
+  Future<void> _refreshAndSaveUserInfo(String role) async {
+    try {
+      final baseInfo = await getCurrentUser();
+      Map<String, dynamic> detail = {};
+      if (role == 'store') detail = await getStoreProfile();
+      if (role == 'deliverer') detail = await getDelivererProfile();
+      if (role == 'requester') detail = await getRequesterProfile();
+      
+      await saveUserInfo({...baseInfo, ...detail});
+    } catch (e) {
+      debugPrint('Detail fetch failed in _refreshAndSaveUserInfo: $e');
+    }
+  }
+
   // ---------------------------------------------------------------------------
   // 3. お問い合わせ機能
   // ---------------------------------------------------------------------------
 
-  /// 運営へお問い合わせメールを送信する
   Future<bool> sendContactEmail({required String category, required String content}) async {
     try {
       final userInfo = await getSavedUserInfo();
@@ -241,9 +286,14 @@ class AuthService {
     
     Map<String, dynamic> updatedData = {};
     if (existingJson != null) {
-      updatedData = Map<String, dynamic>.from(jsonDecode(existingJson));
+      try {
+        updatedData = Map<String, dynamic>.from(jsonDecode(existingJson));
+      } catch (e) {
+        debugPrint('Error decoding existing user info: $e');
+      }
     }
     
+    // nullでない値のみをマージ（上書き）
     user.forEach((key, value) {
       if (value != null) {
         updatedData[key] = value;
@@ -251,6 +301,8 @@ class AuthService {
     });
 
     await prefs.setString(_userKey, jsonEncode(updatedData));
+    
+    // ロールが変更された場合は個別のキーも更新
     if (updatedData['role'] != null) {
       await prefs.setString(_roleKey, updatedData['role']);
     }
@@ -259,7 +311,12 @@ class AuthService {
   Future<Map<String, dynamic>?> getSavedUserInfo() async {
     final prefs = await SharedPreferences.getInstance();
     final String? userJson = prefs.getString(_userKey);
-    return userJson != null ? jsonDecode(userJson) as Map<String, dynamic> : null;
+    if (userJson == null) return null;
+    try {
+      return jsonDecode(userJson) as Map<String, dynamic>;
+    } catch (e) {
+      return null;
+    }
   }
 
   Future<String?> getSavedRole() async {
