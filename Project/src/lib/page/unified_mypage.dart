@@ -12,6 +12,7 @@ import 'requester/c_address_edit.dart';
 import 'requester/c_order_history.dart';
 import 'requester/c_payment_history_page.dart';
 import 'deliverer/d_delivery_history.dart';
+import 'deliverer/d_payment_history_page.dart';
 import 'store/s_order_management.dart';
 import 'store/s_sales.dart';
 import 'banking_info_page.dart';
@@ -276,7 +277,18 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
                           );
                         }
                       ),
-                      _MenuItem(icon: Icons.payments_outlined, title: '給与明細', onTap: () {}),
+                      _MenuItem(
+                        icon: Icons.payments_outlined, 
+                        title: '給与明細', 
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const DPaymentHistoryPage(),
+                            ),
+                          );
+                        }
+                      ),
                     ],
                     if (widget.userRole == 'store') ...[
                       _MenuItem(
