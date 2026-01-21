@@ -219,3 +219,38 @@ async def change_password(
     db.commit()
     
     return {"message": "パスワードを変更しました"}
+
+@router.delete("/withdraw", status_code=status.HTTP_204_NO_CONTENT)
+async def withdraw_account(
+    db: Session = Depends(database.get_db),
+    current_user: models.User = Depends(get_current_user)
+):
+    """
+    ユーザーアカウントとそのプロフィールを完全に削除（物理削除）します。
+    """
+    try:
+        # 1. プロフィールの削除 (ロールに応じて対象を切り替え)
+        # ※ models.py で cascade="all, delete" が設定されていない場合の安全策です
+        if current_user.role == "requester":
+            db.query(models.RequesterProfile).filter(models.RequesterProfile.user_id == current_user.id).delete()
+        elif current_user.role == "deliverer":
+            db.query(models.DelivererProfile).filter(models.DelivererProfile.user_id == current_user.id).delete()
+        elif current_user.role == "store":
+            db.query(models.StoreProfile).filter(models.StoreProfile.user_id == current_user.id).delete()
+
+        # 2. ユーザー本体の削除
+        db.delete(current_user)
+        
+        # 3. 確定
+        db.commit()
+        
+        # 204 No Content は body を返さないため return None
+        return None
+        
+    except Exception as e:
+        db.rollback()
+        print(f"Withdraw Error: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="退会処理中にエラーが発生しました"
+        )

@@ -1,18 +1,9 @@
+import 'package:flutter/foundation.dart';
+import 'dart:io' show Platform;
+
 /// 環境設定クラス
 /// 
 /// --dart-define または環境変数でAPI Base URLを切り替え可能
-/// 
-/// 使用例:
-/// ```bash
-/// # ローカル開発
-/// flutter run --dart-define=ENV=local
-/// 
-/// # ステージング
-/// flutter run --dart-define=ENV=staging --dart-define=API_BASE_URL=https://staging-api.example.com
-/// 
-/// # 本番
-/// flutter run --dart-define=ENV=production --dart-define=API_BASE_URL=https://api.example.com
-/// ```
 class EnvConfig {
   // シングルトンパターン
   static final EnvConfig _instance = EnvConfig._internal();
@@ -31,20 +22,28 @@ class EnvConfig {
     defaultValue: '',
   );
 
-  /// 環境ごとのデフォルトAPI Base URL
-  static const Map<String, String> _defaultApiBaseUrls = {
-    'local': 'http://localhost:8000',
-    'docker': 'http://localhost:8000',
-    'staging': 'https://staging-api.example.com',
-    'production': 'https://api.example.com',
-  };
-
   /// モックAPIを利用するか（--dart-defineで上書き可能）
-  /// デフォルト: 全環境でfalse（必要なときだけ明示的にtrueへ）
   static const bool useMockApi = bool.fromEnvironment(
     'USE_MOCK_API',
     defaultValue: false,
   );
+
+  /// デフォルトのローカルURLをプラットフォーム別に取得
+  static String get _defaultLocalUrl {
+    if (kIsWeb) {
+      return 'http://localhost:8000';
+    }
+    // AndroidエミュレータからPCのホスト(localhost)を参照する場合
+    try {
+      if (Platform.isAndroid) {
+        return 'http://10.0.2.2:8000';
+      }
+    } catch (e) {
+      // Platform.isAndroid が使えない環境（Unit Test等）への配慮
+    }
+    // iOSシミュレータやデスクトップ実行
+    return 'http://127.0.0.1:8000';
+  }
 
   /// API Base URLを取得
   /// 優先順位: --dart-define > 環境別デフォルト > ローカル
@@ -54,8 +53,12 @@ class EnvConfig {
       return _apiBaseUrlOverride;
     }
 
-    // 2. 環境に応じたデフォルトURLを返す
-    return _defaultApiBaseUrls[environment] ?? _defaultApiBaseUrls['local']!;
+    // 2. 本番やステージングの固定URL
+    if (environment == 'production') return 'https://api.example.com';
+    if (environment == 'staging') return 'https://staging-api.example.com';
+    
+    // 3. ローカル/Docker環境（動的に判定）
+    return _defaultLocalUrl;
   }
 
   /// WebSocket URL（APIと同じホストを使用）
@@ -84,16 +87,14 @@ class EnvConfig {
   /// 設定情報をデバッグ出力
   static void printConfig() {
     if (enableLogging) {
-      print('┌─────────────────────────────────────');
-      print('│ Environment Config');
-      print('├─────────────────────────────────────');
-      print('│ ENV: $environment');
-      print('│ API Base URL: $apiBaseUrl');
-      print('│ WS Base URL: $wsBaseUrl');
-      print('│ Use Mock API: $useMockApi');
-      print('│ Debug Mode: $isDebug');
-      print('│ API Timeout: ${apiTimeout}s');
-      print('└─────────────────────────────────────');
+      debugPrint('┌─────────────────────────────────────');
+      debugPrint('│ Environment Config');
+      debugPrint('├─────────────────────────────────────');
+      debugPrint('│ ENV: $environment');
+      debugPrint('│ API Base URL: $apiBaseUrl');
+      debugPrint('│ Use Mock API: $useMockApi');
+      debugPrint('│ Debug Mode: $isDebug');
+      debugPrint('└─────────────────────────────────────');
     }
   }
 }

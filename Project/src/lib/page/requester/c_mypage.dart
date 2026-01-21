@@ -12,7 +12,7 @@ class CMyPageWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // watchを使用しているため、状態変更時に再ビルドされます
+    // userProviderの変更を監視し、ログアウト等の状態変化に対応
     final userProvider = context.watch<UserRoleProvider>();
     final authService = AuthService();
     
@@ -21,6 +21,55 @@ class CMyPageWrapper extends StatelessWidget {
       userEmail: userProvider.userEmail ?? '',
       userRole: 'requester',
       accessToken: userProvider.accessToken ?? '',
+      
+      // --- ログアウト処理 ---
+      onLogout: () async {
+        try {
+          // 1. サーバー側のログアウトセッション破棄（トークン無効化など）
+          await authService.logout();
+          
+          // 2. ローカルの状態（Provider）をクリア
+          userProvider.logout();
+          
+          if (context.mounted) {
+            // 3. 全ての画面履歴を消してログイン画面へ強制遷移
+            // (route) => false により、戻るボタンでマイページに戻るのを完全に防ぎます
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              AppRoutes.login,
+              (route) => false,
+            );
+          }
+        } catch (e) {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('ログアウト中にエラーが発生しました')),
+            );
+          }
+        }
+      },
+
+      // --- 退会処理 (DB物理削除連携) ---
+      onWithdraw: () async {
+        try {
+          // 1. 作成した withdraw() メソッドを呼び出し、
+          // サーバーDBからの削除(DELETE /auth/withdraw)とログアウトを同時に実行
+          await authService.withdraw(); 
+
+          // 2. ローカルのログイン状態（Provider）をクリア
+          userProvider.logout();
+
+          // 注意: UnifiedMyPage 側の実装で、この関数の実行完了後に 
+          // Navigator.pushNamedAndRemoveUntil(context, '/login', ...) 
+          // が走るようになっているか確認してください。
+          // もし走らない場合は、ここに Navigator 処理を追記します。
+
+        } catch (e) {
+          // エラーを再スローして UnifiedMyPage 側の SnackBar 等で表示させる
+          rethrow;
+        }
+      },
+
       roleSpecificSettings: [
         {
           'icon': Icons.location_on_outlined,
@@ -50,63 +99,6 @@ class CMyPageWrapper extends StatelessWidget {
           },
         },
       ],
-      // ログアウト処理の修正
-      onLogout: () async {
-        // 【修正点】ここで showDialog は行わない。
-        // UnifiedMyPage 側で確認ダイアログを出してからこの関数が呼ばれる設計にするため。
-
-        try {
-          // 1. サーバー側のログアウトセッション破棄
-          await authService.logout();
-          
-          // 2. ローカルの状態（Provider）をクリア
-          userProvider.logout();
-          
-          if (context.mounted) {
-            // 3. 全ての画面履歴を消してログイン画面へ強制遷移
-            // これにより、戻るボタンで「山田太郎」画面に戻るのを防ぎます
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              AppRoutes.login,
-              (route) => false,
-            );
-          }
-        } catch (e) {
-          if (context.mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('ログアウト中にエラーが発生しました')),
-            );
-          }
-        }
-      },
-      // 退会処理の修正
-      onWithdraw: () async {
-        // 【修正点】退会も同様に、UnifiedMyPage 側のダイアログで
-        // 「はい」が押された時のみこの処理が走るようにします。
-
-        try {
-          // TODO: 実際の退会API（deleteUser等）をここで呼ぶ
-          await authService.logout();
-          userProvider.logout();
-          
-          if (context.mounted) {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              AppRoutes.login,
-              (route) => false,
-            );
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('退会処理が完了しました')),
-            );
-          }
-        } catch (e) {
-          if (context.mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('退会処理中にエラーが発生しました')),
-            );
-          }
-        }
-      },
     );
   }
 }

@@ -37,9 +37,7 @@ class ApiService {
   }
 
   Future<dynamic> get(String endpoint) async {
-    if (_useMockApi) {
-      return _mockApiService.get(endpoint);
-    }
+    if (_useMockApi) return _mockApiService.get(endpoint);
 
     _log('GET $baseUrl$endpoint');
     final headers = await _getHeaders();
@@ -51,9 +49,7 @@ class ApiService {
   }
 
   Future<dynamic> post(String endpoint, Map<String, dynamic> data, {bool isFormData = false}) async {
-    if (_useMockApi) {
-      return _mockApiService.post(endpoint, data, isFormData: isFormData);
-    }
+    if (_useMockApi) return _mockApiService.post(endpoint, data, isFormData: isFormData);
 
     _log('POST $baseUrl$endpoint');
     final headers = await _getHeaders();
@@ -75,9 +71,7 @@ class ApiService {
   }
 
   Future<dynamic> put(String endpoint, Map<String, dynamic> data) async {
-    if (_useMockApi) {
-      return _mockApiService.put(endpoint, data);
-    }
+    if (_useMockApi) return _mockApiService.put(endpoint, data);
 
     _log('PUT $baseUrl$endpoint');
     final headers = await _getHeaders();
@@ -89,32 +83,34 @@ class ApiService {
     return _handleResponse(response);
   }
 
+  /// 削除リクエスト (認証ヘッダーを確実に含める)
   Future<dynamic> delete(String endpoint) async {
-    if (_useMockApi) {
-      return _mockApiService.delete(endpoint);
-    }
+    if (_useMockApi) return _mockApiService.delete(endpoint);
 
     _log('DELETE $baseUrl$endpoint');
-    final headers = await _getHeaders();
+    final headers = await _getHeaders(); // ここでトークンを取得
+    
     final response = await http.delete(
       Uri.parse('$baseUrl$endpoint'),
       headers: headers,
     ).timeout(timeout);
+    
     return _handleResponse(response);
   }
 
   dynamic _handleResponse(http.Response response) {
+    // 成功時 (200-299)
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      // ボディが空の場合はnullを返す
-      if (response.body.isEmpty) return null;
+      _log('Response Success: ${response.statusCode}');
+      if (response.statusCode == 204 || response.body.isEmpty) return null;
       return jsonDecode(utf8.decode(response.bodyBytes));
     } else {
-      // エラーハンドリング
+      // 失敗時
+      _log('Error Response: ${response.statusCode} ${response.body}');
       throw Exception('API Error: ${response.statusCode} ${response.body}');
     }
   }
 
-  // Order status update
   Future<dynamic> updateOrderStatus(int orderId, String status) async {
     return await put('/orders/$orderId/status', {'status': status});
   }

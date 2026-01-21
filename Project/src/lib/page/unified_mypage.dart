@@ -23,8 +23,10 @@ class UnifiedMyPage extends StatefulWidget {
   final String userRole;
   final String accessToken;
   final Map<String, String>? additionalInfo;
-  final VoidCallback onLogout;
-  final VoidCallback onWithdraw;
+  //final VoidCallback onLogout;
+  //final VoidCallback onWithdraw;
+  final Future<void> Function() onLogout;    // void ではなく Future<void> に
+  final Future<void> Function() onWithdraw;
   final List<Map<String, dynamic>>? roleSpecificSettings;
 
   const UnifiedMyPage({
@@ -178,9 +180,32 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
 
         if (_showWithdraw)
           WithdrawOverlay(
-            onConfirm: () {
+            onConfirm: () async { // async を追加
+              // 1. まずオーバーレイを閉じる
               setState(() => _showWithdraw = false);
-              widget.onWithdraw();
+              
+              try {
+                // 2. 親（Wrapper）に定義された退会API処理を実行
+                // ここで実際のDB削除APIが呼ばれるのを待つ
+                await widget.onWithdraw(); 
+
+                // 3. 退会が成功したら、ログアウト時と同様にスタックをクリアしてログイン画面へ
+                if (mounted) {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    '/login', 
+                    (route) => false,
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('退会手続きが完了しました。ご利用ありがとうございました。')),
+                  );
+                }
+              } catch (e) {
+                if (mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('退会処理に失敗しました。時間をおいて再度お試しください。')),
+                  );
+                }
+              }
             },
             onCancel: () => setState(() => _showWithdraw = false),
           ),
