@@ -84,7 +84,7 @@ class AuthService {
       // 2. 自動ログイン（トークン取得）
       await login(email, password);
 
-      // 3. 詳細情報を各プロフィールへ送信 (キー名を phone_number に統一)
+      // 3. 詳細情報を各プロフィールへ送信
       Map<String, dynamic> detailData = {};
       if (role == 'requester') {
         detailData = {'name': name, 'phone_number': phoneNumber};
@@ -107,7 +107,7 @@ class AuthService {
         await _apiService.put('/profile/store', detailData);
       }
 
-      // 4. ローカルストレージを最新状態に更新
+      // 4. 最新状態を保存
       final baseInfo = await getCurrentUser();
       await saveUserInfo({...baseInfo, ...detailData});
 
@@ -116,7 +116,7 @@ class AuthService {
     }
   }
 
-  /// パスワードリセットメールの送信 (エラー解消のために追加)
+  /// パスワードリセット
   Future<void> sendPasswordResetEmail(String email) async {
     try {
       await _apiService.post('/auth/password-reset-request', {'email': email});
@@ -153,11 +153,14 @@ class AuthService {
       final uri = Uri.parse('$baseUrl$endpoint');
 
       if (imageFile == null) {
+        // 画像なし更新
         await _apiService.put(endpoint, data);
       } else {
+        // 画像あり更新 (MultipartRequest)
         var request = http.MultipartRequest('PUT', uri);
         request.headers['Authorization'] = 'Bearer $token';
 
+        // データをフィールドに追加
         data.forEach((key, value) {
           if (value != null) request.fields[key] = value.toString();
         });
@@ -176,32 +179,41 @@ class AuthService {
           request.files.add(await http.MultipartFile.fromPath(imageFieldName, imageFile.path));
         }
 
-        final streamedResponse = await request.send().timeout(const Duration(seconds: 30));
+        // タイムアウトを40秒に延長し、レスポンスを待機
+        final streamedResponse = await request.send().timeout(const Duration(seconds: 40));
         final response = await http.Response.fromStream(streamedResponse);
         
-        if (response.statusCode != 200) {
-          throw 'プロフィールの保存に失敗しました';
+        // ステータスコードが200番台以外はエラーとする
+        if (response.statusCode < 200 || response.statusCode >= 300) {
+          throw 'プロフィールの保存に失敗しました (${response.statusCode})';
         }
       }
 
-      // サーバー更新後、最新データを取得してローカルに再同期
+      // 重要：サーバーの最新データを取得してローカルを同期
+      // これによりメールアドレスや画像パスの変更を確実に取得する
       final baseInfo = await getCurrentUser();
       Map<String, dynamic> detail = {};
-      if (role == 'store') detail = await getStoreProfile();
-      if (role == 'deliverer') detail = await getDelivererProfile();
-      if (role == 'requester') detail = await getRequesterProfile();
+      try {
+        if (role == 'store') detail = await getStoreProfile();
+        if (role == 'deliverer') detail = await getDelivererProfile();
+        if (role == 'requester') detail = await getRequesterProfile();
+      } catch (e) {
+        debugPrint('Post-update detail fetch failed: $e');
+      }
       
+      // 全データをマージして保存
       await saveUserInfo({...baseInfo, ...detail});
+      
     } catch (e) {
+      debugPrint('updateProfile error: $e');
       rethrow;
     }
   }
 
   // ---------------------------------------------------------------------------
-  // 3. ローカルデータ永続化 (SharedPreferences)
+  // 3. ローカルデータ永続化
   // ---------------------------------------------------------------------------
 
-  /// ユーザー情報をマージして保存
   Future<void> saveUserInfo(Map<String, dynamic> user) async {
     final prefs = await SharedPreferences.getInstance();
     final existingJson = prefs.getString(_userKey);
@@ -211,7 +223,6 @@ class AuthService {
       updatedData = Map<String, dynamic>.from(jsonDecode(existingJson));
     }
     
-    // 新しいデータでマッピングを更新 (null でない値のみ上書き)
     user.forEach((key, value) {
       if (value != null) {
         updatedData[key] = value;
@@ -219,13 +230,11 @@ class AuthService {
     });
 
     await prefs.setString(_userKey, jsonEncode(updatedData));
-    
     if (updatedData['role'] != null) {
       await prefs.setString(_roleKey, updatedData['role']);
     }
   }
 
-  /// 保存されたユーザー情報の取得
   Future<Map<String, dynamic>?> getSavedUserInfo() async {
     final prefs = await SharedPreferences.getInstance();
     final userJson = prefs.getString(_userKey);
@@ -268,7 +277,7 @@ class AuthService {
   }
 
   // ---------------------------------------------------------------------------
-  // 4. API メソッド (エンドポイント呼出し)
+  // 4. API メソッド
   // ---------------------------------------------------------------------------
 
   Future<Map<String, dynamic>> getCurrentUser() async => await _apiService.get('/auth/me');

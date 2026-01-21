@@ -32,7 +32,6 @@ class _UserDetailPageState extends State<UserDetailPage> {
   XFile? _pickedImage;
   String? _serverImageUrl;
 
-  // 各入力項目のコントローラー
   late TextEditingController _nameController;
   late TextEditingController _emailController;
   late TextEditingController _phoneController;
@@ -69,7 +68,6 @@ class _UserDetailPageState extends State<UserDetailPage> {
         if (info['name'] != null) _nameController.text = info['name'].toString();
         if (info['email'] != null) _emailController.text = info['email'].toString();
         
-        // 電話番号の読み込み（複数のキーをチェック）
         final phone = info['phone_number'] ?? info['phoneNumber'] ?? info['phone'];
         if (phone != null) _phoneController.text = phone.toString();
 
@@ -104,7 +102,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
   String _reverseMapVehicle(String val) {
     if (val == '自動車') return 'car';
     if (val == 'バイク') return 'motorcycle';
-    if (val == '自転車  ') return 'bicycle';
+    if (val == '自転車') return 'bicycle';
     return 'walk';
   }
 
@@ -133,7 +131,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
             child: const Text('キャンセル', style: TextStyle(color: Colors.grey)),
           ),
           ElevatedButton(
-            onPressed: () async {
+            onPressed: () {
               Navigator.pop(context);
               _saveProfile();
             },
@@ -153,6 +151,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
     try {
       final data = {
         'name': _nameController.text,
+        'email': _emailController.text, // 追加
         'phone_number': _phoneController.text,
       };
       if (widget.userRole == 'deliverer') {
@@ -164,23 +163,34 @@ class _UserDetailPageState extends State<UserDetailPage> {
         data['business_hours'] = _businessHoursController.text;
       }
 
+      // API実行
       await _authService.updateProfile(
         role: widget.userRole,
         data: data,
         imageFile: _pickedImage,
       );
 
+      // 成功した場合のUIリセット
       if (mounted) {
         setState(() {
           _isEditing = false;
-          _isLoading = false;
           _pickedImage = null;
         });
-        await _loadInitialData();
+        await _loadInitialData(); // サーバーから最新データを再ロード
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('情報を更新しました')));
       }
     } catch (e) {
-      if (mounted) setState(() => _isLoading = false);
+      debugPrint('Update Error: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('エラーが発生しました: $e'), backgroundColor: Colors.red),
+        );
+      }
+    } finally {
+      // 成功・失敗に関わらずローディングを停止
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
     }
   }
 
@@ -212,7 +222,6 @@ class _UserDetailPageState extends State<UserDetailPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // オレンジの警告バー
                 if (_isEditing)
                   Container(
                     width: double.infinity,
@@ -234,7 +243,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
 
                 _buildSectionTitle('基本情報'),
                 _buildCustomField('名前', _nameController),
-                _buildCustomField('メールアドレス', _emailController, enabled: false),
+                _buildCustomField('メールアドレス', _emailController),
                 _buildCustomField('電話番号', _phoneController),
 
                 if (widget.userRole == 'deliverer') ...[
@@ -271,7 +280,6 @@ class _UserDetailPageState extends State<UserDetailPage> {
     );
   }
 
-  // 以前の黒太枠デザインを適用したフィールド
   Widget _buildCustomField(String label, TextEditingController controller, {bool enabled = true}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
@@ -284,7 +292,6 @@ class _UserDetailPageState extends State<UserDetailPage> {
           labelStyle: const TextStyle(color: Colors.black87),
           floatingLabelBehavior: FloatingLabelBehavior.always,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-          // 黒い枠線(black87)に統一
           disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: const BorderSide(color: Colors.black87),
@@ -368,7 +375,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
       children: [
         Icon(Icons.add_a_photo, color: Colors.grey),
         SizedBox(width: 8),
-        Text('[変更]から画像をアップロード', style: TextStyle(color: Colors.grey)),
+        Text('画像をアップロード', style: TextStyle(color: Colors.grey)),
       ],
     );
   }
