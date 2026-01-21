@@ -4,6 +4,7 @@ from fastapi.staticfiles import StaticFiles
 import os
 from .database import engine, Base
 from .routers import auth, products, orders, delivery, stores, notifications, profile, uploads
+from app.routers import contact
 
 # Create tables
 Base.metadata.create_all(bind=engine)
@@ -39,6 +40,7 @@ app.include_router(stores.router)
 app.include_router(notifications.router)
 app.include_router(profile.router)
 app.include_router(uploads.router)
+app.include_router(contact.router)
 
 @app.get("/")
 def read_root():
