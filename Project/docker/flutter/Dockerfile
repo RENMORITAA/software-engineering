@@ -1,40 +1,22 @@
-# ベースイメージ
-FROM ubuntu:22.04
+# --- ステージ1: ビルド用 (重い環境) ---
+FROM ubuntu:22.04 AS build-env
 
-# 必要なツールをインストール
-RUN apt-get update && apt-get install -y \
-    curl \
-    git \
-    unzip \
-    xz-utils \
-    zip \
-    libglu1-mesa \
-    openjdk-11-jdk \
-    wget \
-    dos2unix \
-    && rm -rf /var/lib/apt/lists/*
-
-# Flutter SDKのインストール
-ENV FLUTTER_HOME=/usr/local/flutter
-ENV PATH=${FLUTTER_HOME}/bin:${PATH}
-
-# Flutterの安定版をダウンロード
-RUN git clone https://github.com/flutter/flutter.git ${FLUTTER_HOME} -b stable
-
-# 権限設定（開発時のトラブル防止）
-RUN git config --global --add safe.directory ${FLUTTER_HOME}
-RUN git config --global --add safe.directory /app
-
-# Web開発用の設定を有効化
-RUN flutter config --enable-web
-
-# 作業ディレクトリ設定
+RUN apt-get update && apt-get install -y curl git unzip python3 xz-utils zip libglu1-mesa
 WORKDIR /app
 
-# エントリーポイントスクリプトをコピー
-COPY docker/flutter/entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN dos2unix /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
+# Flutter SDKのインストール
+RUN git clone https://github.com/flutter/flutter.git /usr/local/flutter
+ENV PATH="/usr/local/flutter/bin:/usr/local/flutter/bin/cache/dart-sdk/bin:${PATH}"
 
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-CMD ["flutter", "run", "-d", "web-server", "--web-port", "8080", "--web-hostname", "0.0.0.0"]
+# プロジェクトファイルをコピーしてビルド
+COPY . .
+RUN flutter config --enable-web
+RUN flutter pub get
+RUN flutter build web --release
+
+# --- ステージ2: 配信用 (軽量なNginx) ---
+FROM nginx:stable-alpine
+# ビルド済みの静的ファイルだけをNginxに持っていく
+COPY --from=build-env /app/build/web /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
