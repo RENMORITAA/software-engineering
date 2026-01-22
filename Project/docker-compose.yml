@@ -1,34 +1,19 @@
-version: "3.8"
-
 services:
   flutter:
     build:
       context: .
-      dockerfile: docker/flutter/Dockerfile
-    container_name: flutter_dev
-    volumes:
-      - ./src:/app
+      dockerfile: docker/flutter/Dockerfile # ここを前述のNginx入りDockerfileに書き換え
+    container_name: flutter_web
     ports:
-      - "8080:8080"
-    environment:
-      - ENV=docker
-      - USE_MOCK_API=false
-      - API_BASE_URL=http://localhost:8000
-      - DB_HOST=db
-      - DB_NAME=university_app
-      - DB_USER=student
-      - DB_PASSWORD=password123
+      - "80:80" # 本番は80番でアクセス
     depends_on:
-      backend:
-        condition: service_started
-      db:
-        condition: service_healthy
-    working_dir: /app
-    tty: true
+      - backend
+    restart: unless-stopped
 
   db:
     image: postgres:15
     container_name: postgres_db
+    # network_mode: host は削除
     environment:
       POSTGRES_DB: university_app
       POSTGRES_USER: student
@@ -36,8 +21,6 @@ services:
     volumes:
       - ./docker/db/init.sql:/docker-entrypoint-initdb.d/init.sql
       - db_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U student -d university_app"]
       interval: 5s
@@ -49,16 +32,16 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: fastapi_backend
+    # network_mode: host は削除
     ports:
       - "8000:8000"
     environment:
+      # localhost ではなく db (サービス名) を指定
       - DATABASE_URL=postgresql://student:password123@db:5432/university_app
       - SECRET_KEY=supersecretkey
     depends_on:
       db:
         condition: service_healthy
-    volumes:
-      - ./backend:/app
 
 volumes:
   db_data:
