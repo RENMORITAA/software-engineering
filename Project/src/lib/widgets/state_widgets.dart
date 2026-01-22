@@ -54,6 +54,10 @@ class EmptyStateWidget extends StatelessWidget {
             if (buttonText != null && onButtonPressed != null) ...[
               const SizedBox(height: 24),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).primaryColor,
+                  foregroundColor: Colors.white,
+                ),
                 onPressed: onButtonPressed,
                 child: Text(buttonText!),
               ),
@@ -111,6 +115,10 @@ class ErrorStateWidget extends StatelessWidget {
             if (onRetry != null) ...[
               const SizedBox(height: 24),
               ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  foregroundColor: Colors.white,
+                ),
                 onPressed: onRetry,
                 icon: const Icon(Icons.refresh),
                 label: Text(retryText ?? '再試行'),
@@ -165,6 +173,10 @@ class NetworkErrorWidget extends StatelessWidget {
             if (onRetry != null) ...[
               const SizedBox(height: 24),
               ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).primaryColor,
+                  foregroundColor: Colors.white,
+                ),
                 onPressed: onRetry,
                 icon: const Icon(Icons.refresh),
                 label: const Text('再接続'),

@@ -19,9 +19,9 @@ def get_delivery_jobs(
     if current_user.role != "deliverer":
         raise HTTPException(status_code=403, detail="Only deliverers can access this endpoint")
     
-    # Get orders that are ready for pickup and not yet assigned
+    # Get orders that are preparing or ready for pickup and not yet assigned
     orders = db.query(models.Order).filter(
-        models.Order.status == "ready_for_pickup",
+        models.Order.status.in_(["preparing", "ready_for_pickup"]),
         models.Order.deliverer_id == None
     ).all()
     
@@ -219,3 +219,58 @@ def set_deliverer_offline(
     deliverer.work_status = "offline"
     db.commit()
     return {"message": "Status set to offline", "work_status": "offline"}
+
+@router.get("/track/{order_id}")
+def track_delivery(
+    order_id: int,
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(database.get_db)
+):
+    """Track delivery location for an order (requestor)"""
+    order = db.query(models.Order).filter(models.Order.id == order_id).first()
+    if not order:
+        raise HTTPException(status_code=404, detail="Order not found")
+    
+    # Check if user owns this order
+    if order.user_id != current_user.id:
+        raise HTTPException(status_code=403, detail="Not authorized to track this order")
+    
+    delivery = db.query(models.Delivery).filter(
+        models.Delivery.order_id == order_id
+    ).first()
+    
+    if not delivery:
+        return {
+            "status": "pending",
+            "message": "Delivery not yet assigned",
+            "deliverer": None,
+            "location": None
+        }
+    
+    # Get deliverer info
+    deliverer = db.query(models.DelivererProfile).filter(
+        models.DelivererProfile.id == delivery.deliverer_id
+    ).first()
+    
+    deliverer_user = None
+    if deliverer:
+        deliverer_user = db.query(models.User).filter(
+            models.User.id == deliverer.user_id
+        ).first()
+    
+    return {
+        "status": delivery.status,
+        "deliverer": {
+            "id": deliverer.id if deliverer else None,
+            "name": deliverer_user.name if deliverer_user else "配達員",
+            "vehicle_type": deliverer.vehicle_type if deliverer else None,
+            "phone": deliverer.phone_number if deliverer else None
+        } if deliverer else None,
+        "location": {
+            "latitude": float(delivery.current_latitude) if delivery.current_latitude else None,
+            "longitude": float(delivery.current_longitude) if delivery.current_longitude else None,
+            "updated_at": delivery.updated_at.isoformat() if hasattr(delivery, 'updated_at') else None
+        } if delivery.current_latitude and delivery.current_longitude else None,
+        "pickup_time": delivery.pickup_time.isoformat() if delivery.pickup_time else None,
+        "estimated_delivery": None  # TODO: Calculate estimated delivery time
+    }

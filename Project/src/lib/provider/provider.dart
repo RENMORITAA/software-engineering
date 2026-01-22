@@ -5,3 +5,4 @@ export 'delivery_provider.dart';
 export 'store_provider.dart';
 export 'over_screen_controller.dart';
 export 'notification_provider.dart';
+export 'location_provider.dart';

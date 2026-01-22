@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr, Field
 from typing import List, Optional
 from datetime import datetime, date
 from decimal import Decimal
@@ -14,6 +14,13 @@ class UserBase(BaseModel):
 class UserCreate(UserBase):
     password: str
 
+class PasswordChangeRequest(BaseModel):
+    current_password: str = Field(..., min_length=1, description="現在のパスワード")
+    new_password: str = Field(..., min_length=4, description="新しいパスワード（4文字以上推奨）")
+
+    class Config:
+        from_attributes = True
+
 class User(UserBase):
     id: int
     is_active: bool
@@ -22,6 +29,9 @@ class User(UserBase):
     class Config:
         from_attributes = True
 
+class PasswordResetRequest(BaseModel):
+    email: str
+
 class Token(BaseModel):
     access_token: str
     token_type: str
@@ -29,6 +39,16 @@ class Token(BaseModel):
 class TokenData(BaseModel):
     email: Optional[str] = None
 
+
+# ==========================================
+# Profile 共通：銀行口座情報スキーマ (追加)
+# ==========================================
+class BankingUpdate(BaseModel):
+    bank_name: str
+    bank_branch: str
+    bank_account_type: str
+    bank_account_number: str
+    bank_account_holder: str
 
 # ==========================================
 # RequesterProfile Schemas
@@ -67,12 +87,24 @@ class RequesterProfileUpdate(BaseModel):
     name: Optional[str] = None
     phone_number: Optional[str] = None
     default_address_id: Optional[int] = None
+    # --- 銀行情報を追加 ---
+    bank_name: Optional[str] = None
+    bank_branch: Optional[str] = None
+    bank_account_type: Optional[str] = None
+    bank_account_number: Optional[str] = None
+    bank_account_holder: Optional[str] = None
 
 class RequesterProfile(RequesterProfileBase):
     id: int
     user_id: int
     default_address_id: Optional[int] = None
     addresses: List[RequesterAddress] = []
+    # --- 銀行情報を追加 ---
+    bank_name: Optional[str] = None
+    bank_branch: Optional[str] = None
+    bank_account_type: Optional[str] = None
+    bank_account_number: Optional[str] = None
+    bank_account_holder: Optional[str] = None
 
     class Config:
         from_attributes = True
@@ -142,6 +174,12 @@ class StoreProfileUpdate(BaseModel):
     phone_number: Optional[str] = None
     business_hours: Optional[str] = None
     is_open: Optional[bool] = None
+    # --- 銀行情報を追加 ---
+    bank_name: Optional[str] = None
+    bank_branch: Optional[str] = None
+    bank_account_type: Optional[str] = None
+    bank_account_number: Optional[str] = None
+    bank_account_holder: Optional[str] = None
 
 class StoreProfile(StoreProfileBase):
     id: int
@@ -152,6 +190,12 @@ class StoreProfile(StoreProfileBase):
     business_license: Optional[str] = None
     store_image_url: Optional[str] = None
     is_open: bool = True
+    # --- 銀行情報を追加 ---
+    bank_name: Optional[str] = None
+    bank_branch: Optional[str] = None
+    bank_account_type: Optional[str] = None
+    bank_account_number: Optional[str] = None
+    bank_account_holder: Optional[str] = None
 
     class Config:
         from_attributes = True

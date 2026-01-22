@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+﻿import 'package:flutter/material.dart';
 
 import '../../component/component.dart';
-import '../../provider/provider.dart';
 import '../../models/database_models.dart';
 import '../../services/profile_service.dart';
 
@@ -54,12 +52,15 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
           ? const Center(child: CircularProgressIndicator())
           : _addresses.isEmpty
               ? _buildEmptyState()
-              : ListView.builder(
-                  padding: const EdgeInsets.all(16),
-                  itemCount: _addresses.length,
-                  itemBuilder: (context, index) {
-                    return _buildAddressCard(_addresses[index]);
-                  },
+              : RefreshIndicator(
+                  onRefresh: _fetchAddresses,
+                  child: ListView.builder(
+                    padding: const EdgeInsets.all(16),
+                    itemCount: _addresses.length,
+                    itemBuilder: (context, index) {
+                      return _buildAddressCard(_addresses[index]);
+                    },
+                  ),
                 ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _showAddAddressDialog(),
@@ -111,7 +112,7 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
             : null,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: Colors.black.withOpacity(0.05),
             blurRadius: 5,
             offset: const Offset(0, 2),
           ),
@@ -373,7 +374,10 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
             child: const Text('キャンセル'),
           ),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+            ),
             onPressed: () async {
               try {
                 if (address.id != null) {
@@ -402,7 +406,6 @@ class _CAddressManagementPageState extends State<CAddressManagementPage> {
   }
 
   void _setDefaultAddress(RequesterAddress address) {
-    // TODO: APIでデフォルト住所を設定
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('デフォルト住所に設定しました')),
     );

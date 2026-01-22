@@ -45,37 +45,144 @@ docker-compose down
 
 ```
 Project/
-├── backend/                # Python (FastAPI) バックエンド
+├── backend/                        # Python (FastAPI) バックエンド
 │   ├── app/
-│   │   ├── models.py       # ★重要: データベースのテーブル定義 (SQLAlchemy)
-│   │   ├── schemas.py      # ★重要: データの送受信ルール (Pydantic)
-│   │   ├── main.py         # アプリの起動ファイル
-│   │   ├── database.py     # DB接続設定
-│   │   └── routers/        # ★重要: APIのエンドポイント (URLごとの処理)
-│   │       ├── auth.py     # ログイン・登録関連
-│   │       ├── orders.py   # 注文関連
-│   │       └── ...
-│   ├── Dockerfile          # バックエンドの環境定義
-│   └── requirements.txt    # Pythonライブラリ一覧
+│   │   ├── main.py                 # アプリの起動ファイル・CORS設定
+│   │   ├── database.py             # DB接続設定
+│   │   ├── models.py               # ★重要: データベースのテーブル定義 (SQLAlchemy)
+│   │   ├── schemas.py              # ★重要: データの送受信ルール (Pydantic)
+│   │   └── routers/                # ★重要: APIのエンドポイント (URLごとの処理)
+│   │       ├── auth.py             # 認証API (ログイン・登録・JWT)
+│   │       ├── profile.py          # プロフィールAPI (依頼者・配達員・店舗)
+│   │       ├── orders.py           # 注文API
+│   │       ├── products.py         # 商品API
+│   │       ├── stores.py           # 店舗API
+│   │       ├── delivery.py         # 配達API
+│   │       └── notifications.py    # 通知API
+│   ├── Dockerfile
+│   └── requirements.txt            # Pythonライブラリ一覧
 │
 ├── docker/
-│   └── db/
-│       └── init.sql        # ★重要: データベースの初期化SQL (テーブル作成)
+│   ├── db/
+│   │   └── init.sql                # ★重要: データベース初期化SQL
+│   └── flutter/
+│       └── Dockerfile
 │
-└── src/                    # Flutter (Dart) フロントエンド
-    ├── lib/
-    │   ├── main.dart       # アプリの入り口
-    │   ├── config/         # 設定関連
-    │   │   ├── routes.dart # 画面遷移の定義
-    │   │   └── theme.dart  # ★デザイン: 色やフォントの定義
-    │   ├── models/         # データ型定義 (バックエンドのschemasに対応)
-    │   ├── services/       # ★通信: APIと通信する処理
-    │   ├── provider/       # ★状態管理: データを保持・更新して画面に伝える
-    │   ├── page/           # ★画面: 各ページのUI実装
-    │   ├── component/      # ★部品: ボタンや入力フォームなどの共通部品
-    │   └── widgets/        # 小さなUI部品
-    └── pubspec.yaml        # Dartライブラリ一覧
+├── src/                            # Flutter (Dart) フロントエンド
+│   ├── lib/
+│   │   ├── main.dart               # アプリの入り口・Provider登録
+│   │   │
+│   │   ├── config/                 # 設定関連
+│   │   │   ├── routes.dart         # 画面遷移の定義
+│   │   │   └── theme.dart          # ★デザイン: 色やフォントの定義
+│   │   │
+│   │   ├── models/                 # データ型定義
+│   │   │   └── database_models.dart # バックエンドのschemasに対応するクラス
+│   │   │
+│   │   ├── services/               # ★通信: APIと通信する処理
+│   │   │   ├── api_service.dart    # HTTP通信の基底クラス
+│   │   │   ├── auth_service.dart   # 認証API呼び出し
+│   │   │   ├── order_service.dart  # 注文API呼び出し
+│   │   │   ├── product_service.dart # 商品API呼び出し
+│   │   │   ├── store_service.dart  # 店舗API呼び出し
+│   │   │   ├── delivery_service.dart # 配達API呼び出し
+│   │   │   ├── profile_service.dart # プロフィールAPI呼び出し
+│   │   │   └── notification_service.dart # 通知API呼び出し
+│   │   │
+│   │   ├── provider/               # ★状態管理: データを保持・更新
+│   │   │   ├── provider.dart       # エクスポート用
+│   │   │   ├── change_user_role.dart # ユーザーロール・認証情報管理
+│   │   │   ├── cart_provider.dart  # カート状態管理
+│   │   │   ├── order_provider.dart # 注文状態管理
+│   │   │   ├── store_provider.dart # 店舗状態管理
+│   │   │   ├── delivery_provider.dart # 配達状態管理
+│   │   │   ├── notification_provider.dart # 通知状態管理
+│   │   │   └── over_screen_controller.dart # オーバーレイ制御
+│   │   │
+│   │   ├── page/                   # ★画面: 各ページのUI実装
+│   │   │   ├── login_page.dart     # ログイン画面
+│   │   │   ├── new_member.dart     # 新規登録画面
+│   │   │   ├── mypage.dart         # マイページ（共通）
+│   │   │   │
+│   │   │   ├── requester/          # 依頼者用画面 (c_プレフィックス)
+│   │   │   │   ├── c_root_page.dart       # ナビゲーション制御
+│   │   │   │   ├── c_home.dart            # ホーム（店舗一覧）
+│   │   │   │   ├── c_product_list.dart    # 商品一覧
+│   │   │   │   ├── c_cart.dart            # カート
+│   │   │   │   ├── c_order_history.dart   # 注文履歴
+│   │   │   │   ├── c_order_tracking.dart  # 注文追跡
+│   │   │   │   ├── c_store_search.dart    # 店舗検索
+│   │   │   │   ├── c_notifications.dart   # 通知一覧
+│   │   │   │   ├── c_address_management.dart # 住所管理
+│   │   │   │   ├── c_review.dart          # レビュー投稿
+│   │   │   │   └── c_mypage.dart          # マイページラッパー
+│   │   │   │
+│   │   │   ├── deliverer/          # 配達員用画面 (d_プレフィックス)
+│   │   │   │   ├── d_root_page.dart       # ナビゲーション制御
+│   │   │   │   ├── d_home.dart            # ホーム
+│   │   │   │   ├── d_job_select.dart      # 仕事選択
+│   │   │   │   ├── d_map.dart             # 配達マップ
+│   │   │   │   ├── d_delivery_history.dart # 配達履歴
+│   │   │   │   ├── d_notice.dart          # お知らせ
+│   │   │   │   ├── d_payslip.dart         # 給与明細
+│   │   │   │   ├── d_banking_information.dart # 口座情報
+│   │   │   │   ├── d_resume_detail.dart   # 履歴書詳細
+│   │   │   │   └── d_mypage.dart          # マイページラッパー
+│   │   │   │
+│   │   │   └── store/              # 店舗用画面 (s_プレフィックス)
+│   │   │       ├── s_root_page.dart       # ナビゲーション制御
+│   │   │       ├── s_home.dart            # ホーム
+│   │   │       ├── s_order_list.dart      # 注文一覧
+│   │   │       ├── s_menu_edit.dart       # メニュー編集
+│   │   │       ├── s_inventory_status.dart # 在庫状況
+│   │   │       ├── s_sales.dart           # 売上管理
+│   │   │       ├── s_info.dart            # 店舗情報
+│   │   │       ├── s_banking_info.dart    # 口座情報
+│   │   │       └── s_mypage.dart          # マイページラッパー
+│   │   │
+│   │   ├── component/              # ★部品: 再利用可能なUIコンポーネント
+│   │   │   ├── component.dart      # エクスポート用
+│   │   │   ├── title_appbar.dart   # 共通AppBar
+│   │   │   ├── normal_bottom_appbar.dart # 共通BottomNavigation
+│   │   │   ├── general_form.dart   # 汎用フォーム
+│   │   │   ├── button_set.dart     # ボタンセット
+│   │   │   ├── password_input.dart # パスワード入力
+│   │   │   ├── number_count.dart   # 数量カウンター
+│   │   │   ├── finish_screen.dart  # 完了画面
+│   │   │   ├── d_job.dart          # 配達ジョブカード
+│   │   │   └── d_notice_change.dart # 通知変更
+│   │   │
+│   │   ├── widgets/                # 小さなUI部品
+│   │   │   ├── widgets.dart        # エクスポート用
+│   │   │   ├── buttons.dart        # ボタン集
+│   │   │   ├── custom_button.dart  # カスタムボタン
+│   │   │   ├── text_fields.dart    # テキストフィールド
+│   │   │   ├── rating_widget.dart  # 星評価
+│   │   │   ├── loading_overlay.dart # ローディング表示
+│   │   │   ├── error_dialog.dart   # エラーダイアログ
+│   │   │   └── state_widgets.dart  # 空状態・エラー状態
+│   │   │
+│   │   ├── overlay/                # オーバーレイUI（モーダル等）
+│   │   │   ├── overlay.dart        # エクスポート用
+│   │   │   ├── logout.dart         # ログアウト確認
+│   │   │   ├── withdraw.dart       # 退会確認
+│   │   │   └── ...
+│   │   │
+│   │   └── utils/                  # ユーティリティ
+│   │       ├── constants.dart      # 定数定義（API URL等）
+│   │       └── helpers.dart        # ヘルパー関数（日付フォーマット等）
+│   │
+│   └── pubspec.yaml                # Dartライブラリ一覧
+│
+└── docker-compose.yml              # Docker構成
 ```
+
+### ファイル命名規則
+| プレフィックス | 意味 | 例 |
+|--------------|------|-----|
+| `c_` | 依頼者 (Customer/Consumer) | `c_home.dart`, `c_cart.dart` |
+| `d_` | 配達員 (Deliverer) | `d_home.dart`, `d_job_select.dart` |
+| `s_` | 店舗 (Store) | `s_home.dart`, `s_order_list.dart` |
 
 ---
 
@@ -233,3 +340,267 @@ docker exec postgres_db psql -U student -d university_app -c "\dt"
 # ユーザー一覧を表示
 docker exec postgres_db psql -U student -d university_app -c "SELECT * FROM users;"
 ```
+
+---
+
+## 8. 今回の開発で実装した機能・修正内容
+
+### 実装した主な機能
+
+#### フロントエンド (Flutter)
+
+| 機能 | ファイル | 説明 |
+|------|----------|------|
+| 通知機能 | `provider/notification_provider.dart` | 通知の取得・既読管理 |
+| 通知画面 | `page/requester/c_notifications.dart` | 通知一覧の表示UI |
+| 住所管理 | `page/requester/c_address_management.dart` | 配達先住所の追加・編集・削除 |
+| 店舗検索 | `page/requester/c_store_search.dart` | 店舗名・カテゴリで検索 |
+| 注文追跡 | `page/requester/c_order_tracking.dart` | リアルタイム配達状況確認 |
+| レビュー機能 | `page/requester/c_review.dart` | 注文後のレビュー投稿 |
+| 評価ウィジェット | `widgets/rating_widget.dart` | 星評価の入力・表示 |
+| ローディング | `widgets/loading_overlay.dart` | 処理中のオーバーレイ表示 |
+| エラーダイアログ | `widgets/error_dialog.dart` | 統一されたエラー表示 |
+| 状態表示 | `widgets/state_widgets.dart` | 空状態・エラー状態の表示 |
+| ユーティリティ | `utils/helpers.dart` | 日付フォーマット・価格表示等 |
+| 定数定義 | `utils/constants.dart` | API URL・色定義等 |
+
+#### バックエンド (FastAPI)
+
+| 機能 | ファイル | 説明 |
+|------|----------|------|
+| 店舗プロフィールAPI | `routers/profile.py` | GET/PUT `/profile/store` 追加 |
+| 認証API拡張 | `routers/auth.py` | プロフィール情報取得の追加 |
+
+### 修正したバグ・エラー
+
+| 問題 | 原因 | 解決策 |
+|------|------|--------|
+| `Notification`クラス名衝突 | FlutterのビルトインNotificationと名前が重複 | `AppNotification`にリネーム |
+| ログインできない (401) | パスワードハッシュが不正な形式 | Pythonで正しいbcryptハッシュを生成・更新 |
+| フォームデータ送信失敗 | `x-www-form-urlencoded`のエンコード不正 | `Uri.encodeComponent`で正しくエンコード |
+| プロフィール情報が表示されない | ログイン後にプロフィールを取得していない | `login_page.dart`でプロフィール取得処理を追加 |
+| マイページにダミーデータ表示 | UserRoleProviderを使用していない | Provider経由で実データを表示するよう修正 |
+
+---
+
+## 9. 学習ポイント・コード解説
+
+### 1. Provider状態管理パターン
+
+```dart
+// provider/change_user_role.dart
+class UserRoleProvider extends ChangeNotifier {
+  String? _userName;
+  
+  String? get userName => _userName;  // ゲッター
+  
+  void login({required String name, ...}) {
+    _userName = name;
+    notifyListeners();  // ★これでUIに変更を通知
+  }
+}
+
+// 使用例（画面側）
+// 値を取得するだけ（再描画なし）
+context.read<UserRoleProvider>().login(...);
+
+// 値を監視（変更時に再描画）
+final userName = context.watch<UserRoleProvider>().userName;
+```
+
+**ポイント:**
+- `ChangeNotifier`を継承してProviderを作成
+- `notifyListeners()`を呼ぶとUIが自動更新される
+- `read`は1回だけ取得、`watch`は監視して再描画
+
+---
+
+### 2. REST API通信 (OAuth2フォーム形式)
+
+```dart
+// services/api_service.dart
+Future<dynamic> post(String endpoint, Map<String, dynamic> data, 
+    {bool isFormData = false}) async {
+  
+  dynamic body;
+  if (isFormData) {
+    // OAuth2ログイン用のフォーム形式
+    headers['Content-Type'] = 'application/x-www-form-urlencoded';
+    body = data.entries
+        .map((e) => '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value.toString())}')
+        .join('&');
+  } else {
+    // 通常のJSON形式
+    body = jsonEncode(data);
+  }
+  
+  final response = await http.post(Uri.parse(url), headers: headers, body: body);
+  return _handleResponse(response);
+}
+```
+
+**ポイント:**
+- ログインAPIは`application/x-www-form-urlencoded`形式が必要
+- `username=xxx&password=yyy`のような形式にエンコード
+
+---
+
+### 3. FastAPI JWT認証
+
+```python
+# routers/auth.py
+from fastapi.security import OAuth2PasswordRequestForm
+from jose import jwt
+
+@router.post("/login")
+def login(form_data: OAuth2PasswordRequestForm = Depends()):
+    # 1. ユーザーを検索
+    user = db.query(User).filter(User.email == form_data.username).first()
+    
+    # 2. パスワード検証（bcryptハッシュと比較）
+    if not verify_password(form_data.password, user.hashed_password):
+        raise HTTPException(status_code=401)
+    
+    # 3. JWTトークン生成
+    token = jwt.encode({"sub": user.email, "role": user.role}, SECRET_KEY)
+    return {"access_token": token}
+
+# 認証が必要なエンドポイントでの使用
+@router.get("/me")
+def get_me(current_user = Depends(get_current_user)):
+    return current_user  # トークンから自動でユーザー取得
+```
+
+**ポイント:**
+- `OAuth2PasswordRequestForm`で標準的なログインフォームを処理
+- パスワードは平文保存禁止、bcryptでハッシュ化
+- JWTトークンにユーザー情報を埋め込む
+
+---
+
+### 4. 名前衝突の解決方法
+
+```dart
+// ❌ 問題: FlutterのNotificationと衝突
+import 'package:flutter/material.dart';  // Notification がある
+import '../models/database_models.dart';  // 自作Notification もある
+
+// ✅ 解決策1: 自作クラスをリネーム
+class AppNotification {  // Notification → AppNotification
+  final int? id;
+  final String title;
+  ...
+}
+
+// ✅ 解決策2: インポート時にエイリアスを使う
+import '../models/database_models.dart' as models;
+// 使用時: models.Notification
+```
+
+---
+
+### 5. SQLAlchemy カラム名マッピング
+
+```python
+# models.py
+class User(Base):
+    __tablename__ = "users"
+    
+    # Pythonでは hashed_password、DBでは password カラム
+    hashed_password = Column("password", String(255), nullable=False)
+```
+
+**ポイント:**
+- `Column("実際のカラム名", ...)` でマッピング可能
+- Python側とDB側で異なる命名規則を使える
+
+---
+
+## 10. よくあるエラーと解決法
+
+### CORS エラー
+```
+Access to XMLHttpRequest has been blocked by CORS policy
+```
+**原因**: ブラウザがバックエンドへのアクセスをブロック
+
+**解決**: `backend/app/main.py` でCORS設定を確認
+```python
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:8080", "*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+```
+
+---
+
+### パスワードハッシュエラー
+```
+passlib.exc.UnknownHashError: hash could not be identified
+```
+**原因**: DBに保存されたハッシュが不正な形式
+
+**解決**: 正しいハッシュを生成して更新
+```powershell
+# 正しいハッシュを生成
+docker exec fastapi_backend python -c "
+from passlib.context import CryptContext
+pwd = CryptContext(schemes=['bcrypt'], deprecated='auto')
+print(pwd.hash('password'))
+"
+
+# DBを更新
+docker exec fastapi_backend python -c "
+import psycopg2
+from passlib.context import CryptContext
+pwd = CryptContext(schemes=['bcrypt'], deprecated='auto')
+hashed = pwd.hash('password')
+conn = psycopg2.connect(host='db', database='university_app', user='student', password='password123')
+cur = conn.cursor()
+cur.execute('UPDATE users SET password = %s', (hashed,))
+conn.commit()
+"
+```
+
+---
+
+### 401 Unauthorized
+**原因**: 
+- JWTトークンの有効期限切れ
+- トークンがヘッダーに含まれていない
+
+**解決**: 再ログインするか、`Authorization: Bearer <token>` ヘッダーを確認
+
+---
+
+## 11. 参考リソース
+
+### Flutter
+- [Flutter公式ドキュメント](https://docs.flutter.dev/)
+- [Provider パッケージ](https://pub.dev/packages/provider)
+- [http パッケージ](https://pub.dev/packages/http)
+
+### FastAPI
+- [FastAPI公式ドキュメント](https://fastapi.tiangolo.com/)
+- [SQLAlchemy ORM チュートリアル](https://docs.sqlalchemy.org/en/20/tutorial/)
+- [Pydantic ドキュメント](https://docs.pydantic.dev/)
+
+### 認証
+- [JWT.io - JWTデバッガー](https://jwt.io/)
+- [OAuth2 仕様](https://oauth.net/2/)
+
+### Docker
+- [Docker Compose ドキュメント](https://docs.docker.com/compose/)
+
+---
+
+## 12. 今後の課題・拡張アイデア
+
+- [ ] WebSocket によるリアルタイム通知
+- [ ] Google Maps API による地図表示・位置追跡
+- [ ] 決済機能（Stripe等）の連携
+- [ ] プッシュ通知（Firebase Cloud Messaging）
+- [ ] 画像アップロード機能
+- [ ] 管理者用ダッシュボード

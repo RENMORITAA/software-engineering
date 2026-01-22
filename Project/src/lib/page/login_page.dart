@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../component/component.dart';
+import '../component/component.dart';
 import '../../services/auth_service.dart';
 import '../../provider/provider.dart';
+import '../../config/routes.dart';
 
 /// ログイン画面
 class LoginPage extends StatefulWidget {
@@ -39,9 +40,12 @@ class _LoginPageState extends State<LoginPage> {
 
       if (mounted) {
         final user = await _authService.getCurrentUser();
-        final role = user['role'];
+        final role = user['role'] as String?;
         final userId = user['id'];
         final email = user['email'];
+        
+        // ユーザー情報をAuthServiceに保存（永続化）
+        await _authService.saveUserInfo(user);
         
         // プロフィール情報を取得
         String? userName;
@@ -65,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
             storeName = profile['store_name'];
             storeAddress = profile['address'];
             phoneNumber = profile['phone_number'];
-            userName = storeName; // 店舗の場合は店名をユーザー名として使用
+            userName = storeName; // 店舗の場合、店名をユーザー名として使用
           }
         } catch (e) {
           // プロフィール取得に失敗しても続行
@@ -74,10 +78,13 @@ class _LoginPageState extends State<LoginPage> {
         
         // Providerにユーザー情報を保存
         if (mounted) {
+          final String? token = user['access_token'] ?? user['token'];
+          
           context.read<UserRoleProvider>().login(
             userId: userId,
             email: email,
-            role: role,
+            role: role ?? 'requester',
+            accessToken: token ?? '',
             name: userName,
             phoneNumber: phoneNumber,
             storeName: storeName,
@@ -87,17 +94,19 @@ class _LoginPageState extends State<LoginPage> {
         }
         
         if (mounted) {
-          if (role == 'requester') {
-            Navigator.pushReplacementNamed(context, '/requester/home');
-          } else if (role == 'deliverer') {
-            Navigator.pushReplacementNamed(context, '/deliverer/home');
-          } else if (role == 'store') {
-            Navigator.pushReplacementNamed(context, '/store/home');
-          } else if (role == 'admin' || _emailController.text == 'superuser') {
-             Navigator.pushReplacementNamed(context, '/requester/home');
-          } else {
-             Navigator.pushReplacementNamed(context, '/requester/home');
+          // ロールに応じたホーム画面へ遷移
+          String targetRoute;
+          switch (role) {
+            case 'deliverer':
+              targetRoute = AppRoutes.delivererHome;
+              break;
+            case 'store':
+              targetRoute = AppRoutes.storeHome;
+              break;
+            default:
+              targetRoute = AppRoutes.requestorHome;
           }
+          Navigator.pushReplacementNamed(context, targetRoute);
         }
       }
     } catch (e) {
@@ -194,6 +203,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: TextButton(
                     onPressed: () {
                       // TODO: パスワードリセット画面に遷移
+                      Navigator.pushNamed(context, '/forgot-password');
                     },
                     child: Text(
                       'パスワードをお忘れの方',

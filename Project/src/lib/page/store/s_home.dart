@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import 's_info.dart';
+import '../../provider/provider.dart';
 import 's_inventory_status.dart';
 
-/// 店舗ホーム画面
+/// Simplified store home to fix broken strings.
 class SHomePage extends StatefulWidget {
   const SHomePage({super.key});
 
@@ -16,12 +17,12 @@ class _SHomePageState extends State<SHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = context.watch<UserRoleProvider>();
+    final storeName = userProvider.storeName ?? '店舗名未設定';
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Stellar Delivery',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+        title: const Text('Stellar Delivery'),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
@@ -29,9 +30,8 @@ class _SHomePageState extends State<SHomePage> {
           IconButton(
             icon: const Icon(Icons.store),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const SInfoPage()),
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('店舗情報はマイページで確認できます')),
               );
             },
           ),
@@ -42,7 +42,13 @@ class _SHomePageState extends State<SHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 営業中/準備中切り替え
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: Text(
+                storeName,
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              ),
+            ),
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
@@ -61,11 +67,7 @@ class _SHomePageState extends State<SHomePage> {
                       color: _isOpen ? const Color(0xFFE65100) : Colors.grey[400],
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(
-                      Icons.storefront,
-                      color: Colors.white,
-                      size: 32,
-                    ),
+                    child: const Icon(Icons.storefront, color: Colors.white, size: 32),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
@@ -77,73 +79,36 @@ class _SHomePageState extends State<SHomePage> {
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: _isOpen
-                                ? const Color(0xFFE65100)
-                                : Colors.grey[600],
+                            color: _isOpen ? const Color(0xFFE65100) : Colors.grey[600],
                           ),
                         ),
                         Text(
                           _isOpen ? '注文を受け付けています' : '注文受付を停止中',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey[600],
-                          ),
+                          style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                         ),
                       ],
                     ),
                   ),
                   Switch(
                     value: _isOpen,
-                    onChanged: (value) {
-                      setState(() {
-                        _isOpen = value;
-                      });
-                    },
+                    onChanged: (value) => setState(() => _isOpen = value),
                     activeColor: const Color(0xFFE65100),
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 24),
-            // 本日の売上
-            const Text(
-              '本日の売上',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            const Text('今日のサマリー', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 12),
             Row(
               children: [
-                Expanded(
-                  child: _buildStatCard(
-                    '売上高',
-                    '¥45,000',
-                    Icons.attach_money,
-                    Colors.orange,
-                  ),
-                ),
+                Expanded(child: _buildStatCard('売上高', '¥0', Icons.attach_money, Colors.orange)),
                 const SizedBox(width: 12),
-                Expanded(
-                  child: _buildStatCard(
-                    '注文数',
-                    '32件',
-                    Icons.receipt_long,
-                    Colors.blue,
-                  ),
-                ),
+                Expanded(child: _buildStatCard('注文数', '0件', Icons.receipt_long, Colors.blue)),
               ],
             ),
             const SizedBox(height: 24),
-            // アクションメニュー
-            const Text(
-              'クイックアクション',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            const Text('クイックアクション', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 12),
             GridView.count(
               shrinkWrap: true,
@@ -153,27 +118,10 @@ class _SHomePageState extends State<SHomePage> {
               crossAxisSpacing: 12,
               childAspectRatio: 1.5,
               children: [
-                _buildActionCard(
-                  '在庫管理',
-                  Icons.inventory,
-                  Colors.purple,
-                  () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => const SInventoryStatusPage(),
-                      ),
-                    );
-                  },
-                ),
-                _buildActionCard(
-                  '売上分析',
-                  Icons.analytics,
-                  Colors.green,
-                  () {
-                    // TODO: 売上分析画面へ
-                  },
-                ),
+                _buildActionCard('在庫管理', Icons.inventory, Colors.purple, () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const SInventoryStatusPage()));
+                }),
+                _buildActionCard('売上分析', Icons.analytics, Colors.green, () {}),
               ],
             ),
           ],
@@ -182,12 +130,7 @@ class _SHomePageState extends State<SHomePage> {
     );
   }
 
-  Widget _buildStatCard(
-    String title,
-    String value,
-    IconData icon,
-    Color color,
-  ) {
+  Widget _buildStatCard(String title, String value, IconData icon, Color color) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -206,31 +149,14 @@ class _SHomePageState extends State<SHomePage> {
         children: [
           Icon(icon, color: color),
           const SizedBox(height: 12),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 12,
-              color: Colors.grey[600],
-            ),
-          ),
+          Text(value, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+          Text(title, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
         ],
       ),
     );
   }
 
-  Widget _buildActionCard(
-    String title,
-    IconData icon,
-    Color color,
-    VoidCallback onTap,
-  ) {
+  Widget _buildActionCard(String title, IconData icon, Color color, VoidCallback onTap) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -250,19 +176,11 @@ class _SHomePageState extends State<SHomePage> {
           children: [
             Container(
               padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.1),
-                shape: BoxShape.circle,
-              ),
+              decoration: BoxDecoration(color: color.withValues(alpha: 0.1), shape: BoxShape.circle),
               child: Icon(icon, color: color),
             ),
             const SizedBox(height: 8),
-            Text(
-              title,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
           ],
         ),
       ),

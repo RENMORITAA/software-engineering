@@ -47,14 +47,14 @@ class OrderProvider extends ChangeNotifier {
     }
   }
 
-  /// 店舗の注文一覧を取得
-  Future<void> fetchStoreOrders(int storeId) async {
+  /// 店舗の注文一覧を取得（ログイン中店舗）
+  Future<void> fetchStoreOrders() async {
     _isLoading = true;
     _error = null;
     notifyListeners();
 
     try {
-      final List<dynamic> response = await _orderService.getStoreOrders(storeId);
+      final List<dynamic> response = await _orderService.getStoreOrders();
       _orders = response.map((data) => Order.fromMap(data)).toList();
     } catch (e) {
       _error = e.toString();
@@ -113,7 +113,12 @@ class OrderProvider extends ChangeNotifier {
         deliveryLongitude: orderData['delivery_longitude'],
         notes: orderData['notes'],
       );
-      return response['id'];
+      final newOrderId = response['id'];
+
+      // 直近の注文一覧を再取得して履歴に即時反映
+      final List<dynamic> latest = await _orderService.getMyOrders();
+      _orders = latest.map((data) => Order.fromMap(data)).toList();
+      return newOrderId;
     } catch (e) {
       _error = e.toString();
       return null;

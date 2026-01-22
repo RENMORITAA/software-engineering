@@ -1,12 +1,21 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import '../config/env_config.dart';
+import 'mock_api_service.dart';
 
 class ApiService {
-  // Android Emulator: 10.0.2.2, iOS Simulator: 127.0.0.1, Web: 127.0.0.1
-  // 実機の場合はPCのIPアドレスを指定してください
-  // Webの場合はlocalhostでOK
-  static const String baseUrl = 'http://localhost:8000';
+  /// モックAPIを使うかどうか
+  static bool get _useMockApi => EnvConfig.useMockApi;
+
+  static final MockApiService _mockApiService = MockApiService();
+
+  /// API Base URL（EnvConfigから取得）
+  static String get baseUrl => EnvConfig.apiBaseUrl;
+
+  /// タイムアウト時間
+  Duration get timeout => Duration(seconds: EnvConfig.apiTimeout);
 
   Future<String?> getToken() async {
     final prefs = await SharedPreferences.getInstance();
@@ -21,56 +30,88 @@ class ApiService {
     };
   }
 
+  void _log(String message) {
+    if (EnvConfig.enableLogging) {
+      debugPrint('[ApiService] $message');
+    }
+  }
+
   Future<dynamic> get(String endpoint) async {
+    if (_useMockApi) return _mockApiService.get(endpoint);
+
+    _log('GET $baseUrl$endpoint');
     final headers = await _getHeaders();
     final response = await http.get(
       Uri.parse('$baseUrl$endpoint'),
       headers: headers,
-    );
+    ).timeout(timeout);
     return _handleResponse(response);
   }
 
   Future<dynamic> post(String endpoint, Map<String, dynamic> data, {bool isFormData = false}) async {
+    if (_useMockApi) return _mockApiService.post(endpoint, data, isFormData: isFormData);
+
+    _log('POST $baseUrl$endpoint');
     final headers = await _getHeaders();
+    
+    dynamic body;
     if (isFormData) {
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
+      body = data.entries.map((e) => '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value.toString())}').join('&');
+    } else {
+      body = jsonEncode(data);
     }
 
     final response = await http.post(
       Uri.parse('$baseUrl$endpoint'),
       headers: headers,
-      body: isFormData ? data : jsonEncode(data),
-    );
+      body: body,
+    ).timeout(timeout);
     return _handleResponse(response);
   }
 
   Future<dynamic> put(String endpoint, Map<String, dynamic> data) async {
+    if (_useMockApi) return _mockApiService.put(endpoint, data);
+
+    _log('PUT $baseUrl$endpoint');
     final headers = await _getHeaders();
     final response = await http.put(
       Uri.parse('$baseUrl$endpoint'),
       headers: headers,
       body: jsonEncode(data),
-    );
+    ).timeout(timeout);
     return _handleResponse(response);
   }
 
+  /// 削除リクエスト (認証ヘッダーを確実に含める)
   Future<dynamic> delete(String endpoint) async {
-    final headers = await _getHeaders();
+    if (_useMockApi) return _mockApiService.delete(endpoint);
+
+    _log('DELETE $baseUrl$endpoint');
+    final headers = await _getHeaders(); // ここでトークンを取得
+    
     final response = await http.delete(
       Uri.parse('$baseUrl$endpoint'),
       headers: headers,
-    );
+    ).timeout(timeout);
+    
     return _handleResponse(response);
   }
 
   dynamic _handleResponse(http.Response response) {
+    // 成功時 (200-299)
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      // ボディが空の場合はnullを返す
-      if (response.body.isEmpty) return null;
+      _log('Response Success: ${response.statusCode}');
+      if (response.statusCode == 204 || response.body.isEmpty) return null;
       return jsonDecode(utf8.decode(response.bodyBytes));
     } else {
-      // エラーハンドリング
+      // 失敗時
+      _log('Error Response: ${response.statusCode} ${response.body}');
       throw Exception('API Error: ${response.statusCode} ${response.body}');
     }
+  }
+
+  Future<dynamic> updateOrderStatus(int orderId, String status) async {
+    return await put('/orders/$orderId/status', {'status': status});
   }
 }

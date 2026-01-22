@@ -80,4 +80,14 @@ class DeliveryService {
       rethrow;
     }
   }
+
+  /// 配達状況を追跡（注文者用）
+  Future<Map<String, dynamic>> trackDelivery(int orderId) async {
+    try {
+      final response = await _apiService.get('/delivery/track/$orderId');
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

@@ -136,16 +136,24 @@ class CartProvider extends ChangeNotifier {
   }
 
   /// カートの内容をマップに変換（注文作成用）
+  List<Map<String, dynamic>> buildOrderDetailsPayload() {
+    return _items
+        .where((item) => item.product.id != null)
+        .map((item) => {
+              'product_id': item.product.id,
+              'quantity': item.quantity,
+              'notes': item.notes,
+            })
+        .toList();
+  }
+
   Map<String, dynamic> toOrderMap(int requesterId) {
     return {
       'requester_id': requesterId,
       'store_id': _selectedStoreId,
-      'subtotal': subtotal,
-      'delivery_fee': deliveryFee,
-      'total_price': totalPrice,
       'delivery_address': _deliveryAddress,
       'notes': _notes,
-      'items': _items.map((item) => item.toMap()).toList(),
+      'details': buildOrderDetailsPayload(),
     };
   }
 }

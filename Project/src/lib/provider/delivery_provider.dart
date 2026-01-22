@@ -70,8 +70,10 @@ class DeliveryProvider extends ChangeNotifier {
     }
   }
 
-  /// オンライン/オフライン切り替え
   Future<void> toggleOnlineStatus(bool isOnline) async {
+    final previous = _isOnline;
+
+    _isOnline = isOnline;
     _isLoading = true;
     notifyListeners();
 
@@ -81,19 +83,21 @@ class DeliveryProvider extends ChangeNotifier {
       } else {
         await _deliveryService.setOffline();
       }
-      _isOnline = isOnline;
-      if (_isOnline) {
-        fetchDeliveryJobs();
+      // オンライン/オフライン関係なく常に求人を取得
+      try {
+        await fetchDeliveryJobs();
+      } catch (e) {
+        debugPrint('fetchDeliveryJobs failed: $e');
       }
     } catch (e) {
+      _isOnline = previous;
       _error = e.toString();
-      // エラー時は状態を戻す
-      _isOnline = !isOnline;
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
+
   
   /// 配達ステータス更新
   Future<bool> updateDeliveryStatus(int deliveryId, String status) async {

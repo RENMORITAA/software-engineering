@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../component/component.dart';
@@ -6,7 +6,7 @@ import '../../provider/provider.dart';
 import '../../models/database_models.dart';
 import 'c_product_list.dart';
 
-/// 店舗検索画面
+/// 蠎苓・讀懃ｴ｢逕ｻ髱｢
 class CStoreSearchPage extends StatefulWidget {
   const CStoreSearchPage({super.key});
 
@@ -16,27 +16,27 @@ class CStoreSearchPage extends StatefulWidget {
 
 class _CStoreSearchPageState extends State<CStoreSearchPage> {
   final TextEditingController _searchController = TextEditingController();
-  String _selectedCategory = 'すべて';
+  String _selectedCategory = '縺吶∋縺ｦ';
   String _sortBy = 'recommend';
   List<dynamic> _filteredStores = [];
   bool _isSearching = false;
 
   final List<String> _categories = [
-    'すべて',
-    '料理',
-    'カフェ',
-    'ファストフード',
-    'ラーメン',
-    '食料品',
-    'コンビニ',
-    'スイーツ',
+    '縺吶∋縺ｦ',
+    '譁咏炊',
+    '繧ｫ繝輔ぉ',
+    '繝輔ぃ繧ｹ繝医ヵ繝ｼ繝・,
+    '繝ｩ繝ｼ繝｡繝ｳ',
+    '鬟滓侭蜩・,
+    '繧ｳ繝ｳ繝薙ル',
+    '繧ｹ繧､繝ｼ繝・,
   ];
 
   final List<Map<String, String>> _sortOptions = [
-    {'value': 'recommend', 'label': 'おすすめ順'},
-    {'value': 'distance', 'label': '距離が近い順'},
-    {'value': 'rating', 'label': '評価が高い順'},
-    {'value': 'delivery_time', 'label': '配達時間が短い順'},
+    {'value': 'recommend', 'label': '縺翫☆縺吶ａ鬆・},
+    {'value': 'distance', 'label': '霍晞屬縺瑚ｿ代＞鬆・},
+    {'value': 'rating', 'label': '隧穂ｾ｡縺碁ｫ倥＞鬆・},
+    {'value': 'delivery_time', 'label': '驟埼＃譎る俣縺檎洒縺・・},
   ];
 
   @override
@@ -80,12 +80,12 @@ class _CStoreSearchPageState extends State<CStoreSearchPage> {
 
     return Scaffold(
       appBar: const TitleAppBar(
-        title: '店舗を探す',
+        title: '蠎苓・繧呈爾縺・,
         showBackButton: true,
       ),
       body: Column(
         children: [
-          // 検索バー
+          // 讀懃ｴ｢繝舌・
           Container(
             padding: const EdgeInsets.all(16),
             color: Colors.white,
@@ -94,7 +94,7 @@ class _CStoreSearchPageState extends State<CStoreSearchPage> {
                 TextField(
                   controller: _searchController,
                   decoration: InputDecoration(
-                    hintText: '店舗名・料理名で検索',
+                    hintText: '蠎苓・蜷阪・譁咏炊蜷阪〒讀懃ｴ｢',
                     prefixIcon: const Icon(Icons.search),
                     suffixIcon: _searchController.text.isNotEmpty
                         ? IconButton(
@@ -119,7 +119,7 @@ class _CStoreSearchPageState extends State<CStoreSearchPage> {
                   onChanged: _performSearch,
                 ),
                 const SizedBox(height: 12),
-                // カテゴリフィルター
+                // 繧ｫ繝・ざ繝ｪ繝輔ぅ繝ｫ繧ｿ繝ｼ
                 SizedBox(
                   height: 36,
                   child: ListView.builder(
@@ -137,7 +137,7 @@ class _CStoreSearchPageState extends State<CStoreSearchPage> {
                             setState(() {
                               _selectedCategory = category;
                             });
-                            // TODO: カテゴリでフィルタリング
+                            // TODO: 繧ｫ繝・ざ繝ｪ縺ｧ繝輔ぅ繝ｫ繧ｿ繝ｪ繝ｳ繧ｰ
                           },
                           selectedColor:
                               Theme.of(context).primaryColor.withValues(alpha: 0.2),
@@ -155,14 +155,14 @@ class _CStoreSearchPageState extends State<CStoreSearchPage> {
               ],
             ),
           ),
-          // ソート
+          // 繧ｽ繝ｼ繝・
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '${stores.length}件の店舗',
+                  '${stores.length}莉ｶ縺ｮ蠎苓・',
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.grey[600],
@@ -186,14 +186,14 @@ class _CStoreSearchPageState extends State<CStoreSearchPage> {
                       setState(() {
                         _sortBy = value;
                       });
-                      // TODO: ソート処理
+                      // TODO: 繧ｽ繝ｼ繝亥・逅・
                     }
                   },
                 ),
               ],
             ),
           ),
-          // 店舗リスト
+          // 蠎苓・繝ｪ繧ｹ繝・
           Expanded(
             child: storeProvider.isLoading
                 ? const Center(child: CircularProgressIndicator())
@@ -225,7 +225,7 @@ class _CStoreSearchPageState extends State<CStoreSearchPage> {
           ),
           const SizedBox(height: 16),
           Text(
-            _isSearching ? '検索結果がありません' : '店舗が見つかりません',
+            _isSearching ? '讀懃ｴ｢邨先棡縺後≠繧翫∪縺帙ｓ' : '蠎苓・縺瑚ｦ九▽縺九ｊ縺ｾ縺帙ｓ',
             style: TextStyle(
               fontSize: 16,
               color: Colors.grey[600],
@@ -265,7 +265,7 @@ class _CStoreSearchPageState extends State<CStoreSearchPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 店舗画像
+            // 蠎苓・逕ｻ蜒・
             Container(
               height: 150,
               decoration: BoxDecoration(
@@ -296,7 +296,7 @@ class _CStoreSearchPageState extends State<CStoreSearchPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    store['store_name'] ?? '店舗名なし',
+                    store['store_name'] ?? '蠎苓・蜷阪↑縺・,
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -315,19 +315,19 @@ class _CStoreSearchPageState extends State<CStoreSearchPage> {
                   const SizedBox(height: 12),
                   Row(
                     children: [
-                      // 評価
+                      // 隧穂ｾ｡
                       Row(
                         children: [
                           Icon(Icons.star, size: 18, color: Colors.amber[600]),
                           const SizedBox(width: 4),
                           const Text(
-                            '4.5', // TODO: 実際の評価
+                            '4.5', // TODO: 螳滄圀縺ｮ隧穂ｾ｡
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                           Text(
-                            ' (120)', // TODO: 実際のレビュー数
+                            ' (120)', // TODO: 螳滄圀縺ｮ繝ｬ繝薙Η繝ｼ謨ｰ
                             style: TextStyle(
                               color: Colors.grey[500],
                               fontSize: 12,
@@ -336,14 +336,14 @@ class _CStoreSearchPageState extends State<CStoreSearchPage> {
                         ],
                       ),
                       const SizedBox(width: 16),
-                      // 配達時間
+                      // 驟埼＃譎る俣
                       Row(
                         children: [
                           Icon(Icons.access_time,
                               size: 16, color: Colors.grey[600]),
                           const SizedBox(width: 4),
                           Text(
-                            '20-30分',
+                            '20-30蛻・,
                             style: TextStyle(
                               color: Colors.grey[600],
                               fontSize: 12,
@@ -352,14 +352,14 @@ class _CStoreSearchPageState extends State<CStoreSearchPage> {
                         ],
                       ),
                       const SizedBox(width: 16),
-                      // 配達料
+                      // 驟埼＃譁・
                       Row(
                         children: [
                           Icon(Icons.delivery_dining,
                               size: 16, color: Colors.grey[600]),
                           const SizedBox(width: 4),
                           Text(
-                            '¥300',
+                            'ﾂ･300',
                             style: TextStyle(
                               color: Colors.grey[600],
                               fontSize: 12,
