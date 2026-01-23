@@ -5,6 +5,7 @@ import '../../provider/provider.dart';
 import '../../models/database_models.dart';
 import 's_inventory_status.dart';
 import 's_sales.dart';
+import 's_mypage.dart';
 
 /// 店舗ホームページ（実データ版）
 /// 今日のサマリーと売上分析を実データで表示
@@ -77,9 +78,10 @@ class _SHomePageState extends State<SHomePage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.store),
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('店舗情報はマイページで確認できます')),
+            onPressed: () { // ← ★ onPressed: を追加
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const SMyPageWrapper()),
               );
             },
           ),
