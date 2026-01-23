@@ -1,0 +1,64 @@
+version: "3.8"
+
+services:
+  # Flutter Web（ビルド済みファイルをNginxで配信）
+  flutter:
+    image: nginx:alpine
+    container_name: flutter_web
+    ports:
+      - "80:80"
+    volumes:
+      - ./src/build/web:/usr/share/nginx/html:ro
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      backend:
+        condition: service_started
+    restart: always
+    networks:
+      - app-network
+
+  # PostgreSQL データベース
+  db:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-university_app}
+      POSTGRES_USER: ${POSTGRES_USER:-student}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password123}
+    volumes:
+      - ./docker/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-student} -d ${POSTGRES_DB:-university_app}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: always
+    networks:
+      - app-network
+
+  # FastAPI バックエンド
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: fastapi_backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-student}:${POSTGRES_PASSWORD:-password123}@db:5432/${POSTGRES_DB:-university_app}
+      - SECRET_KEY=${SECRET_KEY:-supersecretkey}
+      - ENV=production
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always
+    networks:
+      - app-network
+
+volumes:
+  db_data:
+
+networks:
+  app-network:
+    driver: bridge

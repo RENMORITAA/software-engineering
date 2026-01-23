@@ -48,13 +48,19 @@ class EnvConfig {
   /// API Base URLを取得
   /// 優先順位: --dart-define > 環境別デフォルト > ローカル
   static String get apiBaseUrl {
-    // 1. --dart-defineで明示的に指定されていればそれを使用
+    // 1. --dart-defineで明示的に指定されていればそれを使用（最優先）
     if (_apiBaseUrlOverride.isNotEmpty) {
       return _apiBaseUrlOverride;
     }
 
-    // 2. 本番やステージングの固定URL
-    if (environment == 'production') return 'https://api.example.com';
+    // 2. 本番環境のデフォルト（dart-defineが設定されていない場合のフォールバック）
+    if (environment == 'production') {
+      // 本番環境では相対パスを使用（同一オリジン）
+      if (kIsWeb) {
+        return '/api';
+      }
+      return 'https://api.example.com';
+    }
     if (environment == 'staging') return 'https://staging-api.example.com';
     
     // 3. ローカル/Docker環境（動的に判定）
@@ -82,7 +88,7 @@ class EnvConfig {
   static bool get enableLogging => isDebug;
 
   /// API タイムアウト時間（秒）
-  static int get apiTimeout => isProduction ? 30 : 60;
+  static int get apiTimeout => 60; // 本番でも60秒に設定
 
   /// 設定情報をデバッグ出力
   static void printConfig() {
