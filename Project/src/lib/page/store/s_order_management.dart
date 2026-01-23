@@ -5,8 +5,8 @@ import '../../component/component.dart';
 import '../../models/database_models.dart';
 import '../../provider/order_provider.dart';
 
-/// Store order management for the current store user.
-/// Fetches from /orders/my and allows basic status updates.
+/// 現在の店舗ユーザー向けの注文管理画面。
+/// /orders/my からデータを取得し、基本的なステータス更新を可能にします。
 class SOrderManagementPage extends StatefulWidget {
   const SOrderManagementPage({super.key});
 
@@ -40,7 +40,7 @@ class _SOrderManagementPageState extends State<SOrderManagementPage>
 
     return Scaffold(
       appBar: const TitleAppBar(
-        title: 'Order Management',
+        title: '受注管理',
         showBackButton: true,
       ),
       body: Column(
@@ -50,10 +50,10 @@ class _SOrderManagementPageState extends State<SOrderManagementPage>
             child: TabBar(
               controller: _tabController,
               tabs: const [
-                Tab(text: 'Pending'),
-                Tab(text: 'Preparing'),
-                Tab(text: 'Ready'),
-                Tab(text: 'Completed'),
+                Tab(text: '未対応'),
+                Tab(text: '準備中'),
+                Tab(text: '受取可'),
+                Tab(text: '完了'),
               ],
               labelColor: Colors.green,
               unselectedLabelColor: Colors.grey,
@@ -66,10 +66,10 @@ class _SOrderManagementPageState extends State<SOrderManagementPage>
                 : TabBarView(
                     controller: _tabController,
                     children: [
-                      _buildOrderList(orderProvider.orders, 'Pending'),
-                      _buildOrderList(orderProvider.orders, 'Preparing'),
-                      _buildOrderList(orderProvider.orders, 'Ready'),
-                      _buildOrderList(orderProvider.orders, 'Completed'),
+                      _buildOrderList(orderProvider.orders, '未対応'),
+                      _buildOrderList(orderProvider.orders, '準備中'),
+                      _buildOrderList(orderProvider.orders, '受取可'),
+                      _buildOrderList(orderProvider.orders, '完了'),
                     ],
                   ),
           ),
@@ -88,7 +88,7 @@ class _SOrderManagementPageState extends State<SOrderManagementPage>
           children: [
             Icon(Icons.assignment_turned_in, size: 64, color: Colors.grey[300]),
             const SizedBox(height: 16),
-            Text('No orders yet', style: TextStyle(color: Colors.grey[600])),
+            Text('注文はありません', style: TextStyle(color: Colors.grey[600])),
           ],
         ),
       );
@@ -106,10 +106,10 @@ class _SOrderManagementPageState extends State<SOrderManagementPage>
 
   Widget _buildOrderCard(Order order, String currentStatusLabel) {
     final statusColors = {
-      'Pending': Colors.blue,
-      'Preparing': Colors.orange,
-      'Ready': Colors.purple,
-      'Completed': Colors.green,
+      '未対応': Colors.blue,
+      '準備中': Colors.orange,
+      '受取可': Colors.purple,
+      '完了': Colors.green,
     };
 
     return Container(
@@ -135,10 +135,10 @@ class _SOrderManagementPageState extends State<SOrderManagementPage>
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Order #${order.id ?? '-'}',
+                  Text('注文番号 #${order.id ?? '-'}',
                       style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 4),
-                  Text('Requester ID: ${order.requesterId}',
+                  Text('依頼者ID: ${order.requesterId}',
                       style: TextStyle(fontSize: 12, color: Colors.grey[600])),
                 ],
               ),
@@ -170,13 +170,13 @@ class _SOrderManagementPageState extends State<SOrderManagementPage>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Items', style: TextStyle(fontSize: 12, color: Colors.grey)),
+                const Text('商品詳細', style: TextStyle(fontSize: 12, color: Colors.grey)),
                 const SizedBox(height: 8),
                 ...order.orderDetails.map(
                   (d) => Padding(
                     padding: const EdgeInsets.only(bottom: 4),
                     child: Text(
-                      '${d.productName} x${d.quantity} (${d.unitPrice})',
+                      '${d.productName} x${d.quantity} (単価: ${d.unitPrice})',
                       style: const TextStyle(fontSize: 13, height: 1.4),
                     ),
                   ),
@@ -211,8 +211,8 @@ class _SOrderManagementPageState extends State<SOrderManagementPage>
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
-              Text('Total', style: TextStyle(fontSize: 12, color: Colors.grey)),
-              Text('Ordered At', style: TextStyle(fontSize: 12, color: Colors.grey)),
+              Text('合計', style: TextStyle(fontSize: 12, color: Colors.grey)),
+              Text('注文日時', style: TextStyle(fontSize: 12, color: Colors.grey)),
             ],
           ),
           Row(
@@ -237,18 +237,18 @@ class _SOrderManagementPageState extends State<SOrderManagementPage>
       return const SizedBox.shrink();
     }
 
-    void add(String label, Color color, String nextStatus) {
+    void add(String label, Color color, String nextStatus, String displayStatus) {
       buttons.add(
         _buildActionButton(label, color, () async {
           final ok = await context.read<OrderProvider>().updateOrderStatus(order.id!, nextStatus);
           if (!mounted) return;
           if (ok) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Updated to $nextStatus')),
+              SnackBar(content: Text('ステータスを「$displayStatus」に更新しました')),
             );
             context.read<OrderProvider>().fetchStoreOrders();
           } else {
-            final err = context.read<OrderProvider>().error ?? 'Update failed';
+            final err = context.read<OrderProvider>().error ?? '更新に失敗しました';
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(err)));
           }
         }),
@@ -257,17 +257,17 @@ class _SOrderManagementPageState extends State<SOrderManagementPage>
 
     switch (order.status) {
       case 'pending':
-        add('Accept Order', Colors.blue, 'accepted');
-        add('Cancel', Colors.red, 'cancelled');
+        add('注文を承認', Colors.blue, 'accepted', '承認済み');
+        add('キャンセル', Colors.red, 'cancelled', 'キャンセル');
         break;
       case 'accepted':
-        add('Start Preparing', Colors.orange, 'preparing');
+        add('準備を開始', Colors.orange, 'preparing', '準備中');
         break;
       case 'preparing':
-        add('Mark Ready', Colors.purple, 'ready_for_pickup');
+        add('準備完了', Colors.purple, 'ready_for_pickup', '受取可');
         break;
       case 'ready_for_pickup':
-        add('Mark Delivered', Colors.green, 'delivered');
+        add('配達・受渡完了', Colors.green, 'delivered', '完了');
         break;
       default:
         break;
@@ -299,13 +299,13 @@ class _SOrderManagementPageState extends State<SOrderManagementPage>
 
   List<Order> _filterByTab(List<Order> orders, String tab) {
     switch (tab) {
-      case 'Pending':
+      case '未対応':
         return orders.where((o) => o.status == 'pending' || o.status == 'accepted').toList();
-      case 'Preparing':
+      case '準備中':
         return orders.where((o) => o.status == 'preparing').toList();
-      case 'Ready':
+      case '受取可':
         return orders.where((o) => o.status == 'ready_for_pickup').toList();
-      case 'Completed':
+      case '完了':
         return orders.where((o) => o.status == 'delivered' || o.status == 'cancelled').toList();
       default:
         return orders;
