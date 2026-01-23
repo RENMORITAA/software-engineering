@@ -30,7 +30,25 @@ class OrderProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get error => _error;
 
-  /// 依頼者の注文履歴を取得
+  /// 自分（依頼者）の注文履歴を取得
+  /// 支払い明細ページなどで使用
+  Future<void> fetchMyOrders() async {
+    _isLoading = true;
+    _error = null;
+    notifyListeners();
+
+    try {
+      final List<dynamic> response = await _orderService.getMyOrders();
+      _orders = response.map((data) => Order.fromMap(data)).toList();
+    } catch (e) {
+      _error = e.toString();
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  /// 依頼者の注文履歴を取得（管理者用）
   Future<void> fetchRequesterOrders(int requesterId) async {
     _isLoading = true;
     _error = null;
@@ -138,7 +156,8 @@ class OrderProvider extends ChangeNotifier {
       await _orderService.updateOrderStatus(orderId, status);
       // 現在の注文を更新
       if (_currentOrder?.id == orderId) {
-        _currentOrder = await _orderService.getOrderById(orderId);
+        final response = await _orderService.getOrderById(orderId);
+        _currentOrder = Order.fromMap(response);
       }
       return true;
     } catch (e) {

@@ -6,6 +6,7 @@ class User {
   final String role;
   final bool isActive;
   final String? createdAt;
+  final String? updatedAt; // 追加
 
   User({
     this.id,
@@ -14,6 +15,7 @@ class User {
     required this.role,
     this.isActive = true,
     this.createdAt,
+    this.updatedAt, // 追加
   });
 
   Map<String, dynamic> toMap() {
@@ -24,6 +26,7 @@ class User {
       'role': role,
       'is_active': isActive,
       'created_at': createdAt,
+      'updated_at': updatedAt, // 追加
     };
   }
 
@@ -35,11 +38,13 @@ class User {
       role: map['role'] ?? '',
       isActive: map['is_active'] ?? true,
       createdAt: map['created_at'],
+      updatedAt: map['updated_at'], // 追加
     );
   }
 }
 
 // 住所モデル
+// ※ 住所テーブルには updated_at がない場合が多いですが、テーブル定義(source:3)にあるため追加します
 class RequesterAddress {
   final int? id;
   final int requesterId;
@@ -52,6 +57,8 @@ class RequesterAddress {
   final double? latitude;
   final double? longitude;
   final bool isDefault;
+  final String? createdAt; // 元コードになかったがDB定義にあるため念の為追加
+  // DB定義(source:3)にはupdated_atがないため、ここでは追加しません(または必要ならDB定義変更後に対応)
 
   RequesterAddress({
     this.id,
@@ -65,6 +72,7 @@ class RequesterAddress {
     this.latitude,
     this.longitude,
     this.isDefault = false,
+    this.createdAt,
   });
 
   factory RequesterAddress.fromMap(Map<String, dynamic> map) {
@@ -80,6 +88,7 @@ class RequesterAddress {
       latitude: map['latitude']?.toDouble(),
       longitude: map['longitude']?.toDouble(),
       isDefault: map['is_default'] ?? false,
+      createdAt: map['created_at'],
     );
   }
 }
@@ -92,6 +101,8 @@ class RequesterProfile {
   final String? phoneNumber;
   final int? defaultAddressId;
   final List<RequesterAddress> addresses;
+  final String? createdAt; // DB定義(source:2)にあるため追加
+  final String? updatedAt; // DB定義(source:2)にあるため追加
 
   RequesterProfile({
     this.id,
@@ -100,6 +111,8 @@ class RequesterProfile {
     this.phoneNumber,
     this.defaultAddressId,
     this.addresses = const [],
+    this.createdAt,
+    this.updatedAt,
   });
 
   Map<String, dynamic> toMap() {
@@ -109,6 +122,8 @@ class RequesterProfile {
       'name': name,
       'phone_number': phoneNumber,
       'default_address_id': defaultAddressId,
+      'created_at': createdAt,
+      'updated_at': updatedAt,
     };
   }
 
@@ -123,6 +138,8 @@ class RequesterProfile {
               ?.map((x) => RequesterAddress.fromMap(x))
               .toList() ??
           [],
+      createdAt: map['created_at'],
+      updatedAt: map['updated_at'],
     );
   }
 }
@@ -144,6 +161,7 @@ class DelivererProfile {
   final String? licenseNumber;
   final String? profileImageUrl;
   final String? createdAt;
+  final String? updatedAt; // 追加
 
   DelivererProfile({
     this.id,
@@ -161,6 +179,7 @@ class DelivererProfile {
     this.licenseNumber,
     this.profileImageUrl,
     this.createdAt,
+    this.updatedAt, // 追加
   });
 
   Map<String, dynamic> toMap() {
@@ -180,6 +199,7 @@ class DelivererProfile {
       'license_number': licenseNumber,
       'profile_image_url': profileImageUrl,
       'created_at': createdAt,
+      'updated_at': updatedAt, // 追加
     };
   }
 
@@ -200,6 +220,7 @@ class DelivererProfile {
       licenseNumber: map['license_number'],
       profileImageUrl: map['profile_image_url'],
       createdAt: map['created_at'],
+      updatedAt: map['updated_at'], // 追加
     );
   }
 }
@@ -220,6 +241,7 @@ class StoreProfile {
   final String? storeImageUrl;
   final bool isOpen;
   final String? createdAt;
+  final String? updatedAt; // 追加
 
   StoreProfile({
     this.id,
@@ -236,6 +258,7 @@ class StoreProfile {
     this.storeImageUrl,
     this.isOpen = true,
     this.createdAt,
+    this.updatedAt, // 追加
   });
 
   Map<String, dynamic> toMap() {
@@ -254,6 +277,7 @@ class StoreProfile {
       'store_image_url': storeImageUrl,
       'is_open': isOpen,
       'created_at': createdAt,
+      'updated_at': updatedAt, // 追加
     };
   }
 
@@ -273,6 +297,7 @@ class StoreProfile {
       storeImageUrl: map['store_image_url'],
       isOpen: map['is_open'] ?? true,
       createdAt: map['created_at'],
+      updatedAt: map['updated_at'], // 追加
     );
   }
 }
@@ -290,6 +315,7 @@ class Product {
   final int stockQuantity;
   final int displayOrder;
   final String? createdAt;
+  final String? updatedAt; // 追加
 
   Product({
     this.id,
@@ -303,6 +329,7 @@ class Product {
     this.stockQuantity = 0,
     this.displayOrder = 0,
     this.createdAt,
+    this.updatedAt, // 追加
   });
 
   Map<String, dynamic> toMap() {
@@ -318,6 +345,7 @@ class Product {
       'stock_quantity': stockQuantity,
       'display_order': displayOrder,
       'created_at': createdAt,
+      'updated_at': updatedAt, // 追加
     };
   }
 
@@ -334,6 +362,7 @@ class Product {
       stockQuantity: map['stock_quantity']?.toInt() ?? 0,
       displayOrder: map['display_order']?.toInt() ?? 0,
       createdAt: map['created_at'],
+      updatedAt: map['updated_at'], // 追加
     );
   }
 }
@@ -348,6 +377,7 @@ class OrderDetail {
   final int unitPrice;
   final int subtotal;
   final String? notes;
+  // order_detailsには通常updated_atを持たせないため、ここでは追加していません
 
   OrderDetail({
     this.id,
@@ -402,6 +432,7 @@ class Order {
   final String? orderedAt;
   final String? acceptedAt;
   final String? completedAt;
+  final String? cancelledAt; // DB定義(source:12)にあるため追加
   final List<OrderDetail> orderDetails;
 
   Order({
@@ -418,6 +449,7 @@ class Order {
     this.orderedAt,
     this.acceptedAt,
     this.completedAt,
+    this.cancelledAt, // 追加
     this.orderDetails = const [],
   });
 
@@ -436,7 +468,7 @@ class Order {
       'ordered_at': orderedAt,
       'accepted_at': acceptedAt,
       'completed_at': completedAt,
-      // orderDetails is usually not sent back in toMap for creation, but for completeness:
+      'cancelled_at': cancelledAt, // 追加
       'order_details': orderDetails.map((x) => x.toMap()).toList(),
     };
   }
@@ -456,6 +488,7 @@ class Order {
       orderedAt: map['ordered_at'],
       acceptedAt: map['accepted_at'],
       completedAt: map['completed_at'],
+      cancelledAt: map['cancelled_at'], // 追加
       orderDetails: (map['order_details'] as List<dynamic>?)
               ?.map((x) => OrderDetail.fromMap(x))
               .toList() ??
@@ -477,6 +510,7 @@ class Delivery {
   final double? distanceKm;
   final int? deliveryFee;
   final String? createdAt;
+  final String? updatedAt; // 追加
 
   Delivery({
     this.id,
@@ -490,6 +524,7 @@ class Delivery {
     this.distanceKm,
     this.deliveryFee,
     this.createdAt,
+    this.updatedAt, // 追加
   });
 
   Map<String, dynamic> toMap() {
@@ -505,6 +540,7 @@ class Delivery {
       'distance_km': distanceKm,
       'delivery_fee': deliveryFee,
       'created_at': createdAt,
+      'updated_at': updatedAt, // 追加
     };
   }
 
@@ -521,6 +557,7 @@ class Delivery {
       distanceKm: map['distance_km']?.toDouble(),
       deliveryFee: map['delivery_fee']?.toInt(),
       createdAt: map['created_at'],
+      updatedAt: map['updated_at'], // 追加
     );
   }
 }
@@ -534,6 +571,7 @@ class AppNotification {
   final String type;
   final bool isRead;
   final String? createdAt;
+  // DB定義(source:18)にはupdated_atがないため追加しません
 
   AppNotification({
     this.id,

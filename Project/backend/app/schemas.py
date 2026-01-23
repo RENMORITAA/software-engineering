@@ -85,6 +85,7 @@ class RequesterProfileCreate(RequesterProfileBase):
 
 class RequesterProfileUpdate(BaseModel):
     name: Optional[str] = None
+    email: Optional[str] = None
     phone_number: Optional[str] = None
     default_address_id: Optional[int] = None
     # --- 銀行情報を追加 ---
@@ -124,6 +125,7 @@ class DelivererProfileCreate(DelivererProfileBase):
 
 class DelivererProfileUpdate(BaseModel):
     name: Optional[str] = None
+    email: Optional[str] = None
     phone_number: Optional[str] = None
     resume: Optional[str] = None
     work_status: Optional[str] = None
@@ -168,6 +170,7 @@ class StoreProfileCreate(StoreProfileBase):
 
 class StoreProfileUpdate(BaseModel):
     store_name: Optional[str] = None
+    email: Optional[str] = None
     description: Optional[str] = None
     address: Optional[str] = None
     postal_code: Optional[str] = None
