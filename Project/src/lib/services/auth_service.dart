@@ -18,9 +18,28 @@ class AuthService {
   static const int _tokenExpiryHours = 24;
 
   // ---------------------------------------------------------------------------
-  // 1. 認証 (ログイン・登録・ログアウト・退会)
+  // 1. 認証 (ログイン・登録・ログアウト・退会・パスワード・状態確認)
   // ---------------------------------------------------------------------------
 
+  /// ログイン状態の確認
+  Future<bool> isLoggedIn() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString(_tokenKey);
+    if (token == null) return false;
+
+    final loginTime = prefs.getInt(_loginTimeKey);
+    if (loginTime != null) {
+      final now = DateTime.now().millisecondsSinceEpoch;
+      final diffInHours = (now - loginTime) / (1000 * 60 * 60);
+      if (diffInHours >= _tokenExpiryHours) {
+        await logout();
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /// ログイン
   Future<Map<String, dynamic>> login(String email, String password) async {
     try {
       final response = await _apiService.post(
@@ -51,7 +70,7 @@ class AuthService {
     }
   }
 
-  /// 新規登録 (businessHours 等の不足していた引数をすべて追加)
+  /// 新規登録 (★復活)
   Future<void> register(
     String email,
     String password,
@@ -61,8 +80,8 @@ class AuthService {
     String? storeName,
     String? storeAddress,
     String? storeDescription,
-    String? businessHours, // 追加
-    String? vehicleType,   // 追加
+    String? businessHours,
+    String? vehicleType,
   }) async {
     try {
       // 1. アカウント作成
@@ -87,7 +106,7 @@ class AuthService {
         detailData = {
           'name': name, 
           'phone_number': phoneNumber,
-          'vehicle_type': vehicleType, // 車種も追加
+          'vehicle_type': vehicleType,
         };
         await _apiService.put('/profile/deliverer', detailData);
       } else if (role == 'store') {
@@ -95,7 +114,7 @@ class AuthService {
           'store_name': storeName,
           'address': storeAddress,
           'description': storeDescription,
-          'business_hours': businessHours, // 営業時間を追加
+          'business_hours': businessHours,
           'phone_number': phoneNumber,
         };
         await _apiService.put('/profile/store', detailData);
@@ -108,6 +127,7 @@ class AuthService {
     }
   }
 
+  /// パスワードリセットメール送信 (★復活)
   Future<void> sendPasswordResetEmail(String email) async {
     try {
       await _apiService.post('/auth/password-reset-request', {'email': email});
@@ -117,6 +137,22 @@ class AuthService {
     }
   }
 
+  /// パスワード変更
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    try {
+      await _apiService.post('/auth/change-password', {
+        'current_password': currentPassword,
+        'new_password': newPassword,
+      });
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  /// ログアウト
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(_tokenKey);
@@ -125,14 +161,12 @@ class AuthService {
     await prefs.remove(_loginTimeKey);
   }
 
-  /// 退会 (DB削除 + ログアウト)
+  /// 退会
   Future<void> withdraw() async {
     try {
       await _apiService.delete('/auth/withdraw');
       await logout();
-      debugPrint('[AuthService] Withdraw successful');
     } catch (e) {
-      debugPrint('[AuthService] Withdraw failed: $e');
       rethrow;
     }
   }
@@ -141,6 +175,7 @@ class AuthService {
   // 2. プロフィール更新・同期
   // ---------------------------------------------------------------------------
 
+  /// プロフィール更新
   Future<void> updateProfile({
     required String role,
     required Map<String, dynamic> data,
@@ -178,12 +213,14 @@ class AuthService {
     }
   }
 
+  /// 口座情報更新
   Future<void> updateBankingInfo({required String role, required Map<String, dynamic> data}) async {
     await _apiService.put('/profile/$role/banking', data);
     await saveUserInfo(data);
     await _refreshAndSaveUserInfo(role);
   }
 
+  /// 最新のプロフィール取得
   Future<Map<String, dynamic>?> getUserProfile() async {
     final role = await getSavedRole();
     if (role == null) return null;
@@ -207,7 +244,7 @@ class AuthService {
   }
 
   // ---------------------------------------------------------------------------
-  // 3. その他
+  // 3. お問い合わせ
   // ---------------------------------------------------------------------------
 
   Future<bool> sendContactEmail({required String category, required String content}) async {
@@ -224,6 +261,10 @@ class AuthService {
       return false;
     }
   }
+
+  // ---------------------------------------------------------------------------
+  // 4. ストレージ・ユーティリティ
+  // ---------------------------------------------------------------------------
 
   Future<void> saveUserInfo(Map<String, dynamic> user) async {
     final prefs = await SharedPreferences.getInstance();
@@ -248,20 +289,6 @@ class AuthService {
   Future<String?> getToken() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(_tokenKey);
-  }
-
-  Future<bool> isLoggedIn() async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString(_tokenKey);
-    if (token == null) return false;
-    final loginTime = prefs.getInt(_loginTimeKey);
-    if (loginTime != null) {
-      if (DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(loginTime)).inHours >= _tokenExpiryHours) {
-        await logout();
-        return false;
-      }
-    }
-    return true;
   }
 
   Future<void> _saveAuthData(String token) async {

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import '../component/component.dart';
 import '../overlay/overlay.dart';
 import '../services/auth_service.dart';
-import 'package:http/http.dart' as http; 
-import 'dart:convert';
 import 'user_detail_page.dart';
 import 'package:provider/provider.dart';
 import '../provider/provider.dart';
@@ -23,9 +21,7 @@ class UnifiedMyPage extends StatefulWidget {
   final String userRole;
   final String accessToken;
   final Map<String, String>? additionalInfo;
-  //final VoidCallback onLogout;
-  //final VoidCallback onWithdraw;
-  final Future<void> Function() onLogout;    // void ではなく Future<void> に
+  final Future<void> Function() onLogout;
   final Future<void> Function() onWithdraw;
   final List<Map<String, dynamic>>? roleSpecificSettings;
 
@@ -46,7 +42,8 @@ class UnifiedMyPage extends StatefulWidget {
 }
 
 class _UnifiedMyPageState extends State<UnifiedMyPage> {
-  // 依頼者で2重に出るのを防ぐため、マイページ側での表示管理を確実に切り離します
+  final AuthService _authService = AuthService();
+  
   bool _showLogout = false;
   bool _showWithdraw = false;
   bool _isEditing = false;
@@ -91,31 +88,67 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
     }
   }
 
-  // --- 修正：ログアウト処理を確実に1回で終わらせ、スタックをクリアする ---
   Future<void> _handleLogout() async {
-    // まずこのマイページ内のオーバーレイを非表示にする
     setState(() => _showLogout = false);
-
     try {
-      // 親から渡されたログアウト処理（データ削除など）を実行
-      widget.onLogout();
-
-      // 全ての履歴を削除してログイン画面へ遷移（2重表示を防ぐため最優先で実行）
+      await widget.onLogout();
       if (mounted) {
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          '/login', 
-          (route) => false,
-        );
+        Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
       }
     } catch (e) {
       debugPrint('Logout Error: $e');
     }
   }
 
+  // --- 追加：パスワード変更の通信処理本体 ---
+  Future<void> _handleChangePassword(StateSetter setDialogState) async {
+    // バリデーション
+    if (_newPwController.text.length < 6) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('新しいパスワードは6文字以上で入力してください')),
+      );
+      return;
+    }
+    if (_newPwController.text != _confirmPwController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('新しいパスワードが一致しません')),
+      );
+      return;
+    }
+
+    setDialogState(() => _isChangingPassword = true);
+
+    try {
+      await _authService.changePassword(
+        currentPassword: _currentPwController.text,
+        newPassword: _newPwController.text,
+      );
+
+      if (mounted) {
+        Navigator.pop(context); // ダイアログを閉じる
+        _resetPasswordFields();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('パスワードを変更しました')),
+        );
+      }
+    } catch (e) {
+      debugPrint('Password Change Error: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(e.toString().contains('400') 
+            ? '現在のパスワードが正しくありません' 
+            : '通信エラーが発生しました')),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setDialogState(() => _isChangingPassword = false);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    // 依頼者の場合、親のScaffoldがLogoutOverlayを持っている可能性があるため、
-    // ここでは Stack で包むのをやめるか、フラグ管理を厳密にします。
     return Stack(
       children: [
         Scaffold(
@@ -148,10 +181,7 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
                   Padding(padding: const EdgeInsets.symmetric(horizontal: 16), child: _buildEditForm()),
                   const SizedBox(height: 24),
                 ],
-                _buildMenuSection(
-                  title: 'アカウント',
-                  items: _buildAccountItems(),
-                ),
+                _buildMenuSection(title: 'アカウント', items: _buildAccountItems()),
                 _buildHistorySection(),
                 _buildMenuSection(
                   title: 'その他',
@@ -160,7 +190,7 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
                     _MenuItem(
                       icon: Icons.help_outline, 
                       title: 'ヘルプ・お問い合わせ', 
-                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => HelpContactPage())),
+                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const HelpContactPage())),
                     ),
                   ],
                 ),
@@ -174,35 +204,26 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
 
         if (_showLogout)
           LogoutOverlay(
-            onConfirm: _handleLogout, // 修正した専用メソッドを呼ぶ
+            onConfirm: _handleLogout,
             onCancel: () => setState(() => _showLogout = false),
           ),
 
         if (_showWithdraw)
           WithdrawOverlay(
-            onConfirm: () async { // async を追加
-              // 1. まずオーバーレイを閉じる
+            onConfirm: () async {
               setState(() => _showWithdraw = false);
-              
               try {
-                // 2. 親（Wrapper）に定義された退会API処理を実行
-                // ここで実際のDB削除APIが呼ばれるのを待つ
                 await widget.onWithdraw(); 
-
-                // 3. 退会が成功したら、ログアウト時と同様にスタックをクリアしてログイン画面へ
                 if (mounted) {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/login', 
-                    (route) => false,
-                  );
+                  Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('退会手続きが完了しました。ご利用ありがとうございました。')),
+                    const SnackBar(content: Text('退会手続きが完了しました。')),
                   );
                 }
               } catch (e) {
                 if (mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('退会処理に失敗しました。時間をおいて再度お試しください。')),
+                    const SnackBar(content: Text('退会処理に失敗しました。')),
                   );
                 }
               }
@@ -219,8 +240,6 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
       ],
     );
   }
-
-  // --- ヘルパーメソッド群（リファクタリングして重複リスクを軽減） ---
 
   Widget _buildProfileHeader() {
     return Container(
@@ -316,10 +335,7 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
           SizedBox(
             width: double.infinity,
             child: OutlinedButton.icon(
-              onPressed: () {
-                // ここでフラグを立てる際、他の通知やプロバイダーが干渉しないよう確実に単一の動作にする
-                setState(() => _showLogout = true);
-              },
+              onPressed: () => setState(() => _showLogout = true),
               style: OutlinedButton.styleFrom(
                 foregroundColor: Colors.orange,
                 side: const BorderSide(color: Colors.orange),
@@ -339,7 +355,6 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
     );
   }
 
-  // --- 共通UIコンポーネント ---
   Widget _buildMenuSection({required String title, required List<_MenuItem> items}) {
     if (items.isEmpty) return const SizedBox.shrink();
     return Column(
@@ -394,16 +409,16 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
           const SizedBox(height: 16),
           TextField(controller: _nameController, decoration: const InputDecoration(labelText: 'ユーザー名', border: OutlineInputBorder())),
           const SizedBox(height: 12),
-          TextField(controller: _emailController, decoration: const InputDecoration(labelText: 'メールアドレス', border: OutlineInputBorder())),
+          TextField(controller: _emailController, decoration: const InputDecoration(labelText: 'メールアドレス', border: OutlineInputBorder(), enabled: false)),
         ],
       ),
     );
   }
 
-  // パスワード変更ダイアログ等の補助メソッドは変更がないため維持
   void _showPasswordChangeDialog() {
     showDialog(
       context: context,
+      barrierDismissible: !_isChangingPassword,
       builder: (context) => StatefulBuilder(
         builder: (context, setDialogState) {
           return AlertDialog(
@@ -413,23 +428,45 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const SizedBox(height: 8),
-                _buildDialogTextField(controller: _currentPwController, label: '現在のパスワード', visible: _isCurrentPwVisible, onToggle: () => setDialogState(() => _isCurrentPwVisible = !_isCurrentPwVisible)),
+                _buildDialogTextField(
+                  controller: _currentPwController, 
+                  label: '現在のパスワード', 
+                  visible: _isCurrentPwVisible, 
+                  onToggle: () => setDialogState(() => _isCurrentPwVisible = !_isCurrentPwVisible)
+                ),
                 const SizedBox(height: 16),
-                _buildDialogTextField(controller: _newPwController, label: '新しいパスワード', visible: _isNewPwVisible, onToggle: () => setDialogState(() => _isNewPwVisible = !_isNewPwVisible)),
+                _buildDialogTextField(
+                  controller: _newPwController, 
+                  label: '新しいパスワード', 
+                  visible: _isNewPwVisible, 
+                  onToggle: () => setDialogState(() => _isNewPwVisible = !_isNewPwVisible)
+                ),
                 const SizedBox(height: 16),
-                _buildDialogTextField(controller: _confirmPwController, label: 'パスワード確認', visible: _isConfirmPwVisible, onToggle: () => setDialogState(() => _isConfirmPwVisible = !_isConfirmPwVisible)),
+                _buildDialogTextField(
+                  controller: _confirmPwController, 
+                  label: 'パスワード確認', 
+                  visible: _isConfirmPwVisible, 
+                  onToggle: () => setDialogState(() => _isConfirmPwVisible = !_isConfirmPwVisible)
+                ),
               ],
             ),
             actions: [
-              TextButton(onPressed: () { _resetPasswordFields(); Navigator.pop(context); }, child: const Text('キャンセル')),
-              ElevatedButton(
-                onPressed: _isChangingPassword ? null : () async {
-                  if (_newPwController.text != _confirmPwController.text) return;
-                  setDialogState(() => _isChangingPassword = true);
-                  // ... 通信処理省略
-                  Navigator.pop(context);
+              TextButton(
+                onPressed: _isChangingPassword ? null : () { 
+                  _resetPasswordFields(); 
+                  Navigator.pop(context); 
                 }, 
-                child: const Text('変更')
+                child: const Text('キャンセル')
+              ),
+              ElevatedButton(
+                onPressed: _isChangingPassword ? null : () => _handleChangePassword(setDialogState), 
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).primaryColor,
+                  foregroundColor: Colors.white,
+                ),
+                child: _isChangingPassword 
+                  ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
+                  : const Text('変更'),
               ),
             ],
           );
@@ -439,14 +476,20 @@ class _UnifiedMyPageState extends State<UnifiedMyPage> {
   }
 
   void _resetPasswordFields() {
-    _currentPwController.clear(); _newPwController.clear(); _confirmPwController.clear();
+    _currentPwController.clear();
+    _newPwController.clear();
+    _confirmPwController.clear();
   }
 
   Widget _buildDialogTextField({required TextEditingController controller, required String label, required bool visible, required VoidCallback onToggle}) {
     return TextField(
       controller: controller,
       obscureText: !visible,
-      decoration: InputDecoration(labelText: label, border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)), suffixIcon: IconButton(icon: Icon(visible ? Icons.visibility : Icons.visibility_off), onPressed: onToggle)),
+      decoration: InputDecoration(
+        labelText: label, 
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)), 
+        suffixIcon: IconButton(icon: Icon(visible ? Icons.visibility : Icons.visibility_off), onPressed: onToggle)
+      ),
     );
   }
 }
