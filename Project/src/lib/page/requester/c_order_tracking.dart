@@ -38,12 +38,12 @@ class _COrderTrackingPageState extends State<COrderTrackingPage> {
   }
 
   void _startDeliveryTracking() {
-    // デモ用の座標でシミュレーション開始
+    // デモ用の座標でシミュレーション開始（高知県香美市）
     _delivererLocationStream = _simulationService.startSimulation(
-      startLat: 35.6812, // 店舗位置（例：東京）
-      startLng: 139.7671,
-      endLat: 35.6895, // 依頼者位置（例：新宿近郊）
-      endLng: 139.6917,
+      startLat: 33.5944, // 店舗位置（高知工科大学付近）
+      startLng: 133.8628,
+      endLat: 33.5850, // 依頼者位置（香美市内）
+      endLng: 133.8750,
       updateIntervalSeconds: 3,
     );
     setState(() {});

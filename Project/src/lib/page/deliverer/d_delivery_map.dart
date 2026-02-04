@@ -20,11 +20,11 @@ class DDeliveryMapPage extends StatefulWidget {
     super.key,
     this.orderId,
     this.storeName = 'テスト店舗',
-    this.deliveryAddress = '東京都渋谷区',
-    this.storeLatitude = 35.6812, // デフォルト: 東京
-    this.storeLongitude = 139.7671,
-    this.customerLatitude = 35.6895, // デフォルト: 東京近郊
-    this.customerLongitude = 139.6917,
+    this.deliveryAddress = '高知県香美市',
+    this.storeLatitude = 33.5944, // デフォルト: 高知工科大学付近
+    this.storeLongitude = 133.8628,
+    this.customerLatitude = 33.5850, // デフォルト: 香美市内
+    this.customerLongitude = 133.8750,
   });
 
   @override

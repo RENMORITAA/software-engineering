@@ -134,8 +134,9 @@ class _MapWidgetState extends State<MapWidget> {
   }
 
   void _initLeafletMap() {
-    final startLat = widget.initialLatitude ?? 35.6812;
-    final startLng = widget.initialLongitude ?? 139.7671;
+    // 高知県香美市（高知工科大学付近）をデフォルトに
+    final startLat = widget.initialLatitude ?? 33.5944;
+    final startLng = widget.initialLongitude ?? 133.8628;
     final destLat = widget.destinationLatitude;
     final destLng = widget.destinationLongitude;
     final zoom = widget.initialZoom;
