@@ -89,6 +89,119 @@ def update_requester_profile(
     return profile
 
 # ==========================================
+# Requester Address Management
+# ==========================================
+
+@router.get("/requester/addresses", response_model=List[schemas.RequesterAddress])
+def get_requester_addresses(
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(database.get_db)
+):
+    """依頼者の住所一覧を取得"""
+    if current_user.role != "requester":
+        raise HTTPException(status_code=403, detail="Only requesters can access this endpoint")
+    
+    profile = db.query(models.RequesterProfile).filter(models.RequesterProfile.user_id == current_user.id).first()
+    if not profile:
+        raise HTTPException(status_code=404, detail="Profile not found")
+    
+    return profile.addresses
+
+@router.post("/requester/addresses", response_model=schemas.RequesterAddress)
+def create_requester_address(
+    address_data: schemas.RequesterAddressCreate,
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(database.get_db)
+):
+    """依頼者の住所を新規登録"""
+    if current_user.role != "requester":
+        raise HTTPException(status_code=403, detail="Only requesters can create addresses")
+    
+    profile = db.query(models.RequesterProfile).filter(models.RequesterProfile.user_id == current_user.id).first()
+    if not profile:
+        raise HTTPException(status_code=404, detail="Profile not found")
+    
+    # 新しい住所を作成
+    new_address = models.RequesterAddress(
+        requester_id=profile.id,
+        **address_data.model_dump()
+    )
+    
+    # デフォルト住所として設定する場合、他の住所のis_defaultをFalseに
+    if address_data.is_default:
+        db.query(models.RequesterAddress).filter(
+            models.RequesterAddress.requester_id == profile.id
+        ).update({"is_default": False})
+    
+    db.add(new_address)
+    db.commit()
+    db.refresh(new_address)
+    return new_address
+
+@router.put("/requester/addresses/{address_id}", response_model=schemas.RequesterAddress)
+def update_requester_address(
+    address_id: int,
+    address_data: schemas.RequesterAddressCreate,
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(database.get_db)
+):
+    """依頼者の住所を更新"""
+    if current_user.role != "requester":
+        raise HTTPException(status_code=403, detail="Only requesters can update addresses")
+    
+    profile = db.query(models.RequesterProfile).filter(models.RequesterProfile.user_id == current_user.id).first()
+    if not profile:
+        raise HTTPException(status_code=404, detail="Profile not found")
+    
+    address = db.query(models.RequesterAddress).filter(
+        models.RequesterAddress.id == address_id,
+        models.RequesterAddress.requester_id == profile.id
+    ).first()
+    
+    if not address:
+        raise HTTPException(status_code=404, detail="Address not found")
+    
+    # デフォルト住所として設定する場合、他の住所のis_defaultをFalseに
+    if address_data.is_default:
+        db.query(models.RequesterAddress).filter(
+            models.RequesterAddress.requester_id == profile.id,
+            models.RequesterAddress.id != address_id
+        ).update({"is_default": False})
+    
+    for field, value in address_data.model_dump().items():
+        setattr(address, field, value)
+    
+    db.commit()
+    db.refresh(address)
+    return address
+
+@router.delete("/requester/addresses/{address_id}")
+def delete_requester_address(
+    address_id: int,
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(database.get_db)
+):
+    """依頼者の住所を削除"""
+    if current_user.role != "requester":
+        raise HTTPException(status_code=403, detail="Only requesters can delete addresses")
+    
+    profile = db.query(models.RequesterProfile).filter(models.RequesterProfile.user_id == current_user.id).first()
+    if not profile:
+        raise HTTPException(status_code=404, detail="Profile not found")
+    
+    address = db.query(models.RequesterAddress).filter(
+        models.RequesterAddress.id == address_id,
+        models.RequesterAddress.requester_id == profile.id
+    ).first()
+    
+    if not address:
+        raise HTTPException(status_code=404, detail="Address not found")
+    
+    db.delete(address)
+    db.commit()
+    return {"message": "住所を削除しました"}
+
+# ==========================================
 # Deliverer Profile
 # ==========================================
 

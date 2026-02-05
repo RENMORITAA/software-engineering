@@ -40,7 +40,8 @@ class RequesterProfile(Base):
     user = relationship("User", back_populates="requester_profile")
     # 【重要】cascadeを追加
     addresses = relationship("RequesterAddress", back_populates="requester", cascade="all, delete-orphan")
-    orders = relationship("Order", back_populates="requester")
+    # passive_deletes=True: DBのON DELETE CASCADEに任せる
+    orders = relationship("Order", back_populates="requester", passive_deletes=True)
 
 
 class RequesterAddress(Base):
@@ -116,7 +117,8 @@ class StoreProfile(Base):
     # 【重要】cascadeを追加
     categories = relationship("ProductCategory", back_populates="store", cascade="all, delete-orphan")
     products = relationship("Product", back_populates="store", cascade="all, delete-orphan")
-    orders = relationship("Order", back_populates="store")
+    # passive_deletes=True: DBのON DELETE CASCADEに任せる
+    orders = relationship("Order", back_populates="store", passive_deletes=True)
     sales = relationship("StoreSales", back_populates="store", cascade="all, delete-orphan")
 
 
@@ -166,9 +168,9 @@ class Order(Base):
     __tablename__ = "orders"
 
     id = Column(Integer, primary_key=True, index=True)
-    requester_id = Column(Integer, ForeignKey("requester_profiles.id"), nullable=False)
-    store_id = Column(Integer, ForeignKey("store_profiles.id"), nullable=False)
-    deliverer_id = Column(Integer, ForeignKey("deliverer_profiles.id"))
+    requester_id = Column(Integer, ForeignKey("requester_profiles.id", ondelete="CASCADE"), nullable=False)
+    store_id = Column(Integer, ForeignKey("store_profiles.id", ondelete="CASCADE"), nullable=False)
+    deliverer_id = Column(Integer, ForeignKey("deliverer_profiles.id", ondelete="SET NULL"))
     status = Column(String(30), nullable=False, default="pending")
     subtotal = Column(Integer, nullable=False)
     delivery_fee = Column(Integer, nullable=False, default=0)
